@@ -1,0 +1,414 @@
+/* Lock Ten Studio , v0 landing page styles.
+   Matches the visual system established in the Pyramid PDF and marketing hub:
+   warm palette, Crimson Pro display + Source Sans 3 body. */
+
+@import url('https://fonts.googleapis.com/css2?family=Crimson+Pro:wght@600;700&family=Source+Sans+3:wght@400;600;700&display=swap');
+
+:root {
+  --slate: #5D87A1;
+  --slate-deep: #4a708a;
+  --slate-light: #e3edf3;
+  --walnut: #413000;
+  --walnut-soft: #6a532f;
+  --walnut-light: #f0e8d6;
+  --paper: #FAF7F2;
+  --bone: #F2EDE4;
+  --linen: #E8E2D5;
+  --stone: #C9C2B5;
+  --ink: #1A1916;
+  --mute: #5a5a5a;
+  --display: 'Crimson Pro', Georgia, serif;
+  --body: 'Source Sans 3', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 17px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+.container {
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* ============================================
+   Header
+   ============================================ */
+
+.site-header {
+  background: var(--paper);
+  border-bottom: 1px solid var(--linen);
+  padding: 1.25rem 0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.header-inner {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.brand {
+  font-family: var(--display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--walnut);
+  text-decoration: none;
+  letter-spacing: -0.01em;
+}
+
+.header-nav {
+  display: flex;
+  gap: 1.75rem;
+  font-size: 0.95rem;
+}
+
+.header-nav a {
+  color: var(--ink);
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.header-nav a:hover { color: var(--walnut); }
+
+/* ============================================
+   Hero
+   ============================================ */
+
+.hero {
+  padding: 6rem 0 5rem;
+  background: var(--paper);
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--walnut);
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+}
+
+.hero-headline {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(2rem, 6vw, 3.5rem);
+  line-height: 1.05;
+  color: var(--ink);
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+  max-width: 900px;
+}
+
+.hero-subhead {
+  font-size: clamp(1.05rem, 2.5vw, 1.25rem);
+  color: var(--mute);
+  max-width: 720px;
+  line-height: 1.5;
+}
+
+/* ============================================
+   Products
+   ============================================ */
+
+.products {
+  padding: 5rem 0;
+  background: var(--bone);
+  border-top: 1px solid var(--linen);
+  border-bottom: 1px solid var(--linen);
+}
+
+.section-headline {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
+  color: var(--ink);
+  letter-spacing: -0.01em;
+  margin-bottom: 0.5rem;
+}
+
+.section-sub {
+  color: var(--mute);
+  font-size: 1.05rem;
+  margin-bottom: 3rem;
+  max-width: 680px;
+}
+
+.product-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1.5rem;
+}
+
+@media (min-width: 760px) {
+  .product-grid { grid-template-columns: 1fr 1fr; gap: 2rem; }
+}
+
+.product-card {
+  background: white;
+  border: 1px solid var(--linen);
+  border-radius: 6px;
+  padding: 2rem 2rem 1.75rem;
+  position: relative;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+}
+
+.product-badge {
+  position: absolute;
+  top: -10px;
+  right: 1.5rem;
+  background: var(--walnut);
+  color: var(--paper);
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  font-weight: 700;
+  padding: 0.3rem 0.7rem;
+  border-radius: 3px;
+}
+
+.product-name {
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.75rem;
+  color: var(--ink);
+  margin-bottom: 0.5rem;
+}
+
+.product-tag {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.1rem;
+  color: var(--walnut);
+  line-height: 1.4;
+  margin-bottom: 1rem;
+}
+
+.product-body {
+  font-size: 0.95rem;
+  color: var(--ink);
+  line-height: 1.55;
+  margin-bottom: 1.5rem;
+}
+
+.product-meta {
+  border-top: 1px solid var(--linen);
+  padding-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.product-price {
+  font-weight: 700;
+  color: var(--walnut);
+  font-size: 1rem;
+}
+
+.product-trial {
+  font-size: 0.85rem;
+  color: var(--mute);
+  font-style: italic;
+}
+
+/* ============================================
+   Trust band
+   ============================================ */
+
+.trust {
+  padding: 5rem 0;
+  background: var(--paper);
+}
+
+.pull-quote {
+  font-family: var(--display);
+  font-style: italic;
+  font-weight: 600;
+  font-size: clamp(1.3rem, 3vw, 1.75rem);
+  color: var(--walnut);
+  line-height: 1.35;
+  border-left: 4px solid var(--walnut);
+  padding-left: 1.5rem;
+  margin-bottom: 1.75rem;
+  max-width: 820px;
+}
+
+.trust-body {
+  color: var(--ink);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  max-width: 760px;
+}
+
+/* ============================================
+   Newsletter
+   ============================================ */
+
+.newsletter {
+  padding: 5rem 0;
+  background: var(--walnut);
+  color: var(--paper);
+}
+
+.newsletter .section-headline {
+  color: var(--paper);
+  margin-bottom: 0.4rem;
+}
+
+.newsletter-tag {
+  font-family: var(--display);
+  font-style: italic;
+  font-size: 1.2rem;
+  color: var(--walnut-light);
+  margin-bottom: 1.5rem;
+}
+
+.newsletter-body {
+  color: var(--paper);
+  opacity: 0.9;
+  font-size: 1rem;
+  max-width: 640px;
+  margin-bottom: 2rem;
+}
+
+.newsletter-form {
+  background: var(--paper);
+  color: var(--ink);
+  padding: 1.5rem;
+  border-radius: 4px;
+  max-width: 560px;
+}
+
+.newsletter-fallback {
+  font-size: 0.95rem;
+  margin: 0;
+  color: var(--ink);
+}
+
+.newsletter-fallback a {
+  color: var(--walnut);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* When Beehiiv embed iframe is dropped in, it sizes itself */
+.newsletter-form iframe {
+  width: 100%;
+  border: none;
+  display: block;
+}
+
+/* ============================================
+   Footer
+   ============================================ */
+
+.site-footer {
+  background: var(--ink);
+  color: var(--paper);
+  padding: 3.5rem 0 2rem;
+  font-size: 0.9rem;
+}
+
+.footer-inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+@media (min-width: 760px) {
+  .footer-inner { grid-template-columns: 2fr 1fr; gap: 3rem; }
+}
+
+.footer-mark {
+  font-family: var(--display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--paper);
+  margin-bottom: 0.3rem;
+}
+
+.footer-tagline {
+  color: var(--paper);
+  opacity: 0.7;
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+
+.footer-positioning {
+  font-family: var(--display);
+  font-style: italic;
+  color: var(--walnut-light);
+  font-size: 1rem;
+  line-height: 1.5;
+  max-width: 520px;
+}
+
+.footer-links {
+  display: flex;
+  gap: 3rem;
+  flex-wrap: wrap;
+}
+
+.footer-col h4 {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--walnut-light);
+  margin-bottom: 0.85rem;
+  font-weight: 700;
+}
+
+.footer-col a {
+  display: block;
+  color: var(--paper);
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.85;
+}
+
+.footer-col a:hover { opacity: 1; text-decoration: underline; }
+
+.footer-legal {
+  grid-column: 1 / -1;
+  border-top: 1px solid rgba(255,255,255,0.1);
+  padding-top: 1.5rem;
+  font-size: 0.8rem;
+  color: var(--paper);
+  opacity: 0.6;
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.footer-legal p { margin: 0; }
+
+.footer-contact {
+  font-family: monospace;
+}
+
+/* ============================================
+   Reduced motion / print
+   ============================================ */
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+@media print {
+  .site-header, .newsletter, .site-footer { display: none; }
+  body { background: white; color: black; }
+  .hero, .products, .trust { padding: 1rem 0; }
+}

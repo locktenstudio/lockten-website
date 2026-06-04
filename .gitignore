@@ -1,0 +1,22 @@
+# OS-specific
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editor / IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Local-only files
+*.local
+.env
+.env.local
+
+# Build artifacts (we don't have a build step, but defensive)
+node_modules/
+dist/
+build/
+.cache/
