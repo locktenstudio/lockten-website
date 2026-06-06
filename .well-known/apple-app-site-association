@@ -1,0 +1,19 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["TEAMID_PLACEHOLDER.studio.lockten.walkthrough"],
+        "components": [
+          {
+            "/": "/billing/success",
+            "comment": "Stripe Checkout success redirect for the Walkthrough app"
+          },
+          {
+            "/": "/billing/cancel",
+            "comment": "Stripe Checkout cancel redirect for the Walkthrough app"
+          }
+        ]
+      }
+    ]
+  }
+}

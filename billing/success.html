@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Subscription started · Walkthrough</title>
+  <link rel="stylesheet" href="/styles.css" />
+  <style>
+    /* Page-specific overrides. The main styles.css covers the
+       brand palette + typography; these tighten the layout for a
+       one-card landing page. */
+    body { background: #fdfbf7; }
+    .card {
+      max-width: 480px;
+      margin: 12vh auto 0;
+      padding: 32px 28px;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 2px 16px rgba(40, 25, 0, 0.06);
+      text-align: center;
+    }
+    .checkmark {
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #5D87A1;
+      color: #fff;
+      font-size: 32px;
+      line-height: 60px;
+      margin: 0 auto 16px;
+    }
+    h1 { color: #413000; font-size: 26px; margin: 0 0 8px; }
+    p { color: #555; line-height: 1.55; margin: 0 0 18px; }
+    .open-btn {
+      display: inline-block;
+      background: #5D87A1;
+      color: #fff;
+      padding: 12px 26px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .footnote { font-size: 13px; color: #888; margin-top: 18px; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="checkmark">&#x2713;</div>
+    <h1>Subscription started</h1>
+    <p>
+      Thanks. Your Walkthrough subscription is active. Open the app
+      to start capturing your first session.
+    </p>
+    <a class="open-btn" href="walkthrough://billing/success">
+      Open Walkthrough
+    </a>
+    <p class="footnote">
+      If you don't have the app installed yet, look for it in
+      TestFlight or the App Store.
+    </p>
+  </div>
+</body>
+</html>

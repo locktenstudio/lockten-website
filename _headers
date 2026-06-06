@@ -1,0 +1,17 @@
+# HTTP headers for Render Static Site. Render supports the
+# Netlify-style _headers file at the publish root.
+# Docs: https://render.com/docs/static-sites#headers
+#
+# Apple App Site Association: served with no extension at
+# /.well-known/apple-app-site-association. iOS Universal Links
+# require Content-Type: application/json or the AASA is ignored.
+# Render's default Content-Type for unknown extensions is
+# application/octet-stream, which Apple silently rejects.
+/.well-known/apple-app-site-association
+  Content-Type: application/json
+  Cache-Control: public, max-age=3600
+
+# Lock the AASA against MIME-sniffing weirdness in case any
+# CDN-side rewriter tries to second-guess our header.
+/.well-known/*
+  X-Content-Type-Options: nosniff

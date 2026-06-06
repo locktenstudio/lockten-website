@@ -1,0 +1,34 @@
+# Render Static Site config. The existing service was created via
+# the dashboard, not a blueprint, so this file is informational on
+# first deploy. Adding it makes future redeploys reproducible and
+# lets Render apply the headers block via blueprint sync.
+#
+# If headers don't take effect after this file lands (Render may
+# require manual dashboard sync for non-blueprint-bound services),
+# configure them through the dashboard:
+#   Settings -> Headers -> Add Header
+#     Path: /.well-known/apple-app-site-association
+#     Header: Content-Type
+#     Value: application/json
+#
+# The _headers file at the repo root is also there as a fallback
+# in case Render's Netlify-compat layer picks it up first.
+
+services:
+  - type: web
+    name: lockten-website
+    runtime: static
+    branch: main
+    buildCommand: ""
+    staticPublishPath: ./
+    pullRequestPreviewsEnabled: false
+    headers:
+      # Universal Links require Content-Type: application/json or iOS
+      # silently rejects the AASA file. Render's default for files
+      # with no extension is application/octet-stream, which won't work.
+      - path: /.well-known/apple-app-site-association
+        name: Content-Type
+        value: application/json
+      - path: /.well-known/apple-app-site-association
+        name: Cache-Control
+        value: public, max-age=3600
