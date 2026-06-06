@@ -2,7 +2,7 @@
   "applinks": {
     "details": [
       {
-        "appIDs": ["TEAMID_PLACEHOLDER.studio.lockten.walkthrough"],
+        "appIDs": ["HNG6WT7GK8.studio.lockten.walkthrough"],
         "components": [
           {
             "/": "/billing/success",
