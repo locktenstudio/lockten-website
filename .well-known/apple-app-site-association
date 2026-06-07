@@ -2,7 +2,10 @@
   "applinks": {
     "details": [
       {
-        "appIDs": ["HNG6WT7GK8.studio.lockten.walkthrough"],
+        "appIDs": [
+          "HNG6WT7GK8.com.cabinjohnbuilders.walkthrough",
+          "HNG6WT7GK8.com.cabinjohnbuilders.walkthroughdev"
+        ],
         "components": [
           {
             "/": "/billing/success",
