@@ -443,22 +443,74 @@ html, body {
 }
 
 /* ------------------------------------------------------------
-   Products — alternating editorial rows
+   Products — two showcase cards with blueprint panels
    ------------------------------------------------------------ */
-.product-row {
+.product-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 44px;
-  align-items: center;
-  padding: 60px 0;
+  gap: 28px;
+  margin-top: 54px;
 }
-.product-row + .product-row { border-top: 1px solid var(--line); }
-
 @media (min-width: 900px) {
-  .product-row { grid-template-columns: 11fr 9fr; gap: 72px; }
-  .product-row.row-flip { grid-template-columns: 9fr 11fr; }
-  .product-row.row-flip .product-text { order: 2; }
-  .product-row.row-flip .product-illo { order: 1; }
+  .product-grid { grid-template-columns: 1fr 1fr; gap: 32px; }
+}
+
+.product-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+  transition: box-shadow 260ms var(--ease), transform 260ms var(--ease), border-color 260ms;
+}
+.product-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: var(--brand);
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 340ms var(--ease);
+  z-index: 1;
+}
+.product-card:hover {
+  box-shadow: var(--shadow-3);
+  transform: translateY(-4px);
+  border-color: var(--line-strong);
+}
+.product-card:hover::before { transform: scaleX(1); }
+
+/* Blueprint panel: dark indigo ground, faint grid, white + gate blue linework */
+.product-panel {
+  background-color: var(--slate-800);
+  background-image:
+    linear-gradient(to right, rgba(168, 204, 238, 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(168, 204, 238, 0.07) 1px, transparent 1px);
+  background-size: 28px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 34px 30px;
+}
+.product-panel svg {
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  transition: transform 400ms var(--ease);
+}
+.product-card:hover .product-panel svg { transform: translateY(-5px); }
+
+.product-info {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  padding: 28px 32px 30px;
 }
 
 .product-kicker {
@@ -474,7 +526,7 @@ html, body {
 .product-name {
   font-family: var(--font-sans);
   font-weight: 600;
-  font-size: 2rem;
+  font-size: 1.75rem;
   color: var(--fg);
   letter-spacing: -0.015em;
 }
@@ -494,30 +546,29 @@ html, body {
 .product-role {
   font-family: var(--font-display);
   font-style: italic;
-  font-size: 1.45rem;
+  font-size: 1.35rem;
   color: var(--brand);
   line-height: 1.3;
-  margin-top: 10px;
+  margin-top: 8px;
 }
 
 .product-body {
-  font-size: 1.01rem;
+  font-size: 0.99rem;
   color: var(--fg-2);
   line-height: 1.65;
-  max-width: 54ch;
-  margin-top: 16px;
+  margin-top: 14px;
   text-wrap: pretty;
 }
 
+.product-body { margin-bottom: 24px; }
 .product-spec {
   display: flex;
   align-items: baseline;
   gap: 10px 22px;
   flex-wrap: wrap;
-  margin-top: 26px;
+  margin-top: auto;
   padding-top: 18px;
   border-top: 1px solid var(--line);
-  max-width: 54ch;
 }
 .product-price { font-family: var(--font-sans); font-weight: 600; color: var(--fg); font-size: 1.05rem; }
 .product-price .per { font-weight: 400; color: var(--fg-3); font-size: 0.85rem; }
@@ -527,15 +578,6 @@ html, body {
   color: var(--fg-3);
   letter-spacing: 0.02em;
 }
-
-.product-illo { display: flex; justify-content: center; }
-.product-illo svg {
-  width: 100%;
-  max-width: 430px;
-  height: auto;
-  transition: transform 400ms var(--ease);
-}
-.product-row:hover .product-illo svg { transform: translateY(-6px) rotate(-0.4deg); }
 
 /* ------------------------------------------------------------
    Studio band (blueprint grid, asymmetric editorial)
