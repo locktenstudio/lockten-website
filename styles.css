@@ -866,3 +866,6 @@ html, body {
   body { background: white; color: black; }
   .hero-dark, .section, .trust { padding: 1rem 0; }
 }
+
+.product-more { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; color: var(--brand); font-weight: 500; font-size: 0.92rem; text-decoration: none; transition: gap 160ms var(--ease), color 160ms; }
+.product-more:hover { color: var(--brand-hover); gap: 10px; }
