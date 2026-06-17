@@ -869,3 +869,12 @@ html, body {
 
 .product-more { display: inline-flex; align-items: center; gap: 6px; margin-top: 16px; color: var(--brand); font-weight: 500; font-size: 0.92rem; text-decoration: none; transition: gap 160ms var(--ease), color 160ms; }
 .product-more:hover { color: var(--brand-hover); gap: 10px; }
+
+.product-tiers { margin-top: auto; padding-top: 18px; border-top: 1px solid var(--line); }
+.product-tiers .tiers-label { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-3); margin-bottom: 10px; }
+.product-tiers ul { list-style: none; margin: 0; padding: 0; }
+.product-tiers li { display: flex; justify-content: space-between; align-items: baseline; padding: 6px 0; font-size: 1rem; color: var(--fg-2); }
+.product-tiers li .t-name { font-weight: 500; }
+.product-tiers li.hero { color: var(--fg); }
+.product-tiers li.hero .t-name { font-weight: 700; }
+.product-tiers li.hero .t-price { font-weight: 700; color: var(--brand); }
