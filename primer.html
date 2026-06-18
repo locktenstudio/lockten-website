@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Claude Cowork, in Plain Language | A primer for small business owners</title>
+<meta name="description" content="What Claude Cowork is, what its pieces do (Projects, Instructions, Connectors, Memory, Skills), and how to start using it on real work without committing to anything yet. A plain-language primer for builders and small business owners, by Lock Ten Studio.">
+
+<meta property="og:title" content="Claude Cowork, in Plain Language">
+<meta property="og:description" content="What it is, what its pieces do, and how to start using it without committing to anything yet. A 10-minute primer for small business owners.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://lockten.ai/primer.html">
+<meta property="og:image" content="https://lockten.ai/assets/primer/cover.jpg">
+
+<link rel="preload" href="fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23272260'/%3E%3Ctext x='50' y='70' font-family='Georgia,serif' font-size='56' font-style='italic' text-anchor='middle' fill='%23FFFFFF'%3EL%3C/text%3E%3C/svg%3E">
+
+<script>document.documentElement.className += ' js';</script>
+
+<style>
+/* ---- Primer page-specific components (scoped) ---- */
+.primer-hero { padding: 76px 0 44px; text-align: center; }
+.primer-eyebrow { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brand); margin: 0; }
+.primer-title { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.4rem, 6vw, 4rem); color: var(--fg); line-height: 1.04; margin: 14px 0 0; }
+.primer-sub { font-size: 1.15rem; color: var(--fg-2); max-width: 44ch; margin: 20px auto 0; line-height: 1.6; }
+.primer-readtime { font-style: italic; color: var(--fg-3); font-size: 0.95rem; margin: 14px 0 0; }
+.primer-hero .jump { display: inline-block; margin-top: 22px; font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.04em; color: var(--brand); text-decoration: none; border-bottom: 1px solid var(--blueprint-300); padding-bottom: 2px; }
+
+.primer-article { max-width: 720px; margin: 0 auto; }
+.primer-note { max-width: 720px; margin: 0 auto; padding: 28px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); }
+.primer-note p { font-size: 1.02rem; line-height: 1.7; color: var(--fg-2); margin: 0 0 14px; }
+.primer-note .sig { font-style: italic; color: var(--fg-3); margin: 0; line-height: 1.5; }
+
+.primer-h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.9rem, 3.6vw, 2.5rem); color: var(--fg); line-height: 1.12; margin: 0 0 18px; }
+.primer-article > p, .primer-block > p { font-size: 1.07rem; line-height: 1.72; color: var(--fg-2); margin: 0 0 18px; }
+.primer-block { margin-top: 12px; }
+.primer-block h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.34rem; color: var(--fg); letter-spacing: -0.01em; margin: 44px 0 10px; scroll-margin-top: 90px; }
+.primer-block blockquote { border-left: 3px solid var(--brand); margin: 0 0 18px; padding: 6px 0 6px 20px; color: var(--fg); font-style: italic; line-height: 1.6; }
+.primer-block ol { margin: 0 0 18px; padding-left: 1.3em; }
+.primer-block ol li { font-size: 1.07rem; line-height: 1.7; color: var(--fg-2); margin-bottom: 12px; }
+.primer-block ol li strong { color: var(--fg); }
+
+figure.primer-fig { margin: 26px 0 28px; }
+.primer-fig img { display: block; width: 100%; height: auto; border-radius: var(--radius-md); border: 1px solid var(--line); box-shadow: var(--shadow-2); background: var(--white); }
+.primer-fig figcaption { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.03em; color: var(--fg-3); text-align: center; margin-top: 10px; }
+
+.primer-cta { max-width: 620px; margin: 0 auto; text-align: center; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); padding: 34px 30px; background: var(--white); box-shadow: var(--shadow-2); }
+.primer-cta h2 { font-family: var(--font-display); font-weight: 400; font-size: 1.7rem; color: var(--fg); margin: 0 0 10px; }
+.primer-cta p.lead { font-size: 0.99rem; color: var(--fg-2); line-height: 1.6; margin: 0 0 18px; max-width: 48ch; margin-left: auto; margin-right: auto; }
+.primer-cta .pdf-slot iframe { width: 100% !important; max-width: 100% !important; min-height: 150px; border: none; display: block; }
+.primer-cta .cta-fine { font-size: 0.84rem; color: var(--fg-3); margin: 14px 0 0; }
+
+.primer-paths { display: grid; gap: 18px; max-width: 760px; margin: 8px auto 0; }
+@media (min-width: 720px) { .primer-paths { grid-template-columns: 1fr 1fr; } }
+.primer-path { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px 26px; background: var(--white); }
+.primer-path .ptag { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3); margin: 0 0 10px; }
+.primer-path h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.18rem; color: var(--fg); margin: 0 0 10px; letter-spacing: -0.01em; }
+.primer-path p { font-size: 0.97rem; color: var(--fg-2); line-height: 1.6; margin: 0 0 16px; }
+.primer-path .go { font-family: var(--font-mono); font-size: 0.82rem; letter-spacing: 0.03em; color: var(--brand); text-decoration: none; font-weight: 500; }
+.primer-path .soon { display: inline-block; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-3); border: 1px solid var(--line-strong); border-radius: 3px; padding: 6px 12px; }
+.primer-neither { text-align: center; color: var(--fg-3); font-size: 0.95rem; line-height: 1.6; max-width: 62ch; margin: 24px auto 0; }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand">
+      <img src="assets/lockten-logo.png" alt="Lock Ten Studio" style="height:92px;">
+    </a>
+    <nav class="header-nav" aria-label="Primary">
+      <a href="#what">What Cowork is</a>
+      <a href="#teams">Teams plan</a>
+      <a href="#first">Try it</a>
+      <a href="#get-pdf">Get the PDF</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="primer-hero">
+    <div class="container">
+      <p class="primer-eyebrow">Free primer &middot; no signup required</p>
+      <h1 class="primer-title">Claude Cowork, in Plain Language.</h1>
+      <p class="primer-sub">What it is, what its pieces do, and how to start using it without committing to anything yet.</p>
+      <p class="primer-readtime">10-minute read. Aimed at small business owners.</p>
+      <a class="jump" href="#get-pdf">Or get the PDF &darr;</a>
+    </div>
+  </section>
+
+  <!-- A NOTE BEFORE YOU READ -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="primer-note reveal">
+        <p>This is a primer on Claude Cowork. It assumes you know AI exists and can do useful things, but maybe you've only used it through a chat interface. It explains what Cowork actually is, what its pieces do, and how to start using it on real work in your business without committing to a paid plan or a big setup project on day one.</p>
+        <p>About ten minutes to read. Aimed at small business owners, especially in the trades and adjacent professions (builders, remodelers, electricians, plumbers, HVAC, landscapers, architects, accountants, lawyers, anyone running a small operation) who want to understand what they're getting into before they jump in.</p>
+        <p class="sig">Josh<br>Lock Ten Studio</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMAIL CTA #1 -->
+  <section class="section" id="get-pdf" style="padding-top:0;">
+    <div class="container">
+      <div class="primer-cta reveal">
+        <h2>Get the PDF version.</h2>
+        <p class="lead">Same primer, in a printable PDF you can read on the train or hand to a colleague. Free, and we don't follow up without your okay.</p>
+        <div class="pdf-slot" id="primer-pdf-slot-1">
+          <a class="btn btn-primary" href="mailto:josh@lockten.ai?subject=Cowork%20Primer%20PDF&amp;body=Please%20send%20me%20the%20Cowork%20Primer%20PDF.">Email me the PDF</a>
+          <p class="cta-fine">We send the PDF and nothing else without your consent.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT COWORK IS + CONCEPTS -->
+  <section class="section" id="what" style="padding-top:0;">
+    <div class="container">
+      <div class="primer-article reveal">
+        <h2 class="primer-h2">What Cowork is.</h2>
+        <p>Claude Cowork is Anthropic's workspace for using Claude inside a business. The simplest distinction: a chat interface starts cold every time you open it. Cowork has a workspace that holds your context across conversations. Your files. Your team's instructions. Your custom workflows. Your connections to other tools.</p>
+        <figure class="primer-fig">
+          <img src="assets/primer/chat-vs-workspace.png" alt="Chat vs. Cowork: a chat tool starts cold each time, while a Cowork workspace holds files, instructions, connectors, memory, and skills.">
+          <figcaption>Chat vs. Cowork, two ways of using Claude.</figcaption>
+        </figure>
+        <p>If you've used an AI chat tool before, the comparison is: chat is what you use to ask a quick one-off question. Cowork is what you use to do real work that involves your actual business stuff.</p>
+        <p>The rest of this primer walks through what's inside Cowork piece by piece. Each piece is one of the things that makes Cowork different from a chat tool. Read it linearly the first time.</p>
+
+        <div class="primer-block">
+          <h3 id="projects">Projects</h3>
+          <p>A Project is a folder Claude works inside. You create one for a specific area of your business: an active job, a client engagement, a department, a recurring workflow. You attach the files that matter to that area, plans, contracts, emails, daily logs, photos, anything that lives in your normal file system.</p>
+          <figure class="primer-fig">
+            <img src="assets/primer/projects.png" alt="The Projects panel in Cowork, where each card is a separate workspace.">
+            <figcaption>The Projects panel, each card is a separate workspace.</figcaption>
+          </figure>
+          <p>When you ask Claude a question inside that project, it reads the attached files directly. No copy-pasting. No re-explaining the project every time.</p>
+          <p>Example: a builder creates a project for their most active build. They attach the latest plans, the original contract, the change-order history, this month's daily logs. Now when they ask "what change orders are still outstanding on this job," Claude reads what's in the folder and answers from the source.</p>
+          <p>You can have as many projects as you want. Each one has its own scope. Each one keeps its own context.</p>
+        </div>
+
+        <div class="primer-block">
+          <h3 id="instructions">Instructions</h3>
+          <p>Every project has a standing instructions panel. This is where you tell Claude the rules for this work. Voice, format, what to always do, what to never do.</p>
+          <p>For a small business owner, the instructions might look like:</p>
+          <blockquote>Write in our company voice: direct, no jargon, sign off with our company name and phone. When summarizing a meeting or call, use this format: decisions, next actions, open questions. Never invent numbers, dates, or names; if something isn't in the source files, say so.</blockquote>
+          <figure class="primer-fig">
+            <img src="assets/primer/instructions.png" alt="The Instructions panel for a Project, where standing rules apply to every conversation.">
+            <figcaption>Standing instructions apply to every conversation in the project.</figcaption>
+          </figure>
+          <p>Instructions stay in place across every conversation in that project. You write them once. Claude follows them every time.</p>
+          <p>Workspace-level instructions also exist (the rules that apply across every project). Per-project instructions stack on top.</p>
+        </div>
+
+        <div class="primer-block">
+          <h3 id="connectors">Connectors</h3>
+          <p>Connectors are the live links between Cowork and your other tools. Dropbox, Google Drive, OneDrive, Outlook, Gmail, Asana, Slack, GitHub, and a growing list. Once connected, Claude can read from and write to those tools in real time.</p>
+          <figure class="primer-fig">
+            <img src="assets/primer/connectors.png" alt="The Connectors page in Cowork, with granular permissions per connected tool.">
+            <figcaption>Connect what you want, with granular permissions per tool.</figcaption>
+          </figure>
+          <p>Example: a builder asks "what's the last email from our framer on the addition we started last month?" If Outlook is connected and Claude knows the project context, it pulls the email and summarizes it.</p>
+          <p>Or: "draft a follow-up to the architect on this scope change and put it in my drafts." Claude writes the draft straight into your Outlook drafts folder. You review and send.</p>
+          <p>You decide what's connected. You decide what Cowork can see. Start narrow (one folder, one inbox). Expand as you get comfortable.</p>
+        </div>
+
+        <div class="primer-block">
+          <h3 id="memory">Memory</h3>
+          <p>Cowork remembers things across conversations. Chat tools forget every conversation. Cowork doesn't.</p>
+          <p>That means you can tell Claude once: "our standard cost code structure is X. Our framer is Y. Our weekly client update follows this format." Next time you start a new conversation, Claude already knows. You don't have to re-explain who you are or how you work.</p>
+          <p>Memory is scoped. Information you put in one project stays in that project. Information you put in your workspace instructions is available across all projects. You control what's remembered and what's not.</p>
+          <figure class="primer-fig">
+            <img src="assets/primer/memory.png" alt="How Cowork memory builds up across conversations over time.">
+            <figcaption>Memory carries across conversations, so Claude picks up where you left off.</figcaption>
+          </figure>
+          <p>This is the thing that most surprises people when they switch from chat to Cowork. The conversation actually picks up where you left off.</p>
+        </div>
+
+        <div class="primer-block">
+          <h3 id="skills">Skills</h3>
+          <p>Skills are reusable workflows. You (or someone like Lock Ten) build them once. They turn a recurring task into a single command.</p>
+          <p>Example: every week a builder spends 30 minutes processing trade partner invoices. They open the PDF, identify the trade, code it to the cost structure, file it in the right folder, log it in QuickBooks. Same steps every time.</p>
+          <p>A skill called "invoice processor" packages that whole workflow. The builder drops a PDF invoice into a conversation. The skill runs: extracts the amount, identifies the trade, codes it to the cost structure, drafts the file rename, logs the entry. Two minutes instead of thirty.</p>
+          <figure class="primer-fig">
+            <img src="assets/primer/skill.png" alt="A real skill in action, answering which change orders are pending approval from the project files.">
+            <figcaption>A real skill in action, answering a change-order question from the project files.</figcaption>
+          </figure>
+          <p>Skills can be simple (draft a weekly client update in our voice) or complex (multi-step workflows that touch several connected tools). Once a skill exists, anyone on your team can run it. You can build skills yourself with Claude's help, or buy a package of skills already built for your kind of business.</p>
+        </div>
+
+        <h2 class="primer-h2" id="teams" style="margin-top:52px;">The Teams Plan.</h2>
+        <p>Cowork's Free and Pro plans are for individuals. The Teams plan is what makes Cowork work for a small business with employees.</p>
+        <p>On Teams, your whole crew or office staff has individual Claude accounts under a single shared workspace. They see the same projects, the same instructions, the same skills. Each person also has their own personal layer of context (their voice, their sign-off, the slate of work they're responsible for).</p>
+        <p>Teams is $25 per seat per month. For a five-person business that's $125/month. The unlock is shared context: everyone works from the same baseline understanding of your business, and any skill you build is available to the whole team.</p>
+        <figure class="primer-fig">
+          <img src="assets/primer/plans.png" alt="Cowork plans compared: Free, Pro, and Teams.">
+          <figcaption>Free, Pro, and Teams compared. Teams is the small-business unlock.</figcaption>
+        </figure>
+        <p>You don't need Teams to try Cowork. Start on Free, see if it works for you. Move to Teams when you bring the team in.</p>
+
+        <h2 class="primer-h2" id="first" style="margin-top:52px;">What to try first.</h2>
+        <p>Don't try to set up everything at once. Pick one painful task you've been putting off and do that one thing with Cowork.</p>
+        <div class="primer-block">
+          <ol>
+            <li><strong>Sign up for Cowork.</strong> Free plan is fine to start.</li>
+            <li><strong>Open a new project.</strong> Name it after something you're actively working on, an active job, a client, a department.</li>
+            <li><strong>Attach two or three files</strong> that relate to that work. Plans, contracts, recent emails, daily logs. Whatever is painful to keep track of manually.</li>
+            <li><strong>Ask Claude a question that requires reading those files.</strong> For example: "Summarize the last three emails from the architect on this job." "What change orders are outstanding on this project?" "Draft this week's client update based on the daily logs."</li>
+            <li><strong>Iterate.</strong> The first answer may miss something. Tell Claude what was wrong. Try again. Real value usually lives in the second or third pass.</li>
+          </ol>
+          <figure class="primer-fig">
+            <img src="assets/primer/first-steps.png" alt="Your first fifteen minutes with Cowork, step by step.">
+            <figcaption>Your first fifteen minutes with Cowork.</figcaption>
+          </figure>
+          <p>Ten to fifteen minutes of work. Notice the difference from chat. Decide from there whether to invest more time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EMAIL CTA #2 -->
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="primer-cta reveal">
+        <h2>Still want the PDF?</h2>
+        <p class="lead">Now that you've read it, the PDF is yours if you want a copy to keep or share. One email, no follow-up without your okay.</p>
+        <div class="pdf-slot" id="primer-pdf-slot-2">
+          <a class="btn btn-primary" href="mailto:josh@lockten.ai?subject=Cowork%20Primer%20PDF&amp;body=Please%20send%20me%20the%20Cowork%20Primer%20PDF.">Email me the PDF</a>
+          <p class="cta-fine">We send the PDF and nothing else without your consent.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHERE TO GO FROM HERE -->
+  <section class="section" id="next" style="padding-top:0;">
+    <div class="container">
+      <div class="primer-article reveal" style="margin-bottom:8px;">
+        <h2 class="primer-h2">Where to go from here.</h2>
+        <p>If you've read this far, there are a couple of real paths forward for putting Cowork to work in your business. Pick whichever fits.</p>
+      </div>
+      <div class="primer-paths reveal">
+        <div class="primer-path">
+          <p class="ptag">For the office</p>
+          <h3>You want the workspace set up properly without spending months figuring it out yourself.</h3>
+          <p>Lock Ten Studio's flagship is The Install. We populate the Cowork workspace for your specific business from a short questionnaire: your team, your projects, your voice, your standard files, your skills. Lite, Plus, and Concierge tiers, depending on how much you want us to do for you.</p>
+          <span class="soon">The Install &middot; coming soon</span>
+        </div>
+        <div class="primer-path">
+          <p class="ptag">For the field</p>
+          <h3>You want something simpler. A specific tool for a specific job.</h3>
+          <p>If the painful job is "I'm tired of typing punch lists into a notes app at 11pm and want to send field reports from my phone to my subs in their normal text thread," that's a different Lock Ten Studio product called Walkthrough. No portal for your subs to sign into.</p>
+          <a class="go" href="/walkthrough.html">See Walkthrough &rarr;</a>
+        </div>
+      </div>
+      <p class="primer-neither">Or, neither. If you read the primer, set up your own Cowork workspace, and run with it, that's a great outcome. More small business owners using Cowork well is a good thing for the whole ecosystem. Questions about your specific situation? Email <a href="mailto:josh@lockten.ai">josh@lockten.ai</a>. A real person reads it.</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="brand"><img src="assets/lockten-logo.png" alt="Lock Ten Studio"></a>
+      </div>
+      <p class="footer-tagline">A primer from Lock Ten Studio. AI tools for custom builders, made by one.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/">Lock Ten Studio</a>
+        <a href="/walkthrough.html">Walkthrough</a>
+        <a href="/#newsletter">Field Notes</a>
+        <a href="mailto:josh@lockten.ai">Contact</a>
+        <a href="/privacy.html">Privacy</a>
+      </nav>
+      <div class="footer-contact-block">
+        <a href="mailto:josh@lockten.ai">josh@lockten.ai</a>
+        <span>Cabin John, Maryland</span>
+      </div>
+      <div class="footer-legal">
+        <span>&copy; 2026 Lock Ten Studio LLC. Built and run by a custom residential builder, on real job sites.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
+</script>
+
+</body>
+</html>
