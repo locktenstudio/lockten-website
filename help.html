@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Walkthrough Help | Lock Ten Studio</title>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23272260'/%3E%3Ctext x='50' y='70' font-family='Georgia,serif' font-size='56' font-style='italic' text-anchor='middle' fill='%23FFFFFF'%3EL%3C/text%3E%3C/svg%3E">
+<style>
+  .help { padding: 4rem 0; max-width: 820px; margin: 0 auto; }
+  .help h1 { font-family: var(--display); font-size: 2.5rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; line-height: 1.1; }
+  .help .lede { color: var(--mute); font-size: 1.05rem; margin-bottom: 2.5rem; line-height: 1.6; }
+  .help h2 { font-family: var(--display); font-size: 1.5rem; font-weight: 700; color: var(--walnut); margin: 3rem 0 0.75rem; scroll-margin-top: 1.5rem; }
+  .help h3 { font-family: var(--display); font-size: 1.15rem; font-weight: 700; color: var(--ink); margin: 1.75rem 0 0.4rem; }
+  .help p { margin: 0 0 1rem; color: var(--ink); line-height: 1.65; }
+  .help a { color: var(--walnut); }
+  .help ul, .help ol { margin: 0 0 1rem; padding-left: 1.4rem; }
+  .help li { margin-bottom: 0.55rem; line-height: 1.6; color: var(--ink); }
+  .help .path { font-family: var(--mono, ui-monospace, Menlo, monospace); font-size: 0.92em; background: rgba(39,34,96,0.06); padding: 0.1em 0.4em; border-radius: 4px; color: var(--ink); white-space: nowrap; }
+  .toc { background: rgba(39,34,96,0.04); border: 1px solid rgba(39,34,96,0.10); border-radius: 12px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+  .toc h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mute); margin: 0 0 0.75rem; font-family: var(--mono, ui-monospace, monospace); font-weight: 600; }
+  .toc ul { list-style: none; padding: 0; margin: 0; columns: 2; column-gap: 2rem; }
+  .toc li { margin-bottom: 0.5rem; break-inside: avoid; }
+  .toc a { text-decoration: none; font-weight: 600; }
+  .toc a:hover { text-decoration: underline; }
+  .note { background: rgba(28,113,193,0.06); border-left: 3px solid #1C71C1; border-radius: 0 8px 8px 0; padding: 0.85rem 1.1rem; margin: 1rem 0 1.25rem; }
+  .note p { margin: 0; font-size: 0.96rem; }
+  .back-link { display: inline-block; margin-top: 3.5rem; color: var(--walnut); text-decoration: none; font-weight: 600; }
+  .back-link:hover { text-decoration: underline; }
+  @media (max-width: 640px) { .toc ul { columns: 1; } }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand">
+      <img src="assets/lockten-logo.png" alt="Lock Ten Studio" style="height:96px;">
+    </a>
+    <nav class="header-nav">
+      <a href="/#products">What we make</a>
+      <a href="/#newsletter">Field Notes</a>
+      <a href="mailto:support@lockten.ai">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="help">
+    <div class="container">
+
+      <h1>Walkthrough Help</h1>
+      <p class="lede">Walkthrough turns what you say on site into a branded PDF report. Create a project, pick the kind of report you need, talk it through, and the app writes it for you. Review it, then share it or save it to your cloud folder. This guide covers everything past the quick tour in the app.</p>
+
+      <div class="toc">
+        <h2>Jump to</h2>
+        <ul>
+          <li><a href="#getting-started">Getting started</a></li>
+          <li><a href="#projects">Projects: create and edit</a></li>
+          <li><a href="#report-types">The report types</a></li>
+          <li><a href="#recording">Recording and photos</a></li>
+          <li><a href="#branding">Branding your PDFs</a></li>
+          <li><a href="#cloud">Connecting Drive or Dropbox</a></li>
+          <li><a href="#reports">Reviewing and sharing reports</a></li>
+          <li><a href="#billing">Subscription and billing</a></li>
+          <li><a href="#account">Account and recovery</a></li>
+          <li><a href="#troubleshooting">Troubleshooting</a></li>
+          <li><a href="#contact">Still need help</a></li>
+        </ul>
+      </div>
+
+      <h2 id="getting-started">Getting started</h2>
+      <p>The flow is the same every time, whatever kind of report you need:</p>
+      <ol>
+        <li>Create a project for the home or job.</li>
+        <li>Open the project and tap one of the report types.</li>
+        <li>Talk naturally. Walkthrough listens and transcribes as you go.</li>
+        <li>Generate. The report comes back as a PDF with your branding on it.</li>
+        <li>Share it, or let it save to your connected Drive or Dropbox folder.</li>
+      </ol>
+      <p>You can replay the in-app tour anytime from <span class="path">Settings &rsaquo; How Walkthrough works</span>.</p>
+
+      <h2 id="projects">Projects: create and edit</h2>
+      <p>A project is one home or one job. Everything you record lives under its project, so this is the first thing you set up.</p>
+      <h3>Create a project</h3>
+      <p>On the Projects tab, tap <strong>+ New</strong>. Only the name is required.</p>
+      <ul>
+        <li><strong>Project name</strong> is required. A client or address name both work, whatever you call the job day to day.</li>
+        <li><strong>Address</strong> is optional and appears on the project screen.</li>
+        <li><strong>Notes / context</strong> is optional background for the AI: client preferences, scope notes, contract terms. This is private. It guides how reports are written but is never printed in the PDF.</li>
+      </ul>
+      <h3>Edit or delete a project</h3>
+      <p>Open the project and use <strong>Edit project</strong> or <strong>Delete project</strong> at the bottom. Deleting is permanent: it removes the project and every session, photo, voice memo, and report under it, and it cannot be undone.</p>
+      <h3>Drafts: pick up where you left off</h3>
+      <p>If you start a session and don't finish it, it shows under <strong>Pick up where you left off</strong> at the top of the project. <strong>Continue</strong> opens it to add more or generate, <strong>Finish</strong> closes it out, and <strong>Dismiss</strong> discards it.</p>
+
+      <h2 id="report-types">The report types</h2>
+      <p>Open a project and you'll see five buttons. Pick the one that matches what you need.</p>
+      <ul>
+        <li><strong>Start walkthrough</strong> is the everyday site report. Walk the site and talk it through.</li>
+        <li><strong>Trade list</strong> scopes work by trade. Pick a single trade up front (framing, electrical, and so on), or choose "Multiple trades" and let the AI sort each item by trade as you talk.</li>
+        <li><strong>Meeting notes</strong> captures a meeting. Enter who's there and the agenda first, then record. Good for OAC and client meetings where you want a clean record of who said what.</li>
+        <li><strong>Owner update</strong> is a progress update for the homeowner. Set the date, then talk through the highlights, what's coming next, and any decisions you need from them.</li>
+        <li><strong>Request decision</strong> asks one person a single question, fast. There's no recording: you type the problem, the question, and who it's for, and the app produces a clean one-pager to send.</li>
+      </ul>
+
+      <h2 id="recording">Recording and photos</h2>
+      <p>For walkthroughs and trade lists, speech is transcribed right on your phone. That means it's free and keeps working with no signal. Meeting notes use a cloud transcription service, because meeting audio is longer and has multiple speakers.</p>
+      <p>You can add photos while you record, and they're attached to that session. If you're somewhere with no signal, photos and audio wait in a queue and upload on their own once you're back online. You can check that queue anytime under <span class="path">Settings &rsaquo; Upload queue</span>.</p>
+      <div class="note">
+        <p>Talk the way you'd talk to a colleague on site. You don't need to dictate punctuation or speak in headings. Walkthrough organizes the report from what you say.</p>
+      </div>
+
+      <h2 id="branding">Branding your PDFs</h2>
+      <p>Everything you set here applies to every report you generate. Builders, clients, subs, and homeowners see your brand, not ours. Go to <span class="path">Settings &rsaquo; Brand your PDFs</span>.</p>
+      <ul>
+        <li><strong>Logo</strong> shows in the PDF header. A PNG or JPG with a transparent or white background works best.</li>
+        <li><strong>Primary color</strong> is used for the header bar and accents. Pick one of the presets or enter your own hex code.</li>
+        <li><strong>Company name</strong> shows in the footer. Leave it blank to keep the Lock Ten attribution.</li>
+        <li><strong>Tagline</strong> is a short line that follows the company name in the footer. Optional.</li>
+        <li><strong>Brand voice</strong> is a paragraph telling Walkthrough how you want the narrative written. The more specific you are, the better it matches you.</li>
+        <li><strong>Glossary</strong> is for proper spellings the app should preserve exactly: surnames, trade partners, product names the speech recognizer might otherwise mangle.</li>
+      </ul>
+
+      <h2 id="cloud">Connecting Drive or Dropbox</h2>
+      <p>You can connect Google Drive or Dropbox so finished reports save straight into a folder. You don't have to connect anything. The Share button always works either way, so cloud storage is a convenience, not a requirement.</p>
+      <h3>Connect an account</h3>
+      <p>Go to <span class="path">Settings &rsaquo; Cloud storage</span> and tap <strong>Connect</strong> next to Google Drive or Dropbox. The app opens your browser so you can sign in to your own account and grant access, then it returns you to the app.</p>
+      <div class="note">
+        <p>Google shows a few of its own permission screens during sign-in. That's Google's standard consent flow, not extra steps from us. Tap through them and you'll come right back.</p>
+      </div>
+      <h3>Choose where a project saves</h3>
+      <p>By default, reports auto-organize into a Walkthrough folder in your cloud account. If you'd rather a project save into a folder you already use, tap <strong>Choose a Drive folder</strong> when you create the project and point it there.</p>
+      <p>You can disconnect either account anytime from the same Cloud storage screen.</p>
+
+      <h2 id="reports">Reviewing and sharing reports</h2>
+      <p>When you finish a session and generate, the report comes back as a PDF. Open it to review. <strong>Share</strong> sends it anywhere your phone can: email, text, AirDrop, and so on. If you've connected a cloud account, it also lands in your project folder automatically.</p>
+      <p>Every report stays in the app under the project's <strong>Sessions</strong> list, so you can pull it up again later without regenerating it.</p>
+
+      <h2 id="billing">Subscription and billing</h2>
+      <p>Walkthrough is $19.99 a month. Start or manage it under <span class="path">Settings &rsaquo; Subscription</span>. Checkout opens securely in your browser. You can cancel anytime from the same place, and access continues through the end of the period you've already paid for.</p>
+      <p>The first 14 days are covered by a satisfaction guarantee. If it isn't working for you, email <a href="mailto:support@lockten.ai">support@lockten.ai</a> and we'll take care of it. Full terms are on the <a href="/terms">Terms of Service</a> page.</p>
+
+      <h2 id="account">Account and recovery</h2>
+      <ul>
+        <li><strong>Recovery email.</strong> Add an alternate email under <span class="path">Settings &rsaquo; Account recovery</span> so you can sign back in if you ever lose access to your main email. This is worth doing now, before you need it.</li>
+        <li><strong>Sign out</strong> signs out this device only. Your data stays safe in the cloud, and you'll need a sign-in code to return.</li>
+        <li><strong>Sign out everywhere</strong> is for when you lose a phone or suspect someone else has access. It signs out every device on the account.</li>
+        <li><strong>Delete account</strong> permanently removes your account and everything in it. This cannot be undone.</li>
+      </ul>
+
+      <h2 id="troubleshooting">Troubleshooting</h2>
+      <h3>Uploads look stuck</h3>
+      <p>Open <span class="path">Settings &rsaquo; Upload queue</span> to see anything still waiting to sync. The app retries on its own when it has signal, and you can tap <strong>Retry now</strong> to push it immediately.</p>
+      <h3>A report failed to generate</h3>
+      <p>Open the session and generate again. If it keeps failing, send feedback (below) and mention the project name so we can look at that exact one.</p>
+      <h3>Light or dark mode</h3>
+      <p>Go to <span class="path">Settings &rsaquo; Appearance</span> to follow your phone's setting or force light or dark.</p>
+      <h3>I want to see the intro again</h3>
+      <p>Tap <span class="path">Settings &rsaquo; How Walkthrough works</span> for the quick tour of the capture-to-PDF flow.</p>
+
+      <h2 id="contact">Still need help</h2>
+      <p>Email <a href="mailto:support@lockten.ai">support@lockten.ai</a> and a real person will get back to you. The <strong>Send feedback</strong> button under <span class="path">Settings &rsaquo; Support</span> does the same thing and stamps your app version automatically, which helps us help you faster.</p>
+
+      <a href="/" class="back-link">&larr; Back to lockten.ai</a>
+
+    </div>
+  </section>
+</main>
+
+</body>
+</html>
