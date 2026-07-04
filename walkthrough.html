@@ -93,6 +93,9 @@
 .cta-band .container { position: relative; }
 .cta-band h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.2rem, 4.5vw, 3.4rem); line-height: 1.1; color: var(--white); max-width: 18ch; margin: 0 auto; }
 .cta-band p { color: rgba(243,243,248,0.78); font-size: 1.08rem; margin: 16px auto 0; max-width: 520px; }
+.store-badge { display: inline-block; margin-top: 36px; transition: transform 0.15s ease; }
+.store-badge:hover { transform: scale(1.04); }
+.store-badge img { display: block; width: 200px; height: auto; }
 .notify-card { background: var(--white); color: var(--fg); padding: 24px; border-radius: var(--radius-lg); box-shadow: var(--shadow-2); max-width: 520px; margin: 32px auto 0; text-align: center; }
 .notify-card .lead-in { font-weight: 500; color: var(--fg-2); margin: 0 0 14px; font-size: 0.95rem; }
 .notify-card iframe { width: 100% !important; max-width: 100% !important; min-height: 320px; border: none; display: block; }
@@ -114,7 +117,7 @@
       <a href="#how">How it works</a>
       <a href="#pricing">Pricing</a>
       <a href="#faq">FAQ</a>
-      <a href="#notify">Get notified</a>
+      <a href="#notify">Download</a>
       <a href="/help">Help</a>
     </nav>
   </div>
@@ -138,11 +141,11 @@
     <div class="container">
       <div class="wt-hero-grid">
         <div class="wt-hero-copy">
-          <span class="launch-stamp">Launching late June</span>
+          <span class="launch-stamp">Now on the App Store</span>
           <h1 class="hero-headline">Walk the site. Talk. <em>Send.</em></h1>
           <p class="hero-subhead">Site reports for builders. No portal. No logins for your subs. Photos to your own Google Drive or Dropbox. Three free walkthroughs to try it.</p>
           <div class="hero-actions">
-            <a href="#notify" class="btn btn-primary">Get notified at launch
+            <a href="https://apps.apple.com/app/walkthrough-site-reports/id6775347863" class="btn btn-primary">Download on the App Store
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
             </a>
             <a href="#how" class="btn btn-ghost-dark">See how it works</a>
@@ -344,16 +347,12 @@
   <!-- FINAL CTA / NOTIFY -->
   <section class="cta-band" id="notify">
     <div class="container">
-      <span class="launch-stamp">Launching late June</span>
-      <h2>Be first to know when it's live.</h2>
-      <p>Drop your email and we'll tell you the day it goes live. iOS first, Android a few weeks behind. Nothing else.</p>
-      <div class="notify-card">
-        <div class="notify-form" id="wt-notify-slot">
-          <script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="e266c9b9-2936-481c-8042-7aa3d421979c"></script>
-          <p class="notify-fallback" style="margin-top:14px;">We'll add you and send one note the day it goes live.</p>
-        </div>
-      </div>
-      <!-- AT LAUNCH: replace this whole notify-card with the App Store + Google Play badges. -->
+      <span class="launch-stamp">Now on the App Store</span>
+      <h2>Walk one job with it. On the house.</h2>
+      <p>Download it and run three walkthroughs free, no credit card. iOS today, Android on the way.</p>
+      <a class="store-badge" href="https://apps.apple.com/app/walkthrough-site-reports/id6775347863">
+        <img src="assets/app-store-badge.svg" alt="Download on the App Store" width="200" height="67">
+      </a>
     </div>
   </section>
 
@@ -396,16 +395,6 @@
     document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
   } else {
     document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
-  }
-  // Hide the notify fallback once a Beehiiv iframe loads (after the form ID is added)
-  var slot = document.getElementById('wt-notify-slot');
-  if (slot && 'MutationObserver' in window) {
-    var mo = new MutationObserver(function () {
-      if (slot.querySelector('iframe')) {
-        var fb = slot.querySelector('.notify-fallback'); if (fb) fb.style.display = 'none'; mo.disconnect();
-      }
-    });
-    mo.observe(slot, { childList: true, subtree: true });
   }
 })();
 </script>

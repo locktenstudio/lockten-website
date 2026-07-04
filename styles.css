@@ -551,6 +551,7 @@ html, body {
   white-space: nowrap;
 }
 .tag-soon { background: var(--bg-subtle); color: var(--fg-2); border: 1px solid var(--line); }
+.tag-live { background: #1C71C1; color: #FFFFFF; border: 1px solid #1C71C1; }
 
 .product-role {
   font-family: var(--font-display);
