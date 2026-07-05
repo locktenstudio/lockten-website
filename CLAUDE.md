@@ -17,11 +17,16 @@ git add .; git commit -m "..."; git push
 | `index.html` | Homepage. Hero, the two products (Walkthrough + The Install), studio, Field Notes signup, footer. |
 | `walkthrough.html` | Walkthrough product page. Hero, how-it-works, modes, compare, pricing, FAQ, final CTA. |
 | `primer.html` + `primer-thanks.html` | The Cowork Primer: a readable article with an email-gated PDF. `primer-thanks.html` is the Beehiiv form's success-redirect download page. |
-| `install.html` | **The Install product page. STAGED, see note below. Live at the URL but NOT linked from the homepage.** |
+| `install.html` | The Install product page. **PUBLIC** since the 2026-07-05 product-first restructure: linked from the homepage nav, hero and product card. See CTA note below. |
 | `help.html` | Walkthrough help / FAQ center (web-hosted so it updates without an app release). |
 | `privacy.html`, `terms.html` | Legal. |
 | `styles.css` | All global styling + design tokens (`:root`). Page-specific CSS is inline in a `<style>` in each page's `<head>`. |
 | `assets/`, `fonts/` | Images/logos + self-hosted woff2 fonts. |
+| `sitemap.xml` | Sitemap (robots.txt points to it). Add new public pages here; keep success/thanks pages out and `noindex`ed. |
+
+## URL convention
+
+Render serves extensionless clean URLs (`/walkthrough`, `/install`, `/help`, `/primer`, `/privacy`, `/terms`) alongside the `.html` paths. **Clean URLs are canonical**: every page carries a `rel="canonical"` clean URL, internal links use clean URLs, and the sitemap lists them. Exception: the Beehiiv primer form's success redirect is configured (in Beehiiv) to `/primer-thanks.html`; leave that page reachable at the `.html` path.
 
 ## Design system (match it, don't invent)
 
@@ -46,9 +51,11 @@ Walkthrough is **live on the App Store** as **"Walkthrough: Site Reports"**, sto
 
 Public pages use **role addresses**: `info@lockten.ai` (general), `support@lockten.ai` (Walkthrough refunds/support). `josh@lockten.ai` is reserved for where a real person must read it (e.g. The Install Concierge inquiry). Keep it that way.
 
-## The Install page (read before touching)
+## The Install page
 
-`install.html` is **staged**: it is live at `lockten.ai/install.html` but deliberately **NOT linked** from the homepage nav or footer. Its buy buttons point at `install.lockten.ai` (a separate app; Stripe was in test mode at last note). It is owned by a separate "Install chat." **Do not link it from the homepage or promote it without checking with Josh / that chat first.**
+`install.html` is **public** (homepage nav, hero and product card link to it since 2026-07-05). Its buy flow lives in the separate intake app at `install.lockten.ai` (repo `locktenstudio/onramp-intake`), where the **Stripe live cutover is done and verified** (onramp-intake commit 2038a0c, 2026-07-04). Checkout charges real cards.
+
+CTA mechanics: the Plus entry route `POST https://install.lockten.ai/intake/start` **rejects GET with a 405**, so every Plus CTA on `install.html` is a `<form method="POST">` button, never a plain `<a href>`. Lite (`/buy-lite`) is a normal page and a normal link. Keep it that way when editing CTAs.
 
 ## Beehiiv embeds
 

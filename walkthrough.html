@@ -9,8 +9,9 @@
 <meta property="og:title" content="Walkthrough by Lock Ten Studio">
 <meta property="og:description" content="Site reports for builders. No portal. No logins for your subs. Three free walkthroughs to try it.">
 <meta property="og:type" content="website">
-<meta property="og:url" content="https://lockten.ai/walkthrough.html">
+<meta property="og:url" content="https://lockten.ai/walkthrough">
 <meta property="og:image" content="https://lockten.ai/assets/lockten-logo.png">
+<link rel="canonical" href="https://lockten.ai/walkthrough">
 
 <link rel="preload" href="fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -18,6 +19,20 @@
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23272260'/%3E%3Ctext x='50' y='70' font-family='Georgia,serif' font-size='56' font-style='italic' text-anchor='middle' fill='%23FFFFFF'%3EL%3C/text%3E%3C/svg%3E">
 
 <script>document.documentElement.className += ' js';</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Walkthrough: Site Reports",
+  "operatingSystem": "iOS",
+  "applicationCategory": "BusinessApplication",
+  "url": "https://lockten.ai/walkthrough",
+  "installUrl": "https://apps.apple.com/app/walkthrough-site-reports/id6775347863",
+  "offers": { "@type": "Offer", "price": "24.99", "priceCurrency": "USD" },
+  "publisher": { "@type": "Organization", "name": "Lock Ten Studio", "url": "https://lockten.ai" }
+}
+</script>
 
 <style>
 /* ---- Walkthrough page-specific components (scoped, does not touch the global kit) ---- */
@@ -29,6 +44,10 @@
 .wt-phone { display: flex; justify-content: center; }
 .wt-phone svg { width: 100%; max-width: 300px; height: auto; }
 .wt-device { width: 100%; max-width: 300px; margin: 0 auto; background: #0A0D12; border: 1px solid rgba(255,255,255,0.12); border-radius: 42px; padding: 12px; box-shadow: 0 30px 70px -24px rgba(0,0,0,0.55); }
+@media (prefers-reduced-motion: no-preference) {
+  .wt-device { animation: wt-float 7s ease-in-out infinite; }
+  @keyframes wt-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+}
 .wt-device img { display: block; width: 100%; height: auto; border-radius: 30px; }
 .wt-shot-note { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.04em; color: var(--steel-400); text-align: center; margin-top: 12px; }
 
@@ -367,13 +386,13 @@
       <p class="footer-tagline">Walkthrough by Lock Ten Studio. AI tools for custom builders, made by one.</p>
       <nav class="footer-nav" aria-label="Footer">
         <a href="/">Lock Ten Studio</a>
-        <a href="/#products">The Install</a>
+        <a href="/install">The Install</a>
         <a href="/#newsletter">Field Notes</a>
-        <a href="/primer.html">Cowork primer</a>
-        <a href="/help.html">Help</a>
+        <a href="/primer">Cowork primer</a>
+        <a href="/help">Help</a>
         <a href="mailto:info@lockten.ai">Contact</a>
-        <a href="/privacy.html">Privacy</a>
-        <a href="/terms.html">Terms</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
       </nav>
       <div class="footer-contact-block">
         <a href="mailto:info@lockten.ai">info@lockten.ai</a>

@@ -1,21 +1,20 @@
 <!DOCTYPE html>
 <!--
-  The Install product page (lockten.ai/install).
-  STAGED: this page is intentionally NOT linked from index.html yet. It is reachable
-  directly at /install (or /install.html). Activate the homepage link when ready to launch.
+  The Install product page (lockten.ai/install). PUBLIC: linked from the homepage
+  nav, hero and product card as of the product-first restructure (2026-07-05).
 
   Built per "Install Product Page Architecture v3" using the shared design system
   (styles.css) and the same head/header/footer as walkthrough.html so it matches the site.
 
-  CTA targets (confirm before going public):
-    - Plus      -> https://install.lockten.ai/intake/start
-    - Lite      -> https://install.lockten.ai/buy-lite
+  CTA targets:
+    - Plus      -> POST https://install.lockten.ai/intake/start
+                   (the route only accepts POST; it creates the intake session and
+                   303-redirects into Stripe Checkout. A plain link 405s, so the
+                   Plus CTAs are form buttons, not anchors.)
+    - Lite      -> https://install.lockten.ai/buy-lite (normal link)
     - Concierge -> mailto:josh@lockten.ai
-  NOTE: Stripe Checkout is wired in the intake app (test mode as of 2026-07-03).
-  Before making this page public, complete the live cutover: live key + live webhook
-  + live products on the Stripe account.
-  NOTE: the "read the framework" links point to /primer.html for now; repoint to /method
-  when the Pyramid page is published.
+  Stripe live cutover on the intake app is DONE and verified (onramp-intake commit
+  2038a0c, 2026-07-04). Checkout charges real cards.
 -->
 <html lang="en">
 <head>
@@ -29,6 +28,7 @@
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lockten.ai/install">
 <meta property="og:image" content="https://lockten.ai/assets/lockten-logo.png">
+<link rel="canonical" href="https://lockten.ai/install">
 
 <link rel="preload" href="fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -47,6 +47,12 @@
 .hero-dark .in-hero-copy .hero-headline { max-width: 18ch; margin: 0 auto; }
 .hero-dark .in-hero-copy .hero-subhead { margin: 28px auto 0; }
 .in-hero-copy .hero-actions { justify-content: center; }
+/* Plus CTAs are POST forms (the intake entry route rejects GET) */
+form.buy-form { display: inline-flex; margin: 0; }
+form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none; }
+.in-tier form.buy-form { margin-top: auto; width: 100%; }
+.in-tier form.buy-form .btn { margin-top: 0; }
+
 .in-hero-note { margin-top: 22px; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.04em; }
 .in-hero-note a { color: var(--blueprint-300); text-decoration: none; border-bottom: 1px solid rgba(168,204,238,0.4); padding-bottom: 1px; }
 .in-hero-note a:hover { color: var(--white); }
@@ -175,9 +181,11 @@
         <h1 class="hero-headline">The AI workspace your build business <em>actually needs.</em></h1>
         <p class="hero-subhead">Built for your specific business from a 25-minute questionnaire. The complete rollout, ready for your team to put in place in a weekend. Three tiers, depending on how much you want built for you.</p>
         <div class="hero-actions">
-          <a href="https://install.lockten.ai/intake/start" class="btn btn-primary">Start with Plus, $2,997
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </a>
+          <form class="buy-form" method="POST" action="https://install.lockten.ai/intake/start">
+            <button type="submit" class="btn btn-primary">Start with Plus, $2,997
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+          </form>
           <a href="https://install.lockten.ai/buy-lite" class="btn btn-ghost-dark">Or start with Lite, $297</a>
         </div>
         <p class="in-hero-note"><a href="#faq">Read the FAQ &darr;</a></p>
@@ -280,9 +288,11 @@
               <li>Owner-operators ready to take their team's AI use to the next level</li>
               <li>Companies that want one cohesive system everyone works from, not scattered tools</li>
             </ul>
-            <a href="https://install.lockten.ai/intake/start" class="btn btn-primary">Start with Plus, $2,997
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-            </a>
+            <form class="buy-form" method="POST" action="https://install.lockten.ai/intake/start">
+              <button type="submit" class="btn btn-primary">Start with Plus, $2,997
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </button>
+            </form>
           </div>
         </div>
 
@@ -412,9 +422,11 @@
       <h2>Pick your tier.</h2>
       <p>Plus for most. Lite if you want DIY. Concierge if you want it tailored.</p>
       <div class="cta-actions">
-        <a href="https://install.lockten.ai/intake/start" class="btn btn-primary">Start with Plus, $2,997
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-        </a>
+        <form class="buy-form" method="POST" action="https://install.lockten.ai/intake/start">
+          <button type="submit" class="btn btn-primary">Start with Plus, $2,997
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </button>
+        </form>
         <a href="https://install.lockten.ai/buy-lite" class="btn btn-ghost-dark">Or start with Lite, $297</a>
       </div>
     </div>
@@ -431,12 +443,12 @@
       <p class="footer-tagline">The Install by Lock Ten Studio. AI tools for custom builders, made by one.</p>
       <nav class="footer-nav" aria-label="Footer">
         <a href="/">Lock Ten Studio</a>
-        <a href="/walkthrough.html">Walkthrough</a>
+        <a href="/walkthrough">Walkthrough</a>
         <a href="/#newsletter">Field Notes</a>
-        <a href="/primer.html">Cowork primer</a>
+        <a href="/primer">Cowork primer</a>
         <a href="mailto:info@lockten.ai">Contact</a>
-        <a href="/privacy.html">Privacy</a>
-        <a href="/terms.html">Terms</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
       </nav>
       <div class="footer-contact-block">
         <a href="mailto:info@lockten.ai">info@lockten.ai</a>
