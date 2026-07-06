@@ -21,8 +21,15 @@ git add .; git commit -m "..."; git push
 | `help.html` | Walkthrough help / FAQ center (web-hosted so it updates without an app release). |
 | `privacy.html`, `terms.html` | Legal. |
 | `styles.css` | All global styling + design tokens (`:root`). Page-specific CSS is inline in a `<style>` in each page's `<head>`. |
-| `assets/`, `fonts/` | Images/logos + self-hosted woff2 fonts. |
+| `assets/`, `fonts/` | Images/logos + self-hosted woff2 fonts. `assets/screens/` holds 640px WebP app screenshots (sourced from `G:\My Drive\AI Business\Walkthrough TikTok Kit\2 - App screens (hero shots)\Raw screenshots`; re-convert with ffmpeg `-noautorotate -map_metadata -1` or they come out rotated). `assets/og/` holds the 1200x630 share cards. |
 | `sitemap.xml` | Sitemap (robots.txt points to it). Add new public pages here; keep success/thanks pages out and `noindex`ed. |
+
+## Share images and social
+
+- Every top page has a branded 1200x630 `og:image` in `assets/og/` plus `twitter:card summary_large_image`. Source HTML templates for regenerating them live in the session scratchpad, rendered via headless Chrome; rebuild by re-rendering a 1200x630 page in the Lock Ten design system.
+- Footers carry Instagram and X icons: both handles are **@locktenstudio** (per `Interim Soft Brand Presence.md` in the AI Business Drive folder).
+- The Walkthrough page hero is a 5-shot rotating carousel (`#wt-carousel`) with captions in `#wt-shot-note`; it respects `prefers-reduced-motion`.
+- Walkthrough sign-in copy: the app emails a **six-digit code** (confirmed by Josh 2026-07-05). Don't "correct" the FAQ to say magic link.
 
 ## URL convention
 

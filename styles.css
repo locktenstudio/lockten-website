@@ -773,6 +773,11 @@ html, body {
 .footer-contact-block a { color: var(--fg-3); text-decoration: none; }
 .footer-contact-block a:hover { color: var(--brand); }
 
+.footer-social { display: flex; justify-content: center; gap: 18px; }
+.footer-social a { color: var(--fg-3); display: inline-flex; padding: 4px; transition: color 180ms, transform 180ms var(--ease); }
+.footer-social a:hover { color: var(--brand); transform: translateY(-1px); }
+.footer-social svg { width: 20px; height: 20px; }
+
 .footer-legal {
   margin-top: 24px;
   padding-top: 26px;

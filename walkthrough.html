@@ -10,7 +10,10 @@
 <meta property="og:description" content="Site reports for builders. No portal. No logins for your subs. Three free walkthroughs to try it.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lockten.ai/walkthrough">
-<meta property="og:image" content="https://lockten.ai/assets/lockten-logo.png">
+<meta property="og:image" content="https://lockten.ai/assets/og/og-walkthrough.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://lockten.ai/walkthrough">
 
 <link rel="preload" href="fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -48,6 +51,10 @@
   .wt-device { animation: wt-float 7s ease-in-out infinite; }
   @keyframes wt-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
 }
+.wt-carousel { position: relative; border-radius: 30px; overflow: hidden; }
+.wt-carousel img { display: block; width: 100%; height: auto; opacity: 0; transition: opacity 700ms var(--ease); }
+.wt-carousel img.show { opacity: 1; }
+.wt-carousel img + img { position: absolute; inset: 0; }
 .wt-device img { display: block; width: 100%; height: auto; border-radius: 30px; }
 .wt-shot-note { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.04em; color: var(--steel-400); text-align: center; margin-top: 12px; }
 
@@ -171,7 +178,18 @@
           </div>
         </div>
         <div class="wt-phone" aria-hidden="true">
-          <div class="wt-device"><img src="assets/walkthrough-app-home.png" alt="Walkthrough app, project screen" width="600" height="1181"></div>
+          <div>
+            <div class="wt-device">
+              <div class="wt-carousel" id="wt-carousel">
+                <img src="assets/screens/capture.webp" alt="" class="show" width="640" height="1391">
+                <img src="assets/screens/punchlist.webp" alt="" loading="lazy" width="640" height="1391">
+                <img src="assets/screens/modes.webp" alt="" loading="lazy" width="640" height="1391">
+                <img src="assets/screens/edit.webp" alt="" loading="lazy" width="640" height="1391">
+                <img src="assets/screens/cloud.webp" alt="" loading="lazy" width="640" height="1391">
+              </div>
+            </div>
+            <p class="wt-shot-note" id="wt-shot-note">Talk while you walk</p>
+          </div>
         </div>
       </div>
     </div>
@@ -398,6 +416,14 @@
         <a href="mailto:info@lockten.ai">info@lockten.ai</a>
         <span>Cabin John, Maryland</span>
       </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/locktenstudio" aria-label="Lock Ten Studio on Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        </a>
+        <a href="https://x.com/locktenstudio" aria-label="Lock Ten Studio on X">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z"/></svg>
+        </a>
+      </div>
       <div class="footer-legal">
         <span>&copy; 2026 Lock Ten Studio LLC. Built and run by a custom residential builder, on real job sites.</span>
       </div>
@@ -414,6 +440,29 @@
     document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
   } else {
     document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+
+  var strip = document.getElementById('wt-carousel');
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (strip && !reduceMotion) {
+    var shots = strip.querySelectorAll('img');
+    var note = document.getElementById('wt-shot-note');
+    var labels = [
+      'Talk while you walk',
+      'Per-trade punch lists, ready to send',
+      'Five modes, one app',
+      'Review and edit before anything sends',
+      'Photos straight to your Drive or Dropbox'
+    ];
+    var idx = 0;
+    if (shots.length > 1) {
+      setInterval(function () {
+        shots[idx].classList.remove('show');
+        idx = (idx + 1) % shots.length;
+        shots[idx].classList.add('show');
+        if (note && labels[idx]) note.textContent = labels[idx];
+      }, 4200);
+    }
   }
 })();
 </script>
