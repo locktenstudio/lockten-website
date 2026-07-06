@@ -30,6 +30,24 @@
 .home .hero-subhead { margin-left: auto; margin-right: auto; }
 .home .hero-actions { justify-content: center; }
 
+/* Product panels: real UI shots rising from the panel bottom
+   (replaced the blueprint line-art SVGs once both products went live) */
+.product-panel.pp { height: 264px; padding: 30px 30px 0; overflow: hidden; align-items: flex-end; }
+.product-card:hover .product-panel.pp svg { transform: none; }
+.pp-phone { width: 190px; height: 234px; overflow: hidden; background: #0A0D12; border: 1px solid rgba(255,255,255,0.15); border-bottom: none; border-radius: 26px 26px 0 0; padding: 8px 8px 0; box-shadow: 0 -18px 50px -20px rgba(0,0,0,0.6); transition: transform 400ms var(--ease); }
+.pp-phone img { display: block; width: 100%; height: auto; border-radius: 18px 18px 0 0; }
+.product-card:hover .pp-phone { transform: translateY(-6px); }
+.pp-window { width: min(82%, 280px); background: var(--white); border-radius: 10px 10px 0 0; box-shadow: 0 -18px 50px -20px rgba(0,0,0,0.55); overflow: hidden; transition: transform 400ms var(--ease); }
+.product-card:hover .pp-window { transform: translateY(-6px); }
+.pp-bar { display: flex; gap: 5px; padding: 9px 12px; background: var(--slate-100); border-bottom: 1px solid var(--line); }
+.pp-bar span { width: 8px; height: 8px; border-radius: 50%; background: var(--slate-300); }
+.pp-rows { padding: 10px 14px 14px; font-size: 12.5px; color: var(--fg-2); }
+.pp-row { display: flex; align-items: center; gap: 8px; padding: 5px 0 5px calc(var(--ind, 0) * 16px); }
+.pp-row svg { width: 14px; height: 14px; flex: none; }
+.pp-row.dir svg { color: var(--brand); }
+.pp-row.file svg { color: var(--slate-400); }
+.pp-row.dir .nm { font-weight: 500; color: var(--fg); }
+
 /* Product-card action rows (badge + learn-more) */
 .product-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
 .product-actions .product-more { margin-top: 0; }
@@ -129,31 +147,8 @@
       <div class="product-grid">
 
         <article class="product-card reveal">
-          <div class="product-panel" aria-hidden="true">
-            <svg viewBox="0 0 360 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M24,216 C74,204 124,228 174,218" stroke="#2F507F" stroke-width="1.5"/>
-              <path d="M20,234 C80,220 134,246 190,234" stroke="#2F507F" stroke-width="1.5"/>
-              <path d="M28,252 C88,240 142,260 198,250" stroke="#2F507F" stroke-width="1.5"/>
-              <rect x="216" y="36" width="92" height="184" rx="18" stroke="#F3F3F8" stroke-width="2"/>
-              <line x1="248" y1="52" x2="276" y2="52" stroke="#F3F3F8" stroke-width="2" stroke-linecap="round"/>
-              <rect x="228" y="64" width="68" height="128" rx="6" stroke="#7E97BC" stroke-width="1.5"/>
-              <path d="M242 134 v-12 M252 140 v-24 M262 132 v-9 M272 142 v-28 M282 134 v-13" stroke="#74ABE3" stroke-width="2.5" stroke-linecap="round"/>
-              <circle cx="262" cy="206" r="5" stroke="#F3F3F8" stroke-width="2"/>
-              <path d="M200 106 a34 34 0 0 0 0 52" stroke="#74ABE3" stroke-width="2" stroke-linecap="round"/>
-              <path d="M184 90 a56 56 0 0 0 0 84" stroke="#A8CCEE" stroke-width="2" stroke-linecap="round" opacity="0.75"/>
-              <path d="M168 74 a80 80 0 0 0 0 116" stroke="#A8CCEE" stroke-width="2" stroke-linecap="round" opacity="0.45"/>
-              <path d="M56 76 h74 l22 22 v112 h-96 z" stroke="#F3F3F8" stroke-width="2" fill="#142A52"/>
-              <path d="M130 76 v22 h22" stroke="#F3F3F8" stroke-width="2"/>
-              <rect x="70" y="94" width="42" height="32" rx="3" stroke="#7E97BC" stroke-width="1.5"/>
-              <path d="M74 122 l11,-13 6,7 9,-11 8,17" stroke="#7E97BC" stroke-width="1.5" stroke-linejoin="round"/>
-              <path d="M70 140 h72 M70 152 h72 M70 164 h50" stroke="#49648F" stroke-width="2" stroke-linecap="round"/>
-              <path d="M70 180 h58" stroke="#74ABE3" stroke-width="2" stroke-linecap="round"/>
-              <path d="M214 232 C 186 256, 144 252, 122 224" stroke="#7E97BC" stroke-width="1.5" stroke-dasharray="4 5"/>
-              <path d="M130 234 l-9 -11 14 -2 z" fill="#7E97BC"/>
-              <line x1="216" y1="252" x2="308" y2="252" stroke="#49648F"/>
-              <line x1="216" y1="247" x2="216" y2="257" stroke="#49648F"/>
-              <line x1="308" y1="247" x2="308" y2="257" stroke="#49648F"/>
-            </svg>
+          <div class="product-panel pp" aria-hidden="true">
+            <div class="pp-phone"><img src="assets/screens/modes.webp" alt="" width="640" height="1391" loading="lazy"></div>
           </div>
           <div class="product-info">
             <p class="product-kicker">For the field</p>
@@ -179,27 +174,32 @@
         </article>
 
         <article class="product-card reveal d1">
-          <div class="product-panel" aria-hidden="true">
-            <svg viewBox="0 0 360 280" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M70 32 h150 l26 26 v178 h-176 z" stroke="#F3F3F8" stroke-width="2" fill="#142A52"/>
-              <path d="M220 32 v26 h26" stroke="#F3F3F8" stroke-width="2"/>
-              <path d="M94 42 V226 M118 42 V226 M142 42 V226 M166 42 V226 M190 42 V226 M214 66 V226" stroke="#2F507F"/>
-              <path d="M80 66 H236 M80 90 H236 M80 114 H236 M80 138 H236 M80 162 H236 M80 186 H236 M80 210 H236" stroke="#2F507F"/>
-              <rect x="92" y="60" width="64" height="44" rx="6" stroke="#F3F3F8" stroke-width="2" fill="#142A52"/>
-              <path d="M102 74 h32 M102 84 h44" stroke="#49648F" stroke-width="2" stroke-linecap="round"/>
-              <rect x="132" y="130" width="76" height="50" rx="6" stroke="#74ABE3" stroke-width="2" fill="#114A82" fill-opacity="0.4"/>
-              <path d="M144 146 h40 M144 158 h52" stroke="#74ABE3" stroke-width="2" stroke-linecap="round"/>
-              <rect x="88" y="176" width="56" height="42" rx="6" stroke="#F3F3F8" stroke-width="2" fill="#142A52"/>
-              <path d="M98 190 h28 M98 202 h36" stroke="#49648F" stroke-width="2" stroke-linecap="round"/>
-              <path d="M156 82 h28 v48" stroke="#7E97BC" stroke-width="1.5" stroke-dasharray="4 5"/>
-              <path d="M132 168 h-16 v8" stroke="#7E97BC" stroke-width="1.5" stroke-dasharray="4 5"/>
-              <circle cx="294" cy="74" r="26" stroke="#F3F3F8" stroke-width="2"/>
-              <path d="M294 56 l7 24 -7 -6 -7 6 z" fill="#74ABE3"/>
-              <line x1="294" y1="42" x2="294" y2="48" stroke="#F3F3F8" stroke-width="2"/>
-              <line x1="320" y1="122" x2="320" y2="222" stroke="#49648F"/>
-              <line x1="315" y1="122" x2="325" y2="122" stroke="#49648F"/>
-              <line x1="315" y1="222" x2="325" y2="222" stroke="#49648F"/>
-            </svg>
+          <div class="product-panel pp" aria-hidden="true">
+            <div class="pp-window">
+              <div class="pp-bar"><span></span><span></span><span></span></div>
+              <div class="pp-rows">
+                <div class="pp-row dir" style="--ind:0">
+                  <svg viewBox="0 0 24 24" fill="#D3E6F7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+                  <span class="nm">your-company</span>
+                </div>
+                <div class="pp-row file" style="--ind:1">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+                  <span>CLAUDE.md</span>
+                </div>
+                <div class="pp-row dir" style="--ind:1">
+                  <svg viewBox="0 0 24 24" fill="#D3E6F7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+                  <span class="nm">team</span>
+                </div>
+                <div class="pp-row dir" style="--ind:1">
+                  <svg viewBox="0 0 24 24" fill="#D3E6F7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+                  <span class="nm">projects</span>
+                </div>
+                <div class="pp-row dir" style="--ind:1">
+                  <svg viewBox="0 0 24 24" fill="#D3E6F7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
+                  <span class="nm">skills</span>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="product-info">
             <p class="product-kicker">For the office</p>
