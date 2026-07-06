@@ -85,20 +85,24 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
 .js .reveal .fb-row { opacity: 0; transform: translateY(5px); transition: opacity 450ms var(--ease), transform 450ms var(--ease); transition-delay: calc(var(--d) * 110ms + 250ms); }
 .js .reveal.in .fb-row { opacity: 1; transform: none; }
 
-/* Chat sample (dark) */
-.in-chat { background: var(--deep-900); border: 1px solid var(--deep-800); }
-.in-chat .bar { color: var(--steel-400); border-bottom: 1px solid rgba(255,255,255,0.08); }
-.in-chat .body { padding: 24px; display: flex; flex-direction: column; gap: 14px; flex: 1; }
-.msg { max-width: 92%; border-radius: 12px; padding: 13px 17px; font-size: 0.94rem; line-height: 1.55; }
-.msg.you { align-self: flex-end; background: var(--brand); color: var(--white); border-bottom-right-radius: 4px; }
-.msg.ai { align-self: flex-start; background: var(--deep-800); color: rgba(243,243,248,0.88); border: 1px solid rgba(255,255,255,0.07); border-bottom-left-radius: 4px; }
-.js .reveal .msg { opacity: 0; transform: translateY(6px); transition: opacity 500ms var(--ease), transform 500ms var(--ease); transition-delay: calc(var(--d) * 600ms + 400ms); }
-.js .reveal.in .msg { opacity: 1; transform: none; }
+/* Chat sample, styled as Claude Cowork dark mode (warm charcoal + coral,
+   user bubble + plain-text reply with the starburst). Deliberately quotes
+   Claude's palette, not the Lock Ten one: it depicts the product itself. */
+.in-chat { background: #262624; border: 1px solid #3A3833; }
+.in-chat .bar { color: #A8A69F; background: #1F1E1B; border-bottom: 1px solid rgba(255,255,255,0.07); }
+.in-chat .bar .spark { width: 13px; height: 13px; color: #D97757; flex: none; }
+.in-chat .body { padding: 26px 26px 20px; display: flex; flex-direction: column; gap: 20px; flex: 1; }
+.msg.you { background: #393937; color: #EDECE8; border-radius: 14px; padding: 14px 18px; font-size: 0.94rem; line-height: 1.55; }
+.claude-reply { display: flex; gap: 12px; }
+.claude-reply .spark { width: 17px; height: 17px; color: #D97757; flex: none; margin-top: 4px; }
+.claude-reply p { margin: 0; color: #EDECE8; font-size: 0.94rem; line-height: 1.62; }
+.js .reveal .msg.you, .js .reveal .claude-reply { opacity: 0; transform: translateY(6px); transition: opacity 500ms var(--ease), transform 500ms var(--ease); transition-delay: calc(var(--d) * 600ms + 400ms); }
+.js .reveal.in .msg.you, .js .reveal.in .claude-reply { opacity: 1; transform: none; }
 @media (prefers-reduced-motion: no-preference) {
-  .reveal.in .msg.ai::after { content: ""; display: inline-block; width: 8px; height: 1em; background: var(--blueprint-300); margin-left: 5px; vertical-align: text-bottom; animation: in-caret 1.1s steps(1) infinite; }
+  .reveal.in .claude-reply p::after { content: ""; display: inline-block; width: 8px; height: 1em; background: #D97757; margin-left: 5px; vertical-align: text-bottom; animation: in-caret 1.1s steps(1) infinite; }
   @keyframes in-caret { 50% { opacity: 0; } }
 }
-.in-chat .foot { padding: 0 24px 22px; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; color: var(--steel-400); }
+.in-chat .foot { padding: 0 26px 22px; font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.08em; color: #A8A69F; }
 
 /* Problem band: quiet, narrower than the hero */
 .in-problem { max-width: 680px; margin: 0 auto; }
@@ -317,10 +321,16 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
         </div>
 
         <div class="in-pane in-chat" aria-hidden="true">
-          <div class="bar"><span class="dots"><span></span><span></span><span></span></span>Claude, with your business loaded</div>
+          <div class="bar"><span class="dots"><span></span><span></span><span></span></span>
+            <svg class="spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 2.5v5"/><path d="M12 16.5v5"/><path d="M2.5 12h5"/><path d="M16.5 12h5"/><path d="M5.3 5.3l3.5 3.5"/><path d="M15.2 15.2l3.5 3.5"/><path d="M5.3 18.7l3.5-3.5"/><path d="M15.2 8.8l3.5-3.5"/></svg>
+            Claude Cowork &middot; your business loaded
+          </div>
           <div class="body">
             <div class="msg you" style="--d:1">Three HVAC bids just came in for 12 Cedar Drive. Level them against our scope and flag anything missing.</div>
-            <div class="msg ai" style="--d:2">Leveled. All three carry the spec&rsquo;d equipment. Two gaps worth knowing about: one bid excludes the garage mini-split, and another carries no allowance for controls. The full comparison table is in the project folder, ready for your call&hellip;</div>
+            <div class="claude-reply" style="--d:2">
+              <svg class="spark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 2.5v5"/><path d="M12 16.5v5"/><path d="M2.5 12h5"/><path d="M16.5 12h5"/><path d="M5.3 5.3l3.5 3.5"/><path d="M15.2 15.2l3.5 3.5"/><path d="M5.3 18.7l3.5-3.5"/><path d="M15.2 8.8l3.5-3.5"/></svg>
+              <p>Leveled. All three carry the spec&rsquo;d equipment. Two gaps worth knowing about: one bid excludes the garage mini-split, and another carries no allowance for controls. The full comparison table is in the project folder, ready for your call&hellip;</p>
+            </div>
           </div>
           <div class="foot">Your projects &middot; your scope &middot; your standards</div>
         </div>
