@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>See a real Walkthrough report | Walkthrough by Lock Ten Studio</title>
+<meta name="description" content="This is what a jobsite walk turns into. A real Walkthrough report: summary, action items tagged by trade, photos. Recorded by voice on a phone, ready to send.">
+
+<meta property="og:title" content="This is what a site walk turns into">
+<meta property="og:description" content="A real Walkthrough report: summary, action items tagged by trade, photos. Recorded by voice during a normal jobsite walk.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lockten.ai/sample-report">
+<meta property="og:image" content="https://lockten.ai/assets/og/og-walkthrough.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://lockten.ai/sample-report">
+
+<link rel="preload" href="fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23272260'/%3E%3Ctext x='50' y='70' font-family='Georgia,serif' font-size='56' font-style='italic' text-anchor='middle' fill='%23FFFFFF'%3EL%3C/text%3E%3C/svg%3E">
+
+<script>document.documentElement.className += ' js';</script>
+
+<style>
+/* ---- Sample report page (scoped) ---- */
+.sr-intro { padding: 72px 0 40px; text-align: center; }
+.sr-eyebrow { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brand); }
+.sr-intro h1 { font-family: var(--font-display); font-size: clamp(2.2rem, 5.5vw, 3.4rem); font-weight: 400; line-height: 1.08; margin: 14px auto 0; max-width: 17ch; }
+.sr-intro p { color: var(--fg-2); max-width: 56ch; margin: 20px auto 0; line-height: 1.6; }
+.sr-context { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.05em; color: var(--fg-3); margin-top: 26px; }
+
+/* The report document */
+.sr-paper-wrap { padding: 8px 0 40px; }
+.sr-paper { max-width: 760px; margin: 0 auto; background: var(--white); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-3); padding: clamp(28px, 6vw, 56px); }
+.sr-doc-header { border-bottom: 3px solid var(--brand); padding-bottom: 20px; margin-bottom: 28px; }
+.sr-logo-slot { display: inline-flex; align-items: center; justify-content: center; border: 1.5px dashed var(--line-strong); border-radius: var(--radius-md); padding: 10px 22px; font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--fg-3); margin-bottom: 18px; }
+.sr-doc-kind { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--brand); }
+.sr-paper h1 { font-family: var(--font-display); font-size: clamp(1.7rem, 4vw, 2.3rem); font-weight: 400; margin: 6px 0 4px; }
+.sr-doc-date { font-family: var(--font-mono); font-size: 0.76rem; color: var(--fg-3); }
+.sr-paper h2 { font-family: var(--font-sans); font-size: 0.82rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--brand); margin: 34px 0 14px; }
+.sr-paper .narrative p { color: var(--fg-2); line-height: 1.65; font-size: 0.95rem; }
+.sr-paper .narrative p + p { margin-top: 12px; }
+.sr-action-list { list-style: none; counter-reset: sr; }
+.sr-action-list li { counter-increment: sr; display: flex; gap: 14px; padding: 13px 0; border-bottom: 1px solid var(--line); align-items: baseline; }
+.sr-action-list li:last-child { border-bottom: none; }
+.sr-action-list li::before { content: counter(sr, decimal-leading-zero); font-family: var(--font-mono); font-size: 0.74rem; color: var(--fg-3); flex: 0 0 auto; }
+.sr-task { font-size: 0.94rem; color: var(--fg); line-height: 1.45; }
+.sr-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+.sr-tag { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.05em; text-transform: uppercase; padding: 3px 9px; border-radius: 999px; background: var(--slate-100); color: var(--slate-600); }
+.sr-tag.trade { background: var(--blueprint-50); color: var(--blueprint-700); }
+.sr-photo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+@media (max-width: 560px) { .sr-photo-grid { grid-template-columns: 1fr 1fr; } }
+.sr-photo-cell { aspect-ratio: 4 / 3; border-radius: var(--radius-md); border: 1px solid var(--line); overflow: hidden; background: var(--slate-100); }
+.sr-photo-cell img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.sr-photo-caption { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.05em; color: var(--fg-3); margin-top: 6px; }
+.sr-doc-footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.05em; color: var(--fg-3); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+
+/* How it got made + CTA */
+.sr-how { padding: 48px 0 8px; }
+.sr-how-grid { display: grid; gap: 22px; max-width: 760px; margin: 0 auto; }
+@media (min-width: 700px) { .sr-how-grid { grid-template-columns: 1fr 1fr 1fr; } }
+.sr-step { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 22px; background: var(--bg-subtle); }
+.sr-step .k { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand); }
+.sr-step h3 { font-family: var(--font-display); font-weight: 400; font-size: 1.25rem; margin: 8px 0 6px; }
+.sr-step p { font-size: 0.88rem; color: var(--fg-2); line-height: 1.55; }
+.sr-cta { text-align: center; padding: 56px 0 84px; }
+.sr-cta .hero-actions { justify-content: center; }
+.sr-price-note { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.05em; color: var(--fg-3); margin-top: 18px; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand">
+      <img src="assets/lockten-logo.png" alt="Lock Ten Studio" style="height:92px;">
+    </a>
+    <nav class="header-nav" aria-label="Primary">
+      <a href="/walkthrough#how">How it works</a>
+      <a href="/walkthrough#pricing">Pricing</a>
+      <a href="/walkthrough#faq">FAQ</a>
+      <a href="/help">Help</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- INTRO -->
+  <section class="sr-intro">
+    <div class="container">
+      <span class="sr-eyebrow">Sample report</span>
+      <h1>This is what a site walk turns into.</h1>
+      <p>The report below is the actual format Walkthrough produces. It was made by walking a jobsite and talking into a phone. No typing, no forms, no evening at the desk. Review it, then it goes to your sub or your client by text or email.</p>
+      <p class="sr-context">RECORDED ON SITE &middot; ORGANIZED AUTOMATICALLY &middot; SENT FROM THE TRUCK</p>
+    </div>
+  </section>
+
+  <!-- THE REPORT -->
+  <section class="sr-paper-wrap">
+    <div class="container">
+      <article class="sr-paper" aria-label="Sample walkthrough report">
+        <div class="sr-doc-header">
+          <div class="sr-logo-slot">Your logo here</div>
+          <div class="sr-doc-kind">Walkthrough</div>
+          <h1>Smith Residence</h1>
+          <div class="sr-doc-date">Thursday, July 2, 2026</div>
+        </div>
+
+        <h2>Summary</h2>
+        <div class="narrative">
+          <p>Walked the main level and second floor with the site supervisor ahead of Friday's drywall delivery. Framing is complete except the pantry bulkhead, and the HVAC rough-in passed inspection Tuesday. Electrical trim locations are set in the kitchen, but the island pendant placement still needs an owner decision before the ceiling closes up.</p>
+          <p>Exterior is ready for the stone mason to start Monday. Two items need attention before then: the flashing at the rear left window and staging room for the stone delivery on the driveway side.</p>
+        </div>
+
+        <h2>Action items</h2>
+        <ol class="sr-action-list">
+          <li><div><div class="sr-task">Confirm island pendant locations with the owner before drywall closes the kitchen ceiling.</div><div class="sr-tags"><span class="sr-tag trade">Electrical</span><span class="sr-tag">Kitchen</span></div></div></li>
+          <li><div><div class="sr-task">Frame the pantry bulkhead to match the 9 ft ceiling line. Last open framing item on the main level.</div><div class="sr-tags"><span class="sr-tag trade">Carpentry</span><span class="sr-tag">Pantry</span></div></div></li>
+          <li><div><div class="sr-task">Correct the flashing at the rear left window before stone veneer starts Monday.</div><div class="sr-tags"><span class="sr-tag trade">Carpentry</span><span class="sr-tag">Rear exterior</span></div></div></li>
+          <li><div><div class="sr-task">Clear the driveway side for stone delivery staging. Mason arrives Monday morning.</div><div class="sr-tags"><span class="sr-tag trade">Masonry</span><span class="sr-tag">Driveway</span></div></div></li>
+          <li><div><div class="sr-task">Powder room vanity supply lines roughed in about 2 inches low. Adjust before close-in.</div><div class="sr-tags"><span class="sr-tag trade">Plumbing</span><span class="sr-tag">Powder room</span></div></div></li>
+          <li><div><div class="sr-task">Add blocking for towel bars and the wall-mounted TV before insulation.</div><div class="sr-tags"><span class="sr-tag trade">Carpentry</span><span class="sr-tag">Primary bath</span></div></div></li>
+          <li><div><div class="sr-task">Drywall delivers Friday. Confirm second-floor stock placement with the crew lead.</div><div class="sr-tags"><span class="sr-tag trade">Drywall</span><span class="sr-tag">Whole house</span></div></div></li>
+          <li><div><div class="sr-task">Confirm the shower niche height with the owner before tile backer goes in.</div><div class="sr-tags"><span class="sr-tag trade">Tile</span><span class="sr-tag">Primary bath</span></div></div></li>
+        </ol>
+
+        <h2>Photos (3)</h2>
+        <div class="sr-photo-grid">
+          <div><div class="sr-photo-cell"><img src="assets/report/hall-bath-ceiling.webp" alt="Hall bath ceiling mechanical rough-in" loading="lazy"></div><div class="sr-photo-caption">Hall bath ceiling</div></div>
+          <div><div class="sr-photo-cell"><img src="assets/report/primary-bath.webp" alt="Primary bath framing and valve rough-in" loading="lazy"></div><div class="sr-photo-caption">Primary bath</div></div>
+          <div><div class="sr-photo-cell"><img src="assets/report/great-room.webp" alt="Great room, subfloor and rear glass" loading="lazy"></div><div class="sr-photo-caption">Great room</div></div>
+        </div>
+
+        <div class="sr-doc-footer">
+          <span>Smith Residence &middot; Walkthrough</span>
+          <span>Made with Walkthrough</span>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- HOW IT GOT MADE -->
+  <section class="sr-how">
+    <div class="container">
+      <div class="sr-how-grid">
+        <div class="sr-step reveal"><span class="k">01 &middot; Walk</span><h3>Talk while you walk</h3><p>Open the app, hit record, walk the site the way you already do. Snap photos as you go.</p></div>
+        <div class="sr-step reveal"><span class="k">02 &middot; Review</span><h3>Read it, fix anything</h3><p>The summary and action items are drafted for you, each item tagged by trade and location. Edit whatever you want.</p></div>
+        <div class="sr-step reveal"><span class="k">03 &middot; Send</span><h3>Text it or email it</h3><p>Send the PDF straight from your phone. Your subs and clients need no app, no portal, no login.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="sr-cta">
+    <div class="container">
+      <h2 class="sr-eyebrow" style="display:block; margin-bottom:14px;">Try it on your next walk</h2>
+      <div class="hero-actions">
+        <a href="https://apps.apple.com/app/walkthrough-site-reports/id6775347863" class="btn btn-primary">Download on the App Store
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+        <a href="/walkthrough" class="btn btn-ghost">Learn more</a>
+      </div>
+      <p class="sr-price-note">3 FREE WALKTHROUGHS &middot; NO CREDIT CARD &middot; $24.99/MO OR $239.99/YR</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="brand"><img src="assets/lockten-logo.png" alt="Lock Ten Studio"></a>
+      </div>
+      <p class="footer-tagline">Walkthrough by Lock Ten Studio. AI tools for custom builders, made by one.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/">Lock Ten Studio</a>
+        <a href="/install">The Install</a>
+        <a href="/#newsletter">Field Notes</a>
+        <a href="/primer">Cowork primer</a>
+        <a href="/help">Help</a>
+        <a href="mailto:info@lockten.ai">Contact</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </nav>
+      <div class="footer-contact-block">
+        <a href="mailto:info@lockten.ai">info@lockten.ai</a>
+        <span>Cabin John, Maryland</span>
+      </div>
+      <div class="footer-legal">
+        <span>&copy; 2026 Lock Ten Studio LLC. Built and run by a custom residential builder, on real job sites.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
+</script>
+
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cd30115fa535417ca908587b96cd3733"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
