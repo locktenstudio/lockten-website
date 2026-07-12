@@ -1,0 +1,21 @@
+# Lock Ten Studio
+
+> AI tools for custom residential builders, built and run by a working custom builder in Cabin John, Maryland. Two products: Walkthrough (a jobsite site-report app) and The Install (a done-for-you AI-workspace setup for a builder's business). Plainspoken, no hype, made by someone who runs a build business.
+
+## Products
+
+- [Walkthrough](https://lockten.ai/walkthrough): an iOS app for builders. Walk a job site, talk and take photos, and it generates a clean PDF report you text or email to your subcontractor from your own phone. No portal and no logins for your subs, they just get a text. Photos save to your own Google Drive or Dropbox, not your camera roll. It handles walkthroughs, punch lists, meeting notes, owner updates and decision requests. Three free walkthroughs to start, no credit card, then $24.99 per user per month or $239.99 per year. On the App Store as "Walkthrough: Site Reports".
+- [The Install](https://lockten.ai/install): a done-for-you Claude Cowork workspace setup for a builder's business (your team, projects, voice and connectors, configured for you). Tiers: Lite $297, Plus $2,997, Concierge by inquiry.
+
+## Key pages
+
+- [Homepage](https://lockten.ai/): the studio and both products.
+- [Walkthrough](https://lockten.ai/walkthrough): the field app, how it works, pricing and FAQ.
+- [Sample report](https://lockten.ai/sample-report): a real example of the PDF Walkthrough produces from a site walk.
+- [The Install](https://lockten.ai/install): the AI-workspace setup service and tiers.
+- [Cowork primer](https://lockten.ai/primer): a plain-language guide to Claude Cowork for small business owners.
+- [Help](https://lockten.ai/help): Walkthrough help and FAQs.
+
+## About
+
+Lock Ten Studio LLC, Cabin John, Maryland. The name refers to Lock 10 of the C&O Canal, a piece of 19th-century masonry engineering still standing. Contact: info@lockten.ai.
