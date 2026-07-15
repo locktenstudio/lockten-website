@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architect Walkthrough Help | Lock Ten Studio</title>
+<link rel="canonical" href="https://lockten.ai/architect-help">
+<meta name="description" content="Help and FAQs for Architect Walkthrough, the site documentation app for architects: Quick Notes, living punch lists, site reports, client updates, signing in with a six-digit code, saving to Google Drive or Dropbox, pricing, and cancelling.">
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23272260'/%3E%3Ctext x='50' y='70' font-family='Georgia,serif' font-size='56' font-style='italic' text-anchor='middle' fill='%23FFFFFF'%3EL%3C/text%3E%3C/svg%3E">
+<style>
+  .help { padding: 4rem 0; max-width: 760px; margin: 0 auto; }
+  .help h1 { font-family: var(--display); font-size: 2.5rem; font-weight: 700; color: var(--ink); margin-bottom: 0.5rem; line-height: 1.1; }
+  .help .lede { color: var(--mute); font-size: 1.05rem; line-height: 1.65; margin-bottom: 2rem; }
+  .help h2 { font-family: var(--display); font-size: 1.5rem; font-weight: 700; color: var(--walnut); margin: 3rem 0 0.75rem; scroll-margin-top: 1.5rem; }
+  .help h3 { font-size: 1.05rem; font-weight: 700; color: var(--ink); margin: 1.5rem 0 0.5rem; }
+  .help p { margin: 0 0 1rem; color: var(--ink); line-height: 1.65; }
+  .help a { color: var(--walnut); }
+  .help ul, .help ol { margin: 0 0 1rem; padding-left: 1.5rem; }
+  .help li { margin-bottom: 0.5rem; line-height: 1.6; }
+  .toc { background: #f7f6f2; border-radius: 10px; padding: 1.25rem 1.5rem; margin-bottom: 1rem; }
+  .toc h2 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--mute); margin: 0 0 0.75rem; font-family: var(--mono, ui-monospace, monospace); font-weight: 600; }
+  .toc ul { margin: 0; padding-left: 1.25rem; }
+  .toc li { margin-bottom: 0.35rem; }
+  .note { background: #f7f6f2; border-left: 3px solid var(--walnut); border-radius: 0; padding: 0.9rem 1.2rem; margin: 0 0 1rem; }
+  .note p { margin: 0; }
+  .path { font-family: var(--mono, ui-monospace, monospace); font-size: 0.9em; background: #f1efe8; padding: 0.1em 0.4em; border-radius: 4px; }
+  .back-link { display: inline-block; margin-top: 3rem; color: var(--walnut); text-decoration: none; font-weight: 600; }
+  .back-link:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand">
+      <img src="assets/lockten-logo.png" alt="Lock Ten Studio" style="height:96px;">
+    </a>
+    <nav class="header-nav">
+      <a href="/#products">What we make</a>
+      <a href="/#newsletter">Field Notes</a>
+      <a href="mailto:info@lockten.ai">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section class="help">
+    <div class="container">
+
+      <h1>Architect Walkthrough Help</h1>
+      <p class="lede">Architect Walkthrough turns what you say on site into finished documents: site reports, living punch lists, client updates, and quick photo-plus-question notes. Talk it through on site, review, then send it or save it to your cloud folder. This guide covers everything past the quick tour in the app. Looking for the builder app? That help lives <a href="/help">here</a>.</p>
+
+      <div class="toc">
+        <h2>Jump to</h2>
+        <ul>
+          <li><a href="#getting-started">Getting started</a></li>
+          <li><a href="#projects">Projects: create and edit</a></li>
+          <li><a href="#lanes">The five capture types</a></li>
+          <li><a href="#punch">Punch lists: the living checklist</a></li>
+          <li><a href="#recording">Recording and photos</a></li>
+          <li><a href="#branding">Branding your documents</a></li>
+          <li><a href="#cloud">Connecting Drive or Dropbox</a></li>
+          <li><a href="#reports">Reviewing and sending</a></li>
+          <li><a href="#billing">Subscription and billing</a></li>
+          <li><a href="#account">Account and recovery</a></li>
+          <li><a href="#troubleshooting">Troubleshooting</a></li>
+          <li><a href="#contact">Still need help</a></li>
+        </ul>
+      </div>
+
+      <h2 id="getting-started">Getting started</h2>
+      <p>The flow is the same every time, whatever kind of document you need:</p>
+      <ol>
+        <li>Create a project for the house or job.</li>
+        <li>Open the project and pick a capture type.</li>
+        <li>Talk naturally, or fill in the short form for Quick Notes and client updates. Add photos as you go.</li>
+        <li>Generate. The document comes back as a PDF with your branding on it.</li>
+        <li>Review it, edit anything you want, then send it or save it to your connected Drive or Dropbox folder.</li>
+      </ol>
+      <p>You can replay the in-app tour anytime from <span class="path">Settings</span>.</p>
+
+      <h2 id="projects">Projects: create and edit</h2>
+      <p>A project is one house or one job. Everything you capture lives under its project.</p>
+      <h3>Create a project</h3>
+      <p>On the Projects tab, tap <strong>+ New</strong>. Only the name is required.</p>
+      <ul>
+        <li><strong>Project name</strong> is required. A client name or an address both work.</li>
+        <li><strong>Address</strong> is optional. If you add it, the app can notice when you arrive on site and offer to open the project's punch list.</li>
+        <li><strong>Notes / context</strong> is optional background for the AI: client preferences, scope notes, drawing references. This is private. It guides how documents are written but is never printed in the PDF.</li>
+      </ul>
+      <h3>Edit or delete a project</h3>
+      <p>Open the project and use <strong>Edit project</strong> or <strong>Delete project</strong> at the bottom. Deleting is permanent: it removes the project and every session, photo, voice memo, and document under it, and it cannot be undone.</p>
+
+      <h2 id="lanes">The five capture types</h2>
+      <ul>
+        <li><strong>Quick Note</strong> is the fast lane: a photo and a short message, sent to one person. No recording. Type or dictate the problem and the question, attach photos, and send a clean one-page card by text or email. Use it anywhere you'd otherwise fire off a text and lose the record.</li>
+        <li><strong>Punch list</strong> is a checklist that stays alive across visits. Walk the space, call out each item, and check items off on later visits as they're completed. More below.</li>
+        <li><strong>Site report</strong> is the construction administration document. Walk the site and talk; each observation is tagged as an action, a question, or a note, with a needs-response summary the contractor can work from.</li>
+        <li><strong>Client update</strong> is a progress letter for your client. Fill in the highlights, what's coming, and anything you need from them; attach photos; the app writes it in plain language a client can read.</li>
+        <li><strong>Meeting notes</strong> records a client meeting or consultant call. Enter who's there and the agenda first, then record. You get a structured record of what was discussed, what was decided, and who owes what.</li>
+      </ul>
+
+      <h2 id="punch">Punch lists: the living checklist</h2>
+      <p>A punch list here is not a frozen PDF. It's a checklist the app keeps current:</p>
+      <ul>
+        <li><strong>Capture:</strong> walk the space and call out each item, one at a time: what's wrong, where it is, and the fix if you have one. Snap photos as you talk; a photo taken while you describe an item attaches to that item automatically.</li>
+        <li><strong>Check off:</strong> on later visits, open the punch list from the project screen and tap items as they're verified complete. Check-offs work with no signal and sync when you're back in coverage.</li>
+        <li><strong>Add and remove:</strong> type new items straight into the list, and long-press an item to delete it.</li>
+        <li><strong>Reshare:</strong> tap <strong>Update PDF</strong> and the shared document reflects the current list. Anyone holding an earlier link sees the updated version, so the contractor always works from the live list.</li>
+        <li><strong>Capture more:</strong> next visit, record additional items and add them to the same list without disturbing what's already checked off.</li>
+      </ul>
+
+      <h2 id="recording">Recording and photos</h2>
+      <p>For site reports and punch lists, speech is transcribed right on your phone: your audio never leaves the device, and it keeps working with no signal. Recorded meetings are the exception; that audio is uploaded and transcribed by a cloud service, because meetings are long and have multiple speakers.</p>
+      <p>Photos attach to the session as you take them. With no signal, photos and audio wait in a queue and upload on their own once you're back online. You can check the queue anytime under <span class="path">Settings</span>.</p>
+      <div class="note">
+        <p>Talk the way you'd talk to a contractor you trust. One item per breath beats a paragraph, and naming the location matters. You don't need to dictate punctuation.</p>
+      </div>
+
+      <h2 id="branding">Branding your documents</h2>
+      <p>Everything you set here applies to every document you generate. Contractors, clients, and consultants see your studio's brand, not ours. Go to <span class="path">Settings &rsaquo; Brand your PDFs</span>.</p>
+      <ul>
+        <li><strong>Logo</strong> shows in the document header. A PNG or JPG with a transparent or white background works best.</li>
+        <li><strong>Primary color</strong> is used for headings and accents. Pick a preset or enter your own hex code.</li>
+        <li><strong>Company name</strong> and <strong>tagline</strong> print in the document footer. Leave them blank and no footer is printed at all.</li>
+        <li><strong>Brand voice</strong> is a paragraph telling the app how you want prose written. The more specific, the better it matches you.</li>
+        <li><strong>Glossary</strong> is for proper spellings the app should preserve exactly: surnames, contractors, consultants, product names the speech recognizer might otherwise mangle.</li>
+      </ul>
+
+      <h2 id="cloud">Connecting Drive or Dropbox</h2>
+      <p>You can connect Google Drive or Dropbox so finished documents save straight into a folder. You don't have to connect anything; the Share button always works either way.</p>
+      <p>Go to <span class="path">Settings &rsaquo; Cloud storage</span> and tap <strong>Connect</strong>. The app opens your browser so you can sign in to your own account and grant access, then returns you to the app. You can disconnect anytime from the same screen.</p>
+      <div class="note">
+        <p>Google shows a few of its own permission screens during sign-in. That's Google's standard consent flow. Tap through them and you'll come right back.</p>
+      </div>
+
+      <h2 id="reports">Reviewing and sending</h2>
+      <p>Every generated document is editable before it goes anywhere: open it and tap <strong>Edit</strong> to fix a name, a number, or anything the AI phrased differently than you would. You are the author; the app is the drafter.</p>
+      <p><strong>Share</strong> sends the PDF anywhere your phone can: text, email, AirDrop. Quick Notes send with your message as the text of the note, so the recipient reads the ask right in the notification. Documents stay in the app under the project, so you can pull one up again later without regenerating.</p>
+
+      <h2 id="billing">Subscription and billing</h2>
+      <p>Your first three sent reports are free, so you can try it on a real project. After that, Architect Walkthrough Pro is $19.99 a month or $199.99 a year. The subscription is billed through your Apple account and you can cancel anytime in your Apple subscription settings; access continues through the period you've paid for.</p>
+
+      <h2 id="account">Account and recovery</h2>
+      <ul>
+        <li><strong>Sign in</strong> uses a six-digit code sent to your email. No password to remember or lose.</li>
+        <li><strong>Recovery email.</strong> Add an alternate email under <span class="path">Settings &rsaquo; Account recovery</span> so you can sign back in if you lose access to your main email.</li>
+        <li><strong>Sign out</strong> signs out this device only. Your data stays safe in the cloud.</li>
+        <li><strong>Sign out everywhere</strong> is for a lost phone: it signs out every device on the account.</li>
+        <li><strong>Delete account</strong> permanently removes your account and everything in it. This cannot be undone.</li>
+      </ul>
+
+      <h2 id="troubleshooting">Troubleshooting</h2>
+      <h3>Uploads look stuck</h3>
+      <p>Open <span class="path">Settings &rsaquo; Upload queue</span> to see anything waiting to sync. The app retries on its own when it has signal, and <strong>Retry now</strong> pushes it immediately.</p>
+      <h3>Punch check-offs show "waiting to sync"</h3>
+      <p>That means you checked items off without signal. They're saved on your phone and sync automatically when you're back in coverage; <strong>Sync now</strong> on the list pushes them immediately.</p>
+      <h3>A document failed to generate</h3>
+      <p>Open the session and generate again. If it keeps failing, email us (below) with the project name so we can look at that exact one.</p>
+      <h3>Light or dark mode</h3>
+      <p><span class="path">Settings &rsaquo; Appearance</span> follows your phone's setting or forces light or dark.</p>
+
+      <h2 id="contact">Still need help</h2>
+      <p>Email <a href="mailto:support@lockten.ai">support@lockten.ai</a> and a real person will get back to you. The <strong>Send feedback</strong> button under <span class="path">Settings &rsaquo; Support</span> does the same thing and stamps your app version automatically, which helps us help you faster.</p>
+
+      <a href="/" class="back-link">&larr; Back to lockten.ai</a>
+
+    </div>
+  </section>
+</main>
+
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cd30115fa535417ca908587b96cd3733"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
