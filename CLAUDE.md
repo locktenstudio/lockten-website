@@ -61,7 +61,9 @@ Walkthrough is **live on the App Store** as **"Walkthrough: Site Reports"**, sto
 
 ## Pricing (single source of truth for the site)
 
-**$24.99 per user / month, or $239.99 / year (about $20/mo).** 3 free walkthroughs, no credit card. It is **per user**, not per seat. iOS billing is Apple In-App Purchase (via RevenueCat); web is Stripe. On the site the price shows in two spots: `walkthrough.html` `#pricing` block and the Walkthrough card in `index.html`. Update both together.
+**Two tiers since 2026-07-24: Standard $9.99/mo or $99.99/yr (all capture lanes, on-device, unlimited reports) and Pro $24.99/mo or $239.99/yr (adds meeting notes and the persistent punch list).** Trial is all-access: 3 free reports of any kind, no credit card, usage-based, never framed as time-limited or auto-converting. Per user, not per seat. iOS billing is Apple In-App Purchase (via RevenueCat).
+
+Price appears in SEVEN places; update ALL together: `walkthrough.html` `#pricing` block, its FAQPage JSON-LD offers + three FAQ answers, the Walkthrough card in `index.html`, `help.html` billing section, `llms.txt`, and `sample-report.html` price note.
 
 **Architect Walkthrough: $19.99 / month, or $199.99 / year (about $17/mo).** First three SENT reports free (drafts don't count), no credit card. Apple billing only. Shows on `architect.html` `#pricing` and in its FAQ; `architect-help.html` billing section must match.
 

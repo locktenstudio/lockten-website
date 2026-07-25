@@ -7,7 +7,7 @@
 <meta name="description" content="Walk the site, talk, send. Walkthrough turns a jobsite walk into a clean PDF report you text or email to your sub from your own phone. No portal, no accounts for your subs. By Lock Ten Studio.">
 
 <meta property="og:title" content="Walkthrough by Lock Ten Studio">
-<meta property="og:description" content="Site reports for builders. No portal. No logins for your subs. Three free walkthroughs to try it.">
+<meta property="og:description" content="Site reports for builders. No portal. No logins for your subs. Three free reports to try it, every feature unlocked.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lockten.ai/walkthrough">
 <meta property="og:image" content="https://lockten.ai/assets/og/og-walkthrough.png">
@@ -32,7 +32,7 @@
   "applicationCategory": "BusinessApplication",
   "url": "https://lockten.ai/walkthrough",
   "installUrl": "https://apps.apple.com/app/walkthrough-site-reports/id6775347863",
-  "offers": { "@type": "Offer", "price": "24.99", "priceCurrency": "USD" },
+  "offers": { "@type": "AggregateOffer", "lowPrice": "9.99", "highPrice": "24.99", "priceCurrency": "USD", "offerCount": "2" },
   "publisher": { "@type": "Organization", "name": "Lock Ten Studio", "url": "https://lockten.ai" }
 }
 </script>
@@ -100,6 +100,22 @@
 .wt-price li { font-size: 0.98rem; color: var(--fg-2); padding: 5px 0; }
 .wt-price .fine { font-size: 0.85rem; color: var(--fg-3); margin-top: 18px; line-height: 1.5; }
 .wt-price-ctx { text-align: center; max-width: 520px; margin: 22px auto 0; color: var(--fg-3); font-size: 0.95rem; line-height: 1.6; }
+
+.wt-plans { display: grid; gap: 18px; max-width: 780px; margin: 8px auto 0; align-items: stretch; }
+@media (min-width: 720px) { .wt-plans { grid-template-columns: 1fr 1fr; gap: 22px; } }
+.wt-plan { border: 1px solid var(--line-strong); border-radius: var(--radius-lg); padding: 32px 30px; background: var(--white); box-shadow: var(--shadow-2); text-align: left; display: flex; flex-direction: column; }
+.wt-plan.pro { border: 1.5px solid var(--brand); }
+.wt-plan .plan-name { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--brand); margin: 0 0 14px; }
+.wt-plan .amt { font-family: var(--font-display); font-size: 3.1rem; line-height: 1; color: var(--fg); }
+.wt-plan .amt .cad { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.04em; color: var(--fg-3); }
+.wt-plan .annual { font-size: 0.9rem; color: var(--fg-3); margin-top: 8px; }
+.wt-plan ul { list-style: none; padding: 0; margin: 20px 0 0; }
+.wt-plan li { font-size: 0.95rem; color: var(--fg-2); padding: 7px 0 7px 26px; position: relative; line-height: 1.5; }
+.wt-plan li::before { content: "\2713"; position: absolute; left: 0; top: 6px; color: var(--brand); font-weight: 700; }
+.wt-plan li.lead { color: var(--fg); font-weight: 500; }
+.wt-trial-line { text-align: center; max-width: 560px; margin: 26px auto 0; color: var(--fg); font-size: 1rem; line-height: 1.6; }
+.wt-trial-line strong { font-weight: 600; }
+.wt-privacy-line { text-align: center; max-width: 560px; margin: 12px auto 0; color: var(--fg-3); font-size: 0.88rem; line-height: 1.55; }
 
 .wt-for { max-width: 680px; margin: 0 auto; }
 .wt-for ul { list-style: none; padding: 0; margin: 0; }
@@ -176,10 +192,18 @@
     },
     {
       "@type": "Question",
+      "name": "What are the plans and what do they cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Two plans, month to month. Standard is $9.99 a user each month, or $99.99 a year, and includes every report type except meeting notes and the punch list, with unlimited reports. Pro is $24.99 a user each month, or $239.99 a year, and adds meeting notes and the persistent punch list. You can move from Standard to Pro anytime."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "What if I want to use this with my whole team?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Each person gets their own seat at $24.99 a month. They sign in with their own email, and reports they send come from their own phone. The subscription handles the seats; there's nothing extra to set up."
+        "text": "Each person gets their own seat, Standard at $9.99 a month or Pro at $24.99. They sign in with their own email, and reports they send come from their own phone. The subscription handles the seats; there's nothing extra to set up."
       }
     },
     {
@@ -187,7 +211,7 @@
       "name": "Can I try it before I subscribe?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Three free walkthroughs to start, no credit card. After the third, the subscription page comes up. Before then, no card."
+        "text": "Three free reports to start, with every feature unlocked and no credit card. Use them on any report type you like, meeting notes and punch list included. After the third report, you pick a plan. Before then, no card."
       }
     },
     {
@@ -241,7 +265,7 @@
         <div class="wt-hero-copy">
           <span class="launch-stamp">Now on the App Store</span>
           <h1 class="hero-headline">Walk the site. Talk. <em>Send.</em></h1>
-          <p class="hero-subhead">Site reports for builders. No portal. No logins for your subs. Photos to your own Google Drive or Dropbox. Three free walkthroughs to try it.</p>
+          <p class="hero-subhead">Site reports for builders. No portal. No logins for your subs. Photos to your own Google Drive or Dropbox. Three free reports to try it, every feature unlocked.</p>
           <div class="hero-actions">
             <a href="https://apps.apple.com/app/walkthrough-site-reports/id6775347863" class="btn btn-primary">Download on the App Store
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
@@ -396,20 +420,35 @@
     <div class="container">
       <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
         <p class="label label-center">Pricing</p>
-        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">One price. No tiers, no contract.</h2>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">Two plans. Month to month, no contract.</h2>
       </div>
-      <div class="wt-price reveal">
-        <div class="amt">$24.99</div>
-        <div class="per">per user / per month</div>
-        <ul>
-          <li>Three walkthroughs free</li>
-          <li>No credit card to start</li>
-          <li>Annual plan optional, save ~20%</li>
-          <li>No "talk to sales"</li>
-        </ul>
-        <p class="fine">Pay monthly, or $239.99 a year (about $20 a month) if you'd rather. The annual plan is optional, never required. Cancel anytime, with a 14-day refund if it's not working for you.</p>
+      <div class="wt-plans reveal">
+        <div class="wt-plan">
+          <p class="plan-name">Standard</p>
+          <div class="amt">$9.99 <span class="cad">/ user / mo</span></div>
+          <p class="annual">or $99.99 a year (about $8 a month)</p>
+          <ul>
+            <li class="lead">Every report type except meeting notes and the punch list</li>
+            <li>Walkthroughs, trade lists, owner updates, decision requests</li>
+            <li>Unlimited reports</li>
+            <li>Speech for site walks runs on your phone</li>
+            <li>Photos to your own Google Drive or Dropbox</li>
+          </ul>
+        </div>
+        <div class="wt-plan pro">
+          <p class="plan-name">Pro</p>
+          <div class="amt">$24.99 <span class="cad">/ user / mo</span></div>
+          <p class="annual">or $239.99 a year (about $20 a month)</p>
+          <ul>
+            <li class="lead">Everything in Standard, plus</li>
+            <li>Meeting notes: record a meeting, get decisions and action items</li>
+            <li>Persistent punch list: a living checklist you reopen every visit, check off, and reshare as it shrinks</li>
+          </ul>
+        </div>
       </div>
-      <p class="wt-price-ctx">A five-person crew is about $125 a month. Less than half what most platform tools cost, and your subs don't need accounts.</p>
+      <p class="wt-trial-line reveal"><strong>Try every feature free. Three full reports, no credit card.</strong> The trial is all-access. You only pick a plan after your third report.</p>
+      <p class="wt-privacy-line reveal">Speech for site walks runs on your phone. Meeting notes sends audio to a secure transcription service.</p>
+      <p class="wt-price-ctx">A five-person crew on Standard is about $50 a month. Still less than most platform tools, and your subs never need accounts. Each person has their own seat and signs in with their own email.</p>
     </div>
   </section>
 
@@ -446,8 +485,9 @@
         <details><summary>Where do the photos go?</summary><p>If you've connected Google Drive or Dropbox, photos save there in a folder for that walkthrough. If you haven't, they save in the app and you can connect Drive or Dropbox later to back-fill.</p></details>
         <details><summary>Does Walkthrough work on Android?</summary><p>iOS is first, at launch. The Android version follows within a few weeks.</p></details>
         <details><summary>How does sign-in work? I don't want another password.</summary><p>You enter your email. We email you a six-digit code. You type it in. You're signed in. No password to remember or reset.</p></details>
-        <details><summary>What if I want to use this with my whole team?</summary><p>Each person gets their own seat at $24.99 a month. They sign in with their own email, and reports they send come from their own phone. The subscription handles the seats; there's nothing extra to set up.</p></details>
-        <details><summary>Can I try it before I subscribe?</summary><p>Three free walkthroughs to start, no credit card. After the third, the subscription page comes up. Before then, no card.</p></details>
+        <details><summary>What are the plans and what do they cost?</summary><p>Two plans, month to month. Standard is $9.99 a user each month, or $99.99 a year, and includes every report type except meeting notes and the punch list, with unlimited reports. Pro is $24.99 a user each month, or $239.99 a year, and adds meeting notes and the persistent punch list. You can move from Standard to Pro anytime.</p></details>
+        <details><summary>What if I want to use this with my whole team?</summary><p>Each person gets their own seat, Standard at $9.99 a month or Pro at $24.99. They sign in with their own email, and reports they send come from their own phone. The subscription handles the seats; there's nothing extra to set up.</p></details>
+        <details><summary>Can I try it before I subscribe?</summary><p>Three free reports to start, with every feature unlocked and no credit card. Use them on any report type you like, meeting notes and punch list included. After the third report, you pick a plan. Before then, no card.</p></details>
         <details><summary>What if I cancel?</summary><p>Cancel anytime from Settings. You keep what you've paid through that month. If you cancel within the first 14 days and it's not working for you, reply to the welcome email and we'll refund.</p></details>
       </div>
     </div>
@@ -458,7 +498,7 @@
     <div class="container">
       <span class="launch-stamp">Now on the App Store</span>
       <h2>Walk one job with it. On the house.</h2>
-      <p>Download it and run three walkthroughs free, no credit card. iOS today, Android on the way.</p>
+      <p>Download it and run three free reports, no credit card, every feature unlocked. iOS today, Android on the way.</p>
       <a class="store-badge" href="https://apps.apple.com/app/walkthrough-site-reports/id6775347863">
         <img src="assets/app-store-badge.svg" alt="Download on the App Store" width="200" height="67">
       </a>
