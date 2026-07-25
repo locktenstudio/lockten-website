@@ -1,0 +1,671 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Architect Walkthrough | Site reports and punch lists for architects</title>
+<meta name="description" content="Architect Walkthrough turns what you say on a site visit into finished documents: site reports, living punch lists, client updates and quick photo notes, sent from your own phone with your studio's brand on them. By Lock Ten Studio.">
+
+<meta property="og:title" content="Architect Walkthrough by Lock Ten Studio">
+<meta property="og:description" content="Site reports, living punch lists and client updates for architects. Talk through the site visit; leave with the correspondence done. Coming soon to the App Store.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lockten.ai/architect">
+<meta property="og:image" content="https://lockten.ai/assets/og/og-architect.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://lockten.ai/architect">
+
+<link rel="preload" href="fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%23272260'/%3E%3Ctext x='50' y='70' font-family='Georgia,serif' font-size='56' font-style='italic' text-anchor='middle' fill='%23FFFFFF'%3EL%3C/text%3E%3C/svg%3E">
+
+<script>document.documentElement.className += ' js';</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Architect Walkthrough",
+  "operatingSystem": "iOS",
+  "applicationCategory": "BusinessApplication",
+  "url": "https://lockten.ai/architect",
+  "offers": { "@type": "Offer", "price": "19.99", "priceCurrency": "USD" },
+  "publisher": { "@type": "Organization", "name": "Lock Ten Studio", "url": "https://lockten.ai" }
+}
+</script>
+
+<style>
+/* ---- Architect Walkthrough page theme: the pine ramp from the app itself.
+       Overriding the ramp tokens at body level re-skins every global
+       component (hero, buttons, labels, compare table, CTA band) to green. ---- */
+body.arch {
+  --brand:         #1B4D3E;
+  --brand-hover:   #174235;
+  --blueprint-50:  #EEF5F1;
+  --blueprint-100: #DAEBE3;
+  --blueprint-200: #B7D7C8;
+  --blueprint-300: #9FD6BF;
+  --blueprint-600: #1B4D3E;
+  --blueprint-700: #174235;
+  --blueprint-800: #12352A;
+  --deep-900: #0C261E;
+  --deep-800: #12352A;
+  --steel-600: #2E5C4B;
+  --steel-400: #6FA08C;
+  --steel-300: #A9C7BB;
+}
+body.arch .bp-grid {
+  background-image:
+    linear-gradient(to right, rgba(27, 77, 62, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(27, 77, 62, 0.05) 1px, transparent 1px);
+}
+/* On dark pine surfaces a pine button disappears; use the mint accent there. */
+.hero-dark .btn-primary, .cta-band .btn-primary { background: #9FD6BF; color: #0C261E; }
+.hero-dark .btn-primary:hover, .cta-band .btn-primary:hover { background: #B7D7C8; }
+.hero-dark .btn-primary:active, .cta-band .btn-primary:active { background: #8ABBA5; }
+
+/* ---- Page components (same skeleton as the Walkthrough page, scoped here) ---- */
+.wt-hero-grid { display: grid; gap: 40px; align-items: center; }
+@media (min-width: 900px) { .wt-hero-grid { grid-template-columns: 1.05fr 0.95fr; gap: 56px; } }
+.wt-hero-copy { text-align: left; }
+.hero-dark .wt-hero-copy .hero-headline { margin: 0; max-width: 14ch; }
+.hero-dark .wt-hero-copy .hero-subhead { margin: 26px 0 0; }
+.wt-phone { display: flex; justify-content: center; }
+.wt-device { width: 100%; max-width: 300px; margin: 0 auto; background: #0A0D12; border: 1px solid rgba(255,255,255,0.12); border-radius: 42px; padding: 12px; box-shadow: 0 30px 70px -24px rgba(0,0,0,0.55); }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-dark .wt-device { animation: wt-float 7s ease-in-out infinite; }
+  @keyframes wt-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+}
+.wt-carousel { position: relative; border-radius: 30px; overflow: hidden; }
+.wt-carousel img { display: block; width: 100%; height: auto; opacity: 0; transition: opacity 700ms var(--ease); }
+.wt-carousel img.show { opacity: 1; }
+.wt-carousel img + img { position: absolute; inset: 0; }
+.wt-shot-note { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.04em; color: var(--steel-400); text-align: center; margin-top: 12px; }
+
+.wt-steps { display: grid; gap: 22px; margin-top: 8px; }
+@media (min-width: 760px) { .wt-steps { grid-template-columns: repeat(3, 1fr); gap: 28px; } }
+.wt-step { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px 26px; background: var(--white); }
+.wt-step .num { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.16em; color: var(--brand); }
+.wt-step .icon { width: 34px; height: 34px; color: var(--brand); margin: 14px 0 10px; }
+.wt-step h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.3rem; color: var(--fg); margin: 0 0 8px; }
+.wt-step p { font-size: 0.98rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
+
+.wt-modes { display: grid; gap: 16px; margin-top: 8px; grid-template-columns: 1fr; }
+@media (min-width: 560px) { .wt-modes { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 920px) { .wt-modes { grid-template-columns: repeat(5, 1fr); gap: 18px; } }
+.wt-mode { border: 1px solid var(--line); border-radius: var(--radius-md); padding: 24px 18px; background: var(--white); text-align: center; transition: box-shadow 200ms var(--ease), transform 200ms var(--ease); }
+.wt-mode:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); }
+.wt-mode.lead { border-color: var(--brand); border-width: 1.5px; background: var(--blueprint-50); }
+.wt-mode .ic { width: 30px; height: 30px; color: var(--brand); margin: 0 auto 12px; display: block; }
+.wt-mode h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.04rem; color: var(--fg); margin: 0 0 6px; letter-spacing: -0.01em; }
+.wt-mode p { font-size: 0.86rem; color: var(--fg-2); line-height: 1.45; margin: 0; }
+
+.punch-grid { display: grid; gap: 44px; align-items: center; }
+@media (min-width: 900px) { .punch-grid { grid-template-columns: 6fr 5fr; gap: 72px; } }
+.punch-grid .wt-device { max-width: 280px; }
+.punch-list { list-style: none; padding: 0; margin: 26px 0 0; }
+.punch-list li { display: flex; gap: 14px; align-items: flex-start; padding: 11px 0; font-size: 1.0rem; color: var(--fg-2); line-height: 1.6; }
+.punch-list li svg { width: 20px; height: 20px; color: var(--brand); flex: none; margin-top: 4px; }
+
+.demo-wrap { display: flex; flex-direction: column; align-items: center; }
+.demo-wrap .wt-device { max-width: 320px; }
+.demo-wrap video { display: block; width: 100%; height: auto; border-radius: 30px; }
+.demo-note { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.05em; color: var(--fg-3); text-align: center; margin-top: 14px; }
+
+.wt-cards { display: grid; gap: 18px; margin-top: 8px; }
+@media (min-width: 760px) { .wt-cards { grid-template-columns: 1fr 1fr; gap: 22px; } }
+.wt-card { border: 1px solid var(--line); border-left: 3px solid var(--brand); border-radius: var(--radius-md); padding: 26px 28px; background: var(--white); }
+.wt-card h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.18rem; color: var(--fg); margin: 0 0 8px; letter-spacing: -0.01em; }
+.wt-card p { font-size: 0.97rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
+
+.wt-compare { max-width: 920px; margin: 8px auto 0; border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; background: var(--white); }
+.wt-compare table { width: 100%; border-collapse: collapse; }
+.wt-compare th, .wt-compare td { padding: 16px 20px; text-align: left; font-size: 0.95rem; vertical-align: top; border-bottom: 1px solid var(--line); line-height: 1.5; }
+.wt-compare thead th { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; }
+.wt-compare thead th:nth-child(2) { color: var(--fg-3); }
+.wt-compare thead th:nth-child(3) { color: var(--brand); }
+.wt-compare tbody td:first-child { font-weight: 500; color: var(--fg); width: 24%; }
+.wt-compare tbody td:nth-child(2) { color: var(--fg-3); background: var(--bg-subtle); }
+.wt-compare tbody td:nth-child(3) { color: var(--fg-2); background: var(--blueprint-50); }
+.wt-compare tr:last-child td { border-bottom: none; }
+@media (max-width: 640px) { .wt-compare th, .wt-compare td { padding: 11px 12px; font-size: 0.85rem; } }
+
+.wt-price { max-width: 460px; margin: 8px auto 0; text-align: center; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); padding: 40px 32px; background: var(--white); box-shadow: var(--shadow-2); }
+.wt-price .amt { font-family: var(--font-display); font-size: 4rem; line-height: 1; color: var(--fg); }
+.wt-price .per { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.04em; color: var(--fg-3); margin-top: 8px; }
+.wt-price ul { list-style: none; padding: 0; margin: 24px 0 0; }
+.wt-price li { font-size: 0.98rem; color: var(--fg-2); padding: 5px 0; }
+.wt-price .fine { font-size: 0.85rem; color: var(--fg-3); margin-top: 18px; line-height: 1.5; }
+.wt-price-ctx { text-align: center; max-width: 520px; margin: 22px auto 0; color: var(--fg-3); font-size: 0.95rem; line-height: 1.6; }
+
+.wt-for { max-width: 680px; margin: 0 auto; }
+.wt-for ul { list-style: none; padding: 0; margin: 0; }
+.wt-for li { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 1.02rem; color: var(--fg-2); }
+.wt-for li svg { width: 20px; height: 20px; color: var(--brand); flex: none; margin-top: 3px; }
+.wt-for .not { margin-top: 22px; color: var(--fg-3); font-size: 0.95rem; font-style: italic; }
+
+.faq { max-width: 760px; margin: 0 auto; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; padding: 20px 0; font-weight: 600; font-size: 1.06rem; color: var(--fg); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--font-mono); color: var(--brand); font-size: 1.4rem; line-height: 1; flex: none; }
+.faq details[open] summary::after { content: "\2013"; }
+.faq details p { margin: 0 0 20px; color: var(--fg-2); line-height: 1.65; font-size: 0.99rem; max-width: 64ch; }
+.faq details a { color: var(--brand); font-weight: 600; }
+
+.cta-band { background: var(--deep-900); color: var(--white); padding: 88px 0; text-align: center; position: relative; overflow: hidden; }
+.cta-band .container { position: relative; }
+.cta-band h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.2rem, 4.5vw, 3.4rem); line-height: 1.1; color: var(--white); max-width: 18ch; margin: 0 auto; }
+.cta-band p { color: rgba(243,243,248,0.78); font-size: 1.08rem; margin: 16px auto 0; max-width: 520px; }
+.cta-band .hero-actions { justify-content: center; }
+.store-badge { display: inline-block; margin-top: 36px; transition: transform 0.15s ease; }
+.store-badge:hover { transform: scale(1.04); }
+.store-badge img { display: block; width: 200px; height: auto; }
+.launch-stamp { display: inline-block; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blueprint-200); border: 1.5px solid var(--blueprint-300); border-radius: 3px; padding: 7px 14px; margin-bottom: 22px; }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do my contractors or clients need the app?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. They get a text or email from you with a PDF attached. They open it. That is the whole experience on their end. No portal, no account, no password."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I edit a document before it sends?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Every document is editable before it goes anywhere. The app drafts; you are the author. Nothing sends until you send it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Will it overstate what I saw?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It's built not to. Site reports follow a strict faithfulness rule: hedges stay hedges, and an observation is never upgraded to inspected or approved. And you review and can edit every document before it goes anywhere, so nothing leaves in words you haven't approved."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does my audio go to the cloud?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "For site reports and punch lists, speech is transcribed right on your phone. Your audio never leaves the device, and it keeps working with no signal. Recorded meetings are the exception: that audio is uploaded for transcription, because meetings are long and have multiple speakers."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where do photos and documents go?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you connect Google Drive or Dropbox, finished documents and photos save straight into a folder for that project. If you don't, everything stays in the app under the project and the Share button still works."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does sign-in work? I don't want another password.",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You enter your email. We email you a six-digit code. You type it in. You're signed in. No password to remember or reset."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does the free trial work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your first three sent reports are free, no credit card. A report only counts against the trial when you actually send it or save it to your cloud folder, so drafts and experiments are free. After that, it's $19.99 a month or $199.99 a year through your Apple account."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this the same app as Walkthrough for builders?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Same family, different tool. Walkthrough: Site Reports is built for builders running their own jobs. Architect Walkthrough is built for the architect visiting those jobs: site reports, living punch lists and client updates, written in an architect's voice."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it work on Android?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "iOS first. Android is on the roadmap; if that's the version you're waiting for, email info@lockten.ai and tell us, it genuinely moves the priority."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="arch">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand">
+      <img src="assets/lockten-logo-pine.png" alt="Lock Ten Studio" style="height:92px;">
+    </a>
+    <nav class="header-nav" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#punch">Punch lists</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="/architect-help">Help</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero-dark" id="top">
+    <div class="hero-contours" aria-hidden="true">
+      <svg viewBox="0 0 1500 640" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice">
+        <path d="M-40,90 C200,40 380,150 580,108 C780,66 960,170 1160,124 C1330,86 1440,140 1540,100" stroke-width="1.5"/>
+        <path class="p-accent" d="M-40,158 C170,116 360,212 560,168 C760,124 950,224 1150,180 C1320,144 1440,196 1540,160" stroke-width="1.5"/>
+        <path d="M-40,226 C190,190 350,278 550,240 C750,202 960,286 1160,246 C1330,214 1440,260 1540,228" stroke-width="1.5"/>
+        <path d="M-40,294 C200,264 360,340 560,308 C760,276 950,348 1150,312 C1320,284 1440,324 1540,296" stroke-width="1.5"/>
+        <path class="p-accent" d="M-40,362 C180,338 370,402 570,374 C770,346 960,408 1160,376 C1330,350 1440,386 1540,362" stroke-width="1.5"/>
+        <path d="M-40,430 C200,410 380,464 580,440 C780,416 970,470 1170,442 C1330,420 1440,452 1540,430" stroke-width="1.5"/>
+        <path d="M-40,498 C190,482 380,528 580,506 C780,484 970,530 1170,506 C1330,488 1440,514 1540,496" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div class="container">
+      <div class="wt-hero-grid">
+        <div class="wt-hero-copy">
+          <span class="launch-stamp">Coming soon to the App Store</span>
+          <h1 class="hero-headline">Walk the site. Talk. <em>It's written.</em></h1>
+          <p class="hero-subhead">Architect Walkthrough turns a site visit into finished correspondence: site reports, living punch lists, client updates and quick photo questions, sent from your own phone before you're back at the desk. Your brand on every page.</p>
+          <div class="hero-actions">
+            <!-- ON APPROVAL: replace this mailto CTA with the App Store badge link
+                 https://apps.apple.com/app/id6787164107 and change both launch stamps
+                 on this page to "Now on the App Store". -->
+            <a href="mailto:info@lockten.ai?subject=Architect%20Walkthrough%20early%20access" class="btn btn-primary">Ask for early access
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+            <a href="#how" class="btn btn-ghost-dark">See how it works</a>
+          </div>
+        </div>
+        <div class="wt-phone" aria-hidden="true">
+          <div>
+            <div class="wt-device">
+              <div class="wt-carousel" id="wt-carousel">
+                <img src="assets/screens/architect/capture.webp" alt="" class="show" width="640" height="1391">
+                <img src="assets/screens/architect/punchlist.webp" alt="" loading="lazy" width="640" height="1391">
+                <img src="assets/screens/architect/quicknote.webp" alt="" loading="lazy" width="640" height="1391">
+                <img src="assets/screens/architect/lanes.webp" alt="" loading="lazy" width="640" height="1391">
+                <img src="assets/screens/architect/clientupdate.webp" alt="" loading="lazy" width="640" height="1391">
+              </div>
+            </div>
+            <p class="wt-shot-note" id="wt-shot-note">Talk while you walk</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-geo" aria-hidden="true">
+      <span>By Lock Ten Studio</span>
+      <span>iOS &middot; In review with Apple</span>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">How it works</p>
+        <h2 class="section-headline">The visit is the work. The write-up is free.</h2>
+      </div>
+      <div class="wt-steps">
+        <div class="wt-step reveal">
+          <span class="num">01</span>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+          <h3>Walk and talk</h3>
+          <p>Open the project, pick what you need and speak as you go. Photos attach as you take them; describe an item with the camera up and the photo lands on that item.</p>
+        </div>
+        <div class="wt-step reveal d1">
+          <span class="num">02</span>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.85 2.83 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5Z"/><path d="m15 5 4 4"/></svg>
+          <h3>Review and edit</h3>
+          <p>The app drafts the document in your words, at your level of certainty. Open it, fix a name or a phrase if you want. You are the author; the app is the drafter.</p>
+        </div>
+        <div class="wt-step reveal d2">
+          <span class="num">03</span>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+          <h3>Send and file</h3>
+          <p>Text or email the PDF from your own phone, in the thread people already read. It files itself to your Google Drive or Dropbox project folder at the same time.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FIVE CAPTURE TYPES -->
+  <section class="section" id="lanes" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">Five capture types</p>
+        <h2 class="section-headline">One tap for whatever the visit calls for.</h2>
+        <p class="section-sub">Every document comes back branded, editable and ready to send. Same flow every time: talk, review, send.</p>
+      </div>
+      <div class="wt-modes reveal">
+        <div class="wt-mode lead">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+          <h3>Quick Note</h3>
+          <p>A photo plus a question, sent in a minute and on the record.</p>
+        </div>
+        <div class="wt-mode">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>
+          <h3>Punch list</h3>
+          <p>A checklist that stays alive across visits.</p>
+        </div>
+        <div class="wt-mode">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6 2 7"/><path d="M10 6h4"/><path d="m22 7-2-1"/><rect width="16" height="16" x="4" y="6" rx="2"/><path d="M4 11h16"/><path d="M8 15h.01"/><path d="M16 15h.01"/><path d="M12 15h.01"/></svg>
+          <h3>Site report</h3>
+          <p>Observations tagged action, question or note, with a needs-response summary.</p>
+        </div>
+        <div class="wt-mode">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+          <h3>Client update</h3>
+          <p>A progress letter your client can actually read.</p>
+        </div>
+        <div class="wt-mode">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <h3>Meeting notes</h3>
+          <p>Who was there, what was decided, who owes what.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DEMO VIDEO -->
+  <section class="section" id="demo" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">In action</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">Two minutes on site, start to sent.</h2>
+        <p class="section-sub" style="margin-left:auto;margin-right:auto;">A real client update, recorded on an iPhone and played back at 4x. Dictate the week, mark up photos, build the letter, ready to send.</p>
+      </div>
+      <div class="demo-wrap reveal">
+        <div class="wt-device">
+          <video id="demo-video" muted loop playsinline preload="metadata" poster="assets/video/architect-demo-poster.jpg" width="640" height="1392" aria-label="Screen recording of a client update being created in Architect Walkthrough">
+            <source src="assets/video/architect-demo.mp4" type="video/mp4">
+          </video>
+        </div>
+        <p class="demo-note">Real screen recording &middot; 4x speed</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- LIVING PUNCH LIST -->
+  <section class="trust bp-grid" id="punch">
+    <div class="container">
+      <div class="punch-grid">
+        <div class="reveal">
+          <p class="label">The punch list</p>
+          <h2 class="trust-headline">A punch list that <em>lives on.</em></h2>
+          <ul class="punch-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Walk the space and call items out. A photo taken while you describe an item attaches to it, so the contractor sees exactly what you meant.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Check items off on later visits, even with no signal. They sync when you're back in coverage.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Tap Update PDF and everyone holding the earlier link sees the current list. The contractor always works from the live version, watching it shrink.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Next visit, capture more. New items append to the same list without disturbing what's already checked off.</li>
+          </ul>
+        </div>
+        <div class="wt-phone reveal d1" aria-hidden="true">
+          <div class="wt-device">
+            <img src="assets/screens/architect/punchlist.webp" alt="" loading="lazy" width="640" height="1391" style="display:block;width:100%;height:auto;border-radius:30px;">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT MAKES IT DIFFERENT -->
+  <section class="section" id="different">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">The difference</p>
+        <h2 class="section-headline">Built for how architects actually work.</h2>
+      </div>
+      <div class="wt-cards">
+        <div class="wt-card reveal">
+          <h3>Your studio's brand, not ours.</h3>
+          <p>Your logo in the header, your accent color, your voice in the prose. Contractors, clients and consultants see your studio on every page. Leave our name out entirely; there's no watermark to earn your way out of.</p>
+        </div>
+        <div class="wt-card reveal d1">
+          <h3>Nothing for anyone else to log into.</h3>
+          <p>Documents send from your own phone as a text or email, in the thread people already read. They open a PDF. No portal, no accounts, no "click here to view."</p>
+        </div>
+        <div class="wt-card reveal">
+          <h3>Built to keep your certainty level.</h3>
+          <p>Field reports carry professional weight, so site reports are drafted under a strict rule: never upgrade an observation. "Appeared complete" stays "appeared complete," not "inspected" or "approved." And you review every document before it sends, so the words that go out are yours.</p>
+        </div>
+        <div class="wt-card reveal d1">
+          <h3>Built for dead zones.</h3>
+          <p>Site reports and punch lists transcribe on your phone, not in the cloud, so recording works with no signal. Photos and check-offs queue up and sync themselves when coverage comes back.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="section" id="compare" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">The lag</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">The write-up, with and without the <em>deferral.</em></h2>
+      </div>
+      <div class="wt-compare reveal">
+        <table>
+          <thead>
+            <tr><th></th><th>Notes and a follow-up email</th><th>Architect Walkthrough</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>When it's written</td><td>That evening at your desk, or three days later when the visit is a blur</td><td>On site, while you're still standing in it</td></tr>
+            <tr><td>What the contractor gets</td><td>A long email to scroll past</td><td>A numbered PDF in the text thread they already answer</td></tr>
+            <tr><td>The punch list</td><td>A new frozen PDF every visit</td><td>One living list that shrinks as items are checked off</td></tr>
+            <tr><td>Your photos</td><td>Somewhere in the camera roll</td><td>Attached to the item they document, filed to the project folder</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY THIS EXISTS -->
+  <section class="trust" id="story">
+    <div class="container">
+      <div class="trust-cols">
+        <div class="reveal">
+          <p class="label">Why this exists</p>
+          <h2 class="trust-headline">Made by the builder on the <em>other side</em> of your reports.</h2>
+        </div>
+        <div class="trust-copy reveal d1">
+          <p>Lock Ten Studio is run by the co-owner of a custom home building company outside Washington DC. Builders live downstream of architects' field notes: the punch list that arrives a week late, the observation that never got written down at all.</p>
+          <p>So he built the field-report tool he wished the architects on his jobs carried. The same engine runs his builder crews' reports every week; this is the version shaped for the architect's side of the visit.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">Pricing</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">One price. Everything included.</h2>
+      </div>
+      <div class="wt-price reveal">
+        <div class="amt">$19.99</div>
+        <div class="per">per month</div>
+        <ul>
+          <li>First three sent reports free</li>
+          <li>No credit card to start</li>
+          <li>All five capture types, meetings included</li>
+          <li>Or $199.99 a year (about $17 a month)</li>
+        </ul>
+        <p class="fine">Billed through your Apple account. Cancel anytime in your Apple subscription settings; access runs through the period you've paid for. Drafts never count against the trial; a report counts when you send it or save it to your cloud folder.</p>
+      </div>
+      <p class="wt-price-ctx">Priced for a solo studio, not an enterprise seat license. If it saves you one evening of typing a month, it has paid for itself.</p>
+    </div>
+  </section>
+
+  <!-- WHO IT'S FOR -->
+  <section class="section" id="for" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">Built for</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">Who it's for.</h2>
+      </div>
+      <div class="wt-for reveal">
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Solo architects and small studios who do their own site visits</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Building and residential designers documenting jobs for clients and contractors</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Construction administration visits that need an observation record the contractor can act on</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Anyone retyping handwritten field notes at the desk at nine at night</li>
+        </ul>
+        <p class="not">Not built for big-firm CA departments that want plan annotation, portals and seat licenses. There are platforms for that. They're not us.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">Questions</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">Things architects ask.</h2>
+      </div>
+      <div class="faq reveal">
+        <details><summary>Do my contractors or clients need the app?</summary><p>No. They get a text or email from you with a PDF attached. They open it. That is the whole experience on their end. No portal, no account, no password.</p></details>
+        <details><summary>Can I edit a document before it sends?</summary><p>Yes. Every document is editable before it goes anywhere. The app drafts; you are the author. Nothing sends until you send it.</p></details>
+        <details><summary>Will it overstate what I saw?</summary><p>It's built not to. Site reports follow a strict faithfulness rule: hedges stay hedges, and an observation is never upgraded to inspected or approved. And you review and can edit every document before it goes anywhere, so nothing leaves in words you haven't approved.</p></details>
+        <details><summary>Does my audio go to the cloud?</summary><p>For site reports and punch lists, speech is transcribed right on your phone. Your audio never leaves the device, and it keeps working with no signal. Recorded meetings are the exception: that audio is uploaded for transcription, because meetings are long and have multiple speakers.</p></details>
+        <details><summary>Where do photos and documents go?</summary><p>If you connect Google Drive or Dropbox, finished documents and photos save straight into a folder for that project. If you don't, everything stays in the app under the project and the Share button still works.</p></details>
+        <details><summary>How does sign-in work? I don't want another password.</summary><p>You enter your email. We email you a six-digit code. You type it in. You're signed in. No password to remember or reset.</p></details>
+        <details><summary>How does the free trial work?</summary><p>Your first three sent reports are free, no credit card. A report only counts against the trial when you actually send it or save it to your cloud folder, so drafts and experiments are free. After that, it's $19.99 a month or $199.99 a year through your Apple account.</p></details>
+        <details><summary>Is this the same app as Walkthrough for builders?</summary><p>Same family, different tool. <a href="/walkthrough">Walkthrough: Site Reports</a> is built for builders running their own jobs. Architect Walkthrough is built for the architect visiting those jobs: site reports, living punch lists and client updates, written in an architect's voice.</p></details>
+        <details><summary>Does it work on Android?</summary><p>iOS first. Android is on the roadmap; if that's the version you're waiting for, email <a href="mailto:info@lockten.ai">info@lockten.ai</a> and tell us, it genuinely moves the priority.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="cta-band" id="launch">
+    <div class="container">
+      <span class="launch-stamp">Coming soon to the App Store</span>
+      <h2>The next site visit could leave with the paperwork done.</h2>
+      <p>Architect Walkthrough is in review with Apple now. Ask for early access and you'll be first in when it clears, with three sent reports free.</p>
+      <!-- ON APPROVAL: replace the button below with the store badge:
+      <a class="store-badge" href="https://apps.apple.com/app/id6787164107">
+        <img src="assets/app-store-badge.svg" alt="Download on the App Store" width="200" height="67">
+      </a> -->
+      <div class="hero-actions">
+        <a href="mailto:info@lockten.ai?subject=Architect%20Walkthrough%20early%20access" class="btn btn-primary">Ask for early access
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="brand"><img src="assets/lockten-logo-pine.png" alt="Lock Ten Studio"></a>
+      </div>
+      <p class="footer-tagline">Architect Walkthrough by Lock Ten Studio. Field tools built on real job sites.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/">Lock Ten Studio</a>
+        <a href="/walkthrough">Walkthrough for builders</a>
+        <a href="/install">The Install</a>
+        <a href="/architect-help">Help</a>
+        <a href="mailto:info@lockten.ai">Contact</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </nav>
+      <div class="footer-contact-block">
+        <a href="mailto:info@lockten.ai">info@lockten.ai</a>
+        <span>Cabin John, Maryland</span>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/locktenstudio" aria-label="Lock Ten Studio on Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        </a>
+        <a href="https://x.com/locktenstudio" aria-label="Lock Ten Studio on X">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z"/></svg>
+        </a>
+      </div>
+      <div class="footer-legal">
+        <span>&copy; 2026 Lock Ten Studio LLC. Built and run by a custom residential builder, on real job sites.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  var strip = document.getElementById('wt-carousel');
+  if (strip && !reduceMotion) {
+    var shots = strip.querySelectorAll('img');
+    var note = document.getElementById('wt-shot-note');
+    var labels = [
+      'Talk while you walk',
+      'The living punch list',
+      'Quick Note: a photo plus a question',
+      'Five capture types, one tap',
+      'Client updates, done on site'
+    ];
+    var idx = 0;
+    if (shots.length > 1) {
+      setInterval(function () {
+        shots[idx].classList.remove('show');
+        idx = (idx + 1) % shots.length;
+        shots[idx].classList.add('show');
+        if (note && labels[idx]) note.textContent = labels[idx];
+      }, 4200);
+    }
+  }
+
+  var demo = document.getElementById('demo-video');
+  if (demo) {
+    if (reduceMotion) {
+      demo.setAttribute('controls', '');
+    } else if ('IntersectionObserver' in window) {
+      var vio = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) { demo.play().catch(function () { demo.setAttribute('controls', ''); }); }
+          else { demo.pause(); }
+        });
+      }, { threshold: 0.25 });
+      vio.observe(demo);
+    } else {
+      demo.setAttribute('controls', '');
+    }
+  }
+})();
+</script>
+
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cd30115fa535417ca908587b96cd3733"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
