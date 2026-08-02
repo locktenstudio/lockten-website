@@ -244,6 +244,26 @@ html, body {
 .btn-ghost-dark:hover { background: rgba(255, 255, 255, 0.08); border-color: rgba(255, 255, 255, 0.55); }
 
 /* ------------------------------------------------------------
+   Store badge pairs (Apple App Store + Google Play)
+   Both badges are official artwork and must never be restyled,
+   recolored, cropped or distorted. Widths are set so the two read
+   the same visual height: the Google asset bakes Google's required
+   clear space (a quarter of the badge height) into the image, so it
+   is ~29% wider and taller than its visible badge. That is also why
+   the flex gap is small; the artwork supplies the rest of the space.
+     large: Apple 200x67   Google 258x100 (visible 225x67)
+     small: Apple 140x47   Google 181x70  (visible 158x47)
+   ------------------------------------------------------------ */
+.store-badges { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; }
+.store-badges a { display: inline-block; transition: transform 0.15s ease; }
+.store-badges a:hover { transform: scale(1.04); }
+.store-badges img { display: block; height: auto; }
+.store-badges .badge-apple img { width: 200px; }
+.store-badges .badge-google img { width: 258px; }
+.store-badges-sm .badge-apple img { width: 140px; }
+.store-badges-sm .badge-google img { width: 181px; }
+
+/* ------------------------------------------------------------
    Header — tall brand header + compact sticky bar on scroll
    ------------------------------------------------------------ */
 .site-header {

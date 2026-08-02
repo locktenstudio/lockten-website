@@ -66,7 +66,8 @@
 .sr-step h3 { font-family: var(--font-display); font-weight: 400; font-size: 1.25rem; margin: 8px 0 6px; }
 .sr-step p { font-size: 0.88rem; color: var(--fg-2); line-height: 1.55; }
 .sr-cta { text-align: center; padding: 56px 0 84px; }
-.sr-cta .hero-actions { justify-content: center; }
+.sr-cta .hero-actions { justify-content: center; margin-top: 20px; }
+.sr-cta .store-badges { justify-content: center; }
 .sr-price-note { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.05em; color: var(--fg-3); margin-top: 18px; }
 </style>
 </head>
@@ -157,11 +158,16 @@
   <section class="sr-cta">
     <div class="container">
       <h2 class="sr-eyebrow" style="display:block; margin-bottom:14px;">Try it on your next walk</h2>
-      <div class="hero-actions">
-        <a href="https://apps.apple.com/app/walkthrough-site-reports/id6775347863" class="btn btn-primary">Download on the App Store
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      <div class="store-badges">
+        <a class="badge-apple" href="https://apps.apple.com/app/walkthrough-site-reports/id6775347863">
+          <img src="assets/app-store-badge.svg" alt="Download on the App Store" width="200" height="67">
         </a>
-        <a href="/walkthrough" class="btn btn-ghost">Learn more</a>
+        <a class="badge-google" href="https://play.google.com/store/apps/details?id=com.cabinjohnbuilders.walkthrough">
+          <img src="assets/google-play-badge.png" alt="Get it on Google Play" width="258" height="100">
+        </a>
+      </div>
+      <div class="hero-actions">
+        <a href="/walkthrough" class="btn btn-secondary">Learn more</a>
       </div>
       <p class="sr-price-note">3 FREE REPORTS &middot; NO CREDIT CARD &middot; FROM $9.99/MO</p>
     </div>
@@ -192,6 +198,7 @@
       </div>
       <div class="footer-legal">
         <span>&copy; 2026 Lock Ten Studio LLC. Built and run by a custom residential builder, on real job sites.</span>
+        <span>Google Play and the Google Play logo are trademarks of Google LLC.</span>
       </div>
     </div>
   </div>

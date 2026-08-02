@@ -48,12 +48,11 @@
 .pp-row.file svg { color: var(--slate-400); }
 .pp-row.dir .nm { font-weight: 500; color: var(--fg); }
 
-/* Product-card action rows (badge + learn-more) */
+/* Product-card action rows (store badges + learn-more). Badge sizing and the
+   Apple/Google pairing live in styles.css under .store-badges. */
 .product-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
 .product-actions .product-more { margin-top: 0; }
-.product-actions .store-badge-sm { display: inline-block; transition: transform 0.15s ease; }
-.product-actions .store-badge-sm:hover { transform: scale(1.04); }
-.product-actions .store-badge-sm img { display: block; width: 140px; height: auto; }
+.product-actions .store-badges { gap: 4px 6px; }
 </style>
 
 <script type="application/ld+json">
@@ -67,7 +66,8 @@
   "sameAs": [
     "https://www.instagram.com/locktenstudio",
     "https://x.com/locktenstudio",
-    "https://apps.apple.com/app/walkthrough-site-reports/id6775347863"
+    "https://apps.apple.com/app/walkthrough-site-reports/id6775347863",
+    "https://play.google.com/store/apps/details?id=com.cabinjohnbuilders.walkthrough"
   ],
   "address": { "@type": "PostalAddress", "addressLocality": "Cabin John", "addressRegion": "MD", "addressCountry": "US" }
 }
@@ -159,7 +159,7 @@
             <p class="product-kicker">For the field</p>
             <div class="product-name-row">
               <h3 class="product-name">Walkthrough</h3>
-              <span class="tag tag-live">On the App Store</span>
+              <span class="tag tag-live">On the App Store and Google Play</span>
             </div>
             <p class="product-role">Walk the site. Talk. Send.</p>
             <p class="product-body">
@@ -170,9 +170,14 @@
               <span class="product-trial">Standard and Pro plans. Three free reports to start, no card.</span>
             </div>
             <div class="product-actions">
-              <a href="https://apps.apple.com/app/walkthrough-site-reports/id6775347863" class="store-badge-sm">
-                <img src="assets/app-store-badge.svg" alt="Download on the App Store" width="140" height="47">
-              </a>
+              <div class="store-badges store-badges-sm">
+                <a class="badge-apple" href="https://apps.apple.com/app/walkthrough-site-reports/id6775347863">
+                  <img src="assets/app-store-badge.svg" alt="Download on the App Store" width="140" height="47">
+                </a>
+                <a class="badge-google" href="https://play.google.com/store/apps/details?id=com.cabinjohnbuilders.walkthrough">
+                  <img src="assets/google-play-badge.png" alt="Get it on Google Play" width="181" height="70">
+                </a>
+              </div>
               <a href="/walkthrough" class="product-more">Learn more <span aria-hidden="true">&rsaquo;</span></a>
             </div>
           </div>
@@ -321,6 +326,7 @@
       </div>
       <div class="footer-legal">
         <span>&copy; 2026 Lock Ten Studio LLC. All rights reserved.</span>
+        <span>Google Play and the Google Play logo are trademarks of Google LLC.</span>
       </div>
     </div>
   </div>

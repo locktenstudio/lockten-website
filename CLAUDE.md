@@ -57,7 +57,13 @@ Lock Ten Design System. Tokens live in `styles.css` `:root`.
 
 ## Walkthrough launch state (current)
 
-Walkthrough is **live on the App Store** as **"Walkthrough: Site Reports"**, store URL `https://apps.apple.com/app/walkthrough-site-reports/id6775347863`. The `/walkthrough` page shows the official Apple **App Store badge** and "Now on the App Store" copy (flipped from the pre-launch notify form on 2026-07-05). The old Beehiiv notify form (`e266c9b9`) was removed from that page at the flip.
+Walkthrough is **live on both stores** as **"Walkthrough: Site Reports"**: App Store since 2026-07-07 (`https://apps.apple.com/app/walkthrough-site-reports/id6775347863`), Google Play since 2026-08-01 (`https://play.google.com/store/apps/details?id=com.cabinjohnbuilders.walkthrough`). The old Beehiiv notify form (`e266c9b9`) was removed from `/walkthrough` at the 2026-07-05 store flip.
+
+**Store badges are a matched pair.** Markup is `.store-badges` (add `.store-badges-sm` for the homepage card) wrapping an `a.badge-apple` and an `a.badge-google`; sizing lives in `styles.css`, not per page. Both are official artwork and must never be recolored, cropped, restyled or distorted. Apple's `assets/app-store-badge.svg` is tight to the badge; Google's `assets/google-play-badge.png` (the official generic English web badge, 646x250) bakes Google's required clear space into the image, so it is set about 29% larger to make the two read at the same visual height. Google does not publish an SVG of this badge, which is why one is PNG and one is SVG.
+
+**Google requires the line "Google Play and the Google Play logo are trademarks of Google LLC" in the footer small print of every page that shows the badge** (`index.html`, `walkthrough.html`, `sample-report.html`). Add it to `.footer-legal` on any new page that gains a Play badge. Apple asks for no equivalent line, so there is none.
+
+**Architect Walkthrough is iOS only** and stays that way on the site: `architect.html`, its FAQ, the `architect-help.html` billing copy, the Architect line in `privacy.html` and the Architect entry in `llms.txt` all correctly say App Store / iOS. Do not sweep them into an Android edit.
 
 ## Pricing (single source of truth for the site)
 

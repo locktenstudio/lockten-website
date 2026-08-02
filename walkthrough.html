@@ -28,10 +28,13 @@
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "name": "Walkthrough: Site Reports",
-  "operatingSystem": "iOS",
+  "operatingSystem": "iOS, Android",
   "applicationCategory": "BusinessApplication",
   "url": "https://lockten.ai/walkthrough",
-  "installUrl": "https://apps.apple.com/app/walkthrough-site-reports/id6775347863",
+  "installUrl": [
+    "https://apps.apple.com/app/walkthrough-site-reports/id6775347863",
+    "https://play.google.com/store/apps/details?id=com.cabinjohnbuilders.walkthrough"
+  ],
   "offers": { "@type": "AggregateOffer", "lowPrice": "9.99", "highPrice": "24.99", "priceCurrency": "USD", "offerCount": "2" },
   "publisher": { "@type": "Organization", "name": "Lock Ten Studio", "url": "https://lockten.ai" }
 }
@@ -135,9 +138,10 @@
 .cta-band .container { position: relative; }
 .cta-band h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.2rem, 4.5vw, 3.4rem); line-height: 1.1; color: var(--white); max-width: 18ch; margin: 0 auto; }
 .cta-band p { color: rgba(243,243,248,0.78); font-size: 1.08rem; margin: 16px auto 0; max-width: 520px; }
-.store-badge { display: inline-block; margin-top: 36px; transition: transform 0.15s ease; }
-.store-badge:hover { transform: scale(1.04); }
-.store-badge img { display: block; width: 200px; height: auto; }
+.cta-band .store-badges { justify-content: center; margin-top: 36px; }
+/* Hero: badge pair on its own row, the secondary link under it, so the two
+   store badges never get split across a wrap at awkward widths. */
+.wt-hero-copy .hero-actions { flex-direction: column; align-items: flex-start; gap: 20px; }
 .notify-card { background: var(--white); color: var(--fg); padding: 24px; border-radius: var(--radius-lg); box-shadow: var(--shadow-2); max-width: 520px; margin: 32px auto 0; text-align: center; }
 .notify-card .lead-in { font-weight: 500; color: var(--fg-2); margin: 0 0 14px; font-size: 0.95rem; }
 .notify-card iframe { width: 100% !important; max-width: 100% !important; min-height: 320px; border: none; display: block; }
@@ -179,7 +183,7 @@
       "name": "Does Walkthrough work on Android?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "iOS is first, at launch. The Android version follows within a few weeks."
+        "text": "Yes. Walkthrough is on Google Play and on the App Store. Sign in with the same email on either one and your projects and reports are there."
       }
     },
     {
@@ -263,13 +267,18 @@
     <div class="container">
       <div class="wt-hero-grid">
         <div class="wt-hero-copy">
-          <span class="launch-stamp">Now on the App Store</span>
+          <span class="launch-stamp">On the App Store and Google Play</span>
           <h1 class="hero-headline">Walk the site. Talk. <em>Send.</em></h1>
           <p class="hero-subhead">Site reports for builders. No portal. No logins for your subs. Photos to your own Google Drive or Dropbox. Three free reports to try it, every feature unlocked.</p>
           <div class="hero-actions">
-            <a href="https://apps.apple.com/app/walkthrough-site-reports/id6775347863" class="btn btn-primary">Download on the App Store
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-            </a>
+            <div class="store-badges">
+              <a class="badge-apple" href="https://apps.apple.com/app/walkthrough-site-reports/id6775347863">
+                <img src="assets/app-store-badge.svg" alt="Download on the App Store" width="200" height="67">
+              </a>
+              <a class="badge-google" href="https://play.google.com/store/apps/details?id=com.cabinjohnbuilders.walkthrough">
+                <img src="assets/google-play-badge.png" alt="Get it on Google Play" width="258" height="100">
+              </a>
+            </div>
             <a href="#how" class="btn btn-ghost-dark">See how it works</a>
           </div>
         </div>
@@ -291,7 +300,7 @@
     </div>
     <div class="hero-geo" aria-hidden="true">
       <span>By Lock Ten Studio</span>
-      <span>iOS first &middot; Android soon</span>
+      <span>iPhone &middot; Android</span>
     </div>
   </section>
 
@@ -483,7 +492,7 @@
         <details><summary>Do my subs need to download anything?</summary><p>No. They get a text or email from you with a PDF attached. They open the PDF. That's it.</p></details>
         <details><summary>Can I edit the report before it sends?</summary><p>Yes. Every walkthrough produces a PDF you preview and edit before sending. The AI gives you a starting point. You decide what goes out.</p></details>
         <details><summary>Where do the photos go?</summary><p>If you've connected Google Drive or Dropbox, photos save there in a folder for that walkthrough. If you haven't, they save in the app and you can connect Drive or Dropbox later to back-fill.</p></details>
-        <details><summary>Does Walkthrough work on Android?</summary><p>iOS is first, at launch. The Android version follows within a few weeks.</p></details>
+        <details><summary>Does Walkthrough work on Android?</summary><p>Yes. Walkthrough is on Google Play and on the App Store. Sign in with the same email on either one and your projects and reports are there.</p></details>
         <details><summary>How does sign-in work? I don't want another password.</summary><p>You enter your email. We email you a six-digit code. You type it in. You're signed in. No password to remember or reset.</p></details>
         <details><summary>What are the plans and what do they cost?</summary><p>Two plans, month to month. Standard is $9.99 a user each month, or $99.99 a year, and includes every report type except meeting notes and the punch list, with unlimited reports. Pro is $24.99 a user each month, or $239.99 a year, and adds meeting notes and the persistent punch list. You can move from Standard to Pro anytime.</p></details>
         <details><summary>What if I want to use this with my whole team?</summary><p>Each person gets their own seat, Standard at $9.99 a month or Pro at $24.99. They sign in with their own email, and reports they send come from their own phone. The subscription handles the seats; there's nothing extra to set up.</p></details>
@@ -496,12 +505,17 @@
   <!-- FINAL CTA / NOTIFY -->
   <section class="cta-band" id="notify">
     <div class="container">
-      <span class="launch-stamp">Now on the App Store</span>
+      <span class="launch-stamp">On the App Store and Google Play</span>
       <h2>Walk one job with it. On the house.</h2>
-      <p>Download it and run three free reports, no credit card, every feature unlocked. iOS today, Android on the way.</p>
-      <a class="store-badge" href="https://apps.apple.com/app/walkthrough-site-reports/id6775347863">
-        <img src="assets/app-store-badge.svg" alt="Download on the App Store" width="200" height="67">
-      </a>
+      <p>Download it and run three free reports, no credit card, every feature unlocked. On iPhone and Android.</p>
+      <div class="store-badges">
+        <a class="badge-apple" href="https://apps.apple.com/app/walkthrough-site-reports/id6775347863">
+          <img src="assets/app-store-badge.svg" alt="Download on the App Store" width="200" height="67">
+        </a>
+        <a class="badge-google" href="https://play.google.com/store/apps/details?id=com.cabinjohnbuilders.walkthrough">
+          <img src="assets/google-play-badge.png" alt="Get it on Google Play" width="258" height="100">
+        </a>
+      </div>
     </div>
   </section>
 
@@ -538,6 +552,7 @@
       </div>
       <div class="footer-legal">
         <span>&copy; 2026 Lock Ten Studio LLC. Built and run by a custom residential builder, on real job sites.</span>
+        <span>Google Play and the Google Play logo are trademarks of Google LLC.</span>
       </div>
     </div>
   </div>
