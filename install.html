@@ -7,24 +7,26 @@
   (styles.css) and the same head/header/footer as walkthrough.html so it matches the site.
 
   CTA targets:
-    - Plus      -> POST https://install.lockten.ai/intake/start
-                   (the route only accepts POST; it creates the intake session and
-                   303-redirects into Stripe Checkout. A plain link 405s, so the
-                   Plus CTAs are form buttons, not anchors.)
-    - Lite      -> https://install.lockten.ai/buy-lite (normal link)
-    - Concierge -> mailto:josh@lockten.ai
-  Stripe live cutover on the intake app is DONE and verified (onramp-intake commit
-  2038a0c, 2026-07-04). Checkout charges real cards.
+    - Plus -> POST https://install.lockten.ai/intake/start
+              (the route only accepts POST; it creates the intake session and
+              303-redirects into Stripe Checkout. A plain link 405s, so the
+              Plus CTAs are form buttons, not anchors.)
+    - Lite -> https://install.lockten.ai/buy-lite (normal link; FREE, email-gated
+              download, no Stripe)
+
+  Repositioned 2026-08-10 (Josh's call): Lite is free, Plus is $499, Concierge is
+  OFF the site entirely (inbound email only, unadvertised), Recurring is retired.
+  Static product: no ongoing-skills or new-content promises anywhere on this page.
 -->
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Install | AI workspace for builder businesses</title>
-<meta name="description" content="The Install builds a complete AI-workspace rollout for your specific build business: your team, projects, voice, files, and customized skills. Built from a 25-minute questionnaire, ready for your team to install. Lite $297, Plus $2,997, Concierge by inquiry. By Lock Ten Studio.">
+<meta name="description" content="The Install builds a complete AI-workspace rollout for your specific build business: your team, projects, voice, files, and customized skills. Built from a 25-minute questionnaire, ready for your team to install. Lite is free; Plus, built for you, is $499. By Lock Ten Studio.">
 
 <meta property="og:title" content="The Install by Lock Ten Studio">
-<meta property="og:description" content="A complete, customized AI-workspace rollout for your build business, built and ready to install. Three tiers from $297.">
+<meta property="og:description" content="A complete, customized AI-workspace rollout for your build business, built and ready to install. Lite is free; the built-for-you package is $499.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lockten.ai/install">
 <meta property="og:image" content="https://lockten.ai/assets/og/og-install.png">
@@ -121,12 +123,11 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
 
 /* Three tiers */
 .in-tiers { display: grid; gap: 20px; margin-top: 14px; grid-template-columns: 1fr; }
-@media (min-width: 920px) { .in-tiers { grid-template-columns: 1fr 1.06fr 1fr; gap: 24px; align-items: start; } }
+@media (min-width: 920px) { .in-tiers { grid-template-columns: 1fr 1.06fr; gap: 24px; align-items: start; max-width: 880px; margin-left: auto; margin-right: auto; } }
 .in-tier { position: relative; display: flex; flex-direction: column; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--white); overflow: hidden; box-shadow: var(--shadow-1); }
 .in-tier-bar { height: 6px; width: 100%; }
 .in-tier.lite .in-tier-bar { background: var(--slate-300); }
 .in-tier.hero .in-tier-bar { background: var(--brand); }
-.in-tier.concierge .in-tier-bar { background: var(--deep-900); }
 .in-tier-body { display: flex; flex-direction: column; flex: 1; padding: 30px 28px 30px; }
 .in-tier-name { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--fg-3); }
 .in-tier.hero .in-tier-name { color: var(--brand); }
@@ -157,14 +158,6 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
 .in-step h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.22rem; color: var(--fg); margin: 12px 0 8px; letter-spacing: -0.01em; }
 .in-step p { font-size: 0.97rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
 .in-steps-note { text-align: center; max-width: 620px; margin: 26px auto 0; color: var(--fg-3); font-size: 0.96rem; line-height: 1.6; }
-
-/* Recurring: quiet add-on card */
-.in-recurring { max-width: 560px; margin: 8px auto 0; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--bg-subtle); padding: 30px 30px 32px; text-align: center; }
-.in-recurring .rname { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-2); }
-.in-recurring .rname strong { color: var(--brand); }
-.in-recurring ul { list-style: none; padding: 0; margin: 18px 0 0; }
-.in-recurring li { font-size: 0.95rem; color: var(--fg-2); padding: 5px 0; line-height: 1.5; }
-.in-recurring .rfine { font-size: 0.85rem; color: var(--fg-3); margin-top: 14px; }
 
 /* Trust: three short statements */
 .in-trust3 { display: grid; gap: 28px; margin-top: 8px; grid-template-columns: 1fr; }
@@ -204,10 +197,18 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
     },
     {
       "@type": "Question",
+      "name": "Why is Lite free?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Because the fastest way to get builders working with AI properly is to hand over the starting structure. The Install comes from inside the industry, and the free tier is our contribution to it. Plus is there if you want yours built for you."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "What if I'm not technical?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Plus and Concierge don't require you to be technical. The 25-minute questionnaire is in plain English. You answer questions about your business. We do the AI part. You and your team use the result."
+        "text": "Plus doesn't require you to be technical. The 25-minute questionnaire is in plain English. You answer questions about your business. We do the AI part. You and your team use the result."
       }
     },
     {
@@ -215,7 +216,7 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
       "name": "How long until I can use it?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Lite: as long as it takes you to follow the guide, usually a focused weekend. Plus: five business days from when you submit the questionnaire. Concierge: typically two to three weeks, depending on the scoping conversation."
+        "text": "Lite: as long as it takes you to follow the guide, usually a focused weekend. Plus: five business days from when you submit the questionnaire."
       }
     },
     {
@@ -223,7 +224,7 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
       "name": "What if it doesn't work for my business?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Lite has a 7-day refund. Plus has a 30-day satisfaction guarantee. Concierge has a scoping conversation before you commit. If something's wrong, you reply to the welcome email; a real person reads it and we make it right."
+        "text": "Lite is free, so there's nothing to lose by trying it. Plus has a 30-day satisfaction guarantee. If something's wrong, you reply to the welcome email; a real person reads it and we make it right."
       }
     },
     {
@@ -239,7 +240,7 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
       "name": "Can I upgrade from Lite to Plus later?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. The $297 you paid for Lite applies as a credit toward Plus. Email info@lockten.ai and we'll set it up."
+        "text": "Yes. Start with the free package, and if you decide you want the built-for-you version, Plus is $499 whenever you're ready. It's the same workspace structure, so nothing you've set up is wasted."
       }
     },
     {
@@ -255,7 +256,7 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
       "name": "Can I see what the configured workspace looks like first?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Email info@lockten.ai with the subject \"Walkthrough call\" and we'll set up a 15-minute look before you commit to Plus or Concierge."
+        "text": "Email info@lockten.ai with the subject \"Walkthrough call\" and we'll set up a 15-minute look before you commit to Plus."
       }
     },
     {
@@ -263,7 +264,7 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
       "name": "Why isn't this a monthly subscription?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Because the Install is configuration work, not an ongoing platform. You buy the configuration once, you own it forever. The Recurring tier ($19/month) is the separate, optional layer that keeps you current with new skills and capabilities as Claude evolves."
+        "text": "Because the Install is configuration work, not an ongoing platform. You get the configuration once, you own it forever, and there's nothing to cancel."
       }
     }
   ]
@@ -306,14 +307,14 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
       <div class="in-hero-copy">
         <p class="label label-center" style="color:var(--blueprint-300);">The Install</p>
         <h1 class="hero-headline">The AI workspace your build business <em>actually needs.</em></h1>
-        <p class="hero-subhead">Built for your specific business from a 25-minute questionnaire. The complete rollout, ready for your team to put in place in a weekend. Three tiers, depending on how much you want built for you.</p>
+        <p class="hero-subhead">Built for your specific business from a 25-minute questionnaire. The complete rollout, ready for your team to put in place in a weekend. Start free and do it yourself, or have it built for you for $499.</p>
         <div class="hero-actions">
           <form class="buy-form" method="POST" action="https://install.lockten.ai/intake/start">
-            <button type="submit" class="btn btn-primary">Start with Plus, $2,997
+            <button type="submit" class="btn btn-primary">Start with Plus, $499
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
             </button>
           </form>
-          <a href="https://install.lockten.ai/buy-lite" class="btn btn-ghost-dark">Or start with Lite, $297
+          <a href="https://install.lockten.ai/buy-lite" class="btn btn-ghost-dark">Or get Lite, free
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
           </a>
         </div>
@@ -471,7 +472,7 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
           <div class="in-tier-bar"></div>
           <div class="in-tier-body">
             <p class="in-tier-name">Lite</p>
-            <p class="in-tier-price">$297 <span class="unit">one-time</span></p>
+            <p class="in-tier-price">Free <span class="unit">no card, just your email</span></p>
             <p class="in-tier-tag">The DIY package.</p>
             <p class="in-tier-sub">For builders who want the framework and the templates and prefer to install it themselves.</p>
             <ul class="in-incl">
@@ -479,14 +480,14 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Templates for the five context layers</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>A standing-instructions library you customize</li>
               <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Five deployable starter skills</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Self-serve install guide, email support 30 days</li>
+              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Self-serve install guide</li>
             </ul>
             <p class="in-bestfor-label">Best for</p>
             <ul class="in-bestfor">
               <li>Tech-comfortable builders who want the structure and a clear guide to roll it out themselves</li>
               <li>Teams that want to start small and learn the system at their own pace</li>
             </ul>
-            <a href="https://install.lockten.ai/buy-lite" class="btn btn-secondary">Buy Lite, $297</a>
+            <a href="https://install.lockten.ai/buy-lite" class="btn btn-secondary">Get Lite free</a>
           </div>
         </div>
 
@@ -496,7 +497,7 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
           <div class="in-tier-bar"></div>
           <div class="in-tier-body">
             <p class="in-tier-name">Plus</p>
-            <p class="in-tier-price">$2,997 <span class="unit">one-time</span></p>
+            <p class="in-tier-price">$499 <span class="unit">one-time</span></p>
             <p class="in-tier-tag">The built-for-you package. Customized to your specific business.</p>
             <p class="in-tier-sub">For builders ready to go from scattered, individual AI use to one cohesive structure the whole company works from.</p>
             <ul class="in-incl">
@@ -513,33 +514,10 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
               <li>Companies that want one cohesive system everyone works from, not scattered tools</li>
             </ul>
             <form class="buy-form" method="POST" action="https://install.lockten.ai/intake/start">
-              <button type="submit" class="btn btn-primary">Start with Plus, $2,997
+              <button type="submit" class="btn btn-primary">Start with Plus, $499
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
               </button>
             </form>
-          </div>
-        </div>
-
-        <!-- CONCIERGE -->
-        <div class="in-tier concierge">
-          <div class="in-tier-bar"></div>
-          <div class="in-tier-body">
-            <p class="in-tier-name">Concierge</p>
-            <p class="in-tier-price">By inquiry <span class="unit">scoped to you</span></p>
-            <p class="in-tier-tag">Plus, with custom skills built for your biggest recurring headaches.</p>
-            <p class="in-tier-sub">For builders who want a tailored AI workspace plus a real conversation about how it should fit.</p>
-            <ul class="in-incl">
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Everything in Plus, plus:</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>A scoping conversation on your three biggest recurring workflows</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Three custom skills built for your workflows, not templates</li>
-              <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>A live handback session walking you and your team through it</li>
-            </ul>
-            <p class="in-bestfor-label">Best for</p>
-            <ul class="in-bestfor">
-              <li>Builders with idiosyncratic workflows that templates won't fit</li>
-              <li>Operators who want to start with the highest-value version</li>
-            </ul>
-            <a href="mailto:josh@lockten.ai?subject=Concierge%20inquiry" class="btn btn-secondary">Schedule a conversation</a>
           </div>
         </div>
 
@@ -571,27 +549,7 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
           <p>You get the complete package within five business days, with a training site, slide deck, and per-person runbooks to put it in place across your team. We're on email for two weeks to help you dial it in.</p>
         </div>
       </div>
-      <p class="in-steps-note">Lite is the same workspace structure, but you fill it in yourself from a guide. Concierge is the same as Plus, plus custom skills and a live handback.</p>
-    </div>
-  </section>
-
-  <!-- RECURRING -->
-  <section class="section" id="recurring" style="padding-top:0;">
-    <div class="container">
-      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
-        <p class="label label-center">After the install</p>
-        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">Stay current as Claude evolves.</h2>
-      </div>
-      <div class="in-recurring reveal">
-        <p class="rname"><strong>Recurring</strong>, $19/month or $190/year</p>
-        <ul>
-          <li>New skills dropped monthly from CJB's own ongoing AI work</li>
-          <li>Notes when Claude ships capabilities that affect builder workflows</li>
-          <li>A small private community of Install customers</li>
-          <li>Cancel anytime</li>
-        </ul>
-        <p class="rfine">Optional add-on. The first month is included with every Install.</p>
-      </div>
+      <p class="in-steps-note">Lite is the same workspace structure, but you fill it in yourself from a guide.</p>
     </div>
   </section>
 
@@ -609,7 +567,7 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
         </div>
         <div class="in-trust-col">
           <h3>A real guarantee</h3>
-          <p>Lite: 7-day refund. Plus: 30-day satisfaction guarantee. Concierge: a scoping conversation before you commit, with terms agreed in writing.</p>
+          <p>Lite is free. Plus has a 30-day satisfaction guarantee. If something's wrong, you reply to the welcome email; a real person reads it and we make it right.</p>
         </div>
         <div class="in-trust-col">
           <h3>A real builder behind it</h3>
@@ -628,14 +586,15 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
       </div>
       <div class="faq reveal">
         <details><summary>Do I need to already be using Claude Cowork?</summary><p>You need a Claude Cowork Teams account (Anthropic, $25/seat/month) for your team to log into. We can walk you through setting that up if you don't have one yet. The Install gives you the configuration to load into it; Anthropic provides the platform.</p></details>
-        <details><summary>What if I'm not technical?</summary><p>Plus and Concierge don't require you to be technical. The 25-minute questionnaire is in plain English. You answer questions about your business. We do the AI part. You and your team use the result.</p></details>
-        <details><summary>How long until I can use it?</summary><p>Lite: as long as it takes you to follow the guide, usually a focused weekend. Plus: five business days from when you submit the questionnaire. Concierge: typically two to three weeks, depending on the scoping conversation.</p></details>
-        <details><summary>What if it doesn't work for my business?</summary><p>Lite has a 7-day refund. Plus has a 30-day satisfaction guarantee. Concierge has a scoping conversation before you commit. If something's wrong, you reply to the welcome email; a real person reads it and we make it right.</p></details>
+        <details><summary>Why is Lite free?</summary><p>Because the fastest way to get builders working with AI properly is to hand over the starting structure. The Install comes from inside the industry, and the free tier is our contribution to it. Plus is there if you want yours built for you.</p></details>
+        <details><summary>What if I'm not technical?</summary><p>Plus doesn't require you to be technical. The 25-minute questionnaire is in plain English. You answer questions about your business. We do the AI part. You and your team use the result.</p></details>
+        <details><summary>How long until I can use it?</summary><p>Lite: as long as it takes you to follow the guide, usually a focused weekend. Plus: five business days from when you submit the questionnaire.</p></details>
+        <details><summary>What if it doesn't work for my business?</summary><p>Lite is free, so there's nothing to lose by trying it. Plus has a 30-day satisfaction guarantee. If something's wrong, you reply to the welcome email; a real person reads it and we make it right.</p></details>
         <details><summary>Is my business data safe?</summary><p>Cowork's paid tiers (including Teams, which The Install requires) do not train on your data. You own your workspace. We don't retain access to it after handover. Configuration data you provide in the questionnaire is encrypted at rest and deleted on request.</p></details>
-        <details><summary>Can I upgrade from Lite to Plus later?</summary><p>Yes. The $297 you paid for Lite applies as a credit toward Plus. Email info@lockten.ai and we'll set it up.</p></details>
+        <details><summary>Can I upgrade from Lite to Plus later?</summary><p>Yes. Start with the free package, and if you decide you want the built-for-you version, Plus is $499 whenever you're ready. It's the same workspace structure, so nothing you've set up is wasted.</p></details>
         <details><summary>Do my team members need separate accounts?</summary><p>Yes, but that's a Cowork Teams thing, not an Install thing. Each person gets their own Cowork seat ($25/month) and signs in with their own email. The Install provides the shared configuration they all work from.</p></details>
-        <details><summary>Can I see what the configured workspace looks like first?</summary><p>Email info@lockten.ai with the subject "Walkthrough call" and we'll set up a 15-minute look before you commit to Plus or Concierge.</p></details>
-        <details><summary>Why isn't this a monthly subscription?</summary><p>Because the Install is configuration work, not an ongoing platform. You buy the configuration once, you own it forever. The Recurring tier ($19/month) is the separate, optional layer that keeps you current with new skills and capabilities as Claude evolves.</p></details>
+        <details><summary>Can I see what the configured workspace looks like first?</summary><p>Email info@lockten.ai with the subject "Walkthrough call" and we'll set up a 15-minute look before you commit to Plus.</p></details>
+        <details><summary>Why isn't this a monthly subscription?</summary><p>Because the Install is configuration work, not an ongoing platform. You get the configuration once, you own it forever, and there's nothing to cancel.</p></details>
       </div>
     </div>
   </section>
@@ -643,15 +602,15 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
   <!-- FINAL CTA -->
   <section class="cta-band" id="start">
     <div class="container">
-      <h2>Pick your tier.</h2>
-      <p>Plus for most. Lite if you want DIY. Concierge if you want it tailored.</p>
+      <h2>Pick your path.</h2>
+      <p>Plus if you want it built for you. Lite, free, if you'd rather do it yourself.</p>
       <div class="cta-actions">
         <form class="buy-form" method="POST" action="https://install.lockten.ai/intake/start">
-          <button type="submit" class="btn btn-primary">Start with Plus, $2,997
+          <button type="submit" class="btn btn-primary">Start with Plus, $499
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
           </button>
         </form>
-        <a href="https://install.lockten.ai/buy-lite" class="btn btn-ghost-dark">Or start with Lite, $297
+        <a href="https://install.lockten.ai/buy-lite" class="btn btn-ghost-dark">Get Lite free
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
         </a>
       </div>

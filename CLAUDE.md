@@ -73,13 +73,15 @@ Price appears in SEVEN places; update ALL together: `walkthrough.html` `#pricing
 
 **Architect Walkthrough: $19.99 / month, or $199.99 / year (about $17/mo).** First three SENT reports free (drafts don't count), no credit card. Apple billing only. Shows on `architect.html` `#pricing` and in its FAQ; `architect-help.html` billing section must match.
 
+**The Install (repositioned 2026-08-10, Josh's call): TWO tiers. Lite is FREE (email-gated download, no card) and Plus is $499 one-time.** Concierge and the Recurring subscription are RETIRED: Concierge is deliberately unadvertised (inbound email only), so do not re-add it to any page. The product is positioned as static: no ongoing-skills or new-content promises anywhere in site copy. Install pricing appears in FIVE places; update ALL together: `install.html` (hero, tier cards, FAQ + its FAQPage JSON-LD, final CTA band), the Install card in `index.html`, `llms.txt`, the Install paragraph in `primer.html`, and the refunds list in `terms.html`.
+
 ## Contact-email convention
 
-Public pages use **role addresses**: `info@lockten.ai` (general), `support@lockten.ai` (Walkthrough refunds/support). `josh@lockten.ai` is reserved for where a real person must read it (e.g. The Install Concierge inquiry). Keep it that way.
+Public pages use **role addresses**: `info@lockten.ai` (general), `support@lockten.ai` (Walkthrough refunds/support). `josh@lockten.ai` is reserved for where a real person must read it (no public page uses it since the Concierge mailto was removed 2026-08-10). Keep it that way.
 
 ## The Install page
 
-`install.html` is **public** (homepage nav, hero and product card link to it since 2026-07-05). Its buy flow lives in the separate intake app at `install.lockten.ai` (repo `locktenstudio/onramp-intake`), where the **Stripe live cutover is done and verified** (onramp-intake commit 2038a0c, 2026-07-04). Checkout charges real cards.
+`install.html` is **public** (homepage nav, hero and product card link to it since 2026-07-05). Its buy flow lives in the separate intake app at `install.lockten.ai` (repo `locktenstudio/onramp-intake`). Since the 2026-08-10 repositioning: **Lite is free** (`/buy-lite` is an email-gated download, no Stripe) and **Plus is $499** through live Stripe Checkout.
 
 CTA mechanics: the Plus entry route `POST https://install.lockten.ai/intake/start` **rejects GET with a 405**, so every Plus CTA on `install.html` is a `<form method="POST">` button, never a plain `<a href>`. Lite (`/buy-lite`) is a normal page and a normal link. Keep it that way when editing CTAs.
 
