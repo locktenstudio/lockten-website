@@ -77,7 +77,7 @@ Price appears in SEVEN places; update ALL together: `walkthrough.html` `#pricing
 
 ## Contact-email convention
 
-Public pages use **role addresses**: `info@lockten.ai` (general), `support@lockten.ai` (Walkthrough refunds/support). `josh@lockten.ai` is reserved for where a real person must read it (no public page uses it since the Concierge mailto was removed 2026-08-10). Keep it that way.
+Public pages use **role addresses**: `info@lockten.ai` (general), `support@lockten.ai` (Walkthrough refunds/support). `josh@lockten.ai` is reserved for where a real person must read it; its one remaining public use is the primer's "a real person reads it" line (`primer.html`), which is deliberate. Keep it that way.
 
 ## The Install page
 
