@@ -1,0 +1,659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- ============================================================
+     DRAFT for lockten.ai/handover  ·  becomes handover.html at the repo root
+     NOT COMMITTED. Josh approves, lockten-reviewer checks, then it goes on a
+     branch. Push to main auto-deploys, so this file must never be dropped
+     straight into C:\Dev\lockten-website and pushed.
+
+     Assets this page needs before it can ship:
+       1. assets/og/og-handover.png  (1200x630 share card, does not exist yet)
+     Everything else on the page uses assets already in the repo, or inline SVG.
+
+     Repo housekeeping that goes with it (NOT done here):
+       - sitemap.xml needs a /handover entry
+       - llms.txt needs a Handover section
+       - privacy.html does not name Handover yet (flagged in STATE.md too)
+     ============================================================ -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Handover | The homeowner's manual, under your name</title>
+<meta name="description" content="Handover gives every client a searchable app and a printed binder for their new home. Manuals found and organized for you, care guides, warranty contacts, all delivered under your brand. For custom home builders, by Lock Ten Studio.">
+
+<meta property="og:title" content="Handover by Lock Ten Studio">
+<meta property="og:description" content="Hand over the house and every answer. A searchable app and a printed binder for each of your clients, under your brand, not ours.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lockten.ai/handover">
+<!-- NEEDS ASSET: 1200x630 card, does not exist in assets/og/ yet -->
+<meta property="og:image" content="https://lockten.ai/assets/og/og-handover.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://lockten.ai/handover">
+
+<link rel="preload" href="fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Crect width='1024' height='1024' rx='180' fill='%23123a40'/%3E%3Crect x='368' y='240' width='288' height='608' rx='10' fill='none' stroke='%231d5058' stroke-width='26'/%3E%3Crect x='392' y='264' width='240' height='560' fill='%23f0bd6a'/%3E%3Cpath d='M632 264 L632 824 L516 876 L516 292 Z' fill='%230c2b30'/%3E%3C/svg%3E">
+
+<script>document.documentElement.className += ' js';</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Handover",
+  "applicationCategory": "BusinessApplication",
+  "url": "https://lockten.ai/handover",
+  "description": "A white-label homeowner manual platform for custom home builders. Each client gets a searchable app and a printed binder for their home, branded to the builder.",
+  "publisher": { "@type": "Organization", "name": "Lock Ten Studio", "url": "https://lockten.ai" }
+}
+</script>
+
+<style>
+/* ---- Handover page theme: the doorway ramp from the app icon itself.
+       Deep teal ground, warm amber light. Overriding the ramp tokens at
+       body level re-skins every global component (hero, buttons, labels,
+       section rules, CTA band) without touching styles.css.
+       Per the 2026-08-02 brand-layering ruling: gate blue binds STUDIO
+       surfaces; a product page wears the product's own skin. ---- */
+body.hand {
+  --brand:         #123A40;
+  --brand-hover:   #0E2E33;
+  --blueprint-50:  #EFF5F5;
+  --blueprint-100: #DCEAEA;
+  --blueprint-200: #B4D0D2;
+  --blueprint-300: #9CCBCF;
+  --blueprint-600: #123A40;
+  --blueprint-700: #0E2E33;
+  --blueprint-800: #0A2429;
+  --deep-900: #0C2B30;
+  --deep-800: #123A40;
+  --steel-600: #2A5A60;
+  --steel-400: #7FA6AA;
+  --steel-300: #A9C9CC;
+  /* the warm half of the identity, used only as an accent */
+  --amber:      #EDA94E;
+  --amber-lift: #F4C877;
+  --amber-deep: #D9973E;
+}
+body.hand .bp-grid {
+  background-image:
+    linear-gradient(to right, rgba(18, 58, 64, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(18, 58, 64, 0.05) 1px, transparent 1px);
+}
+/* On the dark teal surfaces a teal button disappears; the light is amber there. */
+.hero-dark .hero-headline em { color: var(--amber-lift); }
+.hero-dark .btn-primary, .cta-band .btn-primary { background: var(--amber); color: #0C2B30; }
+.hero-dark .btn-primary:hover, .cta-band .btn-primary:hover { background: var(--amber-lift); }
+.hero-dark .btn-primary:active, .cta-band .btn-primary:active { background: var(--amber-deep); }
+
+/* ---- Page components (same skeleton as the other product pages) ---- */
+.hv-hero-grid { display: grid; gap: 44px; align-items: center; }
+@media (min-width: 900px) { .hv-hero-grid { grid-template-columns: 1.1fr 0.9fr; gap: 56px; } }
+.hv-hero-copy { text-align: left; }
+.hero-dark .hv-hero-copy .hero-headline { margin: 0; max-width: 15ch; }
+.hero-dark .hv-hero-copy .hero-subhead { margin: 26px 0 0; }
+
+.hv-plate { display: flex; flex-direction: column; align-items: center; gap: 18px; }
+.hv-tile {
+  width: 100%;
+  max-width: 210px;
+  aspect-ratio: 1 / 1;
+  border-radius: 46px;
+  overflow: hidden;
+  box-shadow: 0 34px 76px -22px rgba(0, 0, 0, 0.62);
+}
+.hv-tile svg { display: block; width: 100%; height: 100%; }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-dark .hv-tile { animation: hv-float 7s ease-in-out infinite; }
+  @keyframes hv-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+}
+.hv-tile-name { font-family: var(--font-sans); font-weight: 600; font-size: 1.06rem; color: var(--white); letter-spacing: -0.01em; }
+.hv-tile-note { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--steel-400); text-align: center; }
+
+.hv-steps { display: grid; gap: 22px; margin-top: 8px; }
+@media (min-width: 760px) { .hv-steps { grid-template-columns: repeat(3, 1fr); gap: 28px; } }
+.hv-step { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px 26px; background: var(--white); }
+.hv-step .num { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.16em; color: var(--brand); }
+.hv-step .icon { width: 34px; height: 34px; color: var(--brand); margin: 14px 0 10px; }
+.hv-step h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.3rem; color: var(--fg); margin: 0 0 8px; }
+.hv-step p { font-size: 0.98rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
+
+.hv-modes { display: grid; gap: 16px; margin-top: 8px; grid-template-columns: 1fr; }
+@media (min-width: 560px) { .hv-modes { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 980px) { .hv-modes { grid-template-columns: repeat(4, 1fr); gap: 18px; } }
+.hv-mode { border: 1px solid var(--line); border-radius: var(--radius-md); padding: 24px 20px; background: var(--white); text-align: center; transition: box-shadow 200ms var(--ease), transform 200ms var(--ease); }
+.hv-mode:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); }
+.hv-mode.lead { border-color: var(--brand); border-width: 1.5px; background: var(--blueprint-50); }
+.hv-mode .ic { width: 30px; height: 30px; color: var(--brand); margin: 0 auto 12px; display: block; }
+.hv-mode h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.06rem; color: var(--fg); margin: 0 0 6px; letter-spacing: -0.01em; }
+.hv-mode p { font-size: 0.88rem; color: var(--fg-2); line-height: 1.5; margin: 0; }
+
+.hv-cards { display: grid; gap: 18px; margin-top: 8px; }
+@media (min-width: 760px) { .hv-cards { grid-template-columns: 1fr 1fr; gap: 22px; } }
+.hv-card { border: 1px solid var(--line); border-left: 3px solid var(--brand); border-radius: var(--radius-md); padding: 26px 28px; background: var(--white); }
+.hv-card h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.18rem; color: var(--fg); margin: 0 0 8px; letter-spacing: -0.01em; }
+.hv-card p { font-size: 0.97rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
+
+.hv-split { display: grid; gap: 44px; align-items: center; }
+@media (min-width: 900px) { .hv-split { grid-template-columns: 6fr 5fr; gap: 72px; } }
+.hv-list { list-style: none; padding: 0; margin: 26px 0 0; }
+.hv-list li { display: flex; gap: 14px; align-items: flex-start; padding: 11px 0; font-size: 1rem; color: var(--fg-2); line-height: 1.6; }
+.hv-list li svg { width: 20px; height: 20px; color: var(--brand); flex: none; margin-top: 4px; }
+
+/* Letterhead mock: shows the white-label point without faking a customer.
+   Every branded slot is labelled as the builder's, never filled with a name. */
+.hv-paper {
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-3);
+  padding: 30px 32px 34px;
+  max-width: 380px;
+  margin: 0 auto;
+}
+.hv-paper-head { display: flex; align-items: center; gap: 14px; padding-bottom: 16px; border-bottom: 1.5px solid var(--brand); }
+.hv-paper-logo {
+  width: 52px; height: 52px; flex: none;
+  border: 1.5px dashed var(--line-strong);
+  border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-mono); font-size: 0.52rem; line-height: 1.25;
+  text-align: center; color: var(--fg-3); letter-spacing: 0.04em; text-transform: uppercase;
+}
+.hv-paper-head span { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-3); }
+.hv-paper h4 { font-family: var(--font-display); font-weight: 400; font-size: 1.55rem; color: var(--fg); margin: 22px 0 14px; letter-spacing: -0.01em; }
+.hv-rule { height: 8px; border-radius: 4px; background: var(--slate-100); margin-bottom: 9px; }
+.hv-rule.w90 { width: 90%; } .hv-rule.w96 { width: 96%; } .hv-rule.w72 { width: 72%; } .hv-rule.w84 { width: 84%; }
+.hv-paper-foot { margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-3); }
+.hv-cap { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.05em; color: var(--fg-3); text-align: center; margin-top: 16px; }
+
+.hv-status { max-width: 700px; margin: 0 auto; }
+.hv-status ul { list-style: none; padding: 0; margin: 0; }
+.hv-status li { display: flex; gap: 16px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid var(--line); font-size: 1.02rem; color: var(--fg-2); line-height: 1.6; }
+.hv-status li:last-child { border-bottom: none; }
+.hv-status li b { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brand); font-weight: 500; flex: none; width: 92px; padding-top: 5px; }
+
+.faq { max-width: 760px; margin: 0 auto; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; padding: 20px 0; font-weight: 600; font-size: 1.06rem; color: var(--fg); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--font-mono); color: var(--brand); font-size: 1.4rem; line-height: 1; flex: none; }
+.faq details[open] summary::after { content: "\2013"; }
+.faq details p { margin: 0 0 20px; color: var(--fg-2); line-height: 1.65; font-size: 0.99rem; max-width: 64ch; }
+.faq details a { color: var(--brand); font-weight: 600; }
+
+.cta-band { background: var(--deep-900); color: var(--white); padding: 88px 0; text-align: center; position: relative; overflow: hidden; }
+.cta-band .container { position: relative; }
+.cta-band h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.2rem, 4.5vw, 3.4rem); line-height: 1.1; color: var(--white); max-width: 18ch; margin: 0 auto; }
+.cta-band h2 em { font-style: italic; color: var(--amber-lift); }
+.cta-band p { color: rgba(243,243,248,0.78); font-size: 1.08rem; margin: 16px auto 0; max-width: 520px; }
+.cta-band .hero-actions { justify-content: center; }
+.cta-mail { display: block; margin-top: 26px; font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.05em; color: var(--steel-300); text-decoration: none; }
+.cta-mail:hover { color: var(--amber-lift); }
+.launch-stamp { display: inline-block; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber-lift); border: 1.5px solid rgba(244, 200, 119, 0.45); border-radius: 3px; padding: 7px 14px; margin-bottom: 22px; }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What does my client have to do?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Nothing before you hand it to them. You add their email address, they get a message saying their home is ready, they type in the six-digit code we email them and they are in. No password, no account to create and nothing for them to pay."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I have to gather all the manuals myself?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No, that is the part the platform does. It searches manufacturers for the right document for each model you selected. Anything it cannot verify is flagged for you rather than attached, and you can upload your own PDF for any product."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Whose brand is on it?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yours. Your logo and colors theme the app the moment your client signs in, and the welcome letter, warranty, care guides and binder cover all print on your letterhead. Lock Ten's name does not appear anywhere your client can see it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What do I have to send in to set up a home?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your selections. A Buildertrend selections export or a spreadsheet both work. The list is read into a product list you review before anything is sourced, and you can add or correct products by hand."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it only work for houses I just finished?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. If you can produce the selection list and the documents, a home you handed over years ago can be built the same way. Older homes are usually more work up front because the selection data is messier."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can it get something wrong?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "It can miss, and it is built to miss out loud. A document it cannot verify is flagged for your review instead of quietly attached, and an answer the home's own documents do not support is replaced with a note pointing your client back to you by name. You review every sourced document before a home is published."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is the app on the App Store yet?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not yet. The homeowner app is on its way to the App Store. The platform behind it is already running real homes in production."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does it cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pricing is not published because it is not settled. Handover is coming on with its first builders and price is part of that conversation. Email info@lockten.ai and you will get a straight answer about where it stands."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this the same company as Walkthrough?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Lock Ten Studio builds software for custom home builders, run by the co-owner of a building company outside Washington DC. Walkthrough: Site Reports is its field-report app, on the App Store and Google Play."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="hand">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand">
+      <img src="assets/lockten-logo.png" alt="Lock Ten Studio" style="height:92px;">
+    </a>
+    <nav class="header-nav" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#app">The app</a>
+      <a href="#binder">The binder</a>
+      <a href="#brand">Your brand</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero-dark" id="top">
+    <div class="hero-contours" aria-hidden="true">
+      <svg viewBox="0 0 1500 640" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice">
+        <path d="M-40,90 C200,40 380,150 580,108 C780,66 960,170 1160,124 C1330,86 1440,140 1540,100" stroke-width="1.5"/>
+        <path class="p-accent" d="M-40,158 C170,116 360,212 560,168 C760,124 950,224 1150,180 C1320,144 1440,196 1540,160" stroke-width="1.5"/>
+        <path d="M-40,226 C190,190 350,278 550,240 C750,202 960,286 1160,246 C1330,214 1440,260 1540,228" stroke-width="1.5"/>
+        <path d="M-40,294 C200,264 360,340 560,308 C760,276 950,348 1150,312 C1320,284 1440,324 1540,296" stroke-width="1.5"/>
+        <path class="p-accent" d="M-40,362 C180,338 370,402 570,374 C770,346 960,408 1160,376 C1330,350 1440,386 1540,362" stroke-width="1.5"/>
+        <path d="M-40,430 C200,410 380,464 580,440 C780,416 970,470 1170,442 C1330,420 1440,452 1540,430" stroke-width="1.5"/>
+        <path d="M-40,498 C190,482 380,528 580,506 C780,484 970,530 1170,506 C1330,488 1440,514 1540,496" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div class="container">
+      <div class="hv-hero-grid">
+        <div class="hv-hero-copy">
+          <span class="launch-stamp">New from Lock Ten Studio</span>
+          <h1 class="hero-headline">Hand over the house. <em>And every answer.</em></h1>
+          <p class="hero-subhead">Handover builds each of your clients a searchable app and a printed binder for their new home. Every appliance manual, every care instruction, every warranty contact, found and organized for you, delivered under your name. Your client gets it free, from you.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="mailto:info@lockten.ai?subject=Handover">Talk to us
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <a href="#how" class="btn btn-ghost-dark">See how it works</a>
+          </div>
+        </div>
+        <!-- ON APPROVAL: once the app is on TestFlight, real screenshots from the
+             Bluestone demo tenant can replace this tile in a phone frame. Never
+             use Byrne or Wolf: those are real CJB clients. -->
+        <div class="hv-plate" aria-hidden="true">
+          <div class="hv-tile">
+            <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
+              <defs>
+                <linearGradient id="doorlight" x1="0" y1="0" x2="0" y2="1">
+                  <stop offset="0" stop-color="#ffe9c2"/>
+                  <stop offset="1" stop-color="#eda94e"/>
+                </linearGradient>
+              </defs>
+              <rect width="1024" height="1024" fill="#123a40"/>
+              <g transform="translate(512 512) scale(1.18) translate(-512 -512)">
+                <polygon points="392,824 632,824 776,952 264,952" fill="#f4c877" opacity="0.16"/>
+                <rect x="368" y="240" width="288" height="608" rx="10" fill="none" stroke="#1d5058" stroke-width="26"/>
+                <rect x="392" y="264" width="240" height="560" fill="url(#doorlight)"/>
+                <path d="M 632 264 L 632 824 L 516 876 L 516 292 Z" fill="#0c2b30"/>
+                <circle cx="542" cy="566" r="12" fill="#d9a44e"/>
+              </g>
+            </svg>
+          </div>
+          <span class="hv-tile-name">Handover</span>
+          <p class="hv-tile-note">The app your client opens</p>
+        </div>
+      </div>
+    </div>
+    <div class="hero-geo" aria-hidden="true">
+      <span>By Lock Ten Studio</span>
+      <span>An app &middot; A printed binder</span>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">How it works</p>
+        <h2 class="section-headline">From your selection list to their front door.</h2>
+        <p class="section-sub">You send in what you already have. The platform does the collecting. You approve what goes out.</p>
+      </div>
+      <div class="hv-steps">
+        <div class="hv-step reveal">
+          <span class="num">01</span>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+          <h3>Send in the house</h3>
+          <p>A Buildertrend selections export or a spreadsheet. It gets read into a product list by section and room, with the makes and models pulled out, for you to look over and correct.</p>
+        </div>
+        <div class="hv-step reveal d1">
+          <span class="num">02</span>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <h3>It goes and finds the documents</h3>
+          <p>Manuals from the manufacturer for each model. Care instructions from the maker, the finish brand or the trade authority. Warranty registration pages with their real deadlines. What it cannot verify, it flags instead of guessing, and nothing publishes until you have accepted it.</p>
+        </div>
+        <div class="hv-step reveal d2">
+          <span class="num">03</span>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 12 3l9 6.5V21a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1z"/><path d="M9 22V12h6v10"/></svg>
+          <h3>Hand it over</h3>
+          <p>Publish, and your client's app is live and searchable that minute. Print the binder from the same content, cover and dividers and page numbers included, and hand it across the counter with the keys.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE OFFICE -->
+  <section class="trust" id="office">
+    <div class="container">
+      <div class="trust-cols">
+        <div class="reveal">
+          <p class="label">The office</p>
+          <h2 class="trust-headline">The other end of the job, <em>off your desk.</em></h2>
+        </div>
+        <div class="trust-copy reveal d1">
+          <p>Every finished house leaves the same pile behind. A drawer of manuals and install guides, creased, a few of them stained, several of them for a model that got swapped out along the way. Turning that pile into something you would be happy to hand a client is hours of office time: finding the ones that went missing, downloading the rest one PDF at a time, sorting them into an order that makes sense and laying the whole thing out so it prints like a book instead of a stack.</p>
+          <p>That is the work Handover absorbs. Assembly becomes a review pass, and what your client receives looks like your company produced it on purpose, instead of looking like the drawer it came out of.</p>
+          <p style="margin-bottom:0;">The parts nobody in your office does by hand any more:</p>
+          <ul class="hv-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Hunting down the manual for a model that was ordered a year ago.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Downloading, renaming and filing several hundred pages of PDFs.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Writing care instructions for surfaces nobody in the office is an expert on.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Laying it out so it prints cleanly, with a cover and a table of contents that agree.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE APP -->
+  <section class="section" id="app">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">The app</p>
+        <h2 class="section-headline">One place your client goes with a question.</h2>
+        <p class="section-sub">Instead of the text message to you at eight on a Sunday night. Free to them, on their phone, wearing your company's colors.</p>
+      </div>
+      <div class="hv-modes reveal">
+        <div class="hv-mode lead">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+          <h3>Ask the house</h3>
+          <p>How do I clean the counters? The answer comes back written from this home's documents, with the product and the page it came from.</p>
+        </div>
+        <div class="hv-mode">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H19a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H6.5a1 1 0 0 1 0-5H20"/></svg>
+          <h3>Every manual, in order</h3>
+          <p>Sorted into the same sections as the binder. Tap a product, its manual opens.</p>
+        </div>
+        <div class="hv-mode">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92"/></svg>
+          <h3>Warranty contacts</h3>
+          <p>The trades who worked on the house, with the number right there and a tap to call.</p>
+        </div>
+        <div class="hv-mode">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+          <h3>Nothing to sign up for</h3>
+          <p>You add your client. They type their email and the six-digit code we send them. No password, no account, no charge to them.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE ANSWERS -->
+  <section class="section" id="answers" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">The answers</p>
+        <h2 class="section-headline">It answers from the house's own documents. <em>Or it says so.</em></h2>
+        <p class="section-sub">Your name is on this. A confident wrong answer about a client's water heater is your problem, not a software company's, so the whole thing is built around not producing one.</p>
+      </div>
+      <div class="hv-cards">
+        <div class="hv-card reveal">
+          <h3>Checked before it is shown.</h3>
+          <p>Every answer is audited against that home's actual documents before your client ever sees it. A claim the documents do not support does not get softened, it gets pulled, and the reply becomes a note pointing them to you by name and phone number.</p>
+        </div>
+        <div class="hv-card reveal d1">
+          <h3>No guessing on the dangerous things.</h3>
+          <p>Gas, electrical, shutoffs, temperatures, cleaning chemicals. If the specifics are not in this home's documents, it refers your client to you instead of reciting the general answer, which is often wrong for the exact model sitting in that house.</p>
+        </div>
+        <div class="hv-card reveal">
+          <h3>The source is on every answer.</h3>
+          <p>Product, model and page number, one tap from the manual itself. Your client can go read the paragraph the answer came from, which is what a good binder always let them do.</p>
+        </div>
+        <div class="hv-card reveal d1">
+          <h3>You approve the file before it lands.</h3>
+          <p>Sourced documents wait in a review list. Open the PDF, accept it, reject it or upload your own. A document nobody verified never reaches a client.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE BINDER -->
+  <section class="trust bp-grid" id="binder">
+    <div class="container">
+      <div class="hv-split">
+        <div class="reveal">
+          <p class="label">The binder</p>
+          <h2 class="trust-headline">The shelf copy, <em>still.</em></h2>
+          <p style="font-size:1.08rem;line-height:1.75;color:var(--fg-2);margin-top:20px;max-width:56ch;">Plenty of homeowners still want the book. It is what most clients picture when you say you hand over a manual, and it is the thing that sits in the kitchen drawer for fifteen years. Handover prints the same content it puts in the app.</p>
+          <ul class="hv-list">
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Your cover, the home, the owners and the delivery date.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>A table of contents with real page numbers, not estimates, and a printed divider for every section.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Laid out for double-sided printing so each manual starts on a fresh sheet, instead of on the back of the last one.</li>
+            <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>One file to the print shop. Anything that would not print cleanly is listed for you rather than dropped in silence.</li>
+          </ul>
+        </div>
+        <div class="reveal d1" aria-hidden="true">
+          <div class="hv-paper">
+            <div class="hv-paper-head">
+              <div class="hv-paper-logo">Your logo</div>
+              <span>Homeowner's Manual</span>
+            </div>
+            <h4>Welcome home.</h4>
+            <div class="hv-rule w96"></div>
+            <div class="hv-rule w90"></div>
+            <div class="hv-rule w96"></div>
+            <div class="hv-rule w72"></div>
+            <div class="hv-paper-foot">Your company &middot; Your address &middot; Your phone</div>
+          </div>
+          <p class="hv-cap">Your letterhead. Not ours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- YOUR BRAND -->
+  <section class="section" id="brand">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">Your name on it</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">Your company everywhere. <em>Ours nowhere.</em></h2>
+        <p class="section-sub" style="margin-left:auto;margin-right:auto;">This is your client relationship. We are not going to put a logo in the middle of it.</p>
+      </div>
+      <div class="hv-cards">
+        <div class="hv-card reveal">
+          <h3>The app wears your colors.</h3>
+          <p>Give it your logo and two brand colors once. From the moment your client signs in, the app they carry is in your palette with your company at the top of the screen.</p>
+        </div>
+        <div class="hv-card reveal d1">
+          <h3>Every printed page is on your letterhead.</h3>
+          <p>The welcome letter, the warranty, the registration guide, the care instructions and the binder cover. All of it comes out looking like your company produced it, because as far as your client is concerned, you did.</p>
+        </div>
+        <div class="hv-card reveal">
+          <h3>No watermark to earn your way out of.</h3>
+          <p>There is no free tier with our name stamped on your deliverable. Builder-first branding is not an upgrade here, it is the whole design.</p>
+        </div>
+        <div class="hv-card reveal d1">
+          <h3>One home stays one home.</h3>
+          <p>Your client sees their house and nothing else. Your projects are yours, separate from every other builder on the platform.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY THIS EXISTS -->
+  <section class="trust" id="story">
+    <div class="container">
+      <div class="trust-cols">
+        <div class="reveal">
+          <p class="label">Why this exists</p>
+          <h2 class="trust-headline">It started as one binder, <em>built by hand.</em></h2>
+        </div>
+        <div class="trust-copy reveal d1">
+          <p>Lock Ten Studio is run by the co-owner of a custom home building company outside Washington DC. His company hands every client a homeowner's manual at closing, and for years that meant weeks of work per house: chasing model numbers through the selection sheets, downloading manuals one at a time, writing care instructions, printing and tabbing several hundred pages.</p>
+          <p>It was the best-received thing the company gave a client and the least sustainable thing it did. So he built the machine that does it, then kept going until it also produced the app. His own company is the first builder running on it. Handover is that machine, opened up.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHERE IT STANDS -->
+  <section class="section" id="status">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">Where it stands</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">Straight about the stage it is at.</h2>
+      </div>
+      <div class="hv-status reveal">
+        <ul>
+          <li><b>Live</b><span>The platform is running in production today, with real homes published, printed and searchable.</span></li>
+          <li><b>Coming</b><span>The homeowner app is on its way to the App Store.</span></li>
+          <li><b>Not set</b><span>There is no price on this page because there is no price yet. It is being worked out with the first builders on it, and you would be talking to the person who decides it.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">Questions</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">Things builders ask.</h2>
+      </div>
+      <div class="faq reveal">
+        <details><summary>What does my client have to do?</summary><p>Nothing before you hand it to them. You add their email address, they get a message saying their home is ready, they type in the six-digit code we email them and they are in. No password, no account to create and nothing for them to pay.</p></details>
+        <details><summary>Do I have to gather all the manuals myself?</summary><p>No, that is the part the platform does. It searches manufacturers for the right document for each model you selected. Anything it cannot verify is flagged for you rather than attached, and you can upload your own PDF for any product.</p></details>
+        <details><summary>Whose brand is on it?</summary><p>Yours. Your logo and colors theme the app the moment your client signs in, and the welcome letter, warranty, care guides and binder cover all print on your letterhead. Lock Ten's name does not appear anywhere your client can see it.</p></details>
+        <details><summary>What do I have to send in to set up a home?</summary><p>Your selections. A Buildertrend selections export or a spreadsheet both work. The list is read into a product list you review before anything is sourced, and you can add or correct products by hand.</p></details>
+        <details><summary>Does it only work for houses I just finished?</summary><p>No. If you can produce the selection list and the documents, a home you handed over years ago can be built the same way. Older homes are usually more work up front because the selection data is messier.</p></details>
+        <details><summary>Can it get something wrong?</summary><p>It can miss, and it is built to miss out loud. A document it cannot verify is flagged for your review instead of quietly attached, and an answer the home's own documents do not support is replaced with a note pointing your client back to you by name. You review every sourced document before a home is published.</p></details>
+        <details><summary>Is the app on the App Store yet?</summary><p>Not yet. The homeowner app is on its way to the App Store. The platform behind it is already running real homes in production.</p></details>
+        <details><summary>What does it cost?</summary><p>Pricing is not published because it is not settled. Handover is coming on with its first builders and price is part of that conversation. Email <a href="mailto:info@lockten.ai?subject=Handover">info@lockten.ai</a> and you will get a straight answer about where it stands.</p></details>
+        <details><summary>Is this the same company as Walkthrough?</summary><p>Yes. Lock Ten Studio builds software for custom home builders, run by the co-owner of a building company outside Washington DC. <a href="/walkthrough">Walkthrough: Site Reports</a> is its field-report app, on the App Store and Google Play.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA -->
+  <section class="cta-band" id="contact">
+    <div class="container">
+      <span class="launch-stamp">Talk to a person</span>
+      <h2>The next house you finish could <em>hand itself over.</em></h2>
+      <p>Tell us what you build and how you hand it over now. You will get a real reply about what it would take to put your next client in the app, from the builder who made it.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="mailto:info@lockten.ai?subject=Handover">Email us about your homes
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+        </a>
+      </div>
+      <a class="cta-mail" href="mailto:info@lockten.ai?subject=Handover">info@lockten.ai</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="brand"><img src="assets/lockten-logo.png" alt="Lock Ten Studio"></a>
+      </div>
+      <p class="footer-tagline">Handover by Lock Ten Studio. Field tools built on real job sites.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/">Lock Ten Studio</a>
+        <a href="/walkthrough">Walkthrough</a>
+        <a href="/install">The Install</a>
+        <a href="mailto:info@lockten.ai?subject=Handover">Contact</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </nav>
+      <div class="footer-contact-block">
+        <a href="mailto:info@lockten.ai?subject=Handover">info@lockten.ai</a>
+        <span>Cabin John, Maryland</span>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/locktenstudio" aria-label="Lock Ten Studio on Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        </a>
+        <a href="https://x.com/locktenstudio" aria-label="Lock Ten Studio on X">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z"/></svg>
+        </a>
+      </div>
+      <div class="footer-legal">
+        <span>&copy; 2026 Lock Ten Studio LLC. Built and run by a custom residential builder, on real job sites.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+})();
+</script>
+
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cd30115fa535417ca908587b96cd3733"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

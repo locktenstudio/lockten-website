@@ -1,12 +1,13 @@
 # Lock Ten Studio
 
-> AI tools for the people who build custom homes, built and run by a working custom builder in Cabin John, Maryland. Three products: Walkthrough (a jobsite site-report app for builders), Architect Walkthrough (site reports and punch lists for architects) and The Install (a done-for-you AI-workspace setup for a builder's business). Plainspoken, no hype, made by someone who runs a build business.
+> AI tools for the people who build custom homes, built and run by a working custom builder in Cabin John, Maryland. Four products: Walkthrough (a jobsite site-report app for builders), Architect Walkthrough (site reports and punch lists for architects), The Install (a done-for-you AI-workspace setup for a builder's business) and Handover (a white-label homeowner's manual a builder gives each client at the end of a job). Plainspoken, no hype, made by someone who runs a build business.
 
 ## Products
 
 - [Walkthrough](https://lockten.ai/walkthrough): an app for builders, on iPhone and Android. Walk a job site, talk and take photos, and it generates a clean PDF report you text or email to your subcontractor from your own phone. No portal and no logins for your subs, they just get a text. Photos save to your own Google Drive or Dropbox, not your camera roll. It handles walkthroughs, trade lists, owner updates, decision requests, meeting notes and a persistent punch list. Three free reports to start with every feature unlocked, no credit card, then two plans: Standard at $9.99 per user per month or $99.99 per year (every report type except meeting notes and the punch list, unlimited), and Pro at $24.99 per user per month or $239.99 per year (adds meeting notes and the persistent punch list). On the App Store and Google Play as "Walkthrough: Site Reports".
 - [Architect Walkthrough](https://lockten.ai/architect): an iOS app for solo architects and small studios. Talk through a site visit and it drafts finished, editable documents in your studio's brand: site reports, living punch lists that stay checked-off across visits, client updates, meeting notes and quick photo-plus-question notes. Recipients just get a PDF by text or email, no logins. On-device transcription for reports and punch lists. First three sent reports free, then $19.99 per month or $199.99 per year. On the App Store.
 - [The Install](https://lockten.ai/install): a done-for-you Claude Cowork workspace setup for a builder's business (your team, projects, voice and connectors, configured for you). Two tiers: Lite is free (the do-it-yourself package, email-gated download), Plus is $499 one-time (built for your specific business from a 25-minute questionnaire).
+- [Handover](https://lockten.ai/handover): a white-label homeowner's manual platform for custom builders. Import a home's selections, and it finds the manufacturer manuals, writes sourced care guides and a warranty registration guide, then publishes a searchable app for the homeowner (answers grounded in the home's own documents, with sources) and a print-ready binder, all under the builder's brand. Homeowners sign in with an email code; their builder sets everything up. No public pricing yet; contact info@lockten.ai.
 
 ## Key pages
 
@@ -15,6 +16,7 @@
 - [Architect Walkthrough](https://lockten.ai/architect): the architect app, how it works, pricing and FAQ.
 - [Sample report](https://lockten.ai/sample-report): a real example of the PDF Walkthrough produces from a site walk.
 - [The Install](https://lockten.ai/install): the AI-workspace setup service and tiers.
+- [Handover](https://lockten.ai/handover): the homeowner manual platform, how it works and FAQ.
 - [Cowork primer](https://lockten.ai/primer): a plain-language guide to Claude Cowork for small business owners.
 - [Help](https://lockten.ai/help): Walkthrough help and FAQs.
 - [Architect help](https://lockten.ai/architect-help): Architect Walkthrough help and FAQs.
