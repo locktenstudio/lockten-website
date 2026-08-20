@@ -1,21 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- ============================================================
-     DRAFT for lockten.ai/handover  ·  becomes handover.html at the repo root
-     NOT COMMITTED. Josh approves, lockten-reviewer checks, then it goes on a
-     branch. Push to main auto-deploys, so this file must never be dropped
-     straight into C:\Dev\lockten-website and pushed.
-
-     Assets this page needs before it can ship:
-       1. assets/og/og-handover.png  (1200x630 share card, does not exist yet)
-     Everything else on the page uses assets already in the repo, or inline SVG.
-
-     Repo housekeeping that goes with it (NOT done here):
-       - sitemap.xml needs a /handover entry
-       - llms.txt needs a Handover section
-       - privacy.html does not name Handover yet (flagged in STATE.md too)
-     ============================================================ -->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Handover | The homeowner's manual, under your name</title>
@@ -25,7 +10,6 @@
 <meta property="og:description" content="Hand over the house and every answer. A searchable app and a printed binder for each of your clients, under your brand, not ours.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lockten.ai/handover">
-<!-- NEEDS ASSET: 1200x630 card, does not exist in assets/og/ yet -->
 <meta property="og:image" content="https://lockten.ai/assets/og/og-handover.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -262,7 +246,7 @@ body.hand .bp-grid {
       "name": "What does it cost?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Pricing is not published because it is not settled. Handover is coming on with its first builders and price is part of that conversation. Email info@lockten.ai and you will get a straight answer about where it stands."
+        "text": "Pricing is not published because it is not settled. Handover is early, and price is part of the first conversations. Email info@lockten.ai and you will get a straight answer about where it stands."
       }
     },
     {
@@ -324,9 +308,6 @@ body.hand .bp-grid {
             <a href="#how" class="btn btn-ghost-dark">See how it works</a>
           </div>
         </div>
-        <!-- ON APPROVAL: once the app is on TestFlight, real screenshots from the
-             Bluestone demo tenant can replace this tile in a phone frame. Never
-             use Byrne or Wolf: those are real CJB clients. -->
         <div class="hv-plate" aria-hidden="true">
           <div class="hv-tile">
             <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg">
@@ -376,7 +357,7 @@ body.hand .bp-grid {
           <span class="num">02</span>
           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
           <h3>It goes and finds the documents</h3>
-          <p>Manuals from the manufacturer for each model. Care instructions from the maker, the finish brand or the trade authority. Warranty registration pages with their real deadlines. What it cannot verify, it flags instead of guessing, and nothing publishes until you have accepted it.</p>
+          <p>Manuals from the manufacturer for each model. Care instructions from the maker, the finish brand or the trade authority. Warranty registration pages, with the terms and deadlines each manufacturer actually states. What it cannot verify, it flags instead of guessing, and nothing publishes until you have accepted it.</p>
         </div>
         <div class="hv-step reveal d2">
           <span class="num">03</span>
@@ -563,7 +544,7 @@ body.hand .bp-grid {
         <ul>
           <li><b>Live</b><span>The platform is running in production today, with real homes published, printed and searchable.</span></li>
           <li><b>Coming</b><span>The homeowner app is on its way to the App Store.</span></li>
-          <li><b>Not set</b><span>There is no price on this page because there is no price yet. It is being worked out with the first builders on it, and you would be talking to the person who decides it.</span></li>
+          <li><b>Not set</b><span>There is no price on this page because there is no price yet. It is being worked out as the first builders come on, and you would be talking to the person who decides it.</span></li>
         </ul>
       </div>
     </div>
@@ -584,7 +565,7 @@ body.hand .bp-grid {
         <details><summary>Does it only work for houses I just finished?</summary><p>No. If you can produce the selection list and the documents, a home you handed over years ago can be built the same way. Older homes are usually more work up front because the selection data is messier.</p></details>
         <details><summary>Can it get something wrong?</summary><p>It can miss, and it is built to miss out loud. A document it cannot verify is flagged for your review instead of quietly attached, and an answer the home's own documents do not support is replaced with a note pointing your client back to you by name. You review every sourced document before a home is published.</p></details>
         <details><summary>Is the app on the App Store yet?</summary><p>Not yet. The homeowner app is on its way to the App Store. The platform behind it is already running real homes in production.</p></details>
-        <details><summary>What does it cost?</summary><p>Pricing is not published because it is not settled. Handover is coming on with its first builders and price is part of that conversation. Email <a href="mailto:info@lockten.ai?subject=Handover">info@lockten.ai</a> and you will get a straight answer about where it stands.</p></details>
+        <details><summary>What does it cost?</summary><p>Pricing is not published because it is not settled. Handover is early, and price is part of the first conversations. Email <a href="mailto:info@lockten.ai?subject=Handover">info@lockten.ai</a> and you will get a straight answer about where it stands.</p></details>
         <details><summary>Is this the same company as Walkthrough?</summary><p>Yes. Lock Ten Studio builds software for custom home builders, run by the co-owner of a building company outside Washington DC. <a href="/walkthrough">Walkthrough: Site Reports</a> is its field-report app, on the App Store and Google Play.</p></details>
       </div>
     </div>
