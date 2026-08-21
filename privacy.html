@@ -61,9 +61,9 @@
         <li><strong>Email address</strong> when you subscribe to our newsletter (Lock Ten Field Notes) or contact us</li>
         <li><strong>Account information</strong> if you sign up for one of the apps (name, email, business name) or The Install (name, email, business details provided in the intake questionnaire)</li>
         <li><strong>Content you capture in the apps</strong> such as photos, voice narration, the transcripts, reports, and punch lists generated from them, and project notes. Most voice capture is transcribed into text on your device; the audio itself never leaves your phone. Recorded meetings are the exception: that audio is uploaded and sent to a third-party transcription service to produce text. Your transcripts are sent to a third-party AI service to format documents</li>
-        <li><strong>Location</strong> in two limited ways, both optional: photos you take can include where they were taken, and the apps can use your device's location to notice you've arrived at a project site and offer to open your punch list. That arrival check happens on your device</li>
+        <li><strong>Location</strong> in three limited ways. Photos you take can include where they were taken. The apps can use your device's location to notice you've arrived at a project site and offer to open your punch list, and that arrival check happens on your device. And when you add a project address, we convert it to map coordinates using the US Census Bureau geocoding service; when you use daily logs, we send those coordinates, never the address itself, to the National Weather Service to fill in the day's weather</li>
         <li><strong>Usage information</strong> such as which features you use and when, tied to your account, so we can understand what's working and improve the product</li>
-        <li><strong>Payment information</strong> processed through Stripe (web purchases) or through Apple as an in-app purchase; we do not store credit card details on our servers</li>
+        <li><strong>Payment information</strong> processed through Apple for in-app purchases on iPhone, Google Play for in-app purchases on Android, and Stripe for purchases made on the web. We do not store credit card details on our servers</li>
       </ul>
 
       <h2 id="handover-data">Handover: what comes from your builder</h2>
@@ -88,7 +88,7 @@
       <h2>Sharing of information</h2>
       <p>We do not sell your information, and we do not use your content to train AI models. We share it only with:</p>
       <ul>
-        <li>Service providers who help operate our business: Beehiiv (newsletter email), Resend (app sign-in emails), Stripe and Apple (payments), RevenueCat (subscription management), Render (hosting), Cloudflare R2 (file storage for photos, audio, and reports), AssemblyAI (meeting audio transcription), Anthropic (AI report formatting), OpenAI (document search and answers in Handover), and Sentry (crash diagnostics). Each receives only the data it needs to perform its function</li>
+        <li>Service providers who help operate our business: Beehiiv (newsletter email), Resend (app sign-in emails), Stripe and Apple (payments), Google Play (Android payments), RevenueCat (subscription management), Render (hosting), Cloudflare R2 (file storage for photos, audio, and reports), AssemblyAI (meeting audio transcription), the US Census Bureau (converting project addresses to map coordinates), the National Weather Service (the day's weather for daily logs), Anthropic (AI report formatting), OpenAI (document search and answers in Handover), and Sentry (crash diagnostics). Each receives only the data it needs to perform its function</li>
         <li>As required by law or to protect our rights</li>
       </ul>
 
