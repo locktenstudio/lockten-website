@@ -2,15 +2,15 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://lockten.ai/</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-08-20</lastmod>
   </url>
   <url>
     <loc>https://lockten.ai/walkthrough</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-08-20</lastmod>
   </url>
   <url>
     <loc>https://lockten.ai/sample-report</loc>
-    <lastmod>2026-07-07</lastmod>
+    <lastmod>2026-08-20</lastmod>
   </url>
   <url>
     <loc>https://lockten.ai/architect</loc>
@@ -30,10 +30,15 @@
   </url>
   <url>
     <loc>https://lockten.ai/architect-help</loc>
+    <lastmod>2026-07-25</lastmod>
   </url>
   <url>
     <loc>https://lockten.ai/help</loc>
-    <lastmod>2026-07-05</lastmod>
+    <lastmod>2026-08-20</lastmod>
+  </url>
+  <url>
+    <loc>https://lockten.ai/account-deletion</loc>
+    <lastmod>2026-08-19</lastmod>
   </url>
   <url>
     <loc>https://lockten.ai/privacy</loc>

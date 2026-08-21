@@ -57,6 +57,11 @@
 .sr-photo-caption { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.05em; color: var(--fg-3); margin-top: 6px; }
 .sr-doc-footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line); font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.05em; color: var(--fg-3); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
 
+/* The real PDF, under the rebuilt web version of the report */
+.sr-real { max-width: 760px; margin: 28px auto 0; text-align: center; border-top: 1px solid var(--line); padding-top: 30px; }
+.sr-real-head { font-family: var(--font-sans); font-weight: 600; font-size: 1.02rem; color: var(--fg); margin: 0 0 16px; }
+.sr-real-note { font-size: 0.88rem; color: var(--fg-3); line-height: 1.6; max-width: 52ch; margin: 16px auto 0; }
+
 /* How it got made + CTA */
 .sr-how { padding: 48px 0 8px; }
 .sr-how-grid { display: grid; gap: 22px; max-width: 760px; margin: 0 auto; }
@@ -94,7 +99,7 @@
     <div class="container">
       <span class="sr-eyebrow">Sample report</span>
       <h1>This is what a site walk turns into.</h1>
-      <p>The report below is the actual format Walkthrough produces. It was made by walking a jobsite and talking into a phone. No typing, no forms, no evening at the desk. Review it, then it goes to your sub or your client by text or email.</p>
+      <p>The report below is the format Walkthrough produces, rebuilt here as a web page so it reads on your phone. The layout, the trade tags and the photo grid are exactly what comes out of the app. No typing, no forms, no evening at the desk. Review it, then it goes to your sub or your client by text or email.</p>
       <p class="sr-context">RECORDED ON SITE &middot; ORGANIZED AUTOMATICALLY &middot; SENT FROM THE TRUCK</p>
     </div>
   </section>
@@ -137,9 +142,15 @@
 
         <div class="sr-doc-footer">
           <span>Smith Residence &middot; Walkthrough</span>
-          <span>Made with Walkthrough</span>
+          <span>Your company name here</span>
         </div>
       </article>
+
+      <div class="sr-real">
+        <p class="sr-real-head">The real thing, with the client blacked out:</p>
+        <a href="/assets/report/sample-trade-list.pdf" class="btn btn-secondary" type="application/pdf">Open the actual PDF</a>
+        <p class="sr-real-note">A framing punch list from a real job. The black bars are ours. Everything else is exactly what the app produced.</p>
+      </div>
     </div>
   </section>
 
