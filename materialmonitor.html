@@ -19,7 +19,7 @@
 <link rel="preload" href="fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 56'%3E%3Crect width='56' height='56' rx='10' fill='%23151A20'/%3E%3Crect x='10' y='16' width='36' height='30' rx='4' fill='none' stroke='%2393A1B0' stroke-width='3'/%3E%3Cpath d='M10 25H46' stroke='%2393A1B0' stroke-width='3'/%3E%3Cpath d='M24 16V25' stroke='%2393A1B0' stroke-width='3'/%3E%3Ccircle cx='43' cy='14' r='7' fill='%23151A20'/%3E%3Ccircle cx='43' cy='14' r='5' fill='%233EC97F'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 56'%3E%3Crect width='56' height='56' rx='10' fill='%231D232B'/%3E%3Crect x='10' y='36' width='36' height='8' rx='2' fill='%235B6470'/%3E%3Crect x='14' y='25' width='36' height='8' rx='2' fill='%23888F9C'/%3E%3Crect x='6' y='14' width='36' height='8' rx='2' fill='%23C8763C'/%3E%3C/svg%3E">
 
 <script>document.documentElement.className += ' js';</script>
 
@@ -36,42 +36,44 @@
 </script>
 
 <style>
-/* ---- Material Monitor page theme: graphite ground, one signal light.
-       Overriding the ramp tokens at body level re-skins every global
-       component without touching styles.css. Per the 2026-08-02
-       brand-layering ruling: gate blue binds STUDIO surfaces; a product
-       page wears the product's own skin. ---- */
+/* ---- Material Monitor page theme: slate ground, copper accent (the
+       materials themselves: pipe and fixture). Overriding the ramp
+       tokens at body level re-skins every global component without
+       touching styles.css. Per the 2026-08-02 brand-layering ruling:
+       gate blue binds STUDIO surfaces; a product page wears the
+       product's own skin. ---- */
 body.mm {
-  --brand:         #23885A;
-  --brand-hover:   #1C6F49;
-  --blueprint-50:  #EAF7EF;
-  --blueprint-100: #D3EEDD;
-  --blueprint-200: #A9DDBD;
-  --blueprint-300: #6BD99B;
-  --blueprint-600: #23885A;
-  --blueprint-700: #1C6F49;
-  --blueprint-800: #165A3B;
-  --deep-900: #151A20;
-  --deep-800: #1E252D;
-  --steel-600: #3A4652;
-  --steel-400: #7F8C99;
-  --steel-300: #B0BCC8;
+  --brand:         #A85F2B;
+  --brand-hover:   #8E4E1F;
+  --blueprint-50:  #F6E7DB;
+  --blueprint-100: #EFD6C2;
+  --blueprint-200: #E2B48F;
+  --blueprint-300: #DE9A66;
+  --blueprint-600: #A85F2B;
+  --blueprint-700: #8E4E1F;
+  --blueprint-800: #733F19;
+  --deep-900: #1D232B;
+  --deep-800: #2D343D;
+  --steel-600: #424A55;
+  --steel-400: #888F9C;
+  --steel-300: #B6BCC5;
   /* the status light itself, used only on dark surfaces */
-  --signal:      #3EC97F;
-  --signal-lift: #6BD99B;
-  --signal-deep: #2FB06B;
+  --copper:      #C8763C;
+  --copper-lift: #DE9A66;
+  --copper-deep: #B5682F;
   font-size: 18px;
 }
 body.mm .bp-grid {
   background-image:
-    linear-gradient(to right, rgba(21, 26, 32, 0.05) 1px, transparent 1px),
-    linear-gradient(to bottom, rgba(21, 26, 32, 0.05) 1px, transparent 1px);
+    linear-gradient(to right, rgba(29, 35, 43, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(29, 35, 43, 0.05) 1px, transparent 1px);
 }
-.hero-dark .hero-headline em { color: var(--signal-lift); }
-.hero-dark .btn-primary, .cta-band .btn-primary { background: var(--signal); color: #0F1A14; }
-.hero-dark .btn-primary:hover, .cta-band .btn-primary:hover { background: var(--signal-lift); }
-.hero-dark .btn-primary:active, .cta-band .btn-primary:active { background: var(--signal-deep); }
+.hero-dark .hero-headline em { color: var(--copper-lift); }
+.hero-dark .btn-primary, .cta-band .btn-primary { background: var(--copper); color: #1D232B; }
+.hero-dark .btn-primary:hover, .cta-band .btn-primary:hover { background: var(--copper-lift); }
+.hero-dark .btn-primary:active, .cta-band .btn-primary:active { background: var(--copper-deep); }
 .hero-dark .hero-subhead { font-size: clamp(1.15rem, 1.6vw, 1.3rem); line-height: 1.65; color: rgba(238, 242, 246, 0.82); }
+.mm .hero-contours path.p-accent { stroke: var(--copper); }
 
 /* Marketing-sized reading copy across the page (18px floor). */
 .mm .section-sub { font-size: 1.15rem; line-height: 1.7; }
@@ -88,7 +90,7 @@ body.mm .bp-grid {
 .mm-hero-copy { text-align: left; }
 .hero-dark .mm-hero-copy .hero-headline { margin: 0; max-width: 14ch; }
 .hero-dark .mm-hero-copy .hero-subhead { margin: 26px 0 0; }
-.launch-stamp { display: inline-block; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--signal-lift); border: 1.5px solid rgba(107, 217, 155, 0.45); border-radius: 3px; padding: 7px 14px; margin-bottom: 22px; }
+.launch-stamp { display: inline-block; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--copper-lift); border: 1.5px solid rgba(222, 154, 102, 0.45); border-radius: 3px; padding: 7px 14px; margin-bottom: 22px; }
 
 /* ---- Product mocks: sample data, drawn to match the real console and
        email, never a real client's job. ---- */
@@ -181,16 +183,13 @@ body.mm .bp-grid {
 .cta-band { background: var(--deep-900); color: var(--white); padding: 88px 0; text-align: center; position: relative; overflow: hidden; }
 .cta-band .container { position: relative; }
 .cta-band h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.2rem, 4.5vw, 3.4rem); line-height: 1.1; color: var(--white); max-width: 18ch; margin: 0 auto; text-wrap: balance; }
-.cta-band h2 em { font-style: italic; color: var(--signal-lift); }
+.cta-band h2 em { font-style: italic; color: var(--copper-lift); }
 .cta-band p { color: rgba(238, 242, 246, 0.8); font-size: 1.12rem; line-height: 1.65; margin: 18px auto 0; max-width: 560px; }
 .mm-capture { background: var(--white); color: var(--fg); padding: 26px 26px 22px; border-radius: var(--radius-lg); box-shadow: var(--shadow-2); max-width: 520px; margin: 36px auto 0; text-align: left; }
 .mm-capture .lead-in { font-family: var(--font-sans); font-size: 1rem; font-weight: 500; color: var(--fg-2); margin: 0 0 14px; }
-.mm-capture iframe { width: 100% !important; max-width: 100% !important; height: 150px !important; border: none; display: block; }
-.mm-fallback { font-size: 0.95rem; color: var(--fg-2); margin: 0; }
-.mm-fallback a { color: var(--brand); font-weight: 600; }
 .mm-capture .fine { font-size: 0.86rem; color: var(--fg-3); margin: 12px 0 0; line-height: 1.5; }
 .cta-mail { display: block; margin-top: 26px; font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.05em; color: var(--steel-300); text-decoration: none; }
-.cta-mail:hover { color: var(--signal-lift); }
+.cta-mail:hover { color: var(--copper-lift); }
 </style>
 
 <script type="application/ld+json">
@@ -557,18 +556,17 @@ body.mm .bp-grid {
     <div class="container">
       <span class="launch-stamp">Founding builders</span>
       <h2>Be one of the first offices <em>it watches for.</em></h2>
-      <p>Leave your email and you will hear from the builder who made it, not from a sequence. A small group of founding builders gets in first, shapes what it becomes and gets founding terms.</p>
+      <p>Send a short email and you will hear back from the builder who made it, not from a sequence. A small group of founding builders gets in first, shapes what it becomes and gets founding terms.</p>
       <div class="mm-capture">
         <p class="lead-in">Get on the founding list</p>
-        <div id="mm-embed-slot">
-          <p class="mm-fallback">Loading the form&hellip; or email <a href="mailto:info@lockten.ai?subject=Material%20Monitor">info@lockten.ai</a> and say Material Monitor.</p>
-          <!-- Beehiiv embed. Currently the shared Lock Ten form (renders headerless). Swap the id for a
-               dedicated Material Monitor form once one exists in Beehiiv; nothing else changes. -->
-          <script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="a189be07-5f91-4076-ba42-67b8fe520c48"></script>
+        <div class="hero-actions" style="margin-top:0;">
+          <a class="btn btn-primary" href="mailto:info@lockten.ai?subject=Material%20Monitor%20founding%20list">Email info@lockten.ai
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+          </a>
         </div>
-        <p class="fine">No sequence, no sales calls. A real reply from a real builder, and you can leave the list any time.</p>
+        <p class="fine">Tell us who you are and what you build. You will get a real reply from the builder who made it. No list, no sequence, no sales calls.</p>
       </div>
-      <a class="cta-mail" href="mailto:info@lockten.ai?subject=Material%20Monitor">Prefer email? info@lockten.ai</a>
+      <a class="cta-mail" href="mailto:info@lockten.ai?subject=Material%20Monitor">Or write any time: info@lockten.ai</a>
     </div>
   </section>
 
@@ -618,19 +616,6 @@ body.mm .bp-grid {
     document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
   } else {
     document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
-  }
-  var slot = document.getElementById('mm-embed-slot');
-  if (slot) {
-    var hideFallback = function () {
-      if (!slot.querySelector('iframe')) return false;
-      var fb = slot.querySelector('.mm-fallback');
-      if (fb) fb.style.display = 'none';
-      return true;
-    };
-    if (!hideFallback() && 'MutationObserver' in window) {
-      var mo = new MutationObserver(function () { if (hideFallback()) mo.disconnect(); });
-      mo.observe(slot, { childList: true, subtree: true });
-    }
   }
 })();
 </script>
