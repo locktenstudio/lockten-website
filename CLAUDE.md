@@ -53,7 +53,7 @@ Lock Ten Design System. Tokens live in `styles.css` `:root`.
 ## SEO and indexing
 
 - Every page: unique `<title>`, meta description, `rel="canonical"` clean URL, an OG image in `assets/og/` plus `twitter:card`. Keep this pattern on every new page.
-- **Structured data (JSON-LD):** Organization on `index.html` (with `sameAs`: Instagram, X, App Store listing), SoftwareApplication + FAQPage on `walkthrough.html`, FAQPage on `install.html`. **The FAQ schema is generated from the on-page `<details><summary>` FAQ, so if you edit the visible FAQ, regenerate the matching FAQPage JSON-LD** (a small python `<details>` parse builds it) or the two drift.
+- **Structured data (JSON-LD):** Organization on `index.html` (with `sameAs`: Instagram, X, App Store listing), SoftwareApplication + FAQPage on `walkthrough.html`, `handover.html` and `materialmonitor.html`, FAQPage on `install.html`. **The FAQ schema is generated from the on-page `<details><summary>` FAQ, so if you edit the visible FAQ, regenerate the matching FAQPage JSON-LD** (a small python `<details>` parse builds it) or the two drift.
 - `llms.txt` at the root is a plain-markdown site index for AI crawlers (ChatGPT/Claude/Perplexity). Update it when products or pricing change.
 - **Indexing (set up 2026-07-05):** verified in Google Search Console (Domain property, auto-verified via the Workspace DNS) and Bing Webmaster Tools (imported from GSC). `sitemap.xml` submitted to both. New public pages just need to be added to `sitemap.xml`; they get crawled on the next pass.
 

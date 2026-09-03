@@ -61,7 +61,6 @@ body.mm {
   --copper:      #C8763C;
   --copper-lift: #DE9A66;
   --copper-deep: #B5682F;
-  font-size: 18px;
 }
 body.mm .bp-grid {
   background-image:
@@ -75,7 +74,7 @@ body.mm .bp-grid {
 .hero-dark .hero-subhead { font-size: clamp(1.15rem, 1.6vw, 1.3rem); line-height: 1.65; color: rgba(238, 242, 246, 0.82); }
 .mm .hero-contours path.p-accent { stroke: var(--copper); }
 
-/* Marketing-sized reading copy across the page (18px floor). */
+/* Marketing-sized reading copy: the site root is 17px, so 1.06rem is the 18px floor. */
 .mm .section-sub { font-size: 1.15rem; line-height: 1.7; }
 .mm .section-headline, .mm .footer-tagline { text-wrap: balance; }
 .mm-story { max-width: 68ch; margin: 0 auto; }
@@ -128,7 +127,7 @@ body.mm .bp-grid {
 .mm-get:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); }
 .mm-get .ic { width: 34px; height: 34px; color: var(--brand); margin-bottom: 16px; display: block; }
 .mm-get h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.22rem; line-height: 1.3; color: var(--fg); margin: 0 0 10px; letter-spacing: -0.01em; text-wrap: balance; }
-.mm-get p { font-size: 1.02rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
+.mm-get p { font-size: 1.06rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
 
 /* ---- How it works ---- */
 .mm-steps { display: grid; gap: 22px; margin-top: 8px; }
@@ -136,7 +135,7 @@ body.mm .bp-grid {
 .mm-step { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px 26px; background: var(--white); }
 .mm-step .num { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.16em; color: var(--brand); }
 .mm-step h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.3rem; color: var(--fg); margin: 14px 0 8px; text-wrap: balance; }
-.mm-step p { font-size: 1.02rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
+.mm-step p { font-size: 1.06rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
 
 /* ---- The morning email and the follow-up draft, side by side ---- */
 .mm-pair { display: grid; gap: 28px; margin-top: 8px; align-items: start; }
@@ -148,19 +147,14 @@ body.mm .bp-grid {
 .mm-draft ul { margin: 0 0 12px; padding-left: 18px; }
 .mm-draft li { margin-bottom: 6px; color: var(--fg-2); }
 .mm-slot { display: inline-block; border: 1.5px dashed var(--line-strong); border-radius: var(--radius-sm); padding: 1px 8px; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-3); vertical-align: middle; }
-.mm-pill { display: inline-block; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; background: var(--blueprint-50); color: var(--brand); }
-
-/* ---- Who it is for ---- */
-.mm-list { list-style: none; padding: 0; margin: 26px 0 0; }
-.mm-list li { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; font-size: 1.08rem; color: var(--fg-2); line-height: 1.6; }
-.mm-list li svg { width: 22px; height: 22px; color: var(--brand); flex: none; margin-top: 4px; }
+.mm-pill { display: inline-block; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; background: var(--blueprint-50); color: var(--blueprint-800); }
 
 /* ---- Guardrail cards ---- */
 .mm-cards { display: grid; gap: 18px; margin-top: 8px; }
 @media (min-width: 760px) { .mm-cards { grid-template-columns: repeat(3, 1fr); gap: 22px; } }
 .mm-card { border: 1px solid var(--line); border-radius: var(--radius-md); padding: 26px 28px; background: var(--white); }
 .mm-card h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.18rem; color: var(--fg); margin: 0 0 8px; letter-spacing: -0.01em; text-wrap: balance; }
-.mm-card p { font-size: 1.02rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
+.mm-card p { font-size: 1.06rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
 
 /* ---- Where it stands ---- */
 .mm-status { max-width: 720px; margin: 0 auto; }
@@ -176,7 +170,7 @@ body.mm .bp-grid {
 .faq summary::-webkit-details-marker { display: none; }
 .faq summary::after { content: "+"; font-family: var(--font-mono); color: var(--brand); font-size: 1.4rem; line-height: 1; flex: none; }
 .faq details[open] summary::after { content: "\2013"; }
-.faq details p { margin: 0 0 20px; color: var(--fg-2); line-height: 1.65; font-size: 1.04rem; max-width: 64ch; }
+.faq details p { margin: 0 0 20px; color: var(--fg-2); line-height: 1.65; font-size: 1.06rem; max-width: 64ch; }
 .faq details a { color: var(--brand); font-weight: 600; }
 
 /* ---- Founding list: the capture band ---- */
@@ -187,7 +181,7 @@ body.mm .bp-grid {
 .cta-band p { color: rgba(238, 242, 246, 0.8); font-size: 1.12rem; line-height: 1.65; margin: 18px auto 0; max-width: 560px; }
 .mm-capture { background: var(--white); color: var(--fg); padding: 26px 26px 22px; border-radius: var(--radius-lg); box-shadow: var(--shadow-2); max-width: 520px; margin: 36px auto 0; text-align: left; }
 .mm-capture .lead-in { font-family: var(--font-sans); font-size: 1rem; font-weight: 500; color: var(--fg-2); margin: 0 0 14px; }
-.mm-capture .fine { font-size: 0.86rem; color: var(--fg-3); margin: 12px 0 0; line-height: 1.5; }
+.mm-capture .fine { font-size: 0.95rem; color: var(--fg-3); margin: 12px 0 0; line-height: 1.5; }
 .cta-mail { display: block; margin-top: 26px; font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.05em; color: var(--steel-300); text-decoration: none; }
 .cta-mail:hover { color: var(--copper-lift); }
 </style>
@@ -242,7 +236,7 @@ body.mm .bp-grid {
       "name": "What does it cost?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Pricing is not published yet. Founding builders talk price directly with the builder who made it, and get founding terms that hold."
+        "text": "Pricing is not published yet. Founding builders talk price directly with the builder who made it."
       }
     },
     {
@@ -327,7 +321,7 @@ body.mm .bp-grid {
     </div>
     <div class="hero-geo" aria-hidden="true">
       <span>By Lock Ten Studio</span>
-      <span>Office console &middot; Morning email &middot; Field app</span>
+      <span>Office console &middot; Morning email</span>
     </div>
   </section>
 
@@ -358,7 +352,7 @@ body.mm .bp-grid {
         <div class="mm-get reveal d3">
           <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/><path d="m8.5 10 2.5 2.5 4.5-5"/></svg>
           <h3>The field checks things in from a phone</h3>
-          <p>A delivery lands, the super taps what arrived, how many, in what condition, with a photo of the packing slip. The office sees it that minute and the morning email carries it the next day.</p>
+          <p>A delivery lands, the super taps what arrived, how many, in what condition, with a photo of the packing slip. The office sees it as soon as it is saved, and the morning email carries it the next day.</p>
         </div>
       </div>
     </div>
@@ -495,7 +489,7 @@ body.mm .bp-grid {
         </div>
         <div class="mm-card reveal d2">
           <h3>Every change keeps its receipt.</h3>
-          <p>Each item carries its full history: who changed what, when, and the email or note it came from. Read-only access to your mail, and it never moves, sends or deletes a message.</p>
+          <p>Each item carries its full history: who changed what, when, and the email or note it came from. It reads your vendor mail and nothing else: it never sends, moves or deletes a message.</p>
         </div>
       </div>
     </div>
@@ -524,9 +518,9 @@ body.mm .bp-grid {
       </div>
       <div class="mm-status reveal">
         <ul>
-          <li><b>Live</b><span>Running every day inside one builder's office, watching a few hundred finish items across active jobs, reading real vendor mail and sending the real morning email.</span></li>
+          <li><b>Live</b><span>Running every day inside one builder's office, watching a few hundred finish items across active jobs, reading real vendor mail and sending the real morning email. The receiving app runs on his crews' phones through Apple's TestFlight.</span></li>
           <li><b>Opening</b><span>Being opened to a small group of founding builders now. Self-serve setup and direct inbox connection are being built with them, so the first offices shape what it becomes.</span></li>
-          <li><b>Not set</b><span>There is no price on this page because there is no public price yet. Founding builders talk it through with the person who decides it, and their terms hold.</span></li>
+          <li><b>Not set</b><span>There is no price on this page because there is no public price yet. Founding builders talk it through with the person who decides it.</span></li>
         </ul>
       </div>
     </div>
@@ -545,7 +539,7 @@ body.mm .bp-grid {
         <details><summary>Does it email my vendors?</summary><p>Never on its own. When an order needs a word, it drafts the follow-up, one email per rep with every open item on it, and you send it from your own address in your own words. Your reps hear from you, not from a system.</p></details>
         <details><summary>What happens when it reads something wrong?</summary><p>Everything it reads becomes a proposal with the vendor's own words quoted beside it, and a person confirms or dismisses it. Nothing changes on its own, with one exception: an email whose tracking number exactly matches an item already carrying that number updates that item automatically.</p></details>
         <details><summary>Microsoft 365 or Google Workspace?</summary><p>Both. Forwarding vendor mail to your private Material Monitor address works with any email system. Connecting an inbox directly is being built with the founding builders, Microsoft 365 first.</p></details>
-        <details><summary>What does it cost?</summary><p>Pricing is not published yet. Founding builders talk price directly with the builder who made it, and get founding terms that hold.</p></details>
+        <details><summary>What does it cost?</summary><p>Pricing is not published yet. Founding builders talk price directly with the builder who made it.</p></details>
         <details><summary>Is this the same company as Walkthrough and Handover?</summary><p>Yes. Lock Ten Studio builds software for custom home builders and is run by the co-owner of a building company outside Washington DC. <a href="/walkthrough">Walkthrough</a> is its field-report app, <a href="/handover">Handover</a> builds the homeowner's manual, and Material Monitor watches the orders in between.</p></details>
       </div>
     </div>
@@ -564,7 +558,7 @@ body.mm .bp-grid {
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
           </a>
         </div>
-        <p class="fine">Tell us who you are and what you build. You will get a real reply from the builder who made it. No list, no sequence, no sales calls.</p>
+        <p class="fine">Tell us who you are and what you build. You will get a real reply from the builder who made it. No mailing list, no drip sequence, no sales calls.</p>
       </div>
       <a class="cta-mail" href="mailto:info@lockten.ai?subject=Material%20Monitor">Or write any time: info@lockten.ai</a>
     </div>
