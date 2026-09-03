@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Material Monitor | Every finish order, watched for you</title>
+<meta name="description" content="Material Monitor reads the vendor email your office already gets, keeps every finish material order current, and tells you each morning which orders need a word. For custom home builders, by Lock Ten Studio.">
+
+<meta property="og:title" content="Material Monitor by Lock Ten Studio">
+<meta property="og:description" content="Every order on every job, watched for you. It reads your vendor email, keeps every finish item current and tells you each morning which orders need a word.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://lockten.ai/materialmonitor">
+<meta property="og:image" content="https://lockten.ai/assets/og/og-materialmonitor.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://lockten.ai/materialmonitor">
+
+<link rel="preload" href="fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 56'%3E%3Crect width='56' height='56' rx='10' fill='%23151A20'/%3E%3Crect x='10' y='16' width='36' height='30' rx='4' fill='none' stroke='%2393A1B0' stroke-width='3'/%3E%3Cpath d='M10 25H46' stroke='%2393A1B0' stroke-width='3'/%3E%3Cpath d='M24 16V25' stroke='%2393A1B0' stroke-width='3'/%3E%3Ccircle cx='43' cy='14' r='7' fill='%23151A20'/%3E%3Ccircle cx='43' cy='14' r='5' fill='%233EC97F'/%3E%3C/svg%3E">
+
+<script>document.documentElement.className += ' js';</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Material Monitor",
+  "applicationCategory": "BusinessApplication",
+  "url": "https://lockten.ai/materialmonitor",
+  "description": "Finish material tracking for custom home builders. It reads vendor email, keeps every order's status current with a person confirming each change, and surfaces the orders that need a follow-up.",
+  "publisher": { "@type": "Organization", "name": "Lock Ten Studio", "url": "https://lockten.ai" }
+}
+</script>
+
+<style>
+/* ---- Material Monitor page theme: graphite ground, one signal light.
+       Overriding the ramp tokens at body level re-skins every global
+       component without touching styles.css. Per the 2026-08-02
+       brand-layering ruling: gate blue binds STUDIO surfaces; a product
+       page wears the product's own skin. ---- */
+body.mm {
+  --brand:         #23885A;
+  --brand-hover:   #1C6F49;
+  --blueprint-50:  #EAF7EF;
+  --blueprint-100: #D3EEDD;
+  --blueprint-200: #A9DDBD;
+  --blueprint-300: #6BD99B;
+  --blueprint-600: #23885A;
+  --blueprint-700: #1C6F49;
+  --blueprint-800: #165A3B;
+  --deep-900: #151A20;
+  --deep-800: #1E252D;
+  --steel-600: #3A4652;
+  --steel-400: #7F8C99;
+  --steel-300: #B0BCC8;
+  /* the status light itself, used only on dark surfaces */
+  --signal:      #3EC97F;
+  --signal-lift: #6BD99B;
+  --signal-deep: #2FB06B;
+  font-size: 18px;
+}
+body.mm .bp-grid {
+  background-image:
+    linear-gradient(to right, rgba(21, 26, 32, 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(21, 26, 32, 0.05) 1px, transparent 1px);
+}
+.hero-dark .hero-headline em { color: var(--signal-lift); }
+.hero-dark .btn-primary, .cta-band .btn-primary { background: var(--signal); color: #0F1A14; }
+.hero-dark .btn-primary:hover, .cta-band .btn-primary:hover { background: var(--signal-lift); }
+.hero-dark .btn-primary:active, .cta-band .btn-primary:active { background: var(--signal-deep); }
+.hero-dark .hero-subhead { font-size: clamp(1.15rem, 1.6vw, 1.3rem); line-height: 1.65; color: rgba(238, 242, 246, 0.82); }
+
+/* Marketing-sized reading copy across the page (18px floor). */
+.mm .section-sub { font-size: 1.15rem; line-height: 1.7; }
+.mm .section-headline, .mm .footer-tagline { text-wrap: balance; }
+.mm-story { max-width: 68ch; margin: 0 auto; }
+.mm-story p { font-size: 1.15rem; line-height: 1.75; color: var(--fg-2); margin: 0 0 18px; }
+.mm-story p:last-child { margin-bottom: 0; }
+.mm-cards.two { grid-template-columns: 1fr; }
+@media (min-width: 760px) { .mm-cards.two { grid-template-columns: 1fr 1fr; } }
+
+/* ---- Hero grid ---- */
+.mm-hero-grid { display: grid; gap: 44px; align-items: center; }
+@media (min-width: 960px) { .mm-hero-grid { grid-template-columns: 1.05fr 0.95fr; gap: 56px; } }
+.mm-hero-copy { text-align: left; }
+.hero-dark .mm-hero-copy .hero-headline { margin: 0; max-width: 14ch; }
+.hero-dark .mm-hero-copy .hero-subhead { margin: 26px 0 0; }
+.launch-stamp { display: inline-block; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--signal-lift); border: 1.5px solid rgba(107, 217, 155, 0.45); border-radius: 3px; padding: 7px 14px; margin-bottom: 22px; }
+
+/* ---- Product mocks: sample data, drawn to match the real console and
+       email, never a real client's job. ---- */
+.mm-mock {
+  background: var(--white);
+  color: var(--fg);
+  border-radius: var(--radius-lg);
+  box-shadow: 0 30px 70px -24px rgba(0, 0, 0, 0.7);
+  padding: 24px 26px 20px;
+  max-width: 520px;
+  margin: 0 auto;
+  text-align: left;
+}
+.mm-mock-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
+.mm-mock-head span { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-3); }
+.mm-mock-sec { padding: 14px 0 4px; }
+.mm-mock-sec .k { display: block; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; color: var(--fg-3); }
+.mm-mock-sec .k.problem { color: #B0413E; }
+.mm-mock-sec .k.received { color: var(--brand); }
+.mm-mock-sec p { font-size: 0.98rem; line-height: 1.55; color: var(--fg); margin: 0 0 6px; }
+.mm-mock-sec p b { font-weight: 600; }
+.mm-mock-foot { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 0.86rem; color: var(--fg-3); }
+.mm-cap { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.06em; color: var(--steel-300); text-align: center; margin-top: 16px; }
+.section .mm-cap, .trust .mm-cap { color: var(--fg-3); }
+@media (prefers-reduced-motion: no-preference) {
+  .hero-dark .mm-mock { animation: mm-float 8s ease-in-out infinite; }
+  @keyframes mm-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-8px); } }
+}
+
+/* ---- What you get: the pitch as a band, high on the page ---- */
+.mm-gets { display: grid; gap: 18px; margin-top: 8px; }
+@media (min-width: 640px) { .mm-gets { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1000px) { .mm-gets { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
+.mm-get { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px 24px 26px; background: var(--white); transition: box-shadow 200ms var(--ease), transform 200ms var(--ease); }
+.mm-get:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); }
+.mm-get .ic { width: 34px; height: 34px; color: var(--brand); margin-bottom: 16px; display: block; }
+.mm-get h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.22rem; line-height: 1.3; color: var(--fg); margin: 0 0 10px; letter-spacing: -0.01em; text-wrap: balance; }
+.mm-get p { font-size: 1.02rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
+
+/* ---- How it works ---- */
+.mm-steps { display: grid; gap: 22px; margin-top: 8px; }
+@media (min-width: 760px) { .mm-steps { grid-template-columns: repeat(3, 1fr); gap: 28px; } }
+.mm-step { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px 26px; background: var(--white); }
+.mm-step .num { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.16em; color: var(--brand); }
+.mm-step h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.3rem; color: var(--fg); margin: 14px 0 8px; text-wrap: balance; }
+.mm-step p { font-size: 1.02rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
+
+/* ---- The morning email and the follow-up draft, side by side ---- */
+.mm-pair { display: grid; gap: 28px; margin-top: 8px; align-items: start; }
+@media (min-width: 900px) { .mm-pair { grid-template-columns: 1fr 1fr; gap: 36px; } }
+.mm-pair .mm-mock { box-shadow: var(--shadow-3); max-width: none; }
+.mm-draft { font-family: var(--font-sans); font-size: 0.98rem; line-height: 1.6; color: var(--fg); }
+.mm-draft .meta { font-family: var(--font-mono); font-size: 0.72rem; color: var(--fg-3); letter-spacing: 0.04em; padding: 12px 0; border-bottom: 1px solid var(--line); margin-bottom: 14px; display: flex; flex-direction: column; gap: 4px; }
+.mm-draft p { margin: 0 0 12px; }
+.mm-draft ul { margin: 0 0 12px; padding-left: 18px; }
+.mm-draft li { margin-bottom: 6px; color: var(--fg-2); }
+.mm-slot { display: inline-block; border: 1.5px dashed var(--line-strong); border-radius: var(--radius-sm); padding: 1px 8px; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-3); vertical-align: middle; }
+.mm-pill { display: inline-block; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; background: var(--blueprint-50); color: var(--brand); }
+
+/* ---- Who it is for ---- */
+.mm-list { list-style: none; padding: 0; margin: 26px 0 0; }
+.mm-list li { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; font-size: 1.08rem; color: var(--fg-2); line-height: 1.6; }
+.mm-list li svg { width: 22px; height: 22px; color: var(--brand); flex: none; margin-top: 4px; }
+
+/* ---- Guardrail cards ---- */
+.mm-cards { display: grid; gap: 18px; margin-top: 8px; }
+@media (min-width: 760px) { .mm-cards { grid-template-columns: repeat(3, 1fr); gap: 22px; } }
+.mm-card { border: 1px solid var(--line); border-radius: var(--radius-md); padding: 26px 28px; background: var(--white); }
+.mm-card h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.18rem; color: var(--fg); margin: 0 0 8px; letter-spacing: -0.01em; text-wrap: balance; }
+.mm-card p { font-size: 1.02rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
+
+/* ---- Where it stands ---- */
+.mm-status { max-width: 720px; margin: 0 auto; }
+.mm-status ul { list-style: none; padding: 0; margin: 0; }
+.mm-status li { display: flex; gap: 16px; align-items: flex-start; padding: 16px 0; border-bottom: 1px solid var(--line); font-size: 1.08rem; color: var(--fg-2); line-height: 1.6; }
+.mm-status li:last-child { border-bottom: none; }
+.mm-status li b { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--brand); font-weight: 500; flex: none; width: 92px; padding-top: 6px; }
+
+/* ---- FAQ ---- */
+.faq { max-width: 760px; margin: 0 auto; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; padding: 20px 0; font-weight: 600; font-size: 1.1rem; color: var(--fg); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--font-mono); color: var(--brand); font-size: 1.4rem; line-height: 1; flex: none; }
+.faq details[open] summary::after { content: "\2013"; }
+.faq details p { margin: 0 0 20px; color: var(--fg-2); line-height: 1.65; font-size: 1.04rem; max-width: 64ch; }
+.faq details a { color: var(--brand); font-weight: 600; }
+
+/* ---- Founding list: the capture band ---- */
+.cta-band { background: var(--deep-900); color: var(--white); padding: 88px 0; text-align: center; position: relative; overflow: hidden; }
+.cta-band .container { position: relative; }
+.cta-band h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.2rem, 4.5vw, 3.4rem); line-height: 1.1; color: var(--white); max-width: 18ch; margin: 0 auto; text-wrap: balance; }
+.cta-band h2 em { font-style: italic; color: var(--signal-lift); }
+.cta-band p { color: rgba(238, 242, 246, 0.8); font-size: 1.12rem; line-height: 1.65; margin: 18px auto 0; max-width: 560px; }
+.mm-capture { background: var(--white); color: var(--fg); padding: 26px 26px 22px; border-radius: var(--radius-lg); box-shadow: var(--shadow-2); max-width: 520px; margin: 36px auto 0; text-align: left; }
+.mm-capture .lead-in { font-family: var(--font-sans); font-size: 1rem; font-weight: 500; color: var(--fg-2); margin: 0 0 14px; }
+.mm-capture iframe { width: 100% !important; max-width: 100% !important; height: 150px !important; border: none; display: block; }
+.mm-fallback { font-size: 0.95rem; color: var(--fg-2); margin: 0; }
+.mm-fallback a { color: var(--brand); font-weight: 600; }
+.mm-capture .fine { font-size: 0.86rem; color: var(--fg-3); margin: 12px 0 0; line-height: 1.5; }
+.cta-mail { display: block; margin-top: 26px; font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.05em; color: var(--steel-300); text-decoration: none; }
+.cta-mail:hover { color: var(--signal-lift); }
+</style>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do my vendors have to do anything?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. They keep emailing you exactly the way they do now. There is no portal for them, nothing to sign up for and no new address to learn. Material Monitor works from the mail your office already receives."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Do I need Buildertrend?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. Your selections list from Buildertrend, JobTread or a spreadsheet becomes the list of items it watches, and anything outside that list you add in a line. It does not log in to any other system."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does it email my vendors?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Never on its own. When an order needs a word, it drafts the follow-up, one email per rep with every open item on it, and you send it from your own address in your own words. Your reps hear from you, not from a system."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens when it reads something wrong?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Everything it reads becomes a proposal with the vendor's own words quoted beside it, and a person confirms or dismisses it. Nothing changes on its own, with one exception: an email whose tracking number exactly matches an item already carrying that number updates that item automatically."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Microsoft 365 or Google Workspace?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Both. Forwarding vendor mail to your private Material Monitor address works with any email system. Connecting an inbox directly is being built with the founding builders, Microsoft 365 first."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What does it cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Pricing is not published yet. Founding builders talk price directly with the builder who made it, and get founding terms that hold."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is this the same company as Walkthrough and Handover?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Lock Ten Studio builds software for custom home builders and is run by the co-owner of a building company outside Washington DC. Walkthrough is its field-report app, Handover builds the homeowner's manual, and Material Monitor watches the orders in between."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="mm">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="/" class="brand">
+      <img src="assets/lockten-logo.png" alt="Lock Ten Studio" style="height:92px;">
+    </a>
+    <nav class="header-nav" aria-label="Primary">
+      <a href="#gets">What you get</a>
+      <a href="#how">How it works</a>
+      <a href="#morning">The morning email</a>
+      <a href="#faq">FAQ</a>
+      <a href="#founding">Founding builders</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero-dark" id="top">
+    <div class="hero-contours" aria-hidden="true">
+      <svg viewBox="0 0 1500 640" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice">
+        <path d="M-40,90 C200,40 380,150 580,108 C780,66 960,170 1160,124 C1330,86 1440,140 1540,100" stroke-width="1.5"/>
+        <path class="p-accent" d="M-40,158 C170,116 360,212 560,168 C760,124 950,224 1150,180 C1320,144 1440,196 1540,160" stroke-width="1.5"/>
+        <path d="M-40,226 C190,190 350,278 550,240 C750,202 960,286 1160,246 C1330,214 1440,260 1540,228" stroke-width="1.5"/>
+        <path d="M-40,294 C200,264 360,340 560,308 C760,276 950,348 1150,312 C1320,284 1440,324 1540,296" stroke-width="1.5"/>
+        <path class="p-accent" d="M-40,362 C180,338 370,402 570,374 C770,346 960,408 1160,376 C1330,350 1440,386 1540,362" stroke-width="1.5"/>
+        <path d="M-40,430 C200,410 380,464 580,440 C780,416 970,470 1170,442 C1330,420 1440,452 1540,430" stroke-width="1.5"/>
+        <path d="M-40,498 C190,482 380,528 580,506 C780,484 970,530 1170,506 C1330,488 1440,514 1540,496" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div class="container">
+      <div class="mm-hero-grid">
+        <div class="mm-hero-copy">
+          <span class="launch-stamp">Founding builders wanted</span>
+          <h1 class="hero-headline">Every order on every job, <em>watched for you.</em></h1>
+          <p class="hero-subhead">Material Monitor reads the vendor email your office already gets, keeps every finish item's status current, and each morning tells you which orders need a word. Built by a custom builder for his own office, running on real jobs since July.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#founding">Join the founding list
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+            </a>
+            <a href="#how" class="btn btn-ghost-dark">See how it works</a>
+          </div>
+        </div>
+        <div aria-hidden="true">
+          <div class="mm-mock">
+            <div class="mm-mock-head"><span>This morning &middot; 3 jobs</span><span>Read mail 6:02 am</span></div>
+            <div class="mm-mock-sec">
+              <span class="k problem">Problems flagged</span>
+              <p><b>Primary bath tile</b> &middot; backordered, vendor gave no revised date.</p>
+            </div>
+            <div class="mm-mock-sec">
+              <span class="k received">Items received</span>
+              <p><b>Kitchen faucet</b> and <b>pot filler</b> landed at the site, good condition.</p>
+            </div>
+            <div class="mm-mock-sec">
+              <span class="k">Needs a follow-up</span>
+              <p><b>Mudroom cabinetry</b> &middot; ordered 14 days ago, no timeline yet. Draft ready.</p>
+            </div>
+            <div class="mm-mock-foot">Also 9 order and tracking updates, read from vendor email.</div>
+          </div>
+          <p class="mm-cap">The morning email. Sample data, not a real job.</p>
+        </div>
+      </div>
+    </div>
+    <div class="hero-geo" aria-hidden="true">
+      <span>By Lock Ten Studio</span>
+      <span>Office console &middot; Morning email &middot; Field app</span>
+    </div>
+  </section>
+
+  <!-- WHAT YOU GET -->
+  <section class="section" id="gets">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">What you get</p>
+        <h2 class="section-headline">Stop chasing orders. Start the day knowing <em>where everything stands.</em></h2>
+        <p class="section-sub">Finish materials are the part of the job that lives in email. Confirmations, ship notices, backorder notes, the rep saying "Monday." Material Monitor reads all of it so nobody in your office has to.</p>
+      </div>
+      <div class="mm-gets">
+        <div class="mm-get reveal">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m2.5 8 9.5 6 9.5-6"/><path d="m14 15.5 2 2 4-4.5"/></svg>
+          <h3>Vendor emails become status updates</h3>
+          <p>The ship notice, the tracking number, the backorder note. It reads them and proposes the change, with the vendor's own words quoted. You confirm with one tap instead of retyping anything.</p>
+        </div>
+        <div class="mm-get reveal d1">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/><circle cx="18.5" cy="5.5" r="2.5" fill="currentColor" stroke="none"/></svg>
+          <h3>The quiet orders get surfaced</h3>
+          <p>The cabinetry ordered three weeks ago with no timeline. The tile whose firm date came and went. They show up on your list before they show up as a hole in the schedule.</p>
+        </div>
+        <div class="mm-get reveal d2">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M8 13h5"/><path d="M8 17h8"/><path d="m18 2 3 3-8 8H10v-3z"/></svg>
+          <h3>Follow-ups written, ready to send</h3>
+          <p>Pick the items that need a word and it writes one email per rep with every open order on it, models and dates filled in. You read it and send it from your own address, in your own name.</p>
+        </div>
+        <div class="mm-get reveal d3">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/><path d="m8.5 10 2.5 2.5 4.5-5"/></svg>
+          <h3>The field checks things in from a phone</h3>
+          <p>A delivery lands, the super taps what arrived, how many, in what condition, with a photo of the packing slip. The office sees it that minute and the morning email carries it the next day.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="trust bp-grid" id="how">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">How it works</p>
+        <h2 class="section-headline">Three steps, and none of them <em>belong to your vendors.</em></h2>
+        <p class="section-sub">Nobody outside your office has to change a thing. Your reps keep sending the same emails they send today.</p>
+      </div>
+      <div class="mm-steps">
+        <div class="mm-step reveal">
+          <span class="num">01</span>
+          <h3>Point your vendor mail at it</h3>
+          <p>Forward or copy the confirmations you already get to a private address that is yours alone, or connect the inbox they land in. Bring your selections list from Buildertrend, JobTread or a spreadsheet, and it knows what to watch for.</p>
+        </div>
+        <div class="mm-step reveal d1">
+          <span class="num">02</span>
+          <h3>It reads. A person confirms.</h3>
+          <p>Every email becomes a proposed change waiting for someone in your office: ordered, shipped, backordered, a new delivery date. Confirm it or dismiss it. Only an exact tracking-number match applies by itself.</p>
+        </div>
+        <div class="mm-step reveal d2">
+          <span class="num">03</span>
+          <h3>Every morning, one email</h3>
+          <p>Problems first. Then what landed, in the receiver's own words. Then the orders that have gone quiet, with the follow-ups already drafted. Everything else collapses into one grey line at the bottom.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- THE MORNING EMAIL AND THE FOLLOW-UP -->
+  <section class="section" id="morning">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">The morning email</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">Sorted by what matters, <em>not by what happened.</em></h2>
+        <p class="section-sub" style="margin-left:auto;margin-right:auto;">A briefing, not a changelog. It never echoes your own edits back at you, and on a quiet day it does not send at all.</p>
+      </div>
+      <div class="mm-pair">
+        <div class="reveal" aria-hidden="true">
+          <div class="mm-mock">
+            <div class="mm-mock-head"><span>Material Monitor &middot; Tuesday</span><span>3 jobs</span></div>
+            <div class="mm-mock-sec">
+              <span class="k problem">Problems flagged</span>
+              <p><b>Primary bath tile</b> (Hillside) &middot; backordered, no revised date from the vendor.</p>
+              <p><b>Range hood</b> (Elm Street) &middot; arrived damaged. "Dented on the left side, box was fine," reported from the site.</p>
+            </div>
+            <div class="mm-mock-sec">
+              <span class="k received">Items received</span>
+              <p><b>Kitchen faucet</b>, <b>pot filler</b> and <b>bar sink</b> at Hillside, good condition, stored in the garage.</p>
+              <p><b>Under-cabinet lighting</b> at Orchard, 19 of 23. "Short 4, vendor says the rest ships Friday."</p>
+            </div>
+            <div class="mm-mock-sec">
+              <span class="k">Needs a follow-up</span>
+              <p><b>Mudroom cabinetry</b> (Hillside) &middot; ordered 14 days ago, no timeline yet.</p>
+              <p><b>Front door hardware</b> (Orchard) &middot; firm date was Thursday, nothing arrived.</p>
+            </div>
+            <div class="mm-mock-foot">Also 9 order and tracking updates across the three jobs.</div>
+          </div>
+          <p class="mm-cap">Sample data. The layout is the real email.</p>
+        </div>
+        <div class="reveal d1" aria-hidden="true">
+          <div class="mm-mock">
+            <div class="mm-mock-head"><span>Follow-up draft</span><span class="mm-pill">Sent from your address</span></div>
+            <div class="mm-draft">
+              <div class="meta">
+                <span>To: your rep at the plumbing showroom</span>
+                <span>Subject: Checking in on Hillside materials</span>
+              </div>
+              <p>Hi there,</p>
+              <p>Checking in on these open orders:</p>
+              <ul>
+                <li>Primary bath tile, model TL-4471-HN, backordered, no revised date</li>
+                <li>Powder room faucet, ordered 8/12, last word was "4 to 5 weeks"</li>
+              </ul>
+              <p>Could you confirm where these stand and the current delivery dates when you get a chance?</p>
+              <p>Thanks,<br><span class="mm-slot">Your first name</span></p>
+            </div>
+          </div>
+          <p class="mm-cap">One email per rep, every open item on it. You hit send.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHO IT IS FOR -->
+  <section class="trust" id="who">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">Who it is for</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">The office with someone who owns ordering. <em>Or the owner who is that someone.</em></h2>
+        <p class="section-sub" style="margin-left:auto;margin-right:auto;">A custom home carries a few hundred finish selections, and every one is an order somebody has to place, track and receive. In most offices that lives in a spreadsheet, an inbox and one person's memory.</p>
+      </div>
+      <div class="mm-cards two">
+        <div class="mm-card reveal">
+          <h3>Custom builders and remodelers, five people to thirty.</h3>
+          <p>A handful of jobs at a time, each carrying its own long list of finish orders. Whether a coordinator owns the list or the owner does it at 9pm, this is built for that desk.</p>
+        </div>
+        <div class="mm-card reveal d1">
+          <h3>The long-lead items that decide the schedule.</h3>
+          <p>Plumbing, tile, appliances, lighting, cabinetry, doors and windows. The orders where a quiet three weeks turns into an empty bathroom on install day.</p>
+        </div>
+        <div class="mm-card reveal">
+          <h3>Beside Buildertrend, JobTread or your spreadsheet.</h3>
+          <p>Your selections list comes in from whatever you use today and becomes the list it watches. Nothing has to move out, and nothing else has to change.</p>
+        </div>
+        <div class="mm-card reveal d1">
+          <h3>Microsoft 365 or Google Workspace.</h3>
+          <p>Whatever inbox your vendor mail lands in today. Forward it or connect it, and the reading starts.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- GUARDRAILS -->
+  <section class="section" id="trust">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">Built to be trusted</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">It proposes. <em>A person decides.</em></h2>
+        <p class="section-sub" style="margin-left:auto;margin-right:auto;">A wrong status is your problem in a homeowner's driveway, not a software company's. So the whole thing is built around not producing one.</p>
+      </div>
+      <div class="mm-cards">
+        <div class="mm-card reveal">
+          <h3>It never sends anything for you.</h3>
+          <p>Follow-ups are drafts. They go out from your address, in your words, when you press send. Your vendors never receive an automated message with your company's name on it.</p>
+        </div>
+        <div class="mm-card reveal d1">
+          <h3>Nothing changes without a confirm.</h3>
+          <p>Every reading becomes a card with the vendor's own words quoted beside the proposed change. The one automatic update is an exact tracking-number match on an item that already carries that number.</p>
+        </div>
+        <div class="mm-card reveal d2">
+          <h3>Every change keeps its receipt.</h3>
+          <p>Each item carries its full history: who changed what, when, and the email or note it came from. Read-only access to your mail, and it never moves, sends or deletes a message.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHY THIS EXISTS -->
+  <section class="trust" id="story">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">Why this exists</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">It started as one office's <em>spreadsheet problem.</em></h2>
+      </div>
+      <div class="mm-story reveal d1">
+        <p>Lock Ten Studio is run by the co-owner of a custom home building company outside Washington DC. His company tracked finish materials the way most do: a spreadsheet, a shared inbox and the coordinator's memory. Orders went quiet, dates slipped and the office found out when the plumber was standing in an empty bathroom.</p>
+        <p>So he built the thing that reads the mail, keeps the list current and tells the office what needs a nudge. His coordinator has run on it daily since July, and his superintendents check deliveries in from their phones. When he described it to other builders, the answer he kept hearing was that companies their size need this too. Material Monitor is that system, opened up.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHERE IT STANDS -->
+  <section class="section" id="status">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">Where it stands</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">Straight about the stage it is at.</h2>
+      </div>
+      <div class="mm-status reveal">
+        <ul>
+          <li><b>Live</b><span>Running every day inside one builder's office, watching a few hundred finish items across active jobs, reading real vendor mail and sending the real morning email.</span></li>
+          <li><b>Opening</b><span>Being opened to a small group of founding builders now. Self-serve setup and direct inbox connection are being built with them, so the first offices shape what it becomes.</span></li>
+          <li><b>Not set</b><span>There is no price on this page because there is no public price yet. Founding builders talk it through with the person who decides it, and their terms hold.</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">Questions</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">Things builders ask.</h2>
+      </div>
+      <div class="faq reveal">
+        <details><summary>Do my vendors have to do anything?</summary><p>No. They keep emailing you exactly the way they do now. There is no portal for them, nothing to sign up for and no new address to learn. Material Monitor works from the mail your office already receives.</p></details>
+        <details><summary>Do I need Buildertrend?</summary><p>No. Your selections list from Buildertrend, JobTread or a spreadsheet becomes the list of items it watches, and anything outside that list you add in a line. It does not log in to any other system.</p></details>
+        <details><summary>Does it email my vendors?</summary><p>Never on its own. When an order needs a word, it drafts the follow-up, one email per rep with every open item on it, and you send it from your own address in your own words. Your reps hear from you, not from a system.</p></details>
+        <details><summary>What happens when it reads something wrong?</summary><p>Everything it reads becomes a proposal with the vendor's own words quoted beside it, and a person confirms or dismisses it. Nothing changes on its own, with one exception: an email whose tracking number exactly matches an item already carrying that number updates that item automatically.</p></details>
+        <details><summary>Microsoft 365 or Google Workspace?</summary><p>Both. Forwarding vendor mail to your private Material Monitor address works with any email system. Connecting an inbox directly is being built with the founding builders, Microsoft 365 first.</p></details>
+        <details><summary>What does it cost?</summary><p>Pricing is not published yet. Founding builders talk price directly with the builder who made it, and get founding terms that hold.</p></details>
+        <details><summary>Is this the same company as Walkthrough and Handover?</summary><p>Yes. Lock Ten Studio builds software for custom home builders and is run by the co-owner of a building company outside Washington DC. <a href="/walkthrough">Walkthrough</a> is its field-report app, <a href="/handover">Handover</a> builds the homeowner's manual, and Material Monitor watches the orders in between.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOUNDING LIST -->
+  <section class="cta-band" id="founding">
+    <div class="container">
+      <span class="launch-stamp">Founding builders</span>
+      <h2>Be one of the first offices <em>it watches for.</em></h2>
+      <p>Leave your email and you will hear from the builder who made it, not from a sequence. A small group of founding builders gets in first, shapes what it becomes and gets founding terms.</p>
+      <div class="mm-capture">
+        <p class="lead-in">Get on the founding list</p>
+        <div id="mm-embed-slot">
+          <p class="mm-fallback">Loading the form&hellip; or email <a href="mailto:info@lockten.ai?subject=Material%20Monitor">info@lockten.ai</a> and say Material Monitor.</p>
+          <!-- Beehiiv embed. Currently the shared Lock Ten form (renders headerless). Swap the id for a
+               dedicated Material Monitor form once one exists in Beehiiv; nothing else changes. -->
+          <script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="a189be07-5f91-4076-ba42-67b8fe520c48"></script>
+        </div>
+        <p class="fine">No sequence, no sales calls. A real reply from a real builder, and you can leave the list any time.</p>
+      </div>
+      <a class="cta-mail" href="mailto:info@lockten.ai?subject=Material%20Monitor">Prefer email? info@lockten.ai</a>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <a href="/" class="brand"><img src="assets/lockten-logo.png" alt="Lock Ten Studio"></a>
+      </div>
+      <p class="footer-tagline">Material Monitor by Lock Ten Studio. Field tools built on real job sites.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="/">Lock Ten Studio</a>
+        <a href="/walkthrough">Walkthrough</a>
+        <a href="/handover">Handover</a>
+        <a href="/install">The Install</a>
+        <a href="mailto:info@lockten.ai?subject=Material%20Monitor">Contact</a>
+        <a href="/privacy">Privacy</a>
+        <a href="/terms">Terms</a>
+      </nav>
+      <div class="footer-contact-block">
+        <a href="mailto:info@lockten.ai?subject=Material%20Monitor">info@lockten.ai</a>
+        <span>Cabin John, Maryland</span>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/locktenstudio" aria-label="Lock Ten Studio on Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        </a>
+        <a href="https://x.com/locktenstudio" aria-label="Lock Ten Studio on X">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z"/></svg>
+        </a>
+      </div>
+      <div class="footer-legal">
+        <span>&copy; 2026 Lock Ten Studio LLC. Built and run by a custom residential builder, on real job sites.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+  var slot = document.getElementById('mm-embed-slot');
+  if (slot) {
+    var hideFallback = function () {
+      if (!slot.querySelector('iframe')) return false;
+      var fb = slot.querySelector('.mm-fallback');
+      if (fb) fb.style.display = 'none';
+      return true;
+    };
+    if (!hideFallback() && 'MutationObserver' in window) {
+      var mo = new MutationObserver(function () { if (hideFallback()) mo.disconnect(); });
+      mo.observe(slot, { childList: true, subtree: true });
+    }
+  }
+})();
+</script>
+
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cd30115fa535417ca908587b96cd3733"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
