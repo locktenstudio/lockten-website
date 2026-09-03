@@ -1,6 +1,6 @@
 # Lock Ten Studio
 
-> AI tools for the people who build custom homes, built and run by a working custom builder in Cabin John, Maryland. Four products: Walkthrough (a jobsite site-report app for builders), Architect Walkthrough (site reports and punch lists for architects), The Install (a done-for-you AI-workspace setup for a builder's business) and Handover (a white-label homeowner's manual a builder gives each client at the end of a job). Plainspoken, no hype, made by someone who runs a build business.
+> AI tools for the people who build custom homes, built and run by a working custom builder in Cabin John, Maryland. Five products: Walkthrough (a jobsite site-report app for builders), Architect Walkthrough (site reports and punch lists for architects), The Install (a done-for-you AI-workspace setup for a builder's business), Handover (a white-label homeowner's manual a builder gives each client at the end of a job) and Material Monitor (finish material order tracking that reads a builder's vendor email and flags the orders that need a follow-up). Plainspoken, no hype, made by someone who runs a build business.
 
 ## Products
 
@@ -18,6 +18,7 @@
 - [Sample report](https://lockten.ai/sample-report): an example of the PDF Walkthrough produces from a site walk.
 - [The Install](https://lockten.ai/install): the AI-workspace setup service and tiers.
 - [Handover](https://lockten.ai/handover): the homeowner manual platform, how it works and FAQ.
+- [Material Monitor](https://lockten.ai/materialmonitor): finish material tracking, how it works, the morning email and FAQ.
 - [Cowork primer](https://lockten.ai/primer): a plain-language guide to Claude Cowork for small business owners.
 - [Help](https://lockten.ai/help): Walkthrough help and FAQs.
 - [Architect help](https://lockten.ai/architect-help): Architect Walkthrough help and FAQs.
