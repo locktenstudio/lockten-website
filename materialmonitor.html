@@ -19,7 +19,7 @@
 <link rel="preload" href="fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="styles.css">
-<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 56 56'%3E%3Crect width='56' height='56' rx='10' fill='%231D232B'/%3E%3Crect x='10' y='36' width='36' height='8' rx='2' fill='%235B6470'/%3E%3Crect x='14' y='25' width='36' height='8' rx='2' fill='%23888F9C'/%3E%3Crect x='6' y='14' width='36' height='8' rx='2' fill='%23C8763C'/%3E%3C/svg%3E">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='20' fill='%232D343D'/%3E%3Cpolygon points='14,50 64,50 82,36 32,36' fill='%23888F9C'/%3E%3Cpolygon points='64,50 82,36 82,76 64,90' fill='%237F8C99'/%3E%3Crect x='14' y='50' width='50' height='40' fill='%23B6BCC5'/%3E%3Crect x='14' y='50' width='50' height='6' fill='%23C8763C'/%3E%3Cpath d='M36 40 A12 12 0 0 1 60 40 Z' fill='%23C8763C'/%3E%3C/svg%3E">
 
 <script>document.documentElement.className += ' js';</script>
 
@@ -61,6 +61,42 @@ body.mm {
   --copper:      #C8763C;
   --copper-lift: #DE9A66;
   --copper-deep: #B5682F;
+  --copper-tint: #F6E7DB;
+  /* status ramp: the four states the morning email sorts by */
+  --st-problem: #B0413E;
+  --st-landed:  #3E8E62;   /* dot only; as text on white it lands at 4.0:1 */
+  --st-landed-text: #2F7350;
+  --st-quiet:   #888F9C;
+  --paper-ground: #F5F7F9;
+}
+
+/* ---- The product mark and wordmark lockup ---- */
+.mm-mark { display: block; flex: none; }
+.mm-lockup { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; flex: none; }
+.mm-lockup .wm { font-family: var(--font-display); font-weight: 400; font-size: 1.5rem; line-height: 1.05; letter-spacing: -0.01em; color: #EEF1F4; white-space: nowrap; }
+a.mm-lockup:hover .wm { color: var(--copper-lift); }
+
+/* ---- Header: the product lockup, not the studio logo ---- */
+.mm .site-header { background: var(--deep-900); border-bottom: 1px solid var(--deep-800); }
+.mm .header-inner { flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px 20px; padding-top: 16px; padding-bottom: 16px; }
+.mm .mm-lockup { order: 1; }
+.mm .header-nav { order: 3; gap: 28px; flex: 1 1 100%; justify-content: center; }
+.mm .header-nav a { color: var(--steel-300); font-size: 0.94rem; font-weight: 400; text-transform: none; letter-spacing: 0; }
+.mm .header-nav a:hover { color: var(--copper-lift); }
+.mm-header-cta { order: 2; flex: none; background: var(--copper); color: #1D232B; font-family: var(--font-sans); font-weight: 600; font-size: 0.95rem; line-height: 1; padding: 12px 18px; border-radius: 6px; text-decoration: none; white-space: nowrap; transition: background 180ms var(--ease); }
+.mm-header-cta:hover { background: var(--copper-lift); }
+@media (min-width: 1000px) {
+  .mm .header-nav { order: 2; flex: 1 1 auto; justify-content: flex-end; margin-right: 8px; }
+  .mm-header-cta { order: 3; }
+}
+@media (max-width: 560px) {
+  .mm .header-inner { gap: 12px; }
+  .mm-lockup { gap: 9px; }
+  .mm-lockup .wm { font-size: 1.18rem; }
+  .mm .site-header .mm-mark { width: 30px; height: 30px; }
+  .mm-header-cta { font-size: 0.8rem; padding: 9px 12px; }
+  .mm .header-nav { gap: 6px 16px; }
+  .mm .header-nav a { font-size: 0.84rem; }
 }
 body.mm .bp-grid {
   background-image:
@@ -106,9 +142,14 @@ body.mm .bp-grid {
 .mm-mock-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; border-bottom: 1px solid var(--line); padding-bottom: 12px; }
 .mm-mock-head span { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-3); }
 .mm-mock-sec { padding: 14px 0 4px; }
-.mm-mock-sec .k { display: block; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; color: var(--fg-3); }
-.mm-mock-sec .k.problem { color: #B0413E; }
-.mm-mock-sec .k.received { color: var(--brand); }
+/* Status rows read by their dot first, the way the real email does. */
+.mm-mock-sec .k { display: flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 6px; color: var(--fg-3); --dot: var(--st-quiet); }
+.mm-mock-sec .k::before { content: ""; width: 9px; height: 9px; border-radius: 50%; background: var(--dot); flex: none; }
+.mm-mock-sec .k.problem { color: var(--st-problem); --dot: var(--st-problem); }
+.mm-mock-sec .k.received { color: var(--st-landed-text); --dot: var(--st-landed); }
+.mm-mock-sec .k.needs { color: #A85F2B; --dot: var(--copper); }
+.mm-mock-head .mm-mark { width: 20px; height: 20px; }
+.mm-mock-head .h-left { display: flex; align-items: center; gap: 9px; }
 .mm-mock-sec p { font-size: 0.98rem; line-height: 1.55; color: var(--fg); margin: 0 0 6px; }
 .mm-mock-sec p b { font-weight: 600; }
 .mm-mock-foot { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); font-size: 0.86rem; color: var(--fg-3); }
@@ -125,8 +166,9 @@ body.mm .bp-grid {
 @media (min-width: 1000px) { .mm-gets { grid-template-columns: repeat(4, 1fr); gap: 20px; } }
 .mm-get { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px 24px 26px; background: var(--white); transition: box-shadow 200ms var(--ease), transform 200ms var(--ease); }
 .mm-get:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); }
-.mm-get .ic { width: 34px; height: 34px; color: var(--brand); margin-bottom: 16px; display: block; }
-.mm-get h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.22rem; line-height: 1.3; color: var(--fg); margin: 0 0 10px; letter-spacing: -0.01em; text-wrap: balance; }
+/* Slate line-work, one copper beacon where a status is implied. */
+.mm-get .ic { width: 34px; height: 34px; color: var(--steel-600); margin-bottom: 16px; display: block; }
+.mm-get h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.3rem; line-height: 1.3; color: var(--fg); margin: 0 0 10px; letter-spacing: -0.01em; text-wrap: balance; }
 .mm-get p { font-size: 1.06rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
 
 /* ---- How it works ---- */
@@ -147,12 +189,31 @@ body.mm .bp-grid {
 .mm-draft ul { margin: 0 0 12px; padding-left: 18px; }
 .mm-draft li { margin-bottom: 6px; color: var(--fg-2); }
 .mm-slot { display: inline-block; border: 1.5px dashed var(--line-strong); border-radius: var(--radius-sm); padding: 1px 8px; font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--fg-3); vertical-align: middle; }
-.mm-pill { display: inline-block; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 4px 9px; border-radius: 999px; background: var(--blueprint-50); color: var(--blueprint-800); }
+.mm-pill { display: inline-flex; align-items: center; gap: 7px; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 10px; border-radius: 999px; background: var(--copper-tint); color: var(--blueprint-800); }
+.mm-pill.dot::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--copper); flex: none; }
+
+/* ---- The proposed-change card: what a reading looks like before a
+       person touches it. Decorative sample, buttons are spans. ---- */
+.mm-propose { display: grid; gap: 32px; align-items: center; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--white); padding: 34px 30px; margin: 0 0 34px; }
+.mm-propose-ui .mm-pill { align-self: flex-start; }
+@media (min-width: 900px) { .mm-propose { grid-template-columns: 1fr 1.1fr; gap: 44px; padding: 44px 46px; } }
+.mm-propose-copy { margin: 0; max-width: none; text-align: left; }
+.mm-propose-copy .label { margin-bottom: 12px; justify-content: flex-start; }
+.mm-propose-copy .section-headline { font-size: clamp(1.95rem, 3.1vw, 2.5rem); line-height: 1.08; text-wrap: balance; }
+.mm-propose-copy .section-sub { max-width: 40ch; margin-left: 0; margin-right: 0; }
+.mm-propose-ui { background: var(--paper-ground); border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 20px 22px; display: flex; flex-direction: column; gap: 12px; }
+.mm-propose-ui .item { font-size: 1rem; line-height: 1.55; color: var(--fg); }
+.mm-propose-ui .item b { font-weight: 600; }
+.mm-propose-ui .quote { font-size: 0.92rem; line-height: 1.55; color: var(--fg-3); border-left: 2px solid var(--line); padding-left: 12px; font-style: italic; margin: 0; }
+.mm-propose-ui .acts { display: flex; gap: 10px; }
+.mm-propose-ui .b { font-family: var(--font-sans); font-size: 0.86rem; line-height: 1; border-radius: 6px; }
+.mm-propose-ui .b-go { background: var(--brand); color: var(--white); font-weight: 600; padding: 11px 17px; }
+.mm-propose-ui .b-no { border: 1.5px solid var(--steel-300); color: var(--fg); font-weight: 500; padding: 9.5px 17px; }
 
 /* ---- Guardrail cards ---- */
 .mm-cards { display: grid; gap: 18px; margin-top: 8px; }
 @media (min-width: 760px) { .mm-cards { grid-template-columns: repeat(3, 1fr); gap: 22px; } }
-.mm-card { border: 1px solid var(--line); border-radius: var(--radius-md); padding: 26px 28px; background: var(--white); }
+.mm-card { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 26px 28px; background: var(--white); }
 .mm-card h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.18rem; color: var(--fg); margin: 0 0 8px; letter-spacing: -0.01em; text-wrap: balance; }
 .mm-card p { font-size: 1.06rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
 
@@ -173,17 +234,34 @@ body.mm .bp-grid {
 .faq details p { margin: 0 0 20px; color: var(--fg-2); line-height: 1.65; font-size: 1.06rem; max-width: 64ch; }
 .faq details a { color: var(--brand); font-weight: 600; }
 
-/* ---- Founding list: the capture band ---- */
-.cta-band { background: var(--deep-900); color: var(--white); padding: 88px 0; text-align: center; position: relative; overflow: hidden; }
+/* ---- Founding list: a slate card carrying the mark, sitting on paper ---- */
+.cta-band { background: var(--paper-ground); color: var(--fg); padding: 76px 0 84px; text-align: left; position: relative; overflow: hidden; }
 .cta-band .container { position: relative; }
-.cta-band h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.2rem, 4.5vw, 3.4rem); line-height: 1.1; color: var(--white); max-width: 18ch; margin: 0 auto; text-wrap: balance; }
+.mm-found { background: var(--deep-900); color: #EEF1F4; border: 1px solid var(--steel-600); border-radius: var(--radius-lg); padding: 40px 28px; display: grid; gap: 30px; align-items: center; }
+@media (min-width: 900px) { .mm-found { grid-template-columns: 1fr 220px; gap: 44px; padding: 56px; } }
+.mm-found-mark { width: clamp(118px, 15vw, 176px); height: auto; justify-self: start; }
+@media (min-width: 900px) { .mm-found-mark { justify-self: center; width: 100%; max-width: 210px; } }
+.cta-band .launch-stamp { border: 0; border-radius: 0; padding: 0; margin-bottom: 16px; letter-spacing: 0.2em; }
+.cta-band h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.95rem, 3.4vw, 2.7rem); line-height: 1.08; color: #EEF1F4; max-width: 26ch; margin: 0; text-wrap: balance; }
 .cta-band h2 em { font-style: italic; color: var(--copper-lift); }
-.cta-band p { color: rgba(238, 242, 246, 0.8); font-size: 1.12rem; line-height: 1.65; margin: 18px auto 0; max-width: 560px; }
-.mm-capture { background: var(--white); color: var(--fg); padding: 26px 26px 22px; border-radius: var(--radius-lg); box-shadow: var(--shadow-2); max-width: 520px; margin: 36px auto 0; text-align: left; }
-.mm-capture .lead-in { font-family: var(--font-sans); font-size: 1rem; font-weight: 500; color: var(--fg-2); margin: 0 0 14px; }
-.mm-capture .fine { font-size: 0.95rem; color: var(--fg-3); margin: 12px 0 0; line-height: 1.5; }
-.cta-mail { display: block; margin-top: 26px; font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.05em; color: var(--steel-300); text-decoration: none; }
+.cta-band p { color: var(--steel-300); font-size: 1.1rem; line-height: 1.65; margin: 16px 0 0; max-width: 34em; }
+.mm-capture { background: transparent; color: inherit; box-shadow: none; border-radius: 0; border-top: 1px solid var(--steel-600); padding: 24px 0 0; margin: 26px 0 0; max-width: none; text-align: left; }
+.mm-capture .lead-in { font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--copper-lift); margin: 0 0 14px; }
+.mm-capture .fine { font-family: var(--font-mono); font-size: 0.95rem; color: var(--steel-400); margin: 16px 0 0; line-height: 1.7; max-width: 58ch; }
+.cta-mail { display: inline-block; margin-top: 20px; font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.05em; color: var(--steel-400); text-decoration: none; }
 .cta-mail:hover { color: var(--copper-lift); }
+
+/* ---- Footer: the product lockup carries the studio line ---- */
+.mm-lockup-foot { gap: 12px; cursor: default; }
+.mm-lockup-foot .mm-mark { width: 28px; height: 28px; }
+.mm-lockup-foot .wm-stack { display: flex; flex-direction: column; gap: 5px; text-align: left; }
+.mm-lockup-foot .wm { font-size: 1.32rem; color: var(--fg); white-space: normal; }
+.mm-lockup-foot .by { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-3); line-height: 1.4; }
+@media (max-width: 480px) { .mm-lockup-foot .by { letter-spacing: 0.12em; } }
+
+/* Fade the contours back so the white mock card reads against them. */
+.mm .hero-contours path { opacity: 0.34; }
+.mm .hero-contours path.p-accent { opacity: 0.42; }
 </style>
 
 <script type="application/ld+json">
@@ -257,16 +335,17 @@ body.mm .bp-grid {
 
 <header class="site-header">
   <div class="container header-inner">
-    <a href="https://lockten.ai/" class="brand">
-      <img src="assets/lockten-logo.png" alt="Lock Ten Studio" style="height:92px;">
+    <a href="#top" class="mm-lockup">
+      <svg class="mm-mark" width="38" height="38" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M30 30 A18 18 0 0 1 66 30" stroke="#DE9A66" stroke-width="2" opacity="0.45" stroke-linecap="round"/><path d="M37 36 A11 11 0 0 1 59 36" stroke="#DE9A66" stroke-width="2" opacity="0.85" stroke-linecap="round"/><polygon points="16,52 64,52 80,40 32,40" fill="#888F9C"/><polygon points="64,52 80,40 80,78 64,90" fill="#7F8C99"/><rect x="16" y="52" width="48" height="38" fill="#B6BCC5"/><rect x="16" y="52" width="48" height="4" fill="#C8763C"/><rect x="24" y="64" width="16" height="11" rx="1.5" fill="#F5F7F9"/><path d="M27 68 H37 M27 71 H34" stroke="#888F9C" stroke-width="1.5"/><rect x="41" y="44" width="14" height="4" rx="1" fill="#5B6470"/><path d="M40 44 A8 8 0 0 1 56 44 Z" fill="#C8763C"/><circle cx="45.5" cy="39.5" r="1.8" fill="#F3C9A6"/></svg>
+      <span class="wm">Material Monitor</span>
     </a>
     <nav class="header-nav" aria-label="Primary">
       <a href="#gets">What you get</a>
       <a href="#how">How it works</a>
       <a href="#morning">The morning email</a>
       <a href="#faq">FAQ</a>
-      <a href="#founding">Founding builders</a>
     </nav>
+    <a class="mm-header-cta" href="#founding">Founding builders</a>
   </div>
 </header>
 
@@ -300,7 +379,7 @@ body.mm .bp-grid {
         </div>
         <div aria-hidden="true">
           <div class="mm-mock">
-            <div class="mm-mock-head"><span>This morning &middot; 3 jobs</span><span>Read mail 6:02 am</span></div>
+            <div class="mm-mock-head"><span class="h-left"><svg class="mm-mark" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="14,50 64,50 82,36 32,36" fill="#5B6470"/><polygon points="64,50 82,36 82,76 64,90" fill="#2D343D"/><rect x="14" y="50" width="50" height="40" fill="#424A55"/><rect x="14" y="50" width="50" height="6" fill="#C8763C"/><path d="M36 40 A12 12 0 0 1 60 40 Z" fill="#C8763C"/></svg>This morning &middot; 3 jobs</span><span>Read mail 6:02 am</span></div>
             <div class="mm-mock-sec">
               <span class="k problem">Problems flagged</span>
               <p><b>Primary bath tile</b> &middot; backordered, vendor gave no revised date.</p>
@@ -310,7 +389,7 @@ body.mm .bp-grid {
               <p><b>Kitchen faucet</b> and <b>pot filler</b> landed at the site, good condition.</p>
             </div>
             <div class="mm-mock-sec">
-              <span class="k">Needs a follow-up</span>
+              <span class="k needs">Needs a follow-up</span>
               <p><b>Mudroom cabinetry</b> &middot; ordered 14 days ago, no timeline yet. Draft ready.</p>
             </div>
             <div class="mm-mock-foot">Also 9 order and tracking updates, read from vendor email.</div>
@@ -335,22 +414,22 @@ body.mm .bp-grid {
       </div>
       <div class="mm-gets">
         <div class="mm-get reveal">
-          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m2.5 8 9.5 6 9.5-6"/><path d="m14 15.5 2 2 4-4.5"/></svg>
+          <svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="5" width="19" height="14" rx="2"/><path d="m2.5 8 9.5 6 9.5-6"/><circle cx="19" cy="6" r="2.5" fill="#C8763C" stroke="none"/></svg>
           <h3>Vendor emails become status updates</h3>
           <p>The ship notice, the tracking number, the backorder note. It reads them and proposes the change, with the vendor's own words quoted. You confirm with one tap instead of retyping anything.</p>
         </div>
         <div class="mm-get reveal d1">
-          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/><circle cx="18.5" cy="5.5" r="2.5" fill="currentColor" stroke="none"/></svg>
+          <svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/><circle cx="18.5" cy="5.5" r="2.5" fill="#C8763C" stroke="none"/></svg>
           <h3>The quiet orders get surfaced</h3>
           <p>The cabinetry ordered three weeks ago with no timeline. The tile whose firm date came and went. They show up on your list before they show up as a hole in the schedule.</p>
         </div>
         <div class="mm-get reveal d2">
-          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M8 13h5"/><path d="M8 17h8"/><path d="m18 2 3 3-8 8H10v-3z"/></svg>
+          <svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H6a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-8"/><path d="M8 13h5"/><path d="M8 17h8"/><path d="m18 2 3 3-8 8H10v-3z"/><circle cx="7.5" cy="7.5" r="2.5" fill="#C8763C" stroke="none"/></svg>
           <h3>Follow-ups written, ready to send</h3>
           <p>Pick the items that need a word and it writes one email per rep with every open order on it, models and dates filled in. You read it and send it from your own address, in your own name.</p>
         </div>
         <div class="mm-get reveal d3">
-          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/><path d="m8.5 10 2.5 2.5 4.5-5"/></svg>
+          <svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M10 18.5h4"/><path d="m8.5 10 2.5 2.5 4.5-5"/><circle cx="18.5" cy="5" r="2.5" fill="#C8763C" stroke="none"/></svg>
           <h3>The field checks things in from a phone</h3>
           <p>A delivery lands, the super taps what arrived, how many, in what condition, with a photo of the packing slip. The office sees it as soon as it is saved, and the morning email carries it the next day.</p>
         </div>
@@ -397,7 +476,7 @@ body.mm .bp-grid {
       <div class="mm-pair">
         <div class="reveal" aria-hidden="true">
           <div class="mm-mock">
-            <div class="mm-mock-head"><span>Material Monitor &middot; Tuesday</span><span>3 jobs</span></div>
+            <div class="mm-mock-head"><span class="h-left"><svg class="mm-mark" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><polygon points="14,50 64,50 82,36 32,36" fill="#5B6470"/><polygon points="64,50 82,36 82,76 64,90" fill="#2D343D"/><rect x="14" y="50" width="50" height="40" fill="#424A55"/><rect x="14" y="50" width="50" height="6" fill="#C8763C"/><path d="M36 40 A12 12 0 0 1 60 40 Z" fill="#C8763C"/></svg>Material Monitor &middot; Tuesday</span><span>3 jobs</span></div>
             <div class="mm-mock-sec">
               <span class="k problem">Problems flagged</span>
               <p><b>Primary bath tile</b> (Hillside) &middot; backordered, no revised date from the vendor.</p>
@@ -409,7 +488,7 @@ body.mm .bp-grid {
               <p><b>Under-cabinet lighting</b> at Orchard, 19 of 23. "Short 4, vendor says the rest ships Friday."</p>
             </div>
             <div class="mm-mock-sec">
-              <span class="k">Needs a follow-up</span>
+              <span class="k needs">Needs a follow-up</span>
               <p><b>Mudroom cabinetry</b> (Hillside) &middot; ordered 14 days ago, no timeline yet.</p>
               <p><b>Front door hardware</b> (Orchard) &middot; firm date was Thursday, nothing arrived.</p>
             </div>
@@ -473,10 +552,21 @@ body.mm .bp-grid {
   <!-- GUARDRAILS -->
   <section class="section" id="trust">
     <div class="container">
-      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
-        <p class="label label-center">Built to be trusted</p>
-        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">It proposes. <em>A person decides.</em></h2>
-        <p class="section-sub" style="margin-left:auto;margin-right:auto;">A wrong status is your problem in a homeowner's driveway, not a software company's. So the whole thing is built around not producing one.</p>
+      <div class="mm-propose reveal">
+        <div class="section-head mm-propose-copy">
+          <p class="label">Built to be trusted</p>
+          <h2 class="section-headline">It proposes. <em>A person decides.</em></h2>
+          <p class="section-sub">A wrong status is your problem in a homeowner's driveway, not a software company's. So the whole thing is built around not producing one.</p>
+        </div>
+        <div class="mm-propose-ui" aria-hidden="true">
+          <span class="mm-pill dot">Proposed</span>
+          <span class="item"><b>Primary bath tile</b> &rarr; Backordered, no revised date</span>
+          <p class="quote">"Unfortunately the 12x24 in Fog is on backorder from the mill and we do not have a revised ETA yet."</p>
+          <div class="acts">
+            <span class="b b-go">Confirm</span>
+            <span class="b b-no">Dismiss</span>
+          </div>
+        </div>
       </div>
       <div class="mm-cards">
         <div class="mm-card reveal">
@@ -548,19 +638,24 @@ body.mm .bp-grid {
   <!-- FOUNDING LIST -->
   <section class="cta-band" id="founding">
     <div class="container">
-      <span class="launch-stamp">Founding builders</span>
-      <h2>Be one of the first offices <em>it watches for.</em></h2>
-      <p>Send a short email and you will hear back from the builder who made it, not from a sequence. A small group of founding builders gets in first, shapes what it becomes and gets founding terms.</p>
-      <div class="mm-capture">
-        <p class="lead-in">Get on the founding list</p>
-        <div class="hero-actions" style="margin-top:0;">
-          <a class="btn btn-primary" href="mailto:info@lockten.ai?subject=Material%20Monitor%20founding%20list">Email info@lockten.ai
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
-          </a>
+      <div class="mm-found">
+        <div class="mm-found-copy">
+          <span class="launch-stamp">Founding builders</span>
+          <h2>Be one of the first offices <em>it watches for.</em></h2>
+          <p>Send a short email and you will hear back from the builder who made it, not from a sequence. A small group of founding builders gets in first, shapes what it becomes and gets founding terms.</p>
+          <div class="mm-capture">
+            <p class="lead-in">Get on the founding list</p>
+            <div class="hero-actions" style="margin-top:0;">
+              <a class="btn btn-primary" href="mailto:info@lockten.ai?subject=Material%20Monitor%20founding%20list">Email info@lockten.ai
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
+              </a>
+            </div>
+            <p class="fine">Tell us who you are and what you build. You will get a real reply from the builder who made it. No mailing list, no drip sequence, no sales calls.</p>
+          </div>
+          <a class="cta-mail" href="mailto:info@lockten.ai?subject=Material%20Monitor">Or write any time: info@lockten.ai</a>
         </div>
-        <p class="fine">Tell us who you are and what you build. You will get a real reply from the builder who made it. No mailing list, no drip sequence, no sales calls.</p>
+        <svg class="mm-found-mark" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M30 30 A18 18 0 0 1 66 30" stroke="#DE9A66" stroke-width="2" opacity="0.45" stroke-linecap="round"/><path d="M37 36 A11 11 0 0 1 59 36" stroke="#DE9A66" stroke-width="2" opacity="0.85" stroke-linecap="round"/><polygon points="16,52 64,52 80,40 32,40" fill="#888F9C"/><polygon points="64,52 80,40 80,78 64,90" fill="#7F8C99"/><rect x="16" y="52" width="48" height="38" fill="#B6BCC5"/><rect x="16" y="52" width="48" height="4" fill="#C8763C"/><rect x="24" y="64" width="16" height="11" rx="1.5" fill="#F5F7F9"/><path d="M27 68 H37 M27 71 H34" stroke="#888F9C" stroke-width="1.5"/><rect x="41" y="44" width="14" height="4" rx="1" fill="#5B6470"/><path d="M40 44 A8 8 0 0 1 56 44 Z" fill="#C8763C"/><circle cx="45.5" cy="39.5" r="1.8" fill="#F3C9A6"/></svg>
       </div>
-      <a class="cta-mail" href="mailto:info@lockten.ai?subject=Material%20Monitor">Or write any time: info@lockten.ai</a>
     </div>
   </section>
 
@@ -570,7 +665,13 @@ body.mm .bp-grid {
   <div class="container">
     <div class="footer-inner">
       <div class="footer-brand">
-        <a href="https://lockten.ai/" class="brand"><img src="assets/lockten-logo.png" alt="Lock Ten Studio"></a>
+        <div class="mm-lockup mm-lockup-foot">
+          <svg class="mm-mark" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="96" height="96" rx="20" fill="#2D343D"/><polygon points="14,50 64,50 82,36 32,36" fill="#888F9C"/><polygon points="64,50 82,36 82,76 64,90" fill="#7F8C99"/><rect x="14" y="50" width="50" height="40" fill="#B6BCC5"/><rect x="14" y="50" width="50" height="6" fill="#C8763C"/><path d="M36 40 A12 12 0 0 1 60 40 Z" fill="#C8763C"/></svg>
+          <span class="wm-stack">
+            <span class="wm">Material Monitor</span>
+            <span class="by">by Lock Ten Studio &middot; Cabin John, Maryland</span>
+          </span>
+        </div>
       </div>
       <p class="footer-tagline">Material Monitor by Lock Ten Studio. Field tools built on real job sites.</p>
       <nav class="footer-nav" aria-label="Footer">
