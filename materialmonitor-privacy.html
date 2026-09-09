@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Privacy Policy | Material Monitor</title>
+<meta name="description" content="How Material Monitor handles your company's data: what we collect, why, who can see it, how long we keep it, and how to delete it. Plain English, no advertising, no selling of data.">
+
+<meta property="og:title" content="Material Monitor Privacy Policy">
+<meta property="og:description" content="What Material Monitor collects, why, who can see it, how long we keep it, and how to delete your company and its data.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://materialmonitor.app/privacy">
+<meta property="og:image" content="https://lockten.ai/assets/og/og-materialmonitor.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://materialmonitor.app/privacy">
+
+<link rel="preload" href="fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='20' fill='%232D343D'/%3E%3Cpolygon points='14,50 64,50 82,36 32,36' fill='%23888F9C'/%3E%3Cpolygon points='64,50 82,36 82,76 64,90' fill='%237F8C99'/%3E%3Crect x='14' y='50' width='50' height='40' fill='%23B6BCC5'/%3E%3Crect x='14' y='50' width='50' height='6' fill='%23C8763C'/%3E%3Cpath d='M36 40 A12 12 0 0 1 60 40 Z' fill='%23C8763C'/%3E%3C/svg%3E">
+
+<script>document.documentElement.className += ' js';</script>
+
+<style>
+/* ---- Material Monitor skin: same token overrides as the product page,
+       so the legal pages wear the product's identity, not the studio's. ---- */
+body.mm {
+  --brand:         #A85F2B;
+  --brand-hover:   #8E4E1F;
+  --blueprint-50:  #F6E7DB;
+  --blueprint-100: #EFD6C2;
+  --blueprint-200: #E2B48F;
+  --blueprint-300: #DE9A66;
+  --blueprint-600: #A85F2B;
+  --blueprint-700: #8E4E1F;
+  --blueprint-800: #733F19;
+  --deep-900: #1D232B;
+  --deep-800: #2D343D;
+  --steel-600: #424A55;
+  --steel-400: #888F9C;
+  --steel-300: #B6BCC5;
+  --copper:      #C8763C;
+  --copper-lift: #DE9A66;
+  --copper-deep: #B5682F;
+  --paper-ground: #F5F7F9;
+}
+
+/* ---- The product lockup ---- */
+.mm-mark { display: block; flex: none; }
+.mm-lockup { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; flex: none; }
+.mm-lockup .wm { font-family: var(--font-display); font-weight: 400; font-size: 1.5rem; line-height: 1.05; letter-spacing: -0.01em; color: #EEF1F4; white-space: nowrap; }
+a.mm-lockup:hover .wm { color: var(--copper-lift); }
+
+/* ---- Header ---- */
+.mm .site-header { background: var(--deep-900); border-bottom: 1px solid var(--deep-800); }
+.mm .header-inner { flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px 20px; padding-top: 16px; padding-bottom: 16px; }
+.mm .mm-lockup { order: 1; }
+.mm .header-nav { order: 3; gap: 28px; flex: 1 1 100%; justify-content: center; }
+.mm .header-nav a { color: var(--steel-300); font-size: 0.94rem; font-weight: 400; text-transform: none; letter-spacing: 0; }
+.mm .header-nav a:hover { color: var(--copper-lift); }
+.mm-header-cta { order: 2; flex: none; background: var(--copper); color: #1D232B; font-family: var(--font-sans); font-weight: 600; font-size: 0.95rem; line-height: 1; padding: 12px 18px; border-radius: 6px; text-decoration: none; white-space: nowrap; transition: background 180ms var(--ease); }
+.mm-header-cta:hover { background: var(--copper-lift); }
+@media (min-width: 1000px) {
+  .mm .header-nav { order: 2; flex: 1 1 auto; justify-content: flex-end; margin-right: 8px; }
+  .mm-header-cta { order: 3; }
+}
+@media (max-width: 560px) {
+  .mm .header-inner { gap: 12px; }
+  .mm-lockup { gap: 9px; }
+  .mm-lockup .wm { font-size: 1.18rem; }
+  .mm .site-header .mm-mark { width: 30px; height: 30px; }
+  .mm-header-cta { font-size: 0.8rem; padding: 9px 12px; }
+  .mm .header-nav { gap: 6px 16px; }
+  .mm .header-nav a { font-size: 0.84rem; }
+}
+
+/* ---- Footer lockup ---- */
+.mm-lockup-foot { gap: 12px; }
+.mm-lockup-foot .mm-mark { width: 28px; height: 28px; }
+.mm-lockup-foot .wm-stack { display: flex; flex-direction: column; gap: 5px; text-align: left; }
+.mm-lockup-foot .wm { font-size: 1.32rem; color: var(--fg); white-space: normal; }
+.mm-lockup-foot .by { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-3); line-height: 1.4; }
+@media (max-width: 759px) {
+  .mm .footer-brand { width: 100%; }
+  .mm-lockup-foot { max-width: 100%; justify-content: center; }
+}
+@media (max-width: 480px) { .mm-lockup-foot .by { letter-spacing: 0.12em; } }
+
+/* ---- Reading copy. The site root is 17px, so 1.06rem is the 18px floor. ---- */
+.mm .legal p, .mm .legal li { font-size: 1.06rem; line-height: 1.75; }
+.mm .legal h2 { font-size: 1.42rem; margin: 2.6rem 0 0.8rem; }
+.mm .legal h3 { font-family: var(--font-sans); font-size: 1.1rem; font-weight: 600; color: var(--fg); margin: 1.8rem 0 0.6rem; letter-spacing: -0.005em; }
+.mm .legal .lede { font-size: 1.15rem; line-height: 1.75; color: var(--fg-2); }
+.mm .legal .updated { font-size: 0.8rem; }
+.mm .legal ul { margin-bottom: 1.2rem; }
+.legal-note {
+  background: var(--paper-ground);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin: 1.6rem 0;
+}
+.legal-note p:last-child { margin-bottom: 0; }
+.legal-toc {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin: 2rem 0 2.6rem;
+}
+.legal-toc h2 { margin: 0 0 0.7rem; font-size: 0.78rem; font-family: var(--font-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-3); font-weight: 500; }
+.legal-toc ul { margin: 0; padding-left: 1.2rem; }
+.legal-toc li { margin-bottom: 0.3rem; font-size: 1rem; line-height: 1.6; }
+</style>
+</head>
+<body class="mm">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="https://materialmonitor.app/" class="mm-lockup">
+      <svg class="mm-mark" width="38" height="38" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M30 30 A18 18 0 0 1 66 30" stroke="#DE9A66" stroke-width="2" opacity="0.45" stroke-linecap="round"/><path d="M37 36 A11 11 0 0 1 59 36" stroke="#DE9A66" stroke-width="2" opacity="0.85" stroke-linecap="round"/><polygon points="16,52 64,52 80,40 32,40" fill="#888F9C"/><polygon points="64,52 80,40 80,78 64,90" fill="#7F8C99"/><rect x="16" y="52" width="48" height="38" fill="#B6BCC5"/><rect x="16" y="52" width="48" height="4" fill="#C8763C"/><rect x="24" y="64" width="16" height="11" rx="1.5" fill="#F5F7F9"/><path d="M27 68 H37 M27 71 H34" stroke="#888F9C" stroke-width="1.5"/><rect x="41" y="44" width="14" height="4" rx="1" fill="#5B6470"/><path d="M40 44 A8 8 0 0 1 56 44 Z" fill="#C8763C"/><circle cx="45.5" cy="39.5" r="1.8" fill="#F3C9A6"/></svg>
+      <span class="wm">Material Monitor</span>
+    </a>
+    <a class="mm-header-cta" href="https://materialmonitor.app/#founding">Founding builders</a>
+    <nav class="header-nav" aria-label="Primary">
+      <a href="https://materialmonitor.app/">Overview</a>
+      <a href="https://materialmonitor.app/#how">How it works</a>
+      <a href="https://materialmonitor.app/#faq">FAQ</a>
+      <a href="https://materialmonitor.app/terms">Terms</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="legal">
+    <div class="container">
+
+      <h1>Privacy Policy</h1>
+      <p class="updated">Material Monitor &middot; Last updated 9 September 2026</p>
+
+      <p class="lede">Material Monitor is a web app for small custom home builders, made and run by Lock Ten Studio LLC, a Maryland limited liability company. This policy explains what the app collects, why it collects it, who can see it, how long it is kept and how to get rid of it. It is written to be read by the person in the office who actually uses the software.</p>
+
+      <div class="legal-note">
+        <p><strong>The short version.</strong> Your company's data belongs to your company. Only people your company invites can see it. We do not sell it, we do not advertise against it, and we do not use it to build anything for anybody else. If your company connects a vendor mailbox, we read only mail from senders your company has approved as vendors, and we never send mail from that mailbox. Ask us to delete your company and we delete it.</p>
+      </div>
+
+      <div class="legal-toc">
+        <h2>On this page</h2>
+        <ul>
+          <li><a href="#who">Who we are</a></li>
+          <li><a href="#collect">What we collect and why</a></li>
+          <li><a href="#vendor-mail">Vendor email, and the three ways it reaches the app</a></li>
+          <li><a href="#google">Google user data and the Limited Use requirements</a></li>
+          <li><a href="#microsoft">Microsoft 365 user data</a></li>
+          <li><a href="#reading">The reading pass and how it uses AI</a></li>
+          <li><a href="#who-sees">Who can see your data</a></li>
+          <li><a href="#providers">Service providers</a></li>
+          <li><a href="#where">Where your data is stored</a></li>
+          <li><a href="#retention">How long we keep things</a></li>
+          <li><a href="#delete">Deleting your company and its data</a></li>
+          <li><a href="#security">Security</a></li>
+          <li><a href="#cookies">Cookies</a></li>
+          <li><a href="#children">Children</a></li>
+          <li><a href="#changes">Changes to this policy</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <h2 id="who">Who we are</h2>
+      <p>Material Monitor is operated by Lock Ten Studio LLC ("we", "us", "our"), a Maryland limited liability company. The app lives at <a href="https://app.materialmonitor.app">app.materialmonitor.app</a>. This policy covers that app, the emails it sends you, and the marketing site at materialmonitor.app.</p>
+      <p>In this policy, "your company" means the builder's business that signed up for an account, and "you" means a person using the app as a member of that company. Your company controls its own data. We hold it and run the software for your company.</p>
+
+      <h2 id="collect">What we collect and why</h2>
+      <p>We collect only what the app needs to do its job. There is no advertising, no ad network, no data broker and no tracking pixel of our own anywhere in the product.</p>
+
+      <h3>Account and company information</h3>
+      <p>Your work email address, your name if you enter one, your company name, and which people your company has invited. We use this to sign you in, to show who did what inside your company, and to send you service email. Sign-in uses a six-digit code sent to your work email. There is no password, so we never store one.</p>
+
+      <h3>Your order and delivery records</h3>
+      <p>The finish material orders your company keeps per job: items, quantities, vendors, purchase order and tracking references, dates, notes, and the status of each order. When a delivery is received from a phone, that record includes counts, condition notes and any photos taken, such as a photo of the packing slip. We store this so the app can show you where every order stands and send the morning email.</p>
+
+      <h3>Vendor email your company routes to the app</h3>
+      <p>Order confirmations, ship notices, delay notices and similar mail from the vendors your company has approved. We store the message content and its attachments so the app can propose an update to the matching order and so a person can check the source when reviewing that proposal. The section below explains exactly how this mail reaches us and what is left out.</p>
+
+      <h3>Technical records</h3>
+      <p>Ordinary server and application logs: the time of a request, the page or action, an error if one occurred, and the account it belonged to. These exist so the app can be kept working and so we can investigate a problem. They are not used to profile anybody.</p>
+
+      <h2 id="vendor-mail">Vendor email, and the three ways it reaches the app</h2>
+      <p>Reading vendor mail is a feature your company turns on. It is off until somebody at your company sets it up, and your company picks one of three ways to do it.</p>
+      <ul>
+        <li><strong>A private forwarding address.</strong> We give your company its own address. Your office forwards vendor mail to it, either by hand or with a rule in your own mail system. We only ever see what is forwarded.</li>
+        <li><strong>A connected Microsoft 365 mailbox.</strong> Your company connects a mailbox through Microsoft's own sign-in screen. The connection is read only.</li>
+        <li><strong>A connected Google Workspace or Gmail mailbox.</strong> Your company connects a mailbox through Google's own sign-in screen. The connection is read only.</li>
+      </ul>
+      <p>Whichever route your company picks, the same rules apply:</p>
+      <ul>
+        <li>We read only mail from senders your company has approved as vendors. Mail from anyone else is not used.</li>
+        <li>Mail from your company's own domains is ignored, so your internal conversation stays out of the app.</li>
+        <li>A person at your company confirms every proposed change to an order. The single exception is an exact tracking number match, which the app can apply on its own because there is nothing to interpret.</li>
+        <li>Follow-up emails are drafts. Your office sends them from its own mailbox. The app never sends mail from a connected mailbox.</li>
+        <li>Sign-in tokens for a connected mailbox are encrypted at rest and deleted when your company disconnects the mailbox.</li>
+      </ul>
+
+      <h2 id="google">Google user data and the Limited Use requirements</h2>
+      <p>If your company connects a Google Workspace or Gmail mailbox, the app reads that mailbox through Google's Gmail API, with read only permission, after your company grants access on Google's own sign-in screen.</p>
+      <div class="legal-note">
+        <p>Material Monitor's use and transfer of information received from Google APIs to any other app will adhere to the <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services User Data Policy</a>, including the Limited Use requirements.</p>
+      </div>
+      <p>In practice that means we use Google mailbox data only to provide the features your company asked for, we do not transfer it to anyone except as needed to provide those features or as required by law, we do not use it for advertising, and we do not allow humans to read it except with your company's explicit permission, when it is necessary for security or to comply with the law, or where the data has been aggregated and made anonymous. Your company can disconnect the mailbox at any time in the app, and can also revoke access from its own Google account settings.</p>
+
+      <h2 id="microsoft">Microsoft 365 user data</h2>
+      <p>If your company connects a Microsoft 365 mailbox, the app reads that mailbox through the Microsoft Graph API, with read only permission, after your company grants access on Microsoft's own sign-in screen.</p>
+      <p>We hold Microsoft mailbox data to the same standard as Google's. We use it only to provide the features your company asked for, we do not transfer it to anyone except as needed to provide those features or as required by law, we do not use it for advertising, and we do not allow humans to read it except with your company's explicit permission, when it is necessary for security or to comply with the law, or where the data has been aggregated and made anonymous. Your company can disconnect the mailbox at any time in the app, and can also revoke access from its own Microsoft account settings.</p>
+
+      <h2 id="reading">The reading pass and how it uses AI</h2>
+      <p>Turning a vendor email into a proposed order update takes a reading pass. When your company enables it, the text of an approved vendor's email is sent to Anthropic's API, which extracts the order facts in it: the item, the quantity, a ship date, a tracking number and so on. Anthropic's API terms do not permit training on that data.</p>
+      <p>What comes back is a proposal, not a change. A person at your company reviews and confirms it, with the exception of an exact tracking number match noted above. The app does not decide anything about your orders on its own.</p>
+
+      <h2 id="who-sees">Who can see your data</h2>
+      <p>Your company's data is visible to the members of your company and to nobody else. There is no shared view across companies, no benchmark, no leaderboard and no aggregate product built from your records.</p>
+      <p>On our side, access is limited to the small number of people at Lock Ten Studio who keep the service running, and only when it is needed to fix a problem, investigate a security issue, or answer a support request from your company. We do not browse customer data.</p>
+      <p>We do not sell your data, and we do not share it with anyone for their own purposes. We share it only with the service providers listed below, who process it on our behalf, or where the law requires us to.</p>
+
+      <h2 id="providers">Service providers</h2>
+      <p>These are the companies that handle some part of your data so that the app can work.</p>
+      <ul>
+        <li><strong>Render</strong> hosts the application and the database.</li>
+        <li><strong>Resend</strong> sends the app's transactional email, such as your sign-in code and the morning email, and receives the mail sent to your company's private forwarding address.</li>
+        <li><strong>Anthropic</strong> provides the reading pass, for companies that have enabled it. Anthropic's API terms do not permit training on that data.</li>
+        <li><strong>Microsoft Graph and Google Gmail APIs</strong>, only for companies that have connected one of those mailboxes.</li>
+        <li><strong>Carrier tracking services</strong>, currently 17TRACK, UPS and FedEx, which we query with a tracking number to get a delivery status.</li>
+      </ul>
+      <p>Transactional email providers add ordinary delivery instrumentation to the messages they send, which can include an open or click record. That is a feature of email delivery, not something we add for tracking, and we run no tracking pixel of our own.</p>
+
+      <h2 id="where">Where your data is stored</h2>
+      <p>Your data is stored in the United States.</p>
+
+      <h2 id="retention">How long we keep things</h2>
+      <ul>
+        <li><strong>Your company's orders, deliveries and photos:</strong> for as long as your company has an account, because the point of the app is the record. Your company can delete individual records at any time.</li>
+        <li><strong>Vendor email content:</strong> kept alongside the order it relates to for as long as your company has an account, so that a person reviewing a change can see the message it came from.</li>
+        <li><strong>Sign-in tokens for a connected mailbox:</strong> encrypted at rest and deleted as soon as your company disconnects that mailbox.</li>
+        <li><strong>Application and server logs:</strong> a short operational window, currently 30 days.</li>
+        <li><strong>After your company closes its account:</strong> we delete the company and its data within 30 days, and it falls out of routine encrypted backups within a further 35 days.</li>
+      </ul>
+
+      <h2 id="delete">Deleting your company and its data</h2>
+      <p>Write to <a href="mailto:info@lockten.ai?subject=Material%20Monitor%20deletion%20request">info@lockten.ai</a> from a work email address on the account and ask us to delete the company. We will confirm with an administrator of that company, then delete the company, its members, its orders, its delivery records and photos, and the vendor mail held against those orders, on the timetable above. Individual records can be deleted inside the app at any time without contacting us.</p>
+      <p>If you only want the mailbox connection gone, disconnect it in the app. That deletes the sign-in tokens immediately and stops any further reading.</p>
+
+      <h2 id="security">Security</h2>
+      <p>Access to the app requires a code sent to a work email address on the account. Traffic runs over encrypted connections. Sign-in tokens for connected mailboxes are encrypted at rest. Access on our side is limited to the people who run the service. No system is perfect, and we will tell your company promptly if we learn of a breach affecting its data.</p>
+
+      <h2 id="cookies">Cookies</h2>
+      <p>The app sets a session cookie so that it knows you are signed in. That is the only cookie it needs, and it is not used for advertising or for following you around the web. Clearing it signs you out.</p>
+
+      <h2 id="children">Children</h2>
+      <p>Material Monitor is a tool for a business. It is not directed at children and is not for anyone under 18. We do not knowingly collect information from anyone under 18. If we learn we have, we will delete it.</p>
+
+      <h2 id="changes">Changes to this policy</h2>
+      <p>If we change this policy we will update the date at the top of the page, and if the change is a significant one we will tell account administrators by email before it takes effect. The current version always lives at this address.</p>
+
+      <h2 id="contact">Contact</h2>
+      <p>Questions about this policy, or about your company's data, go to <a href="mailto:info@lockten.ai?subject=Material%20Monitor%20privacy">info@lockten.ai</a>. Material Monitor is operated by Lock Ten Studio LLC, a Maryland limited liability company.</p>
+
+      <a class="back-link" href="https://materialmonitor.app/">Back to Material Monitor</a>
+
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="mm-lockup mm-lockup-foot">
+          <svg class="mm-mark" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="96" height="96" rx="20" fill="#2D343D"/><polygon points="14,50 64,50 82,36 32,36" fill="#888F9C"/><polygon points="64,50 82,36 82,76 64,90" fill="#7F8C99"/><rect x="14" y="50" width="50" height="40" fill="#B6BCC5"/><rect x="14" y="50" width="50" height="6" fill="#C8763C"/><path d="M36 40 A12 12 0 0 1 60 40 Z" fill="#C8763C"/></svg>
+          <span class="wm-stack">
+            <span class="wm">Material Monitor</span>
+            <span class="by">by Lock Ten Studio</span>
+          </span>
+        </div>
+      </div>
+      <p class="footer-tagline">Field tools built on real job sites.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="https://lockten.ai/">Lock Ten Studio</a>
+        <a href="https://lockten.ai/walkthrough">Walkthrough</a>
+        <a href="https://lockten.ai/handover">Handover</a>
+        <a href="https://lockten.ai/install">The Install</a>
+        <a href="mailto:info@lockten.ai?subject=Material%20Monitor">Contact</a>
+        <a href="https://materialmonitor.app/privacy">Privacy</a>
+        <a href="https://materialmonitor.app/terms">Terms</a>
+      </nav>
+      <div class="footer-contact-block">
+        <a href="mailto:info@lockten.ai?subject=Material%20Monitor">info@lockten.ai</a>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/locktenstudio" aria-label="Lock Ten Studio on Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        </a>
+        <a href="https://x.com/locktenstudio" aria-label="Lock Ten Studio on X">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z"/></svg>
+        </a>
+      </div>
+      <div class="footer-legal">
+        <span>&copy; 2026 Lock Ten Studio LLC. Built and run by a custom residential builder, on real job sites.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cd30115fa535417ca908587b96cd3733"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>

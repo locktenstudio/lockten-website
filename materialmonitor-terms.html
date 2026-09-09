@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Terms of Service | Material Monitor</title>
+<meta name="description" content="The terms for using Material Monitor: the account and company, acceptable use, how the app proposes changes that people confirm, vendor mail responsibilities, subscription, termination and governing law.">
+
+<meta property="og:title" content="Material Monitor Terms of Service">
+<meta property="og:description" content="The terms for using Material Monitor: accounts, acceptable use, confirm-before-change, vendor mail, subscription, termination and governing law.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://materialmonitor.app/terms">
+<meta property="og:image" content="https://lockten.ai/assets/og/og-materialmonitor.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://materialmonitor.app/terms">
+
+<link rel="preload" href="fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 96 96'%3E%3Crect width='96' height='96' rx='20' fill='%232D343D'/%3E%3Cpolygon points='14,50 64,50 82,36 32,36' fill='%23888F9C'/%3E%3Cpolygon points='64,50 82,36 82,76 64,90' fill='%237F8C99'/%3E%3Crect x='14' y='50' width='50' height='40' fill='%23B6BCC5'/%3E%3Crect x='14' y='50' width='50' height='6' fill='%23C8763C'/%3E%3Cpath d='M36 40 A12 12 0 0 1 60 40 Z' fill='%23C8763C'/%3E%3C/svg%3E">
+
+<script>document.documentElement.className += ' js';</script>
+
+<style>
+/* ---- Material Monitor skin: same token overrides as the product page,
+       so the legal pages wear the product's identity, not the studio's. ---- */
+body.mm {
+  --brand:         #A85F2B;
+  --brand-hover:   #8E4E1F;
+  --blueprint-50:  #F6E7DB;
+  --blueprint-100: #EFD6C2;
+  --blueprint-200: #E2B48F;
+  --blueprint-300: #DE9A66;
+  --blueprint-600: #A85F2B;
+  --blueprint-700: #8E4E1F;
+  --blueprint-800: #733F19;
+  --deep-900: #1D232B;
+  --deep-800: #2D343D;
+  --steel-600: #424A55;
+  --steel-400: #888F9C;
+  --steel-300: #B6BCC5;
+  --copper:      #C8763C;
+  --copper-lift: #DE9A66;
+  --copper-deep: #B5682F;
+  --paper-ground: #F5F7F9;
+}
+
+/* ---- The product lockup ---- */
+.mm-mark { display: block; flex: none; }
+.mm-lockup { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; flex: none; }
+.mm-lockup .wm { font-family: var(--font-display); font-weight: 400; font-size: 1.5rem; line-height: 1.05; letter-spacing: -0.01em; color: #EEF1F4; white-space: nowrap; }
+a.mm-lockup:hover .wm { color: var(--copper-lift); }
+
+/* ---- Header ---- */
+.mm .site-header { background: var(--deep-900); border-bottom: 1px solid var(--deep-800); }
+.mm .header-inner { flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px 20px; padding-top: 16px; padding-bottom: 16px; }
+.mm .mm-lockup { order: 1; }
+.mm .header-nav { order: 3; gap: 28px; flex: 1 1 100%; justify-content: center; }
+.mm .header-nav a { color: var(--steel-300); font-size: 0.94rem; font-weight: 400; text-transform: none; letter-spacing: 0; }
+.mm .header-nav a:hover { color: var(--copper-lift); }
+.mm-header-cta { order: 2; flex: none; background: var(--copper); color: #1D232B; font-family: var(--font-sans); font-weight: 600; font-size: 0.95rem; line-height: 1; padding: 12px 18px; border-radius: 6px; text-decoration: none; white-space: nowrap; transition: background 180ms var(--ease); }
+.mm-header-cta:hover { background: var(--copper-lift); }
+@media (min-width: 1000px) {
+  .mm .header-nav { order: 2; flex: 1 1 auto; justify-content: flex-end; margin-right: 8px; }
+  .mm-header-cta { order: 3; }
+}
+@media (max-width: 560px) {
+  .mm .header-inner { gap: 12px; }
+  .mm-lockup { gap: 9px; }
+  .mm-lockup .wm { font-size: 1.18rem; }
+  .mm .site-header .mm-mark { width: 30px; height: 30px; }
+  .mm-header-cta { font-size: 0.8rem; padding: 9px 12px; }
+  .mm .header-nav { gap: 6px 16px; }
+  .mm .header-nav a { font-size: 0.84rem; }
+}
+
+/* ---- Footer lockup ---- */
+.mm-lockup-foot { gap: 12px; }
+.mm-lockup-foot .mm-mark { width: 28px; height: 28px; }
+.mm-lockup-foot .wm-stack { display: flex; flex-direction: column; gap: 5px; text-align: left; }
+.mm-lockup-foot .wm { font-size: 1.32rem; color: var(--fg); white-space: normal; }
+.mm-lockup-foot .by { font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--fg-3); line-height: 1.4; }
+@media (max-width: 759px) {
+  .mm .footer-brand { width: 100%; }
+  .mm-lockup-foot { max-width: 100%; justify-content: center; }
+}
+@media (max-width: 480px) { .mm-lockup-foot .by { letter-spacing: 0.12em; } }
+
+/* ---- Reading copy. The site root is 17px, so 1.06rem is the 18px floor. ---- */
+.mm .legal p, .mm .legal li { font-size: 1.06rem; line-height: 1.75; }
+.mm .legal h2 { font-size: 1.42rem; margin: 2.6rem 0 0.8rem; }
+.mm .legal h3 { font-family: var(--font-sans); font-size: 1.1rem; font-weight: 600; color: var(--fg); margin: 1.8rem 0 0.6rem; letter-spacing: -0.005em; }
+.mm .legal .lede { font-size: 1.15rem; line-height: 1.75; color: var(--fg-2); }
+.mm .legal .updated { font-size: 0.8rem; }
+.mm .legal ul { margin-bottom: 1.2rem; }
+.legal-note {
+  background: var(--paper-ground);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin: 1.6rem 0;
+}
+.legal-note p:last-child { margin-bottom: 0; }
+.legal-toc {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 22px;
+  margin: 2rem 0 2.6rem;
+}
+.legal-toc h2 { margin: 0 0 0.7rem; font-size: 0.78rem; font-family: var(--font-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--fg-3); font-weight: 500; }
+.legal-toc ul { margin: 0; padding-left: 1.2rem; }
+.legal-toc li { margin-bottom: 0.3rem; font-size: 1rem; line-height: 1.6; }
+</style>
+</head>
+<body class="mm">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="https://materialmonitor.app/" class="mm-lockup">
+      <svg class="mm-mark" width="38" height="38" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M30 30 A18 18 0 0 1 66 30" stroke="#DE9A66" stroke-width="2" opacity="0.45" stroke-linecap="round"/><path d="M37 36 A11 11 0 0 1 59 36" stroke="#DE9A66" stroke-width="2" opacity="0.85" stroke-linecap="round"/><polygon points="16,52 64,52 80,40 32,40" fill="#888F9C"/><polygon points="64,52 80,40 80,78 64,90" fill="#7F8C99"/><rect x="16" y="52" width="48" height="38" fill="#B6BCC5"/><rect x="16" y="52" width="48" height="4" fill="#C8763C"/><rect x="24" y="64" width="16" height="11" rx="1.5" fill="#F5F7F9"/><path d="M27 68 H37 M27 71 H34" stroke="#888F9C" stroke-width="1.5"/><rect x="41" y="44" width="14" height="4" rx="1" fill="#5B6470"/><path d="M40 44 A8 8 0 0 1 56 44 Z" fill="#C8763C"/><circle cx="45.5" cy="39.5" r="1.8" fill="#F3C9A6"/></svg>
+      <span class="wm">Material Monitor</span>
+    </a>
+    <a class="mm-header-cta" href="https://materialmonitor.app/#founding">Founding builders</a>
+    <nav class="header-nav" aria-label="Primary">
+      <a href="https://materialmonitor.app/">Overview</a>
+      <a href="https://materialmonitor.app/#how">How it works</a>
+      <a href="https://materialmonitor.app/#faq">FAQ</a>
+      <a href="https://materialmonitor.app/privacy">Privacy</a>
+    </nav>
+  </div>
+</header>
+
+<main id="main">
+  <section class="legal">
+    <div class="container">
+
+      <h1>Terms of Service</h1>
+      <p class="updated">Material Monitor &middot; Last updated 9 September 2026</p>
+
+      <p class="lede">These are the terms for using Material Monitor, a web app for small custom home builders made and run by Lock Ten Studio LLC, a Maryland limited liability company. By signing up, or by using the app as a member of a company that signed up, you agree to them. They are written plainly on purpose.</p>
+
+      <div class="legal-toc">
+        <h2>On this page</h2>
+        <ul>
+          <li><a href="#agreement">Who this agreement is with</a></li>
+          <li><a href="#service">What the service is</a></li>
+          <li><a href="#accounts">Your account and your company</a></li>
+          <li><a href="#proposes">The app proposes, people decide</a></li>
+          <li><a href="#vendor-mail">Vendor mail and your right to route it</a></li>
+          <li><a href="#acceptable">Acceptable use</a></li>
+          <li><a href="#your-data">Your company's data</a></li>
+          <li><a href="#subscription">Subscription and cancellation</a></li>
+          <li><a href="#termination">Termination</a></li>
+          <li><a href="#disclaimers">Disclaimers</a></li>
+          <li><a href="#liability">Limitation of liability</a></li>
+          <li><a href="#changes">Changes to the service and to these terms</a></li>
+          <li><a href="#law">Governing law</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </div>
+
+      <h2 id="agreement">Who this agreement is with</h2>
+      <p>This agreement is between Lock Ten Studio LLC ("we", "us", "our") and the company that holds the account ("your company"). Where these terms say "you", they mean a person using the app as a member of that company. The person who signs the company up confirms they are allowed to agree to these terms on the company's behalf.</p>
+      <p>Our <a href="https://materialmonitor.app/privacy">Privacy Policy</a> explains how we handle data and forms part of this agreement.</p>
+
+      <h2 id="service">What the service is</h2>
+      <p>Material Monitor keeps a list of your company's finish material orders per job, receives deliveries from a phone with counts, condition notes and photos, watches the vendor mail your company routes to it, and sends your office a morning email about the orders that need a word. It is a record keeping and prompting tool. It does not place orders, pay invoices, or contract with your vendors on your behalf.</p>
+
+      <h2 id="accounts">Your account and your company</h2>
+      <p>A company signs up with a work email address. Signing in uses a six-digit code sent to that address, so there is no password to manage. Keep access to that mailbox secure, because anybody who can read it can sign in as you.</p>
+      <p>Your company invites its own teammates and decides who belongs. An administrator can remove a member at any time. Your company is responsible for what its members do in the app, and for keeping its member list current when people join or leave.</p>
+      <p>You must be at least 18 years old to use Material Monitor, and you must use a work email address that belongs to your company.</p>
+
+      <h2 id="proposes">The app proposes, people decide</h2>
+      <p>This is the most important thing to understand about the product. Material Monitor reads vendor mail and proposes changes to your orders. A person at your company confirms every proposed change, with one exception: where a tracking number in the mail matches a tracking number already on the order exactly, the app applies the update on its own, because there is nothing to interpret.</p>
+      <p>We do not guarantee that any read is correct. Vendor email is written by people and machines we do not control, in formats that change without notice. A ship date can be misread, an item can be matched to the wrong line, and a message can be missed entirely. The morning email is a prompt, not a certification.</p>
+      <p>Your office remains responsible for its orders. Confirm what matters with your vendors, keep your own commercial records, and do not treat the app's status as proof of anything. Use it the way you would use a sharp assistant: helpful, fast, and still checked.</p>
+
+      <h2 id="vendor-mail">Vendor mail and your right to route it</h2>
+      <p>Your company chooses how vendor mail reaches the app: a private forwarding address that you forward mail to, a connected Microsoft 365 mailbox read through Microsoft's sign-in, or a connected Google Workspace or Gmail mailbox read through Google's sign-in. Each connection is read only.</p>
+      <p>Your company is responsible for having the right to route the mail it routes. That means the mailbox is your company's, the person who connects it is allowed to, and forwarding that mail to a service provider is consistent with your company's own policies and any agreement it has with the mailbox provider or its vendors. We cannot verify this for you.</p>
+      <p>The app reads only mail from senders your company has approved as vendors, ignores mail from your company's own domains, and never sends mail from a connected mailbox. Follow-up emails are drafts that your office sends from its own mailbox. Your company can disconnect a mailbox at any time, which deletes the stored sign-in tokens and stops any further reading.</p>
+
+      <h2 id="acceptable">Acceptable use</h2>
+      <p>Use the app for your company's own construction business. Do not:</p>
+      <ul>
+        <li>connect or forward mail your company does not have the right to route;</li>
+        <li>use the app to store data unrelated to your company's material orders, including anything you would not want in a business record;</li>
+        <li>try to reach another company's data, probe the service for weaknesses, or work around access controls;</li>
+        <li>scrape, resell, or rebrand the service, or use it to build a competing product;</li>
+        <li>upload anything unlawful, or anything containing malware;</li>
+        <li>place a load on the service that interferes with other customers.</li>
+      </ul>
+      <p>We can suspend an account that is doing any of these, and we will say why.</p>
+
+      <h2 id="your-data">Your company's data</h2>
+      <p>Your company's data stays your company's. We do not claim ownership of your orders, your notes, your photos or your vendor mail. We hold it and process it so the app can work, as described in the <a href="https://materialmonitor.app/privacy">Privacy Policy</a>, and we do not sell it or use it to build a product for anyone else.</p>
+      <p>You grant us only the permission we need to run the service for you: to store, copy, transmit and process your company's data for the purpose of providing Material Monitor to your company.</p>
+      <p>Your company can delete records inside the app at any time, and can ask us to delete the whole company by writing to <a href="mailto:info@lockten.ai?subject=Material%20Monitor%20deletion%20request">info@lockten.ai</a>.</p>
+
+      <h2 id="subscription">Subscription and cancellation</h2>
+      <p>Material Monitor is sold as a monthly subscription per company. The price, what a subscription includes, how it is billed, when it renews, how to cancel and how refunds work will be set out here in full before paid subscriptions begin. Founding builders will be told their terms directly, in writing, before anything is charged.</p>
+      <div class="legal-note">
+        <p>Billing details are still being finalised. Until this section is complete, nothing in these terms authorises a charge to your company. If your company is being asked to pay for Material Monitor, the specific terms it was given in writing govern that arrangement.</p>
+      </div>
+
+      <h2 id="termination">Termination</h2>
+      <p>Your company can stop using Material Monitor whenever it likes, by cancelling the subscription or by asking us to close the account.</p>
+      <p>We can suspend or end access if a company breaks these terms, if its use puts the service or other customers at risk, or if we are required to by law. Except where the problem is serious or urgent, we will give notice and a chance to put it right first. We can also retire the service entirely, in which case we will give account administrators reasonable notice and a way to export their company's records before access ends.</p>
+      <p>When an account closes, we delete the company and its data on the timetable in the <a href="https://materialmonitor.app/privacy#retention">Privacy Policy</a>. Export anything you want to keep before you close it.</p>
+
+      <h2 id="disclaimers">Disclaimers</h2>
+      <p>The service is provided as it is, and as available. To the fullest extent the law allows, we make no warranties of any kind about it, whether express or implied, including implied warranties of merchantability, fitness for a particular purpose, and non infringement. We do not warrant that the service will be uninterrupted, that it will be free of errors, or that anything it reads out of a vendor email will be accurate or complete.</p>
+      <div class="legal-note">
+        <p>This section is a placeholder pending review by counsel. Its final wording, and the extent to which these disclaimers are enforceable, will be set by our lawyer.</p>
+      </div>
+
+      <h2 id="liability">Limitation of liability</h2>
+      <p>To the fullest extent the law allows, neither party is liable to the other for indirect, incidental, special or consequential damages, or for lost profits, lost revenue, or the cost of substitute services, arising out of the use of Material Monitor. Our total liability arising out of this agreement is capped at an amount to be set in this section.</p>
+      <div class="legal-note">
+        <p>This section is a placeholder pending review by counsel. The liability cap, the exceptions to it, and any carve outs will be set by our lawyer.</p>
+      </div>
+
+      <h2 id="changes">Changes to the service and to these terms</h2>
+      <p>We are actively building Material Monitor, so features will change, and some will be removed. We will not remove something a company depends on without telling account administrators.</p>
+      <p>If we change these terms we will update the date at the top of the page, and if the change is a significant one we will tell account administrators by email before it takes effect. Continuing to use the service after that means the new terms apply.</p>
+
+      <h2 id="law">Governing law</h2>
+      <p>This agreement is governed by the laws of the State of Maryland, without regard to its conflict of laws rules, and any dispute will be brought in the state or federal courts located in Maryland.</p>
+      <div class="legal-note">
+        <p>This section is a placeholder pending review by counsel, including whether to add an arbitration clause, a venue selection, or a limitations period.</p>
+      </div>
+
+      <h2 id="contact">Contact</h2>
+      <p>Questions about these terms go to <a href="mailto:info@lockten.ai?subject=Material%20Monitor%20terms">info@lockten.ai</a>. Material Monitor is operated by Lock Ten Studio LLC, a Maryland limited liability company.</p>
+
+      <a class="back-link" href="https://materialmonitor.app/">Back to Material Monitor</a>
+
+    </div>
+  </section>
+</main>
+
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="mm-lockup mm-lockup-foot">
+          <svg class="mm-mark" viewBox="0 0 96 96" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="96" height="96" rx="20" fill="#2D343D"/><polygon points="14,50 64,50 82,36 32,36" fill="#888F9C"/><polygon points="64,50 82,36 82,76 64,90" fill="#7F8C99"/><rect x="14" y="50" width="50" height="40" fill="#B6BCC5"/><rect x="14" y="50" width="50" height="6" fill="#C8763C"/><path d="M36 40 A12 12 0 0 1 60 40 Z" fill="#C8763C"/></svg>
+          <span class="wm-stack">
+            <span class="wm">Material Monitor</span>
+            <span class="by">by Lock Ten Studio</span>
+          </span>
+        </div>
+      </div>
+      <p class="footer-tagline">Field tools built on real job sites.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="https://lockten.ai/">Lock Ten Studio</a>
+        <a href="https://lockten.ai/walkthrough">Walkthrough</a>
+        <a href="https://lockten.ai/handover">Handover</a>
+        <a href="https://lockten.ai/install">The Install</a>
+        <a href="mailto:info@lockten.ai?subject=Material%20Monitor">Contact</a>
+        <a href="https://materialmonitor.app/privacy">Privacy</a>
+        <a href="https://materialmonitor.app/terms">Terms</a>
+      </nav>
+      <div class="footer-contact-block">
+        <a href="mailto:info@lockten.ai?subject=Material%20Monitor">info@lockten.ai</a>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/locktenstudio" aria-label="Lock Ten Studio on Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        </a>
+        <a href="https://x.com/locktenstudio" aria-label="Lock Ten Studio on X">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z"/></svg>
+        </a>
+      </div>
+      <div class="footer-legal">
+        <span>&copy; 2026 Lock Ten Studio LLC. Built and run by a custom residential builder, on real job sites.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cd30115fa535417ca908587b96cd3733"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
