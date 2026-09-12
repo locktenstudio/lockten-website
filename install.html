@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <!--
-  The Install product page (lockten.ai/install). PUBLIC: linked from the homepage
-  nav, hero and product card as of the product-first restructure (2026-07-05).
+  The Install product page (lockten.ai/install).
+
+  UNLISTED 2026-09-12 (Josh's call): the product is paused. The page is kept
+  reachable at /install but carries <meta name="robots" content="noindex, nofollow">,
+  it is out of the sitemap, and it is no longer linked from the homepage nav,
+  hero, product card or any footer on the site.
+
+  All buy CTAs (the Plus POST form and the Lite link, which both pointed at the
+  separate intake app) are replaced with a paused notice that links to
+  info@lockten.ai. The intake service is being suspended, so no CTA on this
+  page may point back at it. Relisting = revert the unlist commit.
 
   Built per "Install Product Page Architecture v3" using the shared design system
   (styles.css) and the same head/header/footer as walkthrough.html so it matches the site.
-
-  CTA targets:
-    - Plus -> POST https://install.lockten.ai/intake/start
-              (the route only accepts POST; it creates the intake session and
-              303-redirects into Stripe Checkout. A plain link 405s, so the
-              Plus CTAs are form buttons, not anchors.)
-    - Lite -> https://install.lockten.ai/buy-lite (normal link; FREE, email-gated
-              download, no Stripe)
 
   Repositioned 2026-08-10 (Josh's call): Lite is free, Plus is $499, and the
   retired tiers are gone for good; the full rules live in CLAUDE.md ("The
@@ -23,6 +24,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
 <title>The Install | AI workspace for builder businesses</title>
 <meta name="description" content="The Install builds a complete AI-workspace rollout for your specific build business: your team, projects, voice, files, and customized skills. Built from a 25-minute questionnaire, ready for your team to install. Lite is free; Plus, built for you, is $499. By Lock Ten Studio.">
 
@@ -309,16 +311,7 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
         <p class="label label-center" style="color:var(--blueprint-300);">The Install</p>
         <h1 class="hero-headline">The AI workspace your build business <em>actually needs.</em></h1>
         <p class="hero-subhead">Built for your specific business from a 25-minute questionnaire. The complete rollout, ready for your team to put in place in a weekend. Start free and do it yourself, or have it built for you for $499.</p>
-        <div class="hero-actions">
-          <form class="buy-form" method="POST" action="https://install.lockten.ai/intake/start">
-            <button type="submit" class="btn btn-primary">Start with Plus, $499
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-            </button>
-          </form>
-          <a href="https://install.lockten.ai/buy-lite" class="btn btn-ghost-dark">Or get Lite, free
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-          </a>
-        </div>
+        <p class="in-paused" style="max-width:54ch;margin:0 auto;color:#D3E6F7;font-size:1.02rem;line-height:1.65;">The Install is on pause while we bring it up to date with the current Claude releases. If you need it in the meantime, <a href="mailto:info@lockten.ai?subject=The%20Install" style="color:inherit;text-decoration:underline;">email us</a>.</p>
         <p class="in-hero-note"><a href="#faq">Read the FAQ &darr;</a></p>
       </div>
     </div>
@@ -488,7 +481,7 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
               <li>Tech-comfortable builders who want the structure and a clear guide to roll it out themselves</li>
               <li>Teams that want to start small and learn the system at their own pace</li>
             </ul>
-            <a href="https://install.lockten.ai/buy-lite" class="btn btn-secondary">Get Lite free</a>
+            <p class="in-paused" style="margin:0;color:var(--fg-2);font-size:0.98rem;line-height:1.6;">The Install is on pause while we bring it up to date with the current Claude releases. If you need it in the meantime, <a href="mailto:info@lockten.ai?subject=The%20Install">email us</a>.</p>
           </div>
         </div>
 
@@ -514,11 +507,7 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
               <li>Owner-operators ready to take their team's AI use to the next level</li>
               <li>Companies that want one cohesive system everyone works from, not scattered tools</li>
             </ul>
-            <form class="buy-form" method="POST" action="https://install.lockten.ai/intake/start">
-              <button type="submit" class="btn btn-primary">Start with Plus, $499
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-              </button>
-            </form>
+            <p class="in-paused" style="margin:0;color:var(--fg-2);font-size:0.98rem;line-height:1.6;">The Install is on pause while we bring it up to date with the current Claude releases. If you need it in the meantime, <a href="mailto:info@lockten.ai?subject=The%20Install">email us</a>.</p>
           </div>
         </div>
 
@@ -603,17 +592,9 @@ form.buy-form .btn { cursor: pointer; -webkit-appearance: none; appearance: none
   <!-- FINAL CTA -->
   <section class="cta-band" id="start">
     <div class="container">
-      <h2>Pick your path.</h2>
-      <p>Plus if you want it built for you. Lite, free, if you'd rather do it yourself.</p>
+      <h2>The Install is paused.</h2>
       <div class="cta-actions">
-        <form class="buy-form" method="POST" action="https://install.lockten.ai/intake/start">
-          <button type="submit" class="btn btn-primary">Start with Plus, $499
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-          </button>
-        </form>
-        <a href="https://install.lockten.ai/buy-lite" class="btn btn-ghost-dark">Get Lite free
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-        </a>
+        <p class="in-paused" style="max-width:54ch;margin:0 auto;color:#D3E6F7;font-size:1.02rem;line-height:1.65;">The Install is on pause while we bring it up to date with the current Claude releases. If you need it in the meantime, <a href="mailto:info@lockten.ai?subject=The%20Install" style="color:inherit;text-decoration:underline;">email us</a>.</p>
       </div>
     </div>
   </section>

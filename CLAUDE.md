@@ -14,10 +14,10 @@ git add .; git commit -m "..."; git push
 
 | File | What it is |
 |---|---|
-| `index.html` | Homepage. Hero, the two products (Walkthrough + The Install), studio, Field Notes signup, footer. |
+| `index.html` | Homepage. Hero, the product section (Walkthrough only since The Install was unlisted 2026-09-12), studio, Field Notes signup, footer. |
 | `walkthrough.html` | Walkthrough product page. Hero, how-it-works, modes, compare, pricing, FAQ, final CTA. |
 | `primer.html` + `primer-thanks.html` | The Cowork Primer: a readable article with an email-gated PDF. `primer-thanks.html` is the Beehiiv form's success-redirect download page. |
-| `install.html` | The Install product page. **PUBLIC** since the 2026-07-05 product-first restructure: linked from the homepage nav, hero and product card. See CTA note below. |
+| `install.html` | The Install product page. **UNLISTED 2026-09-12**: still reachable at `/install`, but `noindex, nofollow`, out of the sitemap, unlinked from every nav and footer, and its CTAs replaced with a paused notice. See The Install page section below. |
 | `architect.html` | Architect Walkthrough product page. **Green-themed**: the page overrides the ramp tokens at `body.arch` level with the app's pine ramp (brand `#1B4D3E`, mint accent `#9FD6BF`); everything else reuses the global kit. Screens in `assets/screens/architect/`, demo video and poster in `assets/video/`. App is **live on the App Store** (released 2026-07-24): both launch stamps say "Now on the App Store" and both CTAs are the store badge linking `https://apps.apple.com/app/id6787164107`. **The homepage stays SILENT on Architect** and that is deliberate, reaffirmed by Josh 2026-08-03: no nav link, no product card, and **no Architect entry in the `index.html` Organization `sameAs`** (it was added and then deliberately backed out). Two reasons: he wants separation between the builder and architect audiences, and Architect may eventually move to its own domain if it gets traction, which `sameAs` would tie to lockten.ai and then have to be unwound. Architect stays reachable by direct URL, sitemap and llms.txt. Do not "fix" this by linking it. |
 | `help.html` | Walkthrough help / FAQ center (web-hosted so it updates without an app release). |
 | `architect-help.html` | Architect Walkthrough help / FAQ center. Cross-linked with `/architect` and `/help`. |
@@ -83,7 +83,9 @@ Public pages use **role addresses**: `info@lockten.ai` (general), `support@lockt
 
 ## The Install page
 
-`install.html` is **public** (homepage nav, hero and product card link to it since 2026-07-05). Its buy flow lives in the separate intake app at `install.lockten.ai` (repo `locktenstudio/onramp-intake`). Since the 2026-08-10 repositioning: **Lite is free** (`/buy-lite` is an email-gated download, no Stripe) and **Plus is $499** through live Stripe Checkout.
+**UNLISTED 2026-09-12 (Josh's call: the product is paused).** The page is kept reachable at `/install` but it carries `<meta name="robots" content="noindex, nofollow">`, it is out of `sitemap.xml`, and every link to it is gone from the homepage (nav, compact nav, hero CTA, product card, footer) and from the footers of `walkthrough.html`, `sample-report.html`, `architect.html`, `handover.html`, `materialmonitor.html`, `materialmonitor-privacy.html` and `materialmonitor-terms.html`. All buy CTAs (the Plus POST form and the Lite link) are replaced with a paused notice linking to `info@lockten.ai`, because **the intake service at the old buy domain is being suspended**: no link to it may remain anywhere on the site. `llms.txt` now describes The Install as paused and not offered, and `robots.txt` carries a note saying so. `terms.html` and `privacy.html` still describe the product and its refund terms, which is correct for legal pages. `primer.html` still has its own in-article Install mention and `/install` link; left alone deliberately, flag it to Josh if the product stays paused. **To relist: revert the unlist commit.** The historical mechanics below still apply if it comes back.
+
+`install.html` was **public** (homepage nav, hero and product card link to it since 2026-07-05). Its buy flow lives in the separate intake app at `install.lockten.ai` (repo `locktenstudio/onramp-intake`). Since the 2026-08-10 repositioning: **Lite is free** (`/buy-lite` is an email-gated download, no Stripe) and **Plus is $499** through live Stripe Checkout.
 
 CTA mechanics: the Plus entry route `POST https://install.lockten.ai/intake/start` **rejects GET with a 405**, so every Plus CTA on `install.html` is a `<form method="POST">` button, never a plain `<a href>`. Lite (`/buy-lite`) is a normal page and a normal link. Keep it that way when editing CTAs.
 
