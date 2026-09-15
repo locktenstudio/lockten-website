@@ -32,3 +32,43 @@ services:
       - path: /.well-known/apple-app-site-association
         name: Cache-Control
         value: public, max-age=3600
+
+  # ------------------------------------------------------------------
+  # Walkthrough's own domain: https://sitewalkthrough.com/
+  #
+  # Same repo, second static site, the pattern the `materialmonitor`
+  # service uses for materialmonitor.app. The build command copies
+  # sitewalkthrough.html over index.html so that page IS the root of this
+  # host (a rewrite rule alone does not work, because Render serves an
+  # existing file first), then writes this host's own robots.txt and
+  # sitemap.xml over the lockten.ai ones.
+  #
+  # The sitemap lists ONE url. sitewalkthrough.html is the only page this
+  # host owns; help, the sample report, privacy and terms are lockten.ai's
+  # pages and every link on the product page points at them there. They
+  # still resolve here, because the whole repo is published either way,
+  # but they are not advertised and their canonicals stay on lockten.ai.
+  #
+  # Like `lockten-website` and `materialmonitor`, this service is created
+  # in the Render dashboard, so this entry is documentation and a paste
+  # source until a blueprint sync binds it.
+  # ------------------------------------------------------------------
+  - type: web
+    name: sitewalkthrough
+    runtime: static
+    branch: main
+    buildCommand: |-
+      cp sitewalkthrough.html index.html && printf 'User-agent: *\nAllow: /\nSitemap: https://sitewalkthrough.com/sitemap.xml\n' > robots.txt && printf '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://sitewalkthrough.com/</loc></url>\n</urlset>\n' > sitemap.xml
+    staticPublishPath: ./
+    pullRequestPreviewsEnabled: false
+    headers:
+      # Carried over from the studio site. The app's associated domain is
+      # lockten.ai today, so nothing deep-links to this host yet, but if
+      # that ever moves the AASA has to be served as application/json or
+      # iOS silently ignores it.
+      - path: /.well-known/apple-app-site-association
+        name: Content-Type
+        value: application/json
+      - path: /.well-known/apple-app-site-association
+        name: Cache-Control
+        value: public, max-age=3600
