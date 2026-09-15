@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- sitewalkthrough.html is the ONLY page the sitewalkthrough.com host owns.
+     The `sitewalkthrough` Render static site copies this file to index.html,
+     so it is served at https://sitewalkthrough.com/ and nowhere else canonically.
+     Every off-page link is an absolute https://lockten.ai/... URL on purpose:
+     help, the sample report, privacy and terms belong to the studio site, and
+     this page must not depend on them resolving here. Same-page anchors stay
+     relative. Relative asset paths (styles.css, fonts/, assets/) are fine,
+     because the build publishes the whole repo to this host.
+     lockten.ai/walkthrough is the studio copy and is edited separately. -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Walkthrough | Site reports for builders, from your own phone</title>
+<meta name="description" content="Walk the site, talk, send. Walkthrough turns a jobsite walk into a clean PDF you text to your sub. Daily logs with the weather filled in, trade lists, punch lists.">
+
+<meta property="og:title" content="Walkthrough by Lock Ten Studio">
+<meta property="og:description" content="Site reports for builders. No portal. No logins for your subs. Three free reports to try it, every feature unlocked.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://sitewalkthrough.com/">
+<meta property="og:image" content="https://sitewalkthrough.com/assets/og/og-sitewalkthrough.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://sitewalkthrough.com/">
+
+<link rel="preload" href="fonts/instrument-serif-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/geist-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="styles.css">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' rx='18' fill='%231C71C1'/%3E%3Cg stroke='%23FFFFFF' stroke-width='7' fill='none' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 47 L50 22 L83 47'/%3E%3Cpath d='M26 62 Q50 52 74 62'/%3E%3Cpath d='M26 77 Q50 67 74 77'/%3E%3C/g%3E%3C/svg%3E">
+
+<script>document.documentElement.className += ' js';</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "Walkthrough: Site Reports",
+  "operatingSystem": "iOS, Android",
+  "applicationCategory": "BusinessApplication",
+  "url": "https://sitewalkthrough.com/",
+  "installUrl": [
+    "https://apps.apple.com/app/walkthrough-site-reports/id6775347863",
+    "https://play.google.com/store/apps/details?id=com.cabinjohnbuilders.walkthrough"
+  ],
+  "offers": { "@type": "AggregateOffer", "lowPrice": "9.99", "highPrice": "24.99", "priceCurrency": "USD", "offerCount": "2" },
+  "publisher": { "@type": "Organization", "name": "Lock Ten Studio", "url": "https://lockten.ai" }
+}
+</script>
+
+<style>
+/* ---- Walkthrough page-specific components (scoped, does not touch the global kit) ---- */
+.wt-hero-grid { display: grid; gap: 40px; align-items: center; }
+@media (min-width: 900px) { .wt-hero-grid { grid-template-columns: 1.05fr 0.95fr; gap: 56px; } }
+.wt-hero-copy { text-align: left; }
+.hero-dark .wt-hero-copy .hero-headline { margin: 0; max-width: 14ch; }
+.hero-dark .wt-hero-copy .hero-subhead { margin: 26px 0 0; }
+.wt-phone { display: flex; justify-content: center; }
+.wt-phone svg { width: 100%; max-width: 300px; height: auto; }
+.wt-device { width: 100%; max-width: 300px; margin: 0 auto; background: #0A0D12; border: 1px solid rgba(255,255,255,0.12); border-radius: 42px; padding: 12px; box-shadow: 0 30px 70px -24px rgba(0,0,0,0.55); }
+@media (prefers-reduced-motion: no-preference) {
+  .wt-device { animation: wt-float 7s ease-in-out infinite; }
+  @keyframes wt-float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-10px); } }
+}
+.wt-carousel { position: relative; border-radius: 30px; overflow: hidden; }
+.wt-carousel img { display: block; width: 100%; height: auto; opacity: 0; transition: opacity 700ms var(--ease); }
+.wt-carousel img.show { opacity: 1; }
+.wt-carousel img + img { position: absolute; inset: 0; }
+.wt-device img { display: block; width: 100%; height: auto; border-radius: 30px; }
+.wt-shot-note { font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.04em; color: var(--steel-400); text-align: center; margin-top: 12px; }
+
+.wt-steps { display: grid; gap: 22px; margin-top: 8px; }
+@media (min-width: 760px) { .wt-steps { grid-template-columns: repeat(3, 1fr); gap: 28px; } }
+.wt-step { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px 26px; background: var(--white); }
+.wt-step .num { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.16em; color: var(--brand); }
+.wt-step .icon { width: 34px; height: 34px; color: var(--brand); margin: 14px 0 10px; }
+.wt-step h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.3rem; color: var(--fg); margin: 0 0 8px; }
+.wt-step p { font-size: 0.98rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
+
+.wt-modes { display: grid; gap: 16px; margin-top: 8px; grid-template-columns: 1fr; }
+@media (min-width: 560px) { .wt-modes { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 920px) { .wt-modes { grid-template-columns: repeat(3, 1fr); gap: 18px; } }
+.wt-mode { border: 1px solid var(--line); border-radius: var(--radius-md); padding: 24px 18px; background: var(--white); text-align: center; transition: box-shadow 200ms var(--ease), transform 200ms var(--ease); }
+.wt-mode:hover { box-shadow: var(--shadow-2); transform: translateY(-2px); }
+.wt-mode .ic { width: 30px; height: 30px; color: var(--brand); margin: 0 auto 12px; display: block; }
+.wt-mode h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.04rem; color: var(--fg); margin: 0 0 6px; letter-spacing: -0.01em; }
+.wt-mode p { font-size: 0.86rem; color: var(--fg-2); line-height: 1.45; margin: 0; }
+
+/* Daily log: one compact block under the modes grid. Deliberately quieter than
+   the grid above it, because daily log is a mode, not the headline feature. */
+.wt-dl { max-width: 760px; margin: 0 auto; border: 1px solid var(--line); border-left: 3px solid var(--brand); border-radius: var(--radius-md); padding: 30px 32px; background: var(--white); }
+.wt-dl .label { margin-bottom: 12px; }
+.wt-dl h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.5rem, 3vw, 2rem); line-height: 1.14; letter-spacing: -0.015em; color: var(--fg); margin: 0 0 14px; }
+.wt-dl p { font-size: 1rem; color: var(--fg-2); line-height: 1.65; margin: 0; }
+.wt-dl .dl-plan { margin-top: 14px; font-size: 0.9rem; color: var(--fg-3); }
+@media (max-width: 560px) { .wt-dl { padding: 26px 22px; } }
+
+/* Proof band: the sample report, sitting between the differentiators and the
+   comparison table. White, so it does not blur into the grey compare band. */
+.wt-proof { max-width: 760px; margin: 0 auto; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); padding: 34px 36px; background: var(--white); box-shadow: var(--shadow-2); text-align: center; }
+.wt-proof p { font-size: 1rem; color: var(--fg-2); line-height: 1.65; margin: 0; }
+.wt-proof .btn { margin-top: 24px; }
+.wt-proof .proof-alt { margin-top: 22px; padding-top: 20px; border-top: 1px solid var(--line); font-size: 0.9rem; color: var(--fg-3); line-height: 1.6; }
+@media (max-width: 560px) { .wt-proof { padding: 28px 22px; } }
+
+.wt-cards { display: grid; gap: 18px; margin-top: 8px; }
+@media (min-width: 760px) { .wt-cards { grid-template-columns: 1fr 1fr; gap: 22px; } }
+.wt-card { border: 1px solid var(--line); border-left: 3px solid var(--brand); border-radius: var(--radius-md); padding: 26px 28px; background: var(--white); }
+.wt-card h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.18rem; color: var(--fg); margin: 0 0 8px; letter-spacing: -0.01em; }
+.wt-card p { font-size: 0.97rem; color: var(--fg-2); line-height: 1.6; margin: 0; }
+
+.wt-compare { max-width: 920px; margin: 8px auto 0; border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; background: var(--white); }
+.wt-compare table { width: 100%; border-collapse: collapse; }
+.wt-compare th, .wt-compare td { padding: 16px 20px; text-align: left; font-size: 0.95rem; vertical-align: top; border-bottom: 1px solid var(--line); line-height: 1.5; }
+.wt-compare thead th { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.1em; font-weight: 500; }
+.wt-compare thead th:nth-child(2) { color: var(--fg-3); }
+.wt-compare thead th:nth-child(3) { color: var(--brand); }
+.wt-compare tbody td:first-child { font-weight: 500; color: var(--fg); width: 24%; }
+.wt-compare tbody td:nth-child(2) { color: var(--fg-3); background: var(--bg-subtle); }
+.wt-compare tbody td:nth-child(3) { color: var(--fg-2); background: var(--blueprint-50); }
+.wt-compare tr:last-child td { border-bottom: none; }
+@media (max-width: 640px) { .wt-compare th, .wt-compare td { padding: 11px 12px; font-size: 0.85rem; } }
+
+.wt-price { max-width: 460px; margin: 8px auto 0; text-align: center; border: 1px solid var(--line-strong); border-radius: var(--radius-lg); padding: 40px 32px; background: var(--white); box-shadow: var(--shadow-2); }
+.wt-price .amt { font-family: var(--font-display); font-size: 4rem; line-height: 1; color: var(--fg); }
+.wt-price .per { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.04em; color: var(--fg-3); margin-top: 8px; }
+.wt-price ul { list-style: none; padding: 0; margin: 24px 0 0; }
+.wt-price li { font-size: 0.98rem; color: var(--fg-2); padding: 5px 0; }
+.wt-price .fine { font-size: 0.85rem; color: var(--fg-3); margin-top: 18px; line-height: 1.5; }
+.wt-price-ctx { text-align: center; max-width: 520px; margin: 22px auto 0; color: var(--fg-3); font-size: 0.95rem; line-height: 1.6; }
+
+.wt-plans { display: grid; gap: 18px; max-width: 780px; margin: 8px auto 0; align-items: stretch; }
+@media (min-width: 720px) { .wt-plans { grid-template-columns: 1fr 1fr; gap: 22px; } }
+.wt-plan { border: 1px solid var(--line-strong); border-radius: var(--radius-lg); padding: 32px 30px; background: var(--white); box-shadow: var(--shadow-2); text-align: left; display: flex; flex-direction: column; }
+.wt-plan.pro { border: 1.5px solid var(--brand); }
+.wt-plan .plan-name { font-family: var(--font-mono); font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.14em; color: var(--brand); margin: 0 0 14px; }
+.wt-plan .amt { font-family: var(--font-display); font-size: 3.1rem; line-height: 1; color: var(--fg); }
+.wt-plan .amt .cad { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.04em; color: var(--fg-3); }
+.wt-plan .annual { font-size: 0.9rem; color: var(--fg-3); margin-top: 8px; }
+.wt-plan ul { list-style: none; padding: 0; margin: 20px 0 0; }
+.wt-plan li { font-size: 0.95rem; color: var(--fg-2); padding: 7px 0 7px 26px; position: relative; line-height: 1.5; }
+.wt-plan li::before { content: "\2713"; position: absolute; left: 0; top: 6px; color: var(--brand); font-weight: 700; }
+.wt-plan li.lead { color: var(--fg); font-weight: 500; }
+.wt-trial-line { text-align: center; max-width: 560px; margin: 26px auto 0; color: var(--fg); font-size: 1rem; line-height: 1.6; }
+.wt-trial-line strong { font-weight: 600; }
+.wt-privacy-line { text-align: center; max-width: 560px; margin: 12px auto 0; color: var(--fg-3); font-size: 0.88rem; line-height: 1.55; }
+
+.wt-for { max-width: 680px; margin: 0 auto; }
+.wt-for ul { list-style: none; padding: 0; margin: 0; }
+.wt-for li { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 1.02rem; color: var(--fg-2); }
+.wt-for li svg { width: 20px; height: 20px; color: var(--brand); flex: none; margin-top: 3px; }
+.wt-for .not { margin-top: 22px; color: var(--fg-3); font-size: 0.95rem; font-style: italic; }
+
+.faq { max-width: 760px; margin: 0 auto; }
+.faq details { border-bottom: 1px solid var(--line); }
+.faq summary { list-style: none; cursor: pointer; padding: 20px 0; font-weight: 600; font-size: 1.06rem; color: var(--fg); display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--font-mono); color: var(--brand); font-size: 1.4rem; line-height: 1; flex: none; }
+.faq details[open] summary::after { content: "\2013"; }
+.faq details p { margin: 0 0 20px; color: var(--fg-2); line-height: 1.65; font-size: 0.99rem; max-width: 64ch; }
+
+.cta-band { background: var(--deep-900); color: var(--white); padding: 88px 0; text-align: center; position: relative; overflow: hidden; }
+.cta-band .container { position: relative; }
+.cta-band h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.2rem, 4.5vw, 3.4rem); line-height: 1.1; color: var(--white); max-width: 18ch; margin: 0 auto; }
+.cta-band p { color: rgba(243,243,248,0.78); font-size: 1.08rem; margin: 16px auto 0; max-width: 520px; }
+.cta-band .store-badges { justify-content: center; margin-top: 36px; }
+/* Hero: badge pair on its own row, the secondary link under it, so the two
+   store badges never get split across a wrap at awkward widths. */
+.wt-hero-copy .hero-actions { flex-direction: column; align-items: flex-start; gap: 20px; }
+.notify-card { background: var(--white); color: var(--fg); padding: 24px; border-radius: var(--radius-lg); box-shadow: var(--shadow-2); max-width: 520px; margin: 32px auto 0; text-align: center; }
+.notify-card .lead-in { font-weight: 500; color: var(--fg-2); margin: 0 0 14px; font-size: 0.95rem; }
+.notify-card iframe { width: 100% !important; max-width: 100% !important; min-height: 320px; border: none; display: block; }
+.notify-card .notify-fallback { font-size: 0.95rem; color: var(--fg-3); }
+.notify-fallback a { color: var(--brand); font-weight: 600; }
+.launch-stamp { display: inline-block; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blueprint-200); border: 1.5px solid var(--blueprint-300); border-radius: 3px; padding: 7px 14px; margin-bottom: 22px; }
+/* ---- The product lockup: Walkthrough carries its own identity here, because
+   this page is the root of sitewalkthrough.com. Lock Ten appears in the footer
+   lockup line only. Structure matches the console's own header lockup. ---- */
+.wt-mark { display: block; flex: none; width: 34px; height: auto; }
+.wt-lockup { display: inline-flex; align-items: center; gap: 11px; text-decoration: none; flex: none; }
+.wt-lockup .wm-stack { display: flex; flex-direction: column; gap: 3px; text-align: left; }
+.wt-lockup .wm { font-family: var(--font-display); font-weight: 400; font-size: 1.5rem; line-height: 1.05; letter-spacing: -0.01em; color: #EEF1F4; white-space: nowrap; }
+.wt-lockup .by { font-family: var(--font-mono); font-size: 0.64rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--steel-400); line-height: 1.4; }
+a.wt-lockup:hover .wm { color: var(--white); }
+
+/* Header: the product lockup, not the studio logo. It merges into the dark hero
+   the same way the homepage header does.
+
+   Source order is lockup, nav, CTA, and there is deliberately no flex `order`
+   anywhere below, so keyboard focus follows the eye at every width. Narrow
+   screens keep the global centred column; the single row only starts once
+   there is room for all three across. */
+.wt .site-header { background: var(--deep-900); border-bottom: 0; }
+.wt .header-inner { gap: 18px; padding-top: 22px; padding-bottom: 22px; }
+.wt .header-nav { gap: 26px; }
+.wt .header-nav a { color: var(--steel-300); font-size: 0.94rem; font-weight: 400; text-transform: none; letter-spacing: 0; }
+.wt .header-nav a:hover { color: var(--white); }
+.wt-header-cta { flex: none; background: var(--brand); color: var(--white); font-family: var(--font-sans); font-weight: 600; font-size: 0.95rem; line-height: 1; padding: 12px 18px; border-radius: 6px; text-decoration: none; white-space: nowrap; transition: background 180ms var(--ease); }
+.wt-header-cta:hover { background: var(--blueprint-300); color: var(--deep-900); }
+@media (min-width: 1000px) {
+  .wt .header-inner { flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px 20px; padding-top: 16px; padding-bottom: 16px; }
+  .wt .header-nav { flex: 1 1 auto; justify-content: flex-end; margin-right: 8px; }
+}
+@media (max-width: 560px) {
+  .wt .header-inner { gap: 14px; padding-top: 18px; padding-bottom: 18px; }
+  .wt-lockup { gap: 9px; }
+  .wt-lockup .wm { font-size: 1.18rem; }
+  .wt-lockup .by { font-size: 0.58rem; letter-spacing: 0.14em; }
+  .wt .site-header .wt-mark { width: 28px; }
+  .wt-header-cta { font-size: 0.8rem; padding: 9px 12px; }
+  .wt .header-nav { gap: 6px 16px; }
+  .wt .header-nav a { font-size: 0.84rem; }
+}
+
+/* Footer lockup: same shape on the white ground, and the one place Lock Ten is named. */
+.wt-lockup-foot { gap: 12px; }
+.wt-lockup-foot .wt-mark { width: 30px; }
+.wt-lockup-foot .wm { font-size: 1.32rem; color: var(--fg); white-space: normal; }
+.wt-lockup-foot .by { color: var(--fg-3); }
+@media (max-width: 560px) {
+  .wt .footer-brand { width: 100%; }
+  .wt-lockup-foot { max-width: 100%; justify-content: center; }
+  .wt-lockup-foot .by { letter-spacing: 0.12em; }
+}
+/* ---- Console: the laptop half of the product. Quieter than the modes grid,
+   because the phone is still the headline. ---- */
+.wt-console { max-width: 760px; margin: 0 auto; border: 1px solid var(--line); border-left: 3px solid var(--brand); border-radius: var(--radius-md); padding: 30px 32px; background: var(--white); }
+.wt-console ul { list-style: none; padding: 0; margin: 0; }
+.wt-console li { display: flex; gap: 14px; align-items: flex-start; padding: 12px 0; border-bottom: 1px solid var(--line); font-size: 1rem; color: var(--fg-2); line-height: 1.6; }
+.wt-console li:last-child { border-bottom: none; }
+.wt-console li svg { width: 20px; height: 20px; color: var(--brand); flex: none; margin-top: 3px; }
+.wt-console .btn { margin-top: 24px; }
+.wt-console .console-note { margin-top: 16px; font-size: 0.9rem; color: var(--fg-3); line-height: 1.55; }
+@media (max-width: 560px) { .wt-console { padding: 26px 22px; } }
+
+/* Console shots: parked. Nothing on the page uses these rules today, because
+   the CONSOLE SHOTS block in #console is commented out until the real
+   screenshots exist. Delete both together if the idea is dropped. */
+.wt-laptop { max-width: 820px; margin: 40px auto 0; }
+.wt-laptop .lid { background: var(--slate-800); border-radius: 14px; padding: 12px 12px 14px; box-shadow: var(--shadow-3); }
+.wt-laptop .screen { aspect-ratio: 16 / 10; border-radius: 5px; overflow: hidden; background: var(--slate-100); border: 1px solid var(--slate-300); display: flex; align-items: center; justify-content: center; }
+.wt-laptop .screen img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.wt-laptop .base { width: 70%; max-width: 100%; height: 11px; margin: 0 auto; border-radius: 0 0 10px 10px; background: var(--slate-400); }
+.wt-laptop .cap { text-align: center; font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.06em; color: var(--fg-3); margin-top: 16px; line-height: 1.5; }
+@media (max-width: 560px) { .wt-laptop .lid { padding: 8px 8px 10px; border-radius: 10px; } }
+</style>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Do my subs need to download anything?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. They get a text or email from you with a PDF attached. They open the PDF. That's it."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I edit the report before it sends?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Every walkthrough produces a PDF you preview and edit before sending. The AI gives you a starting point. You decide what goes out."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where do the photos go?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "If you've connected Google Drive or Dropbox, photos save there in a folder for that walkthrough. If you haven't, they save in the app and you can connect Drive or Dropbox later to back-fill."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Walkthrough do daily logs?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Talk through the day at the end of it and you get a dated, photo-backed daily log with the weather already filled in and a weather-delay flag if you lost time. It is on the Standard plan."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Where does the weather on a daily log come from?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The National Weather Service, for the address on that project and the date on that log. The report notes when the weather was pulled, and you can edit the line before you send."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Does Walkthrough work on Android?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Walkthrough is on Google Play and on the App Store. Sign in with the same email on either one and your projects and reports are there."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does sign-in work? I don't want another password.",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "You enter your email. We email you a six-digit code. You type it in. You're signed in. No password to remember or reset."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What are the plans and what do they cost?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Two plans, month to month. Standard is $9.99 a user each month, or $99.99 a year, and includes every report type except meeting notes and the punch list, with unlimited reports. Pro is $24.99 a user each month, or $239.99 a year, and adds meeting notes and the persistent punch list. You can move from Standard to Pro anytime."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if I want to use this with my whole team?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Each person gets their own seat, Standard at $9.99 a month or Pro at $24.99. They sign in with their own email, and reports they send come from their own phone. The subscription handles the seats; there's nothing extra to set up."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I try it before I subscribe?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Three free reports to start, with every feature unlocked and no credit card. Use them on any report type you like, meeting notes and punch list included. After the third report, you pick a plan. Before then, no card."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What if I cancel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Cancel anytime from Settings. You keep what you've paid through that month. If you cancel within the first 14 days and it's not working for you, reply to the welcome email and we'll refund."
+      }
+    }
+  ]
+}
+</script>
+</head>
+<body class="wt">
+
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container header-inner">
+    <a href="#top" class="wt-lockup">
+      <img class="wt-mark" src="assets/brand/walkthrough-house-mark-white.png" alt="" width="601" height="535">
+      <span class="wm-stack">
+        <span class="wm">Walkthrough</span>
+        <span class="by">Site Reports</span>
+      </span>
+    </a>
+    <nav class="header-nav" aria-label="Primary">
+      <a href="#how">How it works</a>
+      <a href="#console">Console</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#faq">FAQ</a>
+      <a href="https://lockten.ai/sample-report">See a real report</a>
+      <a href="https://lockten.ai/help">Help</a>
+    </nav>
+    <a class="wt-header-cta" href="#notify">Get the app</a>
+  </div>
+</header>
+
+<main id="main">
+
+  <!-- HERO -->
+  <section class="hero-dark" id="top">
+    <div class="hero-contours" aria-hidden="true">
+      <svg viewBox="0 0 1500 640" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMax slice">
+        <path d="M-40,90 C200,40 380,150 580,108 C780,66 960,170 1160,124 C1330,86 1440,140 1540,100" stroke-width="1.5"/>
+        <path class="p-accent" d="M-40,158 C170,116 360,212 560,168 C760,124 950,224 1150,180 C1320,144 1440,196 1540,160" stroke-width="1.5"/>
+        <path d="M-40,226 C190,190 350,278 550,240 C750,202 960,286 1160,246 C1330,214 1440,260 1540,228" stroke-width="1.5"/>
+        <path d="M-40,294 C200,264 360,340 560,308 C760,276 950,348 1150,312 C1320,284 1440,324 1540,296" stroke-width="1.5"/>
+        <path class="p-accent" d="M-40,362 C180,338 370,402 570,374 C770,346 960,408 1160,376 C1330,350 1440,386 1540,362" stroke-width="1.5"/>
+        <path d="M-40,430 C200,410 380,464 580,440 C780,416 970,470 1170,442 C1330,420 1440,452 1540,430" stroke-width="1.5"/>
+        <path d="M-40,498 C190,482 380,528 580,506 C780,484 970,530 1170,506 C1330,488 1440,514 1540,496" stroke-width="1.5"/>
+      </svg>
+    </div>
+    <div class="container">
+      <div class="wt-hero-grid">
+        <div class="wt-hero-copy">
+          <span class="launch-stamp">On the App Store and Google Play</span>
+          <h1 class="hero-headline">Walk the site. Talk. <em>Send.</em></h1>
+          <p class="hero-subhead">Site reports for builders. No portal. No logins for your subs. Photos to your own Google Drive or Dropbox. Three free reports to try it, every feature unlocked.</p>
+          <div class="hero-actions">
+            <div class="store-badges">
+              <a class="badge-apple" href="https://apps.apple.com/app/walkthrough-site-reports/id6775347863">
+                <img src="assets/app-store-badge.svg" alt="Download on the App Store" width="200" height="67">
+              </a>
+              <a class="badge-google" href="https://play.google.com/store/apps/details?id=com.cabinjohnbuilders.walkthrough">
+                <img src="assets/google-play-badge.png" alt="Get it on Google Play" width="258" height="100">
+              </a>
+            </div>
+            <a href="#how" class="btn btn-ghost-dark">See how it works</a>
+          </div>
+        </div>
+        <div class="wt-phone" aria-hidden="true">
+          <div>
+            <div class="wt-device">
+              <div class="wt-carousel" id="wt-carousel">
+                <img src="assets/screens/capture.webp" alt="" class="show" width="640" height="1391">
+                <img src="assets/screens/punchlist.webp" alt="" loading="lazy" width="640" height="1391">
+                <img src="assets/screens/modes.webp" alt="" loading="lazy" width="640" height="1391">
+                <img src="assets/screens/edit.webp" alt="" loading="lazy" width="640" height="1391">
+                <img src="assets/screens/cloud.webp" alt="" loading="lazy" width="640" height="1391">
+              </div>
+            </div>
+            <p class="wt-shot-note" id="wt-shot-note">Talk while you walk</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="hero-geo" aria-hidden="true">
+      <span>By Lock Ten Studio</span>
+      <span>iPhone &middot; Android</span>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="section" id="how">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label"><span class="idx"></span>How it works</p>
+        <h2 class="section-headline">Three steps. About ten minutes.</h2>
+      </div>
+      <div class="wt-steps">
+        <div class="wt-step reveal">
+          <span class="num">01</span>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"/><path d="M5 21V7l8-4v18"/><path d="M19 21V11l-6-4"/><path d="M9 9v.01M9 12v.01M9 15v.01"/></svg>
+          <h3>Walk</h3>
+          <p>Open the app at a job site. Tap a room. Take photos of what needs to be done.</p>
+        </div>
+        <div class="wt-step reveal d1">
+          <span class="num">02</span>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+          <h3>Talk</h3>
+          <p>Voice memo each item as you walk. "Caulk this seam." "Replace this pull." The app handles the formatting.</p>
+        </div>
+        <div class="wt-step reveal d2">
+          <span class="num">03</span>
+          <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M14.536 21.686a.5.5 0 0 0 .937-.024l6.5-19a.496.496 0 0 0-.635-.635l-19 6.5a.5.5 0 0 0-.024.937l7.93 3.18a2 2 0 0 1 1.112 1.11z"/><path d="m21.854 2.147-10.94 10.939"/></svg>
+          <h3>Send</h3>
+          <p>Preview the PDF. Edit if you want. Text or email it to your sub from your own phone, in their normal thread.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MODES -->
+  <section class="section" id="modes" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">More than walkthroughs</p>
+        <h2 class="section-headline">Six ways to talk it, not type it.</h2>
+        <p class="section-sub">Same app, same idea. Talk instead of type, the app formats it, you send it through normal channels. No portal for anyone.</p>
+      </div>
+      <div class="wt-modes reveal">
+        <div class="wt-mode">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 16v-2.38C4 11.5 2.97 10.5 3 8c.03-2.72 1.49-6 4.5-6C9.37 2 10 3.8 10 5.5c0 3.11-2 5.66-2 8.68V16a2 2 0 1 1-4 0Z"/><path d="M20 20v-2.38c0-2.12 1.03-3.12 1-5.62-.03-2.72-1.49-6-4.5-6C14.63 6 14 7.8 14 9.5c0 3.11 2 5.66 2 8.68V20a2 2 0 1 0 4 0Z"/><path d="M16 17h4"/><path d="M4 13h4"/></svg>
+          <h3>Walkthrough</h3>
+          <p>Walk the site, talk it through.</p>
+        </div>
+        <div class="wt-mode">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/></svg>
+          <h3>Trade list</h3>
+          <p>Scope the work by trade into clear action lists.</p>
+        </div>
+        <div class="wt-mode">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+          <h3>Owner update</h3>
+          <p>A weekly progress recap.</p>
+        </div>
+        <div class="wt-mode">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M8 2v4"/><path d="M16 2v4"/><rect width="18" height="18" x="3" y="4" rx="2"/><path d="M3 10h18"/><path d="M8 14h.01"/><path d="M12 14h.01"/><path d="M16 14h.01"/><path d="M8 18h.01"/><path d="M12 18h.01"/><path d="M16 18h.01"/></svg>
+          <h3>Daily log</h3>
+          <p>Talk through your day. Dated, photo-backed.</p>
+        </div>
+        <div class="wt-mode">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+          <h3>Meeting notes</h3>
+          <p>Capture attendees, formatted minutes and action items.</p>
+        </div>
+        <div class="wt-mode">
+          <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect width="8" height="4" x="8" y="2" rx="1" ry="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="m9 14 2 2 4-4"/></svg>
+          <h3>Punch list</h3>
+          <p>Walk it, then check items off. Pro plan.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- DAILY LOG -->
+  <section class="section" id="daily-log" style="padding-top:0;">
+    <div class="container">
+      <div class="wt-dl reveal">
+        <p class="label">Daily log</p>
+        <h2>The daily log, talked out on the drive home.</h2>
+        <p>Nobody wants to write up the day at six o'clock. Talk it through instead. Walkthrough dates it, pulls the day's weather for that address from the National Weather Service, attaches your photos and builds the PDF. Lose time to weather and you can mark the day a partial or full delay, with a note, the day it happens.</p>
+        <p class="dl-plan">Daily log is on the Standard plan, and it counts as one of your three free reports.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- WHAT MAKES IT DIFFERENT -->
+  <section class="section" id="different" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="label">The difference</p>
+        <h2 class="section-headline">What makes Walkthrough different.</h2>
+      </div>
+      <div class="wt-cards">
+        <div class="wt-card reveal">
+          <h3>Your subs don't need accounts.</h3>
+          <p>Reports send from your own phone as a text or email, in the thread your sub already uses. They open the PDF. Done. No portal to learn, no password to forget, no "click here to view."</p>
+        </div>
+        <div class="wt-card reveal d1">
+          <h3>Photos go to your Drive or Dropbox.</h3>
+          <p>Pictures save straight to your Google Drive or Dropbox, organized by report. Your camera roll stays clean. That bathroom photo from March is in the Cherry Lane Punch Walk folder.</p>
+        </div>
+        <div class="wt-card reveal">
+          <h3>Voice-first, not type-first.</h3>
+          <p>Talk while you walk. The app handles transcription and formatting. Builders are not going to type into a phone on a job site.</p>
+        </div>
+        <div class="wt-card reveal d1">
+          <h3>You edit before you send.</h3>
+          <p>The AI gives you a starting point. You make it yours. The PDF that goes out is the version you approved, not the version a black box generated.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONSOLE -->
+  <section class="section" id="console" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">The console</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">Walkthrough on your laptop.</h2>
+        <p class="section-sub" style="margin-left:auto;margin-right:auto;">What you captured in the field, open in a browser back at the office.</p>
+      </div>
+      <div class="wt-console reveal">
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>A Recent feed of every photo across every job, newest first.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>Select the photos you want, then download them, save them to Google Drive or Dropbox, add them to a report, or email someone a link.</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>A page for each job, with every capture on it.</li>
+        </ul>
+        <a href="https://app.sitewalkthrough.com/console" class="btn btn-primary">Open the console
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+        <p class="console-note">The console is included with the app. Same sign-in, nothing separate to buy.</p>
+      </div>
+
+      <!-- CONSOLE SHOTS: nothing renders here yet, on purpose. An empty laptop
+           frame reads as a missing image, so the card above stands alone until
+           the real screenshots exist.
+
+           To add them: export each shot at 2560x1600 (a 1280x800 browser window
+           at 2x), 16:10 exactly, because the frame is object-fit: cover. Save as
+           WebP into assets/screens/console/. Blur the job name, the address and
+           the account email, and crop out any annotation arrows. Then uncomment
+           the block below, one .wt-laptop per shot. The CSS it needs is already
+           in this page's style block, parked under "Console shots".
+
+      <div class="wt-laptop reveal">
+        <div class="lid">
+          <div class="screen">
+            <img src="assets/screens/console/recent.webp" alt="" width="2560" height="1600" loading="lazy">
+          </div>
+        </div>
+        <div class="base"></div>
+        <p class="cap">The Recent feed: every photo from every job, in one place.</p>
+      </div>
+
+           CONSOLE SHOTS END -->
+    </div>
+  </section>
+
+  <!-- PROOF -->
+  <section class="section" id="proof" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">Proof</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">See what comes out before you download anything.</h2>
+      </div>
+      <div class="wt-proof reveal">
+        <p>This is a real report from a real walk, with the client's details blacked out, next to a web version that reads on your phone. It is the same PDF a sub opens in a text thread. Set your logo, your color and your company name once, and every report carries your brand instead of ours.</p>
+        <a href="https://lockten.ai/sample-report" class="btn btn-primary">Open a real report
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+        </a>
+        <p class="proof-alt">Or download the app and look around without signing up. The sign-in screen has "See a sample report" and "Look around first," and neither one asks for your email.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- COMPARISON -->
+  <section class="trust bp-grid" id="compare">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">The wedge</p>
+        <h2 class="trust-headline">The way the field <em>actually works.</em></h2>
+        <p class="section-sub" style="margin-left:auto;margin-right:auto;">Most field-reporting tools want your subs on their platform. Walkthrough wants nothing from your subs except their phone&nbsp;number.</p>
+      </div>
+      <div class="wt-compare reveal">
+        <table>
+          <thead>
+            <tr><th></th><th>Other tools</th><th>Walkthrough</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>How the sub gets it</td><td>An email from noreply@theplatform.com with a "click here to view" link and a sign-up prompt</td><td>A text or email from you, with a PDF attached</td></tr>
+            <tr><td>What your sub has to do</td><td>Create an account, set a password, remember the login, maybe download an app</td><td>Open the text</td></tr>
+            <tr><td>Where your photos live</td><td>On the platform's servers, behind their UI</td><td>In your own Google Drive or Dropbox, organized by report</td></tr>
+            <tr><td>If the platform shuts down or you switch</td><td>You lose access to your photos and reports</td><td>Your reports and photos are still in your Google Drive or Dropbox</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRICING -->
+  <section class="section" id="pricing">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">Pricing</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">Two plans. Month to month, no contract.</h2>
+      </div>
+      <div class="wt-plans reveal">
+        <div class="wt-plan">
+          <p class="plan-name">Standard</p>
+          <div class="amt">$9.99 <span class="cad">/ user / mo</span></div>
+          <p class="annual">or $99.99 a year (about $8 a month)</p>
+          <ul>
+            <li class="lead">Every report type except meeting notes and the punch list</li>
+            <li>Walkthroughs, trade lists, daily logs, owner updates</li>
+            <li>Unlimited reports</li>
+            <li>Speech for site walks runs on your phone</li>
+            <li>Photos to your own Google Drive or Dropbox</li>
+          </ul>
+        </div>
+        <div class="wt-plan pro">
+          <p class="plan-name">Pro</p>
+          <div class="amt">$24.99 <span class="cad">/ user / mo</span></div>
+          <p class="annual">or $239.99 a year (about $20 a month)</p>
+          <ul>
+            <li class="lead">Everything in Standard, plus</li>
+            <li>Meeting notes: record a meeting, get decisions and action items</li>
+            <li>Persistent punch list: a living checklist you reopen every visit, check off, and reshare as it shrinks</li>
+          </ul>
+        </div>
+      </div>
+      <p class="wt-trial-line reveal"><strong>Try every feature free. Three full reports, no credit card.</strong> The trial is all-access. You only pick a plan after your third report.</p>
+      <p class="wt-privacy-line reveal">Speech for site walks runs on your phone. Meeting notes sends audio to a secure transcription service.</p>
+      <p class="wt-price-ctx">A five-person crew on Standard is about $50 a month. Still less than most platform tools, and your subs never need accounts. Each person has their own seat and signs in with their own email.</p>
+    </div>
+  </section>
+
+  <!-- WHO IT'S FOR -->
+  <section class="section" id="for" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">Built for</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">Who it's for.</h2>
+      </div>
+      <div class="wt-for reveal">
+        <ul>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Superintendents running daily site checks and punch walks</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Project managers compiling reports after a walkthrough with a homeowner</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Solopreneur builders who need a report to a sub without typing one</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Owner-operators noticing things on site between meetings</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Foremen needing to get a list to a trade quickly</li>
+        </ul>
+        <p class="not">Not built for builders who want to put their subs on a platform. There are tools for that. They're not us.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="section" id="faq" style="padding-top:0;">
+    <div class="container">
+      <div class="section-head reveal" style="text-align:center;margin-left:auto;margin-right:auto;">
+        <p class="label label-center">Questions</p>
+        <h2 class="section-headline" style="margin-left:auto;margin-right:auto;">Things people ask.</h2>
+      </div>
+      <div class="faq reveal">
+        <details><summary>Do my subs need to download anything?</summary><p>No. They get a text or email from you with a PDF attached. They open the PDF. That's it.</p></details>
+        <details><summary>Can I edit the report before it sends?</summary><p>Yes. Every walkthrough produces a PDF you preview and edit before sending. The AI gives you a starting point. You decide what goes out.</p></details>
+        <details><summary>Where do the photos go?</summary><p>If you've connected Google Drive or Dropbox, photos save there in a folder for that walkthrough. If you haven't, they save in the app and you can connect Drive or Dropbox later to back-fill.</p></details>
+        <details><summary>Does Walkthrough do daily logs?</summary><p>Yes. Talk through the day at the end of it and you get a dated, photo-backed daily log with the weather already filled in and a weather-delay flag if you lost time. It is on the Standard plan.</p></details>
+        <details><summary>Where does the weather on a daily log come from?</summary><p>The National Weather Service, for the address on that project and the date on that log. The report notes when the weather was pulled, and you can edit the line before you send.</p></details>
+        <details><summary>Does Walkthrough work on Android?</summary><p>Yes. Walkthrough is on Google Play and on the App Store. Sign in with the same email on either one and your projects and reports are there.</p></details>
+        <details><summary>How does sign-in work? I don't want another password.</summary><p>You enter your email. We email you a six-digit code. You type it in. You're signed in. No password to remember or reset.</p></details>
+        <details><summary>What are the plans and what do they cost?</summary><p>Two plans, month to month. Standard is $9.99 a user each month, or $99.99 a year, and includes every report type except meeting notes and the punch list, with unlimited reports. Pro is $24.99 a user each month, or $239.99 a year, and adds meeting notes and the persistent punch list. You can move from Standard to Pro anytime.</p></details>
+        <details><summary>What if I want to use this with my whole team?</summary><p>Each person gets their own seat, Standard at $9.99 a month or Pro at $24.99. They sign in with their own email, and reports they send come from their own phone. The subscription handles the seats; there's nothing extra to set up.</p></details>
+        <details><summary>Can I try it before I subscribe?</summary><p>Three free reports to start, with every feature unlocked and no credit card. Use them on any report type you like, meeting notes and punch list included. After the third report, you pick a plan. Before then, no card.</p></details>
+        <details><summary>What if I cancel?</summary><p>Cancel anytime from Settings. You keep what you've paid through that month. If you cancel within the first 14 days and it's not working for you, reply to the welcome email and we'll refund.</p></details>
+      </div>
+    </div>
+  </section>
+
+  <!-- FINAL CTA / NOTIFY -->
+  <section class="cta-band" id="notify">
+    <div class="container">
+      <span class="launch-stamp">On the App Store and Google Play</span>
+      <h2>Walk one job with it. On the house.</h2>
+      <p>Download it and run three free reports, no credit card, every feature unlocked. On iPhone and Android.</p>
+      <div class="store-badges">
+        <a class="badge-apple" href="https://apps.apple.com/app/walkthrough-site-reports/id6775347863">
+          <img src="assets/app-store-badge.svg" alt="Download on the App Store" width="200" height="67">
+        </a>
+        <a class="badge-google" href="https://play.google.com/store/apps/details?id=com.cabinjohnbuilders.walkthrough">
+          <img src="assets/google-play-badge.png" alt="Get it on Google Play" width="258" height="100">
+        </a>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-brand">
+        <div class="wt-lockup wt-lockup-foot">
+          <img class="wt-mark" src="assets/brand/walkthrough-house-mark.png" alt="" width="601" height="535">
+          <span class="wm-stack">
+            <span class="wm">Walkthrough</span>
+            <span class="by">by Lock Ten Studio &middot; Cabin John, Maryland</span>
+          </span>
+        </div>
+      </div>
+      <p class="footer-tagline">Field tools built on real job sites.</p>
+      <nav class="footer-nav" aria-label="Footer">
+        <a href="https://lockten.ai/">Lock Ten Studio</a>
+        <a href="https://lockten.ai/#newsletter">Field Notes</a>
+        <a href="https://lockten.ai/primer">Cowork primer</a>
+        <a href="https://lockten.ai/help">Help</a>
+        <a href="https://lockten.ai/sample-report">Sample report</a>
+        <a href="mailto:info@lockten.ai">Contact</a>
+        <a href="https://lockten.ai/privacy">Privacy</a>
+        <a href="https://lockten.ai/terms">Terms</a>
+      </nav>
+      <div class="footer-contact-block">
+        <a href="mailto:info@lockten.ai">info@lockten.ai</a>
+      </div>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/locktenstudio" aria-label="Lock Ten Studio on Instagram">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect width="20" height="20" x="2" y="2" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/></svg>
+        </a>
+        <a href="https://x.com/locktenstudio" aria-label="Lock Ten Studio on X">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231 5.451-6.231Zm-1.161 17.52h1.833L7.084 4.126H5.117l11.966 15.644Z"/></svg>
+        </a>
+      </div>
+      <div class="footer-legal">
+        <span>&copy; 2026 Lock Ten Studio LLC. Built and run by a custom residential builder, on real job sites.</span>
+        <span>Google Play and the Google Play logo are trademarks of Google LLC.</span>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+(function () {
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function (entries) {
+      entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+    document.querySelectorAll('.reveal').forEach(function (el) { io.observe(el); });
+  } else {
+    document.querySelectorAll('.reveal').forEach(function (el) { el.classList.add('in'); });
+  }
+
+  var strip = document.getElementById('wt-carousel');
+  var reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (strip && !reduceMotion) {
+    var shots = strip.querySelectorAll('img');
+    var note = document.getElementById('wt-shot-note');
+    var labels = [
+      'Talk while you walk',
+      'Per-trade punch lists, ready to send',
+      'Six modes, one app',
+      'Review and edit before anything sends',
+      'Photos straight to your Drive or Dropbox'
+    ];
+    var idx = 0;
+    if (shots.length > 1) {
+      setInterval(function () {
+        shots[idx].classList.remove('show');
+        idx = (idx + 1) % shots.length;
+        shots[idx].classList.add('show');
+        if (note && labels[idx]) note.textContent = labels[idx];
+      }, 4200);
+    }
+  }
+})();
+</script>
+
+<!-- Cloudflare Web Analytics --><script defer src='https://static.cloudflareinsights.com/beacon.min.js' data-cf-beacon='{"token": "cd30115fa535417ca908587b96cd3733"}'></script><!-- End Cloudflare Web Analytics -->
+</body>
+</html>
