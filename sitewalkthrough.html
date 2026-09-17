@@ -198,6 +198,13 @@ a.wt-lockup:hover .wm { color: var(--white); }
 .wt .header-nav a:hover { color: var(--white); }
 .wt-header-cta { flex: none; background: var(--brand); color: var(--white); font-family: var(--font-sans); font-weight: 600; font-size: 0.95rem; line-height: 1; padding: 12px 18px; border-radius: 6px; text-decoration: none; white-space: nowrap; transition: background 180ms var(--ease); }
 .wt-header-cta:hover { background: var(--blueprint-300); color: var(--deep-900); }
+/* The two header actions travel as one row at every width: Log in is the
+   quiet door for people who already have the app, Get the app stays the
+   loud one. Log in's padding is 1px tighter than the CTA's so the border
+   keeps both boxes the same height. */
+.wt-header-actions { display: flex; align-items: center; gap: 10px; flex: none; }
+.wt-header-login { flex: none; color: var(--steel-300); border: 1px solid rgba(255, 255, 255, 0.28); font-family: var(--font-sans); font-weight: 500; font-size: 0.95rem; line-height: 1; padding: 11px 17px; border-radius: 6px; text-decoration: none; white-space: nowrap; transition: color 180ms var(--ease), border-color 180ms var(--ease); }
+.wt-header-login:hover { color: var(--white); border-color: rgba(255, 255, 255, 0.6); }
 @media (min-width: 1000px) {
   .wt .header-inner { flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px 20px; padding-top: 16px; padding-bottom: 16px; }
   .wt .header-nav { flex: 1 1 auto; justify-content: flex-end; margin-right: 8px; }
@@ -209,6 +216,8 @@ a.wt-lockup:hover .wm { color: var(--white); }
   .wt-lockup .by { font-size: 0.58rem; letter-spacing: 0.14em; }
   .wt .site-header .wt-mark { width: 28px; }
   .wt-header-cta { font-size: 0.8rem; padding: 9px 12px; }
+  .wt-header-actions { gap: 8px; }
+  .wt-header-login { font-size: 0.8rem; padding: 8px 11px; }
   .wt .header-nav { gap: 6px 16px; }
   .wt .header-nav a { font-size: 0.84rem; }
 }
@@ -363,7 +372,10 @@ a.wt-lockup:hover .wm { color: var(--white); }
       <a href="https://lockten.ai/sample-report">See a real report</a>
       <a href="https://lockten.ai/help">Help</a>
     </nav>
-    <a class="wt-header-cta" href="#notify">Get the app</a>
+    <div class="wt-header-actions">
+      <a class="wt-header-login" href="https://app.sitewalkthrough.com/console">Log in</a>
+      <a class="wt-header-cta" href="#notify">Get the app</a>
+    </div>
   </div>
 </header>
 
