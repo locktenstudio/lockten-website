@@ -205,9 +205,9 @@ a.wt-lockup:hover .wm { color: var(--white); }
 .wt-header-actions { display: flex; align-items: center; gap: 10px; flex: none; }
 .wt-header-login { flex: none; color: var(--steel-300); border: 1px solid rgba(255, 255, 255, 0.28); font-family: var(--font-sans); font-weight: 500; font-size: 0.95rem; line-height: 1; padding: 11px 17px; border-radius: 6px; text-decoration: none; white-space: nowrap; transition: color 180ms var(--ease), border-color 180ms var(--ease); }
 .wt-header-login:hover { color: var(--white); border-color: rgba(255, 255, 255, 0.6); }
-@media (min-width: 1000px) {
+@media (min-width: 1024px) {
   .wt .header-inner { flex-direction: row; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 14px 20px; padding-top: 16px; padding-bottom: 16px; }
-  .wt .header-nav { flex: 1 1 auto; justify-content: flex-end; margin-right: 8px; }
+  .wt .header-nav { flex: 1 1 auto; justify-content: flex-end; margin-right: 8px; min-width: 0; }
 }
 @media (max-width: 560px) {
   .wt .header-inner { gap: 14px; padding-top: 18px; padding-bottom: 18px; }
