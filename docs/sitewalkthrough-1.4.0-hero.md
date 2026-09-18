@@ -1,9 +1,10 @@
 # sitewalkthrough.com: the 1.4.0 hero, ready to apply
 
-**Status: NOT APPLIED.** The served page still carries the 1.3.0
-voice-first hero, which is correct while 1.3.0 is what is on the stores.
-On 1.4.0 release day, apply the diff below to `sitewalkthrough.html` and
-push. It is one commit.
+**Status: APPLIED 2026-09-19**, the day 1.4.0 went live on the App
+Store. The three hunks below are now the served page. The follow-up
+items further down (carousel shots, How-it-works steps, the
+voice-first card, the trial sentence, console promotion) were NOT part
+of the flip and remain open; they belong to the 1.5 marketing pass.
 
 1.4.0 is the camera-first release (ratified 2026-09-05): the walkthrough
 opens in a camera, the shutter is the primary action, and voice annotates
