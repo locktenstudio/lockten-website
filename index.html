@@ -30,6 +30,13 @@
 .home .hero-subhead { margin-left: auto; margin-right: auto; }
 .home .hero-actions { justify-content: center; }
 
+/* One product card since The Install was unlisted (2026-09-12): keep the grid
+   single-column and centered at the card's old two-column width (1180 container
+   minus 80 gutter minus 32 gap, halved). */
+@media (min-width: 900px) {
+  .product-grid { grid-template-columns: minmax(0, 534px); justify-content: center; }
+}
+
 /* Product panels: real UI shots rising from the panel bottom
    (replaced the blueprint line-art SVGs once both products went live) */
 .product-panel.pp { height: 264px; padding: 30px 30px 0; overflow: hidden; align-items: flex-end; }
@@ -84,7 +91,6 @@
     </a>
     <nav class="header-nav" aria-label="Primary">
       <a href="/walkthrough">Walkthrough</a>
-      <a href="/install">The Install</a>
       <a href="#studio">The studio</a>
       <a href="#newsletter">Field Notes</a>
       <a href="mailto:info@lockten.ai">Contact</a>
@@ -99,7 +105,6 @@
     </a>
     <nav class="header-nav">
       <a href="/walkthrough" tabindex="-1">Walkthrough</a>
-      <a href="/install" tabindex="-1">The Install</a>
       <a href="#studio" tabindex="-1">The studio</a>
       <a href="#newsletter" tabindex="-1">Field Notes</a>
       <a href="mailto:info@lockten.ai" tabindex="-1">Contact</a>
@@ -125,12 +130,9 @@
     </div>
     <div class="container">
       <h1 class="hero-headline">AI tools for custom builders, <em>made by one.</em></h1>
-      <p class="hero-subhead">Built and run by a custom residential builder, tested on our own jobs first. Two tools, both available now: Walkthrough for the field, The Install for the office.</p>
+      <p class="hero-subhead">Built and run by a custom residential builder, tested on our own jobs first. Walkthrough is available now for the field.</p>
       <div class="hero-actions">
         <a href="/walkthrough" class="btn btn-primary">Walkthrough, for the field
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-        </a>
-        <a href="/install" class="btn btn-primary">The Install, for the office
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
         </a>
       </div>
@@ -145,8 +147,8 @@
     <div class="container">
       <div class="section-head reveal">
         <p class="label">What we make</p>
-        <h2 class="section-headline">Two tools, built on the job.</h2>
-        <p class="section-sub">Independent tools. No bundle, no platform to adopt. Start with the one your week needs.</p>
+        <h2 class="section-headline">Built on the job.</h2>
+        <p class="section-sub">No bundle, no platform to adopt. Just the tool your week needs.</p>
       </div>
 
       <div class="product-grid">
@@ -180,57 +182,6 @@
               </div>
               <a href="/walkthrough" class="product-more">Learn more <span aria-hidden="true">&rsaquo;</span></a>
               <a href="/sample-report" class="product-more">See a real report <span aria-hidden="true">&rsaquo;</span></a>
-            </div>
-          </div>
-        </article>
-
-        <article class="product-card reveal d1">
-          <div class="product-panel pp" aria-hidden="true">
-            <div class="pp-window">
-              <div class="pp-bar"><span></span><span></span><span></span></div>
-              <div class="pp-rows">
-                <div class="pp-row dir" style="--ind:0">
-                  <svg viewBox="0 0 24 24" fill="#D3E6F7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
-                  <span class="nm">your-company</span>
-                </div>
-                <div class="pp-row file" style="--ind:1">
-                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
-                  <span>CLAUDE.md</span>
-                </div>
-                <div class="pp-row dir" style="--ind:1">
-                  <svg viewBox="0 0 24 24" fill="#D3E6F7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
-                  <span class="nm">team</span>
-                </div>
-                <div class="pp-row dir" style="--ind:1">
-                  <svg viewBox="0 0 24 24" fill="#D3E6F7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
-                  <span class="nm">projects</span>
-                </div>
-                <div class="pp-row dir" style="--ind:1">
-                  <svg viewBox="0 0 24 24" fill="#D3E6F7" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg>
-                  <span class="nm">skills</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="product-info">
-            <p class="product-kicker">For the office</p>
-            <div class="product-name-row">
-              <h3 class="product-name">The Install</h3>
-              <span class="tag tag-live">Available now</span>
-            </div>
-            <p class="product-role">Your AI office, built to spec.</p>
-            <p class="product-body">
-              It's time to bring AI into your office. The Install is the blueprint: we stand up a complete AI workspace built to your team, your projects and the way you already work, from a single 25-minute questionnaire. You pick how much you want us to handle.
-            </p>
-            <div class="product-tiers">
-              <p class="tiers-label">Two tiers</p>
-              <ul>
-                <li><span class="t-name">Lite</span><span class="t-price">Free</span></li>
-                <li class="hero"><span class="t-name">Plus</span><span class="t-price">$499</span></li>
-              </ul>
-            </div>
-            <div class="product-actions">
-              <a href="/install" class="product-more">Pricing &amp; how it works <span aria-hidden="true">&rsaquo;</span></a>
             </div>
           </div>
         </article>
@@ -304,7 +255,6 @@
       <p class="footer-tagline">AI tools for custom builders, made by one.</p>
       <nav class="footer-nav" aria-label="Footer">
         <a href="/walkthrough">Walkthrough</a>
-        <a href="/install">The Install</a>
         <a href="#studio">The studio</a>
         <a href="#newsletter">Field Notes</a>
         <a href="/primer">Cowork primer</a>
