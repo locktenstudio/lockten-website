@@ -174,7 +174,7 @@ body.hand .bp-grid {
 .cta-band h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.2rem, 4.5vw, 3.4rem); line-height: 1.1; color: var(--white); max-width: 18ch; margin: 0 auto; }
 .cta-band h2 em { font-style: italic; color: var(--amber-lift); }
 .cta-band p { color: rgba(243,243,248,0.78); font-size: 1.08rem; margin: 16px auto 0; max-width: 520px; }
-.cta-band .hero-actions { justify-content: center; }
+.cta-band .hero-actions { justify-content: center; align-items: center; }
 .cta-mail { display: block; margin-top: 26px; font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.05em; color: var(--steel-300); text-decoration: none; }
 .cta-mail:hover { color: var(--amber-lift); }
 .launch-stamp { display: inline-block; font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber-lift); border: 1.5px solid rgba(244, 200, 119, 0.45); border-radius: 3px; padding: 7px 14px; margin-bottom: 22px; }
@@ -214,7 +214,7 @@ body.hand .bp-grid {
       "name": "What do I have to send in to set up a home?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Your selections. A Buildertrend selections export or a spreadsheet both work. The list is read into a product list you review before anything is sourced, and you can add or correct products by hand."
+        "text": "Your selections list. An export from the software you already run (Buildertrend, JobTread, Ressio or another) or a spreadsheet kept by hand both work. The list is read into a product list you review before anything is sourced, and you can add or correct products by hand."
       }
     },
     {
@@ -230,15 +230,15 @@ body.hand .bp-grid {
       "name": "Can it get something wrong?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "It can miss, and it is built to miss out loud. A document it cannot verify is flagged for your review instead of quietly attached, and an answer the home's own documents do not support is replaced with a note pointing your client back to you by name. You review every sourced document before a home is published."
+        "text": "Yes, and when it does it says so. If it cannot find the right manual for something, it tells you instead of guessing, and you can upload the document yourself. If your client asks a question the manuals do not answer, the app says it does not know and gives them your name and phone number. You look over every document before a home goes out to your client."
       }
     },
     {
       "@type": "Question",
-      "name": "Is the app on the App Store yet?",
+      "name": "Is the app on the App Store?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Not yet. The homeowner app is on its way to the App Store. The platform behind it is already running real homes in production."
+        "text": "Yes. Handover: Home Manual is on the App Store. Your client downloads it and signs in with the email address you set up for them. The platform behind it is already running real homes."
       }
     },
     {
@@ -254,7 +254,7 @@ body.hand .bp-grid {
       "name": "Is this the same company as Walkthrough?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. Lock Ten Studio builds software for custom home builders, run by the co-owner of a building company outside Washington DC. Walkthrough: Site Reports is its field-report app, on the App Store and Google Play."
+        "text": "Yes. Lock Ten Studio builds software for custom home builders, run by the co-owner of a building company outside Washington DC. Walkthrough: Site Reports is its field-report app, on the App Store and Google Play. Material Monitor (materialmonitor.app) is its material tracking tool: one list of what has been ordered and what has arrived across your jobs, for the office and the field."
       }
     }
   ]
@@ -351,7 +351,7 @@ body.hand .bp-grid {
           <span class="num">01</span>
           <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M15 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7Z"/><path d="M14 2v4a2 2 0 0 0 2 2h4"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
           <h3>Send in the house</h3>
-          <p>A Buildertrend selections export or a spreadsheet. It gets read into a product list by section and room, with the makes and models pulled out, for you to look over and correct.</p>
+          <p>A selections export from whatever you run the job in (Buildertrend, JobTread, Ressio or another), or a plain spreadsheet. It gets read into a product list by section and room, with the makes and models pulled out, for you to look over and correct.</p>
         </div>
         <div class="hv-step reveal d1">
           <span class="num">02</span>
@@ -543,8 +543,8 @@ body.hand .bp-grid {
       <div class="hv-status reveal">
         <ul>
           <li><b>Live</b><span>The platform is running in production today, with real homes published, printed and searchable.</span></li>
-          <li><b>Coming</b><span>The homeowner app is on its way to the App Store.</span></li>
-          <li><b>Not set</b><span>There is no price on this page because there is no price yet. It is being worked out as the first builders come on, and you would be talking to the person who decides it.</span></li>
+          <li><b>Live</b><span>The homeowner app, <a href="https://apps.apple.com/app/id6803311830">Handover: Home Manual</a>, is on the App Store.</span></li>
+          <li><b>Priced</b><span>$99 for your first home, then $249 per home, paid when you hand the house over, plus one yearly company fee that keeps every delivered home live. The full table is at <a href="https://homehandover.app/#pricing">homehandover.app</a>.</span></li>
         </ul>
       </div>
     </div>
@@ -561,12 +561,12 @@ body.hand .bp-grid {
         <details><summary>What does my client have to do?</summary><p>Nothing before you hand it to them. You add their email address, they get a message saying their home is ready, they type in the six-digit code we email them and they are in. No password, no account to create and nothing for them to pay.</p></details>
         <details><summary>Do I have to gather all the manuals myself?</summary><p>No, that is the part the platform does. It searches manufacturers for the right document for each model you selected. Anything it cannot verify is flagged for you rather than attached, and you can upload your own PDF for any product.</p></details>
         <details><summary>Whose brand is on it?</summary><p>Yours. Your logo and colors theme the app the moment your client signs in, and the welcome letter, warranty, care guides and binder cover all print on your letterhead. Lock Ten's name does not appear anywhere your client can see it.</p></details>
-        <details><summary>What do I have to send in to set up a home?</summary><p>Your selections. A Buildertrend selections export or a spreadsheet both work. The list is read into a product list you review before anything is sourced, and you can add or correct products by hand.</p></details>
+        <details><summary>What do I have to send in to set up a home?</summary><p>Your selections list. An export from the software you already run (Buildertrend, JobTread, Ressio or another) or a spreadsheet kept by hand both work. The list is read into a product list you review before anything is sourced, and you can add or correct products by hand.</p></details>
         <details><summary>Does it only work for houses I just finished?</summary><p>No. If you can produce the selection list and the documents, a home you handed over years ago can be built the same way. Older homes are usually more work up front because the selection data is messier.</p></details>
-        <details><summary>Can it get something wrong?</summary><p>It can miss, and it is built to miss out loud. A document it cannot verify is flagged for your review instead of quietly attached, and an answer the home's own documents do not support is replaced with a note pointing your client back to you by name. You review every sourced document before a home is published.</p></details>
-        <details><summary>Is the app on the App Store yet?</summary><p>Not yet. The homeowner app is on its way to the App Store. The platform behind it is already running real homes in production.</p></details>
+        <details><summary>Can it get something wrong?</summary><p>Yes, and when it does it says so. If it cannot find the right manual for something, it tells you instead of guessing, and you can upload the document yourself. If your client asks a question the manuals do not answer, the app says it does not know and gives them your name and phone number. You look over every document before a home goes out to your client.</p></details>
+        <details><summary>Is the app on the App Store?</summary><p>Yes. <a href="https://apps.apple.com/app/id6803311830">Handover: Home Manual</a> is on the App Store. Your client downloads it and signs in with the email address you set up for them. The platform behind it is already running real homes.</p></details>
         <details><summary>What does it cost?</summary><p>Pricing is not published because it is not settled. Handover is early, and price is part of the first conversations. Email <a href="mailto:info@lockten.ai?subject=Handover">info@lockten.ai</a> and you will get a straight answer about where it stands.</p></details>
-        <details><summary>Is this the same company as Walkthrough?</summary><p>Yes. Lock Ten Studio builds software for custom home builders, run by the co-owner of a building company outside Washington DC. <a href="/walkthrough">Walkthrough: Site Reports</a> is its field-report app, on the App Store and Google Play.</p></details>
+        <details><summary>Is this the same company as Walkthrough?</summary><p>Yes. Lock Ten Studio builds software for custom home builders, run by the co-owner of a building company outside Washington DC. <a href="/walkthrough">Walkthrough: Site Reports</a> is its field-report app, on the App Store and Google Play. <a href="https://materialmonitor.app">Material Monitor</a> is its material tracking tool: one list of what has been ordered and what has arrived across your jobs, for the office and the field.</p></details>
       </div>
     </div>
   </section>
@@ -581,6 +581,7 @@ body.hand .bp-grid {
         <a class="btn btn-primary" href="mailto:info@lockten.ai?subject=Handover">Email us about your homes
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
+        <a class="badge-apple" href="https://apps.apple.com/app/id6803311830"><img src="assets/app-store-badge.svg" alt="Download on the App Store" width="200" height="67"></a>
       </div>
       <a class="cta-mail" href="mailto:info@lockten.ai?subject=Handover">info@lockten.ai</a>
     </div>
@@ -598,7 +599,6 @@ body.hand .bp-grid {
       <nav class="footer-nav" aria-label="Footer">
         <a href="/">Lock Ten Studio</a>
         <a href="/walkthrough">Walkthrough</a>
-        <a href="/install">The Install</a>
         <a href="mailto:info@lockten.ai?subject=Handover">Contact</a>
         <a href="/privacy">Privacy</a>
         <a href="/terms">Terms</a>
