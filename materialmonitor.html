@@ -114,7 +114,7 @@ body.mm .bp-grid {
 .mm .label { font-size: 0.9rem; letter-spacing: 0.14em; }
 .mm .section-head { max-width: 860px; margin-bottom: 40px; }
 .mm .section-head.center { text-align: center; margin-left: auto; margin-right: auto; }
-.mm .section-head.center .section-sub { margin-left: auto; margin-right: auto; }
+.mm .section-head.center .section-sub { margin-left: auto; margin-right: auto; text-wrap: balance; }
 .mm .section-headline { text-wrap: balance; }
 .mm .section-sub { font-size: 1.15rem; line-height: 1.7; max-width: 44em; text-wrap: pretty; }
 /* A headline's emphasised phrase is its second line on a wide screen. */
@@ -267,7 +267,11 @@ body.mm .bp-grid {
   .shot.two .labels li::before { background: var(--brand); }
   .shot.two.nmiss-1 .labels li:nth-child(1)::before, .shot.two.nmiss-2 .labels li:nth-child(2)::before,
   .shot.two.nmiss-3 .labels li:nth-child(3)::before, .shot.two.nmiss-4 .labels li:nth-child(4)::before { background: var(--steel-300); }
-  .mm-hero-fig .pic .hero-phone { position: relative; right: auto; bottom: auto; width: 52%; max-width: 230px; margin: 28px auto 0; }
+  /* the phone sits under the picture, out of the picture's box so the pins keep their places;
+     the room it needs is its width times its height-to-width (about 2.08 with the bezel) */
+  .mm-hero-fig { --phone-w: min(52vw, 230px); }
+  .mm-hero-fig .pic { margin-bottom: calc(var(--phone-w) * 2.08 + 64px); }  /* collapses with the list's top margin */
+  .mm-hero-fig .pic .hero-phone { right: auto; bottom: auto; top: calc(100% + 28px); left: calc(50% - var(--phone-w) / 2); width: var(--phone-w); }
   .mm-hero-fig .labels { margin-top: 30px; }
 }
 
