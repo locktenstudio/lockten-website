@@ -150,7 +150,7 @@ FIGURES = [
                      "display": 1022, "widths": [1040, 2080], "sizes": HERO_SIZES},
             # Phones: the left two job cards and the left of every section down to the line under the
             # follow-up heading, so all four pins show; the right edge falls between the second and third card.
-            "narrow": {"x0": 60, "x1": 724, "y0": ("jobs_heading", "top", -16),
+            "narrow": {"x0": 40, "x1": 724, "y0": ("jobs_heading", "top", -16),
                        "y1": ("first_follow_up_category", "top", -8), "fade": True,
                        "display": 390, "widths": [560, 1120]},
         },
@@ -185,7 +185,7 @@ FIGURES = [
                 {"nav": True, "x0": ("search_box", "left", -16), "x1": ("search_box", "left", 612),
                  "y0": ("follow_up_heading", "top", -14),
                  "y1": ("draft_an_email_button", "bottom", 14)},
-                {"x0": 90, "x1": 720, "y0": ("first_follow_up_category", "top", -10),
+                {"x0": 66, "x1": 694, "y0": ("first_follow_up_category", "top", -10),
                  "y1": ("first_follow_up_row", "bottom", 8), "snap_x1": "first_follow_up_contact"}],
                 "fade": True, "display": 390, "widths": [560, 1120]},
         },
@@ -202,7 +202,7 @@ FIGURES = [
         "crops": {
             "wide": {"x0": 84, "x1": 1332, "y0": ("job_title", "top", -24), "aspect": TOUR_ASPECT,
                      "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
-            "narrow": {"x0": 60, "x1": 740, "y0": ("update_the_list_upload", "top", -24),
+            "narrow": {"x0": 40, "x1": 740, "y0": ("update_the_list_upload", "top", -24),
                        "y1": ("first_board_row", "bottom", 1), "fade": True,
                        "display": 390, "widths": [560, 1120]},
         },
@@ -216,20 +216,20 @@ FIGURES = [
                 "with an email address and a phone number, and the history of what changed."),
         # Vendor: level with the gap under the Status row. History: along the gap under the order-by line.
         "pins": [(("vendor_and_rep"), ("left", 26)), ("order_by_date", "left"),
-                 ("first_history_entry", ("left", 78))],
+                 ("first_history_entry", ("left", 90))],
         "crops": {
             "wide": {"x0": 84, "x1": 1332, "y0": ("status_field", "top", -24), "aspect": TOUR_ASPECT,
                      "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
             # Phones: Who sells it from the right column, the lead time and order-by rows of the form,
             # then the History heading and first entry, in the order the pins are numbered.
             "narrow": {"stack": [
-                {"x0": 896, "x1": 1330, "y0": ("who_sells_it", "top", -16),
+                {"x0": 872, "x1": 1330, "y0": ("who_sells_it", "top", -16),
                  "y1": ("who_sells_it", "bottom", 8)},
-                {"x0": 90, "x1": ("needed_on_site_by", "left", -8), "y0": ("lead_time", "top", -12),
+                {"x0": 76, "x1": 534, "y0": ("lead_time", "top", -12),
                  "y1": ("order_by_date", "bottom", 12)},
-                {"x0": 896, "x1": 1330, "y0": ("history_heading", "top", -12),
+                {"x0": 872, "x1": 1330, "y0": ("history_heading", "top", -12),
                  "y1": ("first_history_entry", "bottom", 3)}],
-                "display": 390, "widths": [560, 868]},
+                "display": 390, "widths": [560, 916]},
         },
         "narrow_pins": [("vendor_and_rep", "left"), ("order_by_date", "left"), ("first_history_entry", "left")],
     },
@@ -261,7 +261,7 @@ FIGURES = [
         "crops": {
             "wide": {"x0": 84, "x1": 1332, "y0": ("first_draft", "top", -56), "aspect": TOUR_ASPECT,
                      "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
-            "narrow": {"x0": 84, "x1": 700, "y0": ("first_draft", "top", -16),
+            "narrow": {"x0": 64, "x1": 700, "y0": ("first_draft", "top", -16),
                        "y1": ("first_draft", "bottom", 12), "snap_x1": "first_draft_body",
                        "fade": True, "display": 390, "widths": [560, 1120]},
         },
@@ -283,7 +283,7 @@ FIGURES = [
                      "sizes": "(min-width: 1100px) 600px, (min-width: 700px) min(600px, calc(100vw - 48px)), 100vw"},
             # Phones: the email's text column at the full width of the screen. Only the side padding
             # is cut (the grey ground on the left, the card's padding on the right), never a line.
-            "narrow": {"x0": 30, "x1": 640, "y0": 0, "y1": ("card", "bottom", 16),
+            "narrow": {"x0": 0, "x1": 640, "y0": 0, "y1": ("card", "bottom", 16),
                        "display": 390, "widths": [560, 1220]},
         },
     },
@@ -573,7 +573,10 @@ def place_pins(fig: dict, fr: Frame, display: float | None, variant: str) -> lis
         a = fr.anchor.get(name)
         if a is not None:
             ex, ey, side = _end_point(a, end, k)
-            ex = max(ex, min_end) if side == "left" else ex
+            if side == "left" and ex < min_end:
+                warn(f"{fig['id']} {variant}: pin {n} ({name}) sits too close to its target; widen the crop "
+                     f"on the left so the arrow has room")
+                ex = min_end
             lane = ey
             if side == "top":
                 lane = a[1] - lane_off
