@@ -7,7 +7,8 @@ thing. Run this after any change to a question or an answer:
 
     python scripts/mm_faq_jsonld.py
 
-It rewrites the FAQPage block in place (HTML comments and tags stripped from the answers)
+It rewrites the FAQPage block in place (HTML comments and tags stripped from the answers, the
+non-breaking spaces that keep last lines from running short turned back into spaces)
 and then checks that every JSON-LD block on the page parses.
 """
 
@@ -31,8 +32,8 @@ def main() -> int:
     for m in re.finditer(r"<details><summary>(.*?)</summary><p>(.*?)</p></details>", faq.group(1), re.S):
         answer = re.sub(r"<!--.*?-->", "", m.group(2), flags=re.S)
         answer = re.sub(r"<[^>]+>", "", answer)
-        answer = html.unescape(re.sub(r"\s+", " ", answer)).strip()
-        items.append({"@type": "Question", "name": html.unescape(m.group(1).strip()),
+        answer = html.unescape(re.sub(r"\s+", " ", answer)).replace(" ", " ").strip()
+        items.append({"@type": "Question", "name": html.unescape(m.group(1).strip()).replace(" ", " "),
                       "acceptedAnswer": {"@type": "Answer", "text": answer}})
     block = json.dumps({"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": items},
                        indent=2, ensure_ascii=False)
