@@ -116,17 +116,19 @@ body.mm .bp-grid {
 }
 /* Labels and captions stay at 15px or more; reading copy at 18px or more. */
 .mm .label { font-size: 0.9rem; letter-spacing: 0.14em; }
-.mm .section-head { max-width: 860px; margin-bottom: 40px; }
+.mm .section-head { max-width: none; margin-bottom: 40px; }
 .mm .section-head.center { text-align: center; margin-left: auto; margin-right: auto; }
 .mm .section-head.center .section-sub { margin-left: auto; margin-right: auto; text-wrap: balance; }
-.mm .section-headline { text-wrap: balance; }
-.mm .section-sub { font-size: 1.15rem; line-height: 1.7; max-width: 44em; text-wrap: pretty; }
-/* A headline's emphasised phrase is its second line on a wide screen. */
-@media (min-width: 760px) { .mm .brk em { display: block; } }
+/* Headlines: one sentence in one colour, at most two words in the copper italic, on one line
+   at 1280 and wider. On a narrow screen a headline breaks only between its phrase groups:
+   .pg never breaks inside, .pgw (a group of groups) holds together from 760px up. */
+.mm .section-headline { font-size: clamp(1.9rem, 1.2rem + 2.6vw, 2.6rem); line-height: 1.12; text-wrap: balance; }
+.pg { white-space: nowrap; }
+@media (min-width: 760px) { .pgw { white-space: nowrap; } }
+.mm .section-sub { font-size: 1.15rem; line-height: 1.7; max-width: 36em; text-wrap: pretty; }
 .mm p, .mm li { text-wrap: pretty; }
 /* Short blocks balance their lines, so the last line never holds one or two words. */
-.mm-get p, .mm-card p, .tour-text p.what, .labels span, .seq-caps li, .mm-field-item p, .mm-status li span { text-wrap: balance; }
-.mm-cap { font-family: var(--font-mono); font-size: 0.9rem; letter-spacing: 0.02em; line-height: 1.5; color: var(--fg-3); text-align: center; margin: 22px auto 0; max-width: 60ch; }
+.mm-get p, .mm-card p, .tour-text p.what, .labels span, .seq-caps li, .mm-field-item p { text-wrap: balance; }
 .mm .footer-nav a { font-size: 0.9rem; }
 .mm .footer-legal { font-size: 0.9rem; }
 .mm .footer-contact-block { font-size: 0.9rem; }
@@ -134,7 +136,7 @@ body.mm .bp-grid {
 
 /* ---- Hero ---- */
 .mm .hero-dark { padding: 22px 0 80px; }
-.hero-dark .hero-headline { font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1; max-width: none; margin: 0; }
+.hero-dark .hero-headline { font-size: clamp(2.3rem, 4.9vw, 4.25rem); line-height: 1.02; max-width: none; margin: 0; }
 .hero-dark .hero-headline em { color: var(--copper-lift); }
 .hero-dark .btn-primary, .cta-band .btn-primary { background: var(--copper); color: #1D232B; }
 .hero-dark .btn-primary:hover, .cta-band .btn-primary:hover { background: var(--copper-lift); }
@@ -150,8 +152,6 @@ body.mm .bp-grid {
 .mm .btn { font-size: 1rem; padding: 13px 22px; }
 .launch-stamp { display: inline-block; font-family: var(--font-mono); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--copper-lift); border: 1.5px solid rgba(222, 154, 102, 0.45); border-radius: 3px; padding: 6px 13px; margin-bottom: 14px; }
 .annotated.mm-hero-fig { margin-top: 22px; }
-.mm-hero-fig figcaption { color: var(--steel-300); margin-top: 28px; }
-@media (max-width: 1099px) { .mm-hero-fig figcaption { margin-top: 30px; } }
 @media (max-width: 720px) { .mm .hero-dark { padding-bottom: 64px; } }
 
 /* ---- Browser frame: a plain bar over the real picture ---- */
@@ -164,17 +164,21 @@ body.mm .bp-grid {
 @media (max-width: 560px) { .bar { height: 30px; padding: 0 9px; gap: 5px; border-radius: 8px 8px 0 0; } .bar i { width: 7px; height: 7px; } .bar span { font-size: 0.9rem; padding: 1px 10px; max-width: 74%; transform: none; } .browser .shot-img { border-radius: 0 0 8px 8px; } }
 
 /* =====================================================================
-   Callout system. A figure.annotated holds:
-     .stage > (.bar) + .shot > .pic > img + .lead svgs + .pin spans
+   Callout system. A figure.annotated holds
+     .stage > (.bar) + .shot > .pic > picture + svg.arrows + span.pin
                               + ol.labels
-   The pin numbers come from scripts/mm_site_images.py as CSS variables
-   on .shot: --xN/--yN (percent of the picture, the anchor point) and
-   --dxN/--dyN (the push off the target, in screen pixels).
-   .side  labels sit in columns beside the picture with leader lines
-          (1100px and wider); below that, and always for .legend, the
-          numbered labels sit under the picture and the lines go.
-   .anim  (added by the script only when motion is allowed) hides pins,
-          lines and labels until .is-on, then they draw in.
+   scripts/mm_site_images.py writes the picture, the arrows and the pins into
+   the figure's MM-FIG block. Every pin of a figure sits in ONE gutter: 18px
+   outside the picture's left edge on a wide crop, 18px inside on a narrow one,
+   at the height --py (--npy on the narrow crop) of its target, and a copper
+   arrow runs from it to the target. .shot also carries --yN, pin N's height,
+   for labels set beside the picture.
+   .side  (1100px and wider) the labels sit in a column left of the picture,
+          each level with its pin: label, pin, arrow, target. Below that, and
+          always in the tour, the numbered labels sit under the picture.
+   .anim  (added by the script only when motion is allowed) hides pins, arrows
+          and labels until .is-on; then the pins arrive down the gutter in
+          order and each arrow draws from its pin to its target.
    ===================================================================== */
 .annotated { margin: 0; }
 .annotated .stage { position: relative; }
@@ -183,102 +187,94 @@ body.mm .bp-grid {
 .annotated .pic picture { display: block; }
 .shot-img { display: block; width: 100%; height: auto; }
 .pin {
-  position: absolute; z-index: 3;
+  position: absolute; z-index: 3; left: -18px; top: var(--py);
   width: var(--pin); height: var(--pin); margin: calc(var(--pin) / -2) 0 0 calc(var(--pin) / -2);
   border-radius: 50%; background: var(--brand); border: 2px solid #FFFFFF; color: #FFFFFF;
   font: 600 14px/24px var(--font-sans); text-align: center;
   box-shadow: 0 2px 8px rgba(17, 22, 28, 0.38);
 }
-.pin.p1 { left: calc(var(--x1) + var(--dx1)); top: calc(var(--y1) + var(--dy1)); }
-.pin.p2 { left: calc(var(--x2) + var(--dx2)); top: calc(var(--y2) + var(--dy2)); }
-.pin.p3 { left: calc(var(--x3) + var(--dx3)); top: calc(var(--y3) + var(--dy3)); }
-.pin.p4 { left: calc(var(--x4) + var(--dx4)); top: calc(var(--y4) + var(--dy4)); }
-.miss-1 .p1, .miss-2 .p2, .miss-3 .p3, .miss-4 .p4 { display: none; }
-.lead { display: none; }
-.lead line { stroke: var(--copper); stroke-width: 1.5; fill: none; }
+.pin.off { display: none; }
+.arrows { position: absolute; left: 0; top: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; z-index: 2; }
+.arrows polyline { fill: none; stroke: var(--copper-deep); stroke-linejoin: round; stroke-linecap: round; }
+.arrows path { fill: var(--copper-deep); stroke: none; }
+.arrows.an { display: none; }
+/* a wide crop's gutter sits outside the picture, so it needs room on the left */
+@media (min-width: 700px) and (max-width: 719px) { .tour-fig .stage, .mm-hero-fig .stage { margin-left: 14px; } }
 
 .labels { list-style: none; counter-reset: lab; margin: 26px 0 0; padding: 0; display: grid; gap: 16px 30px; }
 .labels li { counter-increment: lab; position: relative; padding-left: 40px; min-height: 28px; }
 .labels li::before { content: counter(lab); position: absolute; left: 0; top: -1px; width: 28px; height: 28px; border-radius: 50%; background: var(--brand); color: #FFFFFF; font: 600 14px/28px var(--font-sans); text-align: center; }
 .labels strong { display: block; font-weight: 600; font-size: 1.02rem; line-height: 1.35; color: var(--fg); }
 .labels span { display: block; font-size: 0.95rem; line-height: 1.5; color: var(--fg-2); margin-top: 3px; }
-.miss-1 .labels li:nth-child(1)::before, .miss-2 .labels li:nth-child(2)::before, .miss-3 .labels li:nth-child(3)::before, .miss-4 .labels li:nth-child(4)::before { background: transparent; color: var(--fg-3); box-shadow: inset 0 0 0 1.5px var(--fg-3); }
+.miss-1 .labels li:nth-child(1)::before, .miss-2 .labels li:nth-child(2)::before, .miss-3 .labels li:nth-child(3)::before, .miss-4 .labels li:nth-child(4)::before, .miss-5 .labels li:nth-child(5)::before { background: transparent; color: var(--fg-3); box-shadow: inset 0 0 0 1.5px var(--fg-3); }
 .hero-dark .miss-1 .labels li:nth-child(1)::before, .hero-dark .miss-2 .labels li:nth-child(2)::before, .hero-dark .miss-3 .labels li:nth-child(3)::before, .hero-dark .miss-4 .labels li:nth-child(4)::before { color: var(--steel-300); box-shadow: inset 0 0 0 1.5px var(--steel-300); }
 @media (min-width: 640px) { .labels { grid-template-columns: 1fr 1fr; } }
 .hero-dark .labels strong { color: #EEF1F4; }
 .hero-dark .labels span { color: var(--steel-300); }
 
 @media (min-width: 1100px) {
-  .side .lead { display: block; position: absolute; z-index: 2; height: 12px; margin-top: -6px; overflow: visible; pointer-events: none; }
-  .side .lead.to-l { left: calc(8px - var(--gap)); }
-  .side .lead.to-l.l1 { width: calc(var(--gap) - 8px + var(--x1) + var(--dx1)); }
-  .side .lead.to-l.l2 { width: calc(var(--gap) - 8px + var(--x2) + var(--dx2)); }
-  .side .lead.to-l.l3 { width: calc(var(--gap) - 8px + var(--x3) + var(--dx3)); }
-  .side .lead.to-l.l4 { width: calc(var(--gap) - 8px + var(--x4) + var(--dx4)); }
-  /* an svg is a replaced element, so it needs a width, not left plus right */
-  .side .lead.to-r.l1 { left: calc(var(--x1) + var(--dx1)); width: calc(100% - var(--x1) - var(--dx1) + var(--gap) - 8px); }
-  .side .lead.to-r.l2 { left: calc(var(--x2) + var(--dx2)); width: calc(100% - var(--x2) - var(--dx2) + var(--gap) - 8px); }
-  .side .lead.to-r.l3 { left: calc(var(--x3) + var(--dx3)); width: calc(100% - var(--x3) - var(--dx3) + var(--gap) - 8px); }
-  .side .lead.to-r.l4 { left: calc(var(--x4) + var(--dx4)); width: calc(100% - var(--x4) - var(--dx4) + var(--gap) - 8px); }
-  .side .lead.l1 { top: calc(var(--y1) + var(--dy1)); }
-  .side .lead.l2 { top: calc(var(--y2) + var(--dy2)); }
-  .side .lead.l3 { top: calc(var(--y3) + var(--dy3)); }
-  .side .lead.l4 { top: calc(var(--y4) + var(--dy4)); }
-  .side .miss-1 .l1, .side .miss-2 .l2, .side .miss-3 .l3, .side .miss-4 .l4 { display: none; }
-
   .side .labels { display: block; position: absolute; top: 0; bottom: 0; left: 0; right: 0; margin: 0; pointer-events: none; }
-  .side .labels li { position: absolute; width: var(--col); padding: 0; min-height: 0; margin-top: -0.7em; pointer-events: auto; }
+  .side .labels li { position: absolute; right: calc(100% + var(--gap)); width: var(--col); padding: 0; min-height: 0; margin-top: -0.7em; text-align: right; pointer-events: auto; }
   .side .labels li::before { display: none; }
-  .side .labels li.to-l { right: calc(100% + var(--gap)); text-align: right; }
-  .side .labels li.to-r { left: calc(100% + var(--gap)); text-align: left; }
-  .side .labels li:nth-child(1) { top: calc(var(--y1) + var(--dy1)); }
-  .side .labels li:nth-child(2) { top: calc(var(--y2) + var(--dy2)); }
-  .side .labels li:nth-child(3) { top: calc(var(--y3) + var(--dy3)); }
-  .side .labels li:nth-child(4) { top: calc(var(--y4) + var(--dy4)); }
+  .side .labels li:nth-child(1) { top: var(--y1); }
+  .side .labels li:nth-child(2) { top: var(--y2); }
+  .side .labels li:nth-child(3) { top: var(--y3); }
+  .side .labels li:nth-child(4) { top: var(--y4); }
+  .side .labels li:nth-child(5) { top: var(--y5); }
 }
 
-/* The drawing-in, only when the script has armed a figure. */
+/* The drawing-in, only when the script has armed a figure: pin N at t0 + (N - 1) x 0.4s,
+   its arrow drawing from 0.2s after the pin, its head showing as the line arrives. */
 @media (prefers-reduced-motion: no-preference) {
-  .annotated.anim .pin { opacity: 0; transform: translateY(-22px) scale(0.6); }
-  .annotated.anim .lead { opacity: 0; }
-  .annotated.anim .lead line { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .annotated.anim .pin { opacity: 0; transform: scale(0.4); }
+  .annotated.anim .arrows polyline { stroke-dasharray: 1; stroke-dashoffset: 1; }
+  .annotated.anim .arrows path { opacity: 0; }
   .annotated.anim .labels li { opacity: 0; transform: translateY(6px); }
-  .annotated.anim.is-on .pin { opacity: 1; transform: none; transition: opacity 0.3s var(--ease), transform 0.55s cubic-bezier(0.3, 1.45, 0.5, 1); }
-  .annotated.anim.is-on .lead { opacity: 1; transition: opacity 0.15s linear; }
-  .annotated.anim.is-on .lead line { stroke-dashoffset: 0; transition: stroke-dashoffset 0.6s var(--ease); }
+  .annotated.anim.is-on .pin { opacity: 1; transform: none; transition: opacity 0.25s var(--ease), transform 0.45s cubic-bezier(0.3, 1.45, 0.5, 1); }
+  .annotated.anim.is-on .arrows polyline { stroke-dashoffset: 0; transition: stroke-dashoffset 0.55s var(--ease); }
+  .annotated.anim.is-on .arrows path { opacity: 1; transition: opacity 0.15s linear; }
   .annotated.anim.is-on .labels li { opacity: 1; transform: none; transition: opacity 0.5s var(--ease), transform 0.5s var(--ease); }
   .annotated.anim.is-on .p1 { transition-delay: calc(var(--t0, 0s) + 0s); }
-  .annotated.anim.is-on .p2 { transition-delay: calc(var(--t0, 0s) + 0.32s); }
-  .annotated.anim.is-on .p3 { transition-delay: calc(var(--t0, 0s) + 0.64s); }
-  .annotated.anim.is-on .p4 { transition-delay: calc(var(--t0, 0s) + 0.96s); }
-  .annotated.anim.is-on .l1, .annotated.anim.is-on .l1 line { transition-delay: calc(var(--t0, 0s) + 0.3s); }
-  .annotated.anim.is-on .l2, .annotated.anim.is-on .l2 line { transition-delay: calc(var(--t0, 0s) + 0.62s); }
-  .annotated.anim.is-on .l3, .annotated.anim.is-on .l3 line { transition-delay: calc(var(--t0, 0s) + 0.94s); }
-  .annotated.anim.is-on .l4, .annotated.anim.is-on .l4 line { transition-delay: calc(var(--t0, 0s) + 1.26s); }
-  .annotated.anim.is-on .labels li:nth-child(1) { transition-delay: calc(var(--t0, 0s) + 0.55s); }
-  .annotated.anim.is-on .labels li:nth-child(2) { transition-delay: calc(var(--t0, 0s) + 0.87s); }
-  .annotated.anim.is-on .labels li:nth-child(3) { transition-delay: calc(var(--t0, 0s) + 1.19s); }
-  .annotated.anim.is-on .labels li:nth-child(4) { transition-delay: calc(var(--t0, 0s) + 1.51s); }
+  .annotated.anim.is-on .p2 { transition-delay: calc(var(--t0, 0s) + 0.4s); }
+  .annotated.anim.is-on .p3 { transition-delay: calc(var(--t0, 0s) + 0.8s); }
+  .annotated.anim.is-on .p4 { transition-delay: calc(var(--t0, 0s) + 1.2s); }
+  .annotated.anim.is-on .p5 { transition-delay: calc(var(--t0, 0s) + 1.6s); }
+  .annotated.anim.is-on .a1 polyline { transition-delay: calc(var(--t0, 0s) + 0.2s); }
+  .annotated.anim.is-on .a2 polyline { transition-delay: calc(var(--t0, 0s) + 0.6s); }
+  .annotated.anim.is-on .a3 polyline { transition-delay: calc(var(--t0, 0s) + 1s); }
+  .annotated.anim.is-on .a4 polyline { transition-delay: calc(var(--t0, 0s) + 1.4s); }
+  .annotated.anim.is-on .a5 polyline { transition-delay: calc(var(--t0, 0s) + 1.8s); }
+  .annotated.anim.is-on .a1 path { transition-delay: calc(var(--t0, 0s) + 0.7s); }
+  .annotated.anim.is-on .a2 path { transition-delay: calc(var(--t0, 0s) + 1.1s); }
+  .annotated.anim.is-on .a3 path { transition-delay: calc(var(--t0, 0s) + 1.5s); }
+  .annotated.anim.is-on .a4 path { transition-delay: calc(var(--t0, 0s) + 1.9s); }
+  .annotated.anim.is-on .a5 path { transition-delay: calc(var(--t0, 0s) + 2.3s); }
+  .annotated.anim.is-on .labels li:nth-child(1) { transition-delay: calc(var(--t0, 0s) + 0.1s); }
+  .annotated.anim.is-on .labels li:nth-child(2) { transition-delay: calc(var(--t0, 0s) + 0.5s); }
+  .annotated.anim.is-on .labels li:nth-child(3) { transition-delay: calc(var(--t0, 0s) + 0.9s); }
+  .annotated.anim.is-on .labels li:nth-child(4) { transition-delay: calc(var(--t0, 0s) + 1.3s); }
+  .annotated.anim.is-on .labels li:nth-child(5) { transition-delay: calc(var(--t0, 0s) + 1.7s); }
 }
 
 /* Under 700px a figure runs edge to edge and shows its narrow crop (a <picture>
-   source), with the pins from the script's --nxN/--nyN numbers. Pins outside
-   the narrow crop hide and their numbers go grey; the list keeps every label. */
+   source) with its own gutter, 18px inside the left edge, and its own arrows.
+   Pins outside the narrow crop hide and their numbers are outlined; the list
+   under the picture keeps every label. */
 @media (max-width: 699px) {
   .mm-hero-fig .stage, .tour-fig .stage, .annotated.mm-email-fig .stage { margin-left: calc(-1 * var(--gutter)); margin-right: calc(-1 * var(--gutter)); max-width: none; }
   .mm-hero-fig .bar, .tour-fig .bar { border-radius: 0; }
   .mm-hero-fig .shot-img, .tour-fig .shot-img, .annotated.mm-email-fig .shot-img { border-radius: 0; }
   .mm-hero-fig .labels, .tour-fig .labels, .mm-email-fig .labels { padding: 0 var(--gutter); }
-  .shot.two .pin { display: block; }
-  .shot.two .pin.p1 { left: calc(var(--nx1) + var(--ndx1)); top: calc(var(--ny1) + var(--ndy1)); }
-  .shot.two .pin.p2 { left: calc(var(--nx2) + var(--ndx2)); top: calc(var(--ny2) + var(--ndy2)); }
-  .shot.two .pin.p3 { left: calc(var(--nx3) + var(--ndx3)); top: calc(var(--ny3) + var(--ndy3)); }
-  .shot.two .pin.p4 { left: calc(var(--nx4) + var(--ndx4)); top: calc(var(--ny4) + var(--ndy4)); }
-  .shot.two.nmiss-1 .p1, .shot.two.nmiss-2 .p2, .shot.two.nmiss-3 .p3, .shot.two.nmiss-4 .p4 { display: none; }
-  .shot.two .labels li::before { background: var(--brand); }
+  .shot.two .pin { left: 18px; top: var(--npy); }
+  .shot.two .pin.off { display: block; }
+  .shot.two .pin.noff { display: none; }
+  .shot.two .arrows.aw { display: none; }
+  .shot.two .arrows.an { display: block; }
+  .shot.two .labels li::before { background: var(--brand); box-shadow: none; color: #FFFFFF; }
   .shot.nfade .shot-img { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 26px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 26px), transparent); }
   .shot.two.nmiss-1 .labels li:nth-child(1)::before, .shot.two.nmiss-2 .labels li:nth-child(2)::before,
-  .shot.two.nmiss-3 .labels li:nth-child(3)::before, .shot.two.nmiss-4 .labels li:nth-child(4)::before { background: transparent; color: var(--fg-3); box-shadow: inset 0 0 0 1.5px var(--fg-3); }
+  .shot.two.nmiss-3 .labels li:nth-child(3)::before, .shot.two.nmiss-4 .labels li:nth-child(4)::before,
+  .shot.two.nmiss-5 .labels li:nth-child(5)::before { background: transparent; color: var(--fg-3); box-shadow: inset 0 0 0 1.5px var(--fg-3); }
   .hero-dark .shot.two.nmiss-1 .labels li:nth-child(1)::before, .hero-dark .shot.two.nmiss-2 .labels li:nth-child(2)::before,
   .hero-dark .shot.two.nmiss-3 .labels li:nth-child(3)::before, .hero-dark .shot.two.nmiss-4 .labels li:nth-child(4)::before { color: var(--steel-300); box-shadow: inset 0 0 0 1.5px var(--steel-300); }
   /* the phone sits under the picture, out of the picture's box so the pins keep their places;
@@ -289,24 +285,27 @@ body.mm .bp-grid {
   .mm-hero-fig .labels { margin-top: 30px; }
 }
 
-/* ---- The hero figure: labels on the left, the phone over the lower right ---- */
+/* ---- The hero figure ----
+   1100px and wider: the labels in a column on the left, the phone over the picture's lower
+   right corner, starting under the follow-up hint line (--pt, a fraction of the picture's
+   height written by the script) and hanging below it; the shot is padded by the part that
+   hangs below (--room), worked out from the stage's width with container units.
+   700px to 1099px: the labels in one column under the picture, the phone in its own column
+   to their right, so it never covers a label. Under 700px: the phone under the picture. */
 .mm-hero-fig { --t0: 0.95s; }
 .mm-hero-fig .labels { margin-top: 30px; }
-@media (min-width: 1100px) {
-  .mm-hero-fig .stage { margin-left: calc(var(--col) + var(--gap)); margin-right: calc(-1 * var(--bleed)); }
-  .mm-hero-fig .labels { margin-top: 0; }
-}
-/* The phone starts just under the Draft an email button (--pt, a fraction of the picture's
-   height written by the script) and hangs below the picture; the shot is padded by the part
-   that hangs below (--room), worked out from the stage's width with container units. */
 .mm-hero-fig .stage { container-type: inline-size; }
 .hero-phone { position: absolute; z-index: 4; right: 2.5%; top: calc(100% * var(--pt, 0.8)); width: var(--phone-w); }
-@media (min-width: 700px) {
-  .mm-hero-fig { --phone-w: 26cqw; }
-  .mm-hero-fig .shot { --room: max(0px, calc(var(--phone-w) * 2.08 + 12px - 100cqw * (1 - var(--pt, 0.8)) * var(--ratio, 0.6))); padding-bottom: var(--room); }
+@media (min-width: 700px) and (max-width: 1099px) {
+  .mm-hero-fig { --phone-w: 30cqw; }
+  .mm-hero-fig .pic .hero-phone { top: calc(100% + 30px); right: 0; }
+  .mm-hero-fig .labels { grid-template-columns: 1fr; margin-top: 30px; padding-right: calc(var(--phone-w) + 40px); min-height: calc(var(--phone-w) * 2.08); }
 }
 @media (min-width: 1100px) {
   .mm-hero-fig { --phone-w: 300px; }
+  .mm-hero-fig .stage { margin-left: calc(var(--col) + var(--gap)); margin-right: calc(-1 * var(--bleed)); }
+  .mm-hero-fig .shot { --room: max(0px, calc(var(--phone-w) * 2.08 + 12px - 100cqw * (1 - var(--pt, 0.8)) * var(--ratio, 0.6))); padding-bottom: var(--room); }
+  .mm-hero-fig .labels { margin-top: 0; }
   .mm-hero-fig.side .labels { bottom: var(--room); }
 }
 @keyframes rise-only { from { transform: translateY(16px); } to { transform: none; } }
@@ -319,12 +318,8 @@ body.mm .bp-grid {
 
 /* ---- What you get: the pitch as a band, high on the page ---- */
 .mm-gets { display: grid; gap: 20px; }
-@media (min-width: 700px) { .mm-gets { grid-template-columns: 1fr 1fr; } .mm-get:last-child { grid-column: 1 / -1; } }
-@media (min-width: 1060px) {
-  .mm-gets { grid-template-columns: repeat(6, 1fr); gap: 22px; }
-  .mm-get { grid-column: span 2; }
-  .mm-get:nth-child(4), .mm-get:nth-child(5) { grid-column: span 3; }
-}
+@media (min-width: 700px) { .mm-gets { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 1060px) { .mm-gets { grid-template-columns: repeat(3, 1fr); gap: 22px; } }
 .mm-get { border: 1px solid var(--line); border-radius: var(--radius-lg); padding: 28px 28px 30px; background: var(--white); }
 .mm-get .ic { width: 40px; height: 40px; color: var(--steel-600); margin-bottom: 18px; display: block; }
 .mm-get h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.3rem; line-height: 1.3; color: var(--fg); margin: 0 0 10px; letter-spacing: -0.01em; text-wrap: balance; }
@@ -341,7 +336,6 @@ body.mm .bp-grid {
 .tour-text h3 { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.9rem, 2.6vw, 2.35rem); line-height: 1.1; letter-spacing: -0.01em; color: var(--fg); margin: 0 0 10px; }
 .tour-text p.what { font-size: 1.1rem; line-height: 1.65; color: var(--fg-2); margin: 0; }
 .tour-fig .stage { max-width: 960px; }
-.tour-fig figcaption { text-align: left; margin: 14px 0 0; }
 @media (min-width: 900px) { .tour-fig .labels { grid-template-columns: repeat(3, 1fr); } }
 .tour-screen { display: none; }
 
@@ -372,7 +366,6 @@ body.mm .bp-grid {
   .screen-stack .layer.is-active { opacity: 1; }
   .screen-stack .shot-img { border-radius: 0 0 12px 12px; box-shadow: var(--shadow-3); }
   .tour-screen .bar { box-shadow: var(--shadow-3); }
-  .tour-screen .mm-cap { text-align: left; margin-left: 0; }
 }
 
 /* ---- Vendor mail: the sequence, built from HTML, not video ---- */
@@ -399,10 +392,22 @@ body.mm .bp-grid {
 .seq-where { font-family: var(--font-mono); font-size: 0.9rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--steel-300); margin: 0 0 12px; }
 .seq-card { background: #FFFFFF; color: var(--fg); border-radius: var(--radius-lg); padding: 20px 22px; box-shadow: 0 24px 50px -24px rgba(0, 0, 0, 0.6); position: relative; }
 .seq-card p { margin: 0; }
-.mail-card .from { font-size: 1rem; color: var(--fg-2); }
-.mail-card .from b { color: var(--fg); font-weight: 600; }
-.mail-card .subj { font-weight: 600; font-size: 1.06rem; margin-top: 4px !important; }
-.mail-card .body { font-size: 1rem; line-height: 1.6; color: var(--fg-2); margin-top: 12px !important; padding-top: 12px; border-top: 1px solid var(--line); }
+.seq-card.mail-card { padding: 0; overflow: hidden; }
+.mail-bar { display: flex; align-items: center; gap: 10px; padding: 8px 16px; background: var(--slate-100); border-bottom: 1px solid var(--line); font-size: 0.9rem; color: var(--fg-2); }
+.mail-bar b { font-weight: 600; color: var(--fg); }
+.mail-bar span { margin-left: auto; }
+.mail-in { padding: 16px 18px 18px; }
+.mail-from { display: grid; grid-template-columns: 36px 1fr auto; gap: 0 10px; align-items: start; }
+.mail-from .av { width: 36px; height: 36px; border-radius: 50%; background: #3F6E8C; color: #FFFFFF; font-weight: 600; font-size: 1rem; line-height: 36px; text-align: center; }
+.mail-from b { display: block; font-weight: 600; font-size: 0.98rem; line-height: 1.35; }
+.mail-from .addr { display: block; font-size: 0.9rem; line-height: 1.4; color: var(--fg-3); }
+.mail-from .time { font-size: 0.9rem; color: var(--fg-3); white-space: nowrap; padding-top: 1px; }
+.mail-card .to { margin-top: 12px !important; font-size: 0.95rem; color: var(--fg-2); }
+.mail-card .subj { margin-top: 4px !important; font-weight: 700; font-size: 1.06rem; }
+.mail-msg { margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--line); font-size: 1rem; line-height: 1.55; color: var(--fg); }
+.mail-msg p + p { margin-top: 10px; }
+/* the vendor's sentence: highlighted when the proposal quotes it */
+.vs { background: rgba(222, 154, 102, 0.34); border-radius: 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 .prop-card { display: flex; flex-direction: column; gap: 12px; }
 .prop-card .item { font-size: 1.04rem; line-height: 1.5; }
 .prop-card .item b { font-weight: 600; }
@@ -449,6 +454,8 @@ body.mm .bp-grid {
   .seq.live.b2 .prop-card { opacity: 1; transform: none; }
   .seq.live .quote .hl { opacity: 0; transition: opacity 0.7s var(--ease); }
   .seq.live.b2 .quote .hl { opacity: 1; transition-delay: 0.9s; }
+  .seq.live .vs { background: transparent; transition: background 0.7s var(--ease); }
+  .seq.live.b2 .vs { background: rgba(222, 154, 102, 0.34); transition-delay: 0.9s; }
   .seq.live .cursor { display: block; position: absolute; z-index: 3; left: 38px; top: 22px; width: 26px; height: 26px; opacity: 0; transform: translate(60px, 58px); transition: opacity 0.3s linear, transform 1s cubic-bezier(0.45, 0, 0.2, 1); pointer-events: none; }
   .seq.live.b2 .cursor { opacity: 1; transition-delay: 1.6s, 0s; }
   .seq.live.b3 .cursor { transform: none; transition-delay: 0s; }
@@ -493,7 +500,10 @@ body.mm .bp-grid {
 .mm-email-fig { --t0: 0.2s; }
 .mm-email-fig .stage { max-width: 600px; margin: 0 auto; }
 .mm-email-fig .shot-img { border-radius: 12px; box-shadow: var(--shadow-3); }
-@media (min-width: 1100px) { .mm-email-fig { --col: 236px; --gap: 40px; } .mm-email-fig .stage { max-width: min(600px, calc(100% - 2 * (var(--col) + var(--gap)))); } }
+@media (min-width: 1100px) {
+  .mm-email-fig { --col: 236px; --gap: 48px; }
+  .mm-email-fig .stage { margin-left: calc((100% - 600px - var(--col) - var(--gap)) / 2 + var(--col) + var(--gap)); margin-right: 0; }
+}
 
 /* ---- Cards ---- */
 .mm-cards { display: grid; gap: 20px; }
@@ -503,17 +513,10 @@ body.mm .bp-grid {
 .mm-card p { font-size: 1.06rem; color: var(--fg-2); line-height: 1.62; margin: 0; }
 
 /* ---- The story ---- */
-.mm-story { max-width: 68ch; margin: 0 auto; }
+.mm-story { max-width: 62ch; margin: 0 auto; text-align: center; }
+#story { border-bottom: 1px solid var(--line); }
 .mm-story p { font-size: 1.15rem; line-height: 1.75; color: var(--fg-2); margin: 0 0 18px; }
 .mm-story p:last-child { margin-bottom: 0; }
-
-/* ---- Where it stands ---- */
-.mm-status { max-width: 760px; margin: 0 auto; }
-.mm-status ul { list-style: none; padding: 0; margin: 0; }
-.mm-status li { display: flex; gap: 18px; align-items: flex-start; padding: 18px 0; border-bottom: 1px solid var(--line); font-size: 1.1rem; color: var(--fg-2); line-height: 1.65; }
-.mm-status li:last-child { border-bottom: none; }
-.mm-status li b { font-family: var(--font-mono); font-size: 0.9rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--brand); font-weight: 500; flex: none; width: 104px; padding-top: 4px; }
-@media (max-width: 480px) { .mm-status li { flex-direction: column; gap: 4px; } }
 
 /* ---- FAQ ---- */
 .faq { max-width: 780px; margin: 0 auto; }
@@ -533,7 +536,7 @@ body.mm .bp-grid {
 .mm-found-mark { width: clamp(118px, 15vw, 176px); height: auto; justify-self: start; }
 @media (min-width: 900px) { .mm-found-mark { justify-self: center; width: 100%; max-width: 210px; } }
 .cta-band .launch-stamp { border: 0; border-radius: 0; padding: 0; margin-bottom: 16px; }
-.cta-band h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.95rem, 3.4vw, 2.7rem); line-height: 1.08; color: #EEF1F4; max-width: 30ch; margin: 0; text-wrap: balance; }
+.cta-band h2 { font-family: var(--font-display); font-weight: 400; font-size: clamp(1.8rem, 1.1rem + 2.2vw, 2.3rem); line-height: 1.08; color: #EEF1F4; max-width: none; margin: 0; text-wrap: balance; }
 .cta-band h2 em { font-style: italic; color: var(--copper-lift); }
 .cta-band p { color: var(--steel-300); font-size: 1.1rem; line-height: 1.65; margin: 16px 0 0; max-width: 36em; }
 .mm-capture { border-top: 1px solid var(--steel-600); padding: 24px 0 0; margin: 26px 0 0; text-align: left; }
@@ -581,7 +584,7 @@ body.mm .bp-grid {
       "name": "Can my crew use it on site?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Yes. The field app is the crew's half of the same list, on an iPhone: they receive deliveries, look up any material on any job and report problems to the office. The office invites them from the console, and they sign in with a six digit code sent to their email. The iPhone app is not on the App Store yet. Founding builders get it through TestFlight, Apple's testing app."
+        "text": "Yes. The field app is the crew's half of the same list, on an iPhone: they receive deliveries, look up any material on any job and report problems to the office. The office invites them from the console, and they sign in with a six digit code sent to their email."
       }
     },
     {
@@ -597,7 +600,7 @@ body.mm .bp-grid {
       "name": "Microsoft 365 or Google?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "Microsoft 365 inboxes connect directly today. Forwarding to your own private Material Monitor address works from any email system, Gmail included, and connecting a Google inbox directly is being finished."
+        "text": "Both. Material Monitor works with Microsoft 365 and Google inboxes, by connecting the inbox or by forwarding from it to your own private Material Monitor address."
       }
     },
     {
@@ -610,10 +613,18 @@ body.mm .bp-grid {
     },
     {
       "@type": "Question",
+      "name": "Does it track shipments?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Once a material has a tracking number, Material Monitor checks it with the carrier each day and keeps the expected date current. If the carrier reports a problem, the material is flagged as delayed and the office hears about it. When the carrier says it was delivered, somebody still confirms it arrived."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "What happens when it reads something wrong?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "You dismiss it and nothing changes. The one thing that updates by itself is a shipping notice in a connected inbox for a tracking number already on the material. It can set the tracking, the expected date and Shipped, and nothing else. Everything else it reads becomes a suggestion with the vendor's sentence quoted beside it, and a person confirms or dismisses it, so a wrong reading is easy to spot and you can correct a suggestion before you confirm it."
+        "text": "You dismiss it and nothing changes. Two things update by themselves, and only on a material that already has a tracking number: a shipping notice in a connected inbox, which can set the tracking, the expected date and Shipped, and the carrier's own tracking, which can move the expected date or flag a delay. Everything else it reads becomes a suggestion with the vendor's sentence quoted beside it, and a person confirms or dismisses it. No email and no carrier can mark a material received."
       }
     },
     {
@@ -648,13 +659,6 @@ body.mm .bp-grid {
 
 <a class="skip-link" href="#main">Skip to content</a>
 
-<!-- The arrowhead every leader line uses: its tip stops at the edge of the pin it points at. -->
-<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
-  <defs>
-    <marker id="mm-arrow" viewBox="0 0 10 10" refX="30" refY="5" markerWidth="8" markerHeight="8" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path d="M0,0 L10,5 L0,10 z" fill="#C8763C"/></marker>
-  </defs>
-</svg>
-
 <header class="site-header">
   <div class="container header-inner">
     <a href="#top" class="mm-lockup">
@@ -679,9 +683,9 @@ body.mm .bp-grid {
     <div class="container wide">
       <div class="mm-hero-copy">
         <span class="launch-stamp">Founding&nbsp;builders&nbsp;wanted</span>
-        <h1 class="hero-headline brk">Know where every finish material stands, <em>on every job.</em></h1>
+        <h1 class="hero-headline"><span class="pgw"><span class="pg">Know where every</span> <span class="pg">finish material stands,</span></span> <span class="pg">on <em>every job.</em></span></h1>
         <div class="hero-row">
-        <p class="hero-subhead">Keeping track of the finish materials on a custom home is a lot of work, and most offices are running several homes at once. Material Monitor is one list for all of it, shared by the office on the computer and the crew on&nbsp;their&nbsp;phones.</p>
+        <p class="hero-subhead">Keeping track of&nbsp;the finish materials on&nbsp;a custom home is a&nbsp;lot of&nbsp;work, and&nbsp;most offices are running several homes at&nbsp;once. Material Monitor is one list for&nbsp;all of&nbsp;it, shared by&nbsp;the office on&nbsp;the computer and&nbsp;the crew on&nbsp;their&nbsp;phones.</p>
         <div class="hero-actions">
           <a class="btn btn-primary" href="#founding">Join the founding list
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
@@ -696,43 +700,40 @@ body.mm .bp-grid {
           <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>app.materialmonitor.app</span></div>
 <!-- MM-FIG hero START. Generated by scripts/mm_site_images.py from site-shots-2.
      wide: console/full/dashboard.png, x 84 to 1332, y 635 to 1802 (1248 x 1167)
-       pin 1  first_job_card (left) box 48,53 285x207 -> left 3.846% top 13.423%, pushed -18px 0px
-       pin 2  first_order_by_date (left) box 69,348 162x29 -> left 5.529% top 31.088%, pushed -18px 0px
-       pin 3  deliveries_heading (left) box 48,603 1176x26 -> left 3.846% top 52.806%, pushed -18px 0px
-       pin 4  follow_up_heading (left) box 48,837 252x26 -> left 3.846% top 72.849%, pushed -18px 0px
+       pin 1  first_job_card: pin at 13.42%, arrow ends at 3.55% 13.42%
+       pin 2  first_order_by_date: pin at 31.09%, arrow ends at 5.24% 31.09%
+       pin 3  deliveries_heading: pin at 52.81%, arrow ends at 3.55% 52.81%
+       pin 4  follow_up_heading: pin at 72.85%, arrow ends at 3.55% 72.85%
      narrow: console/full/dashboard.png, x 60 to 724, y 639 to 1558 (664 x 919)
-       pin 1  first_job_card (left) box 72,49 285x207 -> left 10.843% top 16.610%, pushed -18px 0px
-       pin 2  first_order_by_date (left) box 93,344 162x29 -> left 14.006% top 39.042%, pushed -18px 0px
-       pin 3  deliveries_heading (left) box 72,599 1176x26 -> left 10.843% top 66.621%, pushed -18px 0px
-       pin 4  follow_up_heading (left) box 72,833 252x26 -> left 10.843% top 92.073%, pushed -18px 0px
+       pin 1  first_job_card: pin at 16.61%, arrow ends at 11.28% 16.61%
+       pin 2  first_order_by_date: pin at 39.04%, arrow ends at 13.24% 39.04%
+       pin 3  deliveries_heading: pin at 66.62%, arrow ends at 11.28% 66.62%
+       pin 4  follow_up_heading: pin at 92.07%, arrow ends at 11.28% 92.07%
      To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
-<div class="shot nfade two" style="--x1:3.846%;--y1:13.423%;--dx1:-18px;--dy1:0px;--x2:5.529%;--y2:31.088%;--dx2:-18px;--dy2:0px;--x3:3.846%;--y3:52.806%;--dx3:-18px;--dy3:0px;--x4:3.846%;--y4:72.849%;--dx4:-18px;--dy4:0px;--ratio:0.9351;--pt:0.7907;--nx1:10.843%;--ny1:16.610%;--ndx1:-18px;--ndy1:0px;--nx2:14.006%;--ny2:39.042%;--ndx2:-18px;--ndy2:0px;--nx3:10.843%;--ny3:66.621%;--ndx3:-18px;--ndy3:0px;--nx4:10.843%;--ny4:92.073%;--ndx4:-18px;--ndy4:0px">
-<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-hero-dashboard-n-560.webp 560w, assets/screens/materialmonitor/mm-hero-dashboard-n-1120.webp 1120w" sizes="100vw" width="560" height="775"><img class="shot-img" src="assets/screens/materialmonitor/mm-hero-dashboard-1040.webp" srcset="assets/screens/materialmonitor/mm-hero-dashboard-1040.webp 1040w, assets/screens/materialmonitor/mm-hero-dashboard-2080.webp 2080w" sizes="(min-width: 1320px) calc(50vw + 302px), (min-width: 1100px) calc(100vw - 358px), (min-width: 700px) calc(100vw - 48px), 100vw" width="1040" height="972" fetchpriority="high" decoding="async" alt="The Material Monitor dashboard with sample data: four job cards, the materials that need ordering with their order-by dates, this week's deliveries and the start of the follow-up list. A sample company, not a real job."></picture>
+<div class="shot nfade two" style="--y1:13.423%;--y2:31.088%;--y3:52.806%;--y4:72.849%;--ratio:0.9351;--pt:0.7907">
+<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-hero-dashboard-n-560.webp 560w, assets/screens/materialmonitor/mm-hero-dashboard-n-1120.webp 1120w" sizes="100vw" width="560" height="775"><img class="shot-img" src="assets/screens/materialmonitor/mm-hero-dashboard-1040.webp" srcset="assets/screens/materialmonitor/mm-hero-dashboard-1040.webp 1040w, assets/screens/materialmonitor/mm-hero-dashboard-2080.webp 2080w" sizes="(min-width: 1320px) calc(50vw + 302px), (min-width: 1100px) calc(100vw - 358px), (min-width: 700px) calc(100vw - 48px), 100vw" width="1040" height="972" fetchpriority="high" decoding="async" alt="The Material Monitor dashboard: four job cards, the materials that need ordering with their order-by dates, this week's deliveries and the start of the follow-up list."></picture>
+<svg class="arrows aw" viewBox="0 0 1248.0 1167.0" preserveAspectRatio="none" stroke-width="1.83" aria-hidden="true" focusable="false"><g class="a a1"><polyline pathLength="1" points="-22.0,156.6 44.3,156.6"/><path d="M44.3,156.6 L33.3,162.3 L33.3,151.0 Z"/></g><g class="a a2"><polyline pathLength="1" points="-22.0,362.8 65.3,362.8"/><path d="M65.3,362.8 L54.3,368.4 L54.3,357.2 Z"/></g><g class="a a3"><polyline pathLength="1" points="-22.0,616.2 44.3,616.2"/><path d="M44.3,616.2 L33.3,621.9 L33.3,610.6 Z"/></g><g class="a a4"><polyline pathLength="1" points="-22.0,850.2 44.3,850.2"/><path d="M44.3,850.2 L33.3,855.8 L33.3,844.5 Z"/></g></svg>
+<svg class="arrows an" viewBox="0 0 664.0 919.0" preserveAspectRatio="none" stroke-width="2.55" aria-hidden="true" focusable="false"><g class="a a1"><polyline pathLength="1" points="30.6,152.6 74.9,152.6"/><path d="M74.9,152.6 L59.6,160.5 L59.6,144.8 Z"/></g><g class="a a2"><polyline pathLength="1" points="30.6,358.8 87.9,358.8"/><path d="M87.9,358.8 L72.6,366.6 L72.6,351.0 Z"/></g><g class="a a3"><polyline pathLength="1" points="30.6,612.2 74.9,612.2"/><path d="M74.9,612.2 L59.6,620.1 L59.6,604.4 Z"/></g><g class="a a4"><polyline pathLength="1" points="30.6,846.2 74.9,846.2"/><path d="M74.9,846.2 L59.6,854.0 L59.6,838.3 Z"/></g></svg>
+<span class="pin p1" style="--py:13.423%;--npy:16.610%" aria-hidden="true">1</span>
+<span class="pin p2" style="--py:31.088%;--npy:39.042%" aria-hidden="true">2</span>
+<span class="pin p3" style="--py:52.806%;--npy:66.621%" aria-hidden="true">3</span>
+<span class="pin p4" style="--py:72.849%;--npy:92.073%" aria-hidden="true">4</span>
 <!-- MM-FIG hero END -->
-            <svg class="lead to-l l1" aria-hidden="true" focusable="false"><line x1="100%" y1="6" x2="0" y2="6" pathLength="1" marker-start="url(#mm-arrow)"/></svg>
-            <svg class="lead to-l l2" aria-hidden="true" focusable="false"><line x1="100%" y1="6" x2="0" y2="6" pathLength="1" marker-start="url(#mm-arrow)"/></svg>
-            <svg class="lead to-l l3" aria-hidden="true" focusable="false"><line x1="100%" y1="6" x2="0" y2="6" pathLength="1" marker-start="url(#mm-arrow)"/></svg>
-            <svg class="lead to-l l4" aria-hidden="true" focusable="false"><line x1="100%" y1="6" x2="0" y2="6" pathLength="1" marker-start="url(#mm-arrow)"/></svg>
-            <span class="pin p1" aria-hidden="true">1</span>
-            <span class="pin p2" aria-hidden="true">2</span>
-            <span class="pin p3" aria-hidden="true">3</span>
-            <span class="pin p4" aria-hidden="true">4</span>
             <div class="hero-phone"><div class="mm-phone">
 <!-- MM-FIG hero-phone START. Generated by scripts/mm_site_images.py from site-shots-2.
      wide: app/home.png -->
-<img src="assets/screens/materialmonitor/mm-app-home-240.webp" srcset="assets/screens/materialmonitor/mm-app-home-240.webp 240w, assets/screens/materialmonitor/mm-app-home-480.webp 480w" sizes="(min-width: 700px) 21vw, 52vw" width="240" height="519" decoding="async" alt="The field app's home screen with sample data: receive materials, look up a material, report a problem and the expected deliveries by day.">
+<img src="assets/screens/materialmonitor/mm-app-home-240.webp" srcset="assets/screens/materialmonitor/mm-app-home-240.webp 240w, assets/screens/materialmonitor/mm-app-home-480.webp 480w" sizes="(min-width: 700px) 21vw, 52vw" width="240" height="519" decoding="async" alt="The field app's home screen: receive materials, look up a material, report a problem and the expected deliveries by day.">
 <!-- MM-FIG hero-phone END -->
             </div></div>
           </div>
           <ol class="labels">
-            <li class="to-l"><strong>Every job on one page</strong><span>What is in hand, in transit or flagged on&nbsp;each&nbsp;house.</span></li>
-            <li class="to-l"><strong>When to order</strong><span>The date to order by so it arrives when the crew&nbsp;needs&nbsp;it.</span></li>
-            <li class="to-l"><strong>This week's deliveries</strong><span>Everything due on any job in the next&nbsp;seven&nbsp;days.</span></li>
-            <li class="to-l"><strong>Needs a follow-up</strong><span>Damaged items, missed dates and orders gone quiet, each with&nbsp;its&nbsp;reason.</span></li>
+            <li><strong>Every job on one page</strong><span>What is in hand, in transit or flagged on&nbsp;each&nbsp;house.</span></li>
+            <li><strong>When to order</strong><span>The date to order by so it arrives when the crew&nbsp;needs&nbsp;it.</span></li>
+            <li><strong>This week's deliveries</strong><span>Everything due on any job in the next&nbsp;seven&nbsp;days.</span></li>
+            <li><strong>Needs a follow-up</strong><span>Damaged items, missed dates and orders gone quiet, each with&nbsp;its&nbsp;reason.</span></li>
           </ol>
           </div>
         </div>
-        <figcaption class="mm-cap">The office console and the field app, shown with a sample company. Not a&nbsp;real&nbsp;job.</figcaption>
       </figure>
     </div>
   </section>
@@ -742,8 +743,8 @@ body.mm .bp-grid {
     <div class="container wide">
       <div class="section-head reveal">
         <p class="label">What&nbsp;you&nbsp;get</p>
-        <h2 class="section-headline brk">Everyone in the office works <em>from the same list.</em></h2>
-        <p class="section-sub">Whoever places the orders, whoever runs the job and whoever is on site when the delivery comes can each see where a material stands without&nbsp;asking&nbsp;anyone.</p>
+        <h2 class="section-headline"><span class="pg">Everyone in the office</span> <span class="pg">works from the <em>same list.</em></span></h2>
+        <p class="section-sub">Whoever orders, whoever runs the&nbsp;job and&nbsp;whoever is on&nbsp;site can each see where a&nbsp;material stands without&nbsp;asking&nbsp;anyone.</p>
       </div>
       <div class="mm-gets">
         <div class="mm-get reveal">
@@ -771,6 +772,12 @@ body.mm .bp-grid {
           <h3>Vendor mail keeps it current</h3>
           <p>Connect the inboxes your vendor mail already comes into, and it suggests updates with the vendor's words quoted. Somebody in the office confirms each one, with one exception&nbsp;explained&nbsp;below.</p>
         </div>
+        <!-- BEFORE PROMOTION: carrier tracking needs its carrier key configured on the worker (scripts and docs/CARRIERS.md in the product repo). -->
+        <div class="mm-get reveal d2">
+          <svg class="ic" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M3 9.5 8.5 7l5.5 2.5v6.5L8.5 18.5 3 16z"/><path d="M3 9.5l5.5 2.5 5.5-2.5M8.5 12v6.5"/><path d="M15.8 17.8c2.6-.2 4.2-1.5 4.2-3.3 0-1.4-1-2.3-2.3-2.6" stroke-dasharray="1.4 2.2"/><path d="M18.9 2.8a2.7 2.7 0 0 0-2.7 2.7c0 2 2.7 4.4 2.7 4.4s2.7-2.4 2.7-4.4a2.7 2.7 0 0 0-2.7-2.7z" fill="#C8763C" stroke="none"/><circle cx="18.9" cy="5.5" r="0.9" fill="#FFFFFF" stroke="none"/></svg>
+          <h3>Shipments followed with the carrier</h3>
+          <p>Once a material has a tracking number, Material Monitor checks it with the carrier each day, keeps the expected date current and flags a shipment that&nbsp;is&nbsp;delayed.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -780,8 +787,8 @@ body.mm .bp-grid {
     <div class="container wide">
       <div class="section-head reveal">
         <p class="label">The&nbsp;office&nbsp;console</p>
-        <h2 class="section-headline brk">See every order and delivery <em>from your desk.</em></h2>
-        <p class="section-sub">The office side runs in a web browser at app.materialmonitor.app. Here are five of its pages, shown with a&nbsp;sample&nbsp;company.</p>
+        <h2 class="section-headline"><span class="pgw"><span class="pg">See every order</span> <span class="pg">and delivery</span></span> <span class="pg">from <em>your desk.</em></span></h2>
+        <p class="section-sub">The office side runs in&nbsp;a web browser at&nbsp;app.materialmonitor.app. Here are five of&nbsp;its&nbsp;pages.</p>
       </div>
 
       <div class="tour">
@@ -798,29 +805,30 @@ body.mm .bp-grid {
                 <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>app.materialmonitor.app</span></div>
 <!-- MM-FIG tour-1 START. Generated by scripts/mm_site_images.py from site-shots-2.
      wide: console/full/dashboard.png, x 100 to 1372, y 1448 to 2181, the console's bar kept (1272 x 795)
-       pin 1  search_box (bottom) box 680,12 154x38 -> left 59.477% top 6.289%, pushed 0px 18px
-       pin 2  first_follow_up_reason (left) box 53,275 1134x21 -> left 4.167% top 35.899%, pushed -18px 0px
-       pin 3  draft_an_email_button (right) box 908,79 300x40 -> left 94.969% top 12.465%, pushed 18px 0px
+       pin 1  search_box: pin at 8.30%, arrow ends at 59.48% 6.78%
+       pin 2  draft_an_email_button: pin at 16.24%, arrow ends at 83.20% 15.47%
+       pin 3  first_follow_up_reason: pin at 35.90%, arrow ends at 3.86% 35.90%
      narrow: console/full/dashboard.png, x 764 to 1392, y 1458 to 1519, the console's bar kept (628 x 123) then console/full/dashboard.png, x 90 to 718, y 1556 to 1794 (628 x 238)
-       pin 1  search_box (bottom) box 16,12 154x38 -> left 14.737% top 13.333%, pushed 0px 18px
-       pin 2  first_follow_up_reason (left) box 63,242 1134x21 -> left 10.032% top 67.307%, pushed -18px 0px
-       pin 3  draft_an_email_button (left) box 244,69 300x40 -> left 38.933% top 23.760%, pushed -18px 0px
+       pin 1  search_box: pin at 17.16%, arrow ends at 14.74% 14.62%
+       pin 2  draft_an_email_button: pin at 34.33%, arrow ends at 62.78% 30.38%
+       pin 3  first_follow_up_reason: pin at 67.31%, arrow ends at 11.28% 67.31%
      To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
-<div class="shot nfade two" style="--x1:59.477%;--y1:6.289%;--dx1:0px;--dy1:18px;--x2:4.167%;--y2:35.899%;--dx2:-18px;--dy2:0px;--x3:94.969%;--y3:12.465%;--dx3:18px;--dy3:0px;--ratio:0.6250;--nx1:14.737%;--ny1:13.333%;--ndx1:0px;--ndy1:18px;--nx2:10.032%;--ny2:67.307%;--ndx2:-18px;--ndy2:0px;--nx3:38.933%;--ny3:23.760%;--ndx3:-18px;--ndy3:0px">
-<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-dashboard-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-dashboard-n-1120.webp 1120w" sizes="100vw" width="560" height="334"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-dashboard-980.webp" srcset="assets/screens/materialmonitor/mm-tour-dashboard-980.webp 980w, assets/screens/materialmonitor/mm-tour-dashboard-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="The dashboard's follow-up list with sample data: orders that have gone quiet, each with the reason and the rep, and the button that drafts the emails. A sample company."></picture>
+<div class="shot nfade two" style="--y1:8.302%;--y2:16.239%;--y3:35.899%;--ratio:0.6250">
+<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-dashboard-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-dashboard-n-1120.webp 1120w" sizes="100vw" width="560" height="334"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-dashboard-980.webp" srcset="assets/screens/materialmonitor/mm-tour-dashboard-980.webp 980w, assets/screens/materialmonitor/mm-tour-dashboard-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="The dashboard's follow-up list: orders that need a word, each with the reason and the rep, and the button that drafts the emails."></picture>
+<svg class="arrows aw" viewBox="0 0 1272.0 795.0" preserveAspectRatio="none" stroke-width="1.95" aria-hidden="true" focusable="false"><g class="a a1"><polyline pathLength="1" points="-23.5,66.0 756.5,66.0 756.5,53.9"/><path d="M756.5,53.9 L762.5,65.6 L750.6,65.6 Z"/></g><g class="a a2"><polyline pathLength="1" points="-23.5,129.1 1058.2,129.1 1058.2,123.0"/><path d="M1058.2,123.0 L1064.2,134.7 L1052.3,134.7 Z"/></g><g class="a a3"><polyline pathLength="1" points="-23.5,285.4 49.1,285.4"/><path d="M49.1,285.4 L37.4,291.4 L37.4,279.4 Z"/></g></svg>
+<svg class="arrows an" viewBox="0 0 628.0 375.0" preserveAspectRatio="none" stroke-width="2.42" aria-hidden="true" focusable="false"><g class="a a1"><polyline pathLength="1" points="29.0,64.3 73.2,74.0 92.5,74.0 92.5,54.8"/><path d="M92.5,54.8 L100.0,69.3 L85.1,69.3 Z"/></g><g class="a a2"><polyline pathLength="1" points="29.0,128.8 83.7,119.1 394.2,119.1 394.2,113.9"/><path d="M394.2,113.9 L401.7,128.4 L386.8,128.4 Z"/></g><g class="a a3"><polyline pathLength="1" points="29.0,252.4 70.9,252.4"/><path d="M70.9,252.4 L56.4,259.8 L56.4,245.0 Z"/></g></svg>
+<span class="pin p1" style="--py:8.302%;--npy:17.159%" aria-hidden="true">1</span>
+<span class="pin p2" style="--py:16.239%;--npy:34.335%" aria-hidden="true">2</span>
+<span class="pin p3" style="--py:35.899%;--npy:67.307%" aria-hidden="true">3</span>
 <!-- MM-FIG tour-1 END -->
-                  <span class="pin p1" aria-hidden="true">1</span>
-                  <span class="pin p2" aria-hidden="true">2</span>
-                  <span class="pin p3" aria-hidden="true">3</span>
                 </div>
                 <ol class="labels">
                   <li><strong>Find any material</strong><span>Search every job by room, material, model number&nbsp;or&nbsp;vendor.</span></li>
-                  <li><strong>Why it is on the list</strong><span>Each one says why: damaged, a date that passed or no word in&nbsp;two&nbsp;weeks.</span></li>
                   <li><strong>Write the follow-ups</strong><span>Pick the orders to follow up on and one email per rep&nbsp;is&nbsp;written.</span></li>
+                  <li><strong>Why it is on the list</strong><span>Each one says why: damaged, a date that passed or no word in&nbsp;two&nbsp;weeks.</span></li>
                 </ol>
                 </div>
               </div>
-              <figcaption class="mm-cap">Sample company, not a&nbsp;real&nbsp;job.</figcaption>
             </figure>
           </li>
 
@@ -835,29 +843,30 @@ body.mm .bp-grid {
                 <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>app.materialmonitor.app</span></div>
 <!-- MM-FIG tour-2 START. Generated by scripts/mm_site_images.py from site-shots-2.
      wide: console/full/job-board.png, x 84 to 1332, y 89 to 869 (1248 x 780)
-       pin 1  first_section_heading (left) box 48,305 1176x26 -> left 3.846% top 40.853%, pushed -18px 0px
-       pin 2  status_chip_ordered (top) box 399,421 188x29 -> left 39.523% top 53.974%, pushed 0px -18px
-       pin 3  update_the_list_upload (left) box 48,82 1176x80 -> left 3.846% top 15.692%, pushed -18px 0px
+       pin 1  update_the_list_upload: pin at 15.69%, arrow ends at 3.54% 15.69%
+       pin 2  first_section_heading: pin at 40.85%, arrow ends at 3.54% 40.85%
+       pin 3  status_chip_ordered: pin at 52.44%, arrow ends at 39.52% 53.48%
      narrow: console/full/job-board.png, x 60 to 740, y 147 to 601 (680 x 454)
-       pin 1  first_section_heading (left) box 72,247 1176x26 -> left 10.588% top 57.412%, pushed -18px 0px
-       pin 2  status_chip_ordered (top) box 423,363 188x29 -> left 76.066% top 79.956%, pushed 0px -18px
-       pin 3  update_the_list_upload (left) box 72,24 1176x80 -> left 10.588% top 14.185%, pushed -18px 0px
+       pin 1  update_the_list_upload: pin at 14.19%, arrow ends at 11.28% 14.19%
+       pin 2  first_section_heading: pin at 57.41%, arrow ends at 11.28% 57.41%
+       pin 3  status_chip_ordered: pin at 77.31%, arrow ends at 76.07% 78.80%
      To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
-<div class="shot nfade two" style="--x1:3.846%;--y1:40.853%;--dx1:-18px;--dy1:0px;--x2:39.523%;--y2:53.974%;--dx2:0px;--dy2:-18px;--x3:3.846%;--y3:15.692%;--dx3:-18px;--dy3:0px;--ratio:0.6250;--nx1:10.588%;--ny1:57.412%;--ndx1:-18px;--ndy1:0px;--nx2:76.066%;--ny2:79.956%;--ndx2:0px;--ndy2:-18px;--nx3:10.588%;--ny3:14.185%;--ndx3:-18px;--ndy3:0px">
-<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-job-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-job-n-1120.webp 1120w" sizes="100vw" width="560" height="374"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-job-980.webp" srcset="assets/screens/materialmonitor/mm-tour-job-980.webp 980w, assets/screens/materialmonitor/mm-tour-job-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="One job's list with sample data: the box for bringing in a selections export, then the tile and appliance groups with each material's vendor, status and dates. A sample company."></picture>
+<div class="shot nfade two" style="--y1:15.692%;--y2:40.853%;--y3:52.436%;--ratio:0.6250">
+<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-job-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-job-n-1120.webp 1120w" sizes="100vw" width="560" height="374"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-job-980.webp" srcset="assets/screens/materialmonitor/mm-tour-job-980.webp 980w, assets/screens/materialmonitor/mm-tour-job-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="One job's list: the box for bringing in a selections export, then the tile and appliance groups with each material's vendor, status and dates."></picture>
+<svg class="arrows aw" viewBox="0 0 1248.0 780.0" preserveAspectRatio="none" stroke-width="1.92" aria-hidden="true" focusable="false"><g class="a a1"><polyline pathLength="1" points="-23.0,122.4 44.2,122.4"/><path d="M44.2,122.4 L32.7,128.3 L32.7,116.5 Z"/></g><g class="a a2"><polyline pathLength="1" points="-23.0,318.6 44.2,318.6"/><path d="M44.2,318.6 L32.7,324.5 L32.7,312.8 Z"/></g><g class="a a3"><polyline pathLength="1" points="-23.0,409.0 493.2,409.0 493.2,417.2"/><path d="M493.2,417.2 L487.4,405.7 L499.1,405.7 Z"/></g></svg>
+<svg class="arrows an" viewBox="0 0 680.0 454.0" preserveAspectRatio="none" stroke-width="2.62" aria-hidden="true" focusable="false"><g class="a a1"><polyline pathLength="1" points="31.4,64.4 76.7,64.4"/><path d="M76.7,64.4 L61.0,72.4 L61.0,56.4 Z"/></g><g class="a a2"><polyline pathLength="1" points="31.4,260.6 76.7,260.6"/><path d="M76.7,260.6 L61.0,268.7 L61.0,252.6 Z"/></g><g class="a a3"><polyline pathLength="1" points="31.4,351.0 517.2,351.0 517.2,357.8"/><path d="M517.2,357.8 L509.2,342.1 L525.3,342.1 Z"/></g></svg>
+<span class="pin p1" style="--py:15.692%;--npy:14.185%" aria-hidden="true">1</span>
+<span class="pin p2" style="--py:40.853%;--npy:57.412%" aria-hidden="true">2</span>
+<span class="pin p3" style="--py:52.436%;--npy:77.313%" aria-hidden="true">3</span>
 <!-- MM-FIG tour-2 END -->
-                  <span class="pin p1" aria-hidden="true">1</span>
-                  <span class="pin p2" aria-hidden="true">2</span>
-                  <span class="pin p3" aria-hidden="true">3</span>
                 </div>
                 <ol class="labels">
+                  <li><strong>Bring in the list</strong><span>Drop a selections export or a spreadsheet to add or&nbsp;update&nbsp;items.</span></li>
                   <li><strong>Grouped the way you order</strong><span>Tile, plumbing, appliances and the rest, each in its&nbsp;own&nbsp;group.</span></li>
                   <li><strong>Where it stands</strong><span>Every stage, from waiting on the client&nbsp;to&nbsp;installed.</span></li>
-                  <li><strong>Bring in the list</strong><span>Drop a selections export or a spreadsheet to add or&nbsp;update&nbsp;items.</span></li>
                 </ol>
                 </div>
               </div>
-              <figcaption class="mm-cap">Sample company, not a&nbsp;real&nbsp;job.</figcaption>
             </figure>
           </li>
 
@@ -872,20 +881,22 @@ body.mm .bp-grid {
                 <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>app.materialmonitor.app</span></div>
 <!-- MM-FIG tour-3 START. Generated by scripts/mm_site_images.py from site-shots-2.
      wide: console/full/material.png, x 84 to 1332, y 194 to 974 (1248 x 780)
-       pin 1  vendor_and_rep (left) box 865,84 338x335 -> left 69.311% top 32.237%, pushed -18px 0px
-       pin 2  order_by_date (left) box 48,631 371x52 -> left 3.846% top 84.199%, pushed -18px 0px
-       pin 3  first_history_entry (left) box 844,601 380x86 -> left 67.628% top 82.590%, pushed -18px 0px
-     narrow: console/full/material.png, x 90 to 513, y 733 to 889 (423 x 156) then console/full/material.png, x 896 to 1330, y 202 to 884 (434 x 682)
-       pin 1  vendor_and_rep (left) box 53,246 338x335 -> left 12.212% top 48.527%, pushed -18px 0px
-       pin 2  order_by_date (left) box 42,92 371x52 -> left 9.677% top 13.820%, pushed -18px 0px
-       pin 3  first_history_entry (top-left) box 32,763 380x86 -> left 7.373% top 89.577%, pushed 0px 0px
+       pin 1  vendor_and_rep: pin at 14.08%, arrow ends at 69.00% 14.08%
+       pin 2  order_by_date: pin at 82.03%, arrow ends at 3.54% 84.20%
+       pin 3  first_history_entry: pin at 89.24%, arrow ends at 67.32% 87.08%
+     narrow: console/full/material.png, x 896 to 1330, y 202 to 688 (434 x 486) then console/full/material.png, x 90 to 513, y 733 to 889 (423 x 156) then console/full/material.png, x 896 to 1330, y 685 to 884 (434 x 199)
+       pin 1  vendor_and_rep: pin at 28.01%, arrow ends at 11.44% 28.01%
+       pin 2  order_by_date: pin at 71.09%, arrow ends at 11.28% 71.09%
+       pin 3  first_history_entry: pin at 94.73%, arrow ends at 11.28% 94.73%
      To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
-<div class="shot two" style="--x1:69.311%;--y1:32.237%;--dx1:-18px;--dy1:0px;--x2:3.846%;--y2:84.199%;--dx2:-18px;--dy2:0px;--x3:67.628%;--y3:82.590%;--dx3:-18px;--dy3:0px;--ratio:0.6250;--nx1:12.212%;--ny1:48.527%;--ndx1:-18px;--ndy1:0px;--nx2:9.677%;--ny2:13.820%;--ndx2:-18px;--ndy2:0px;--nx3:7.373%;--ny3:89.577%;--ndx3:0px;--ndy3:0px">
-<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-material-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-material-n-868.webp 868w" sizes="100vw" width="560" height="1099"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-material-980.webp" srcset="assets/screens/materialmonitor/mm-tour-material-980.webp 980w, assets/screens/materialmonitor/mm-tour-material-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="A material's page with sample data: its status and dates with the order-by date, the vendor and the rep with an email address and a phone number, and the history of what changed. A sample company."></picture>
+<div class="shot two" style="--y1:14.077%;--y2:82.031%;--y3:89.244%;--ratio:0.6250">
+<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-material-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-material-n-868.webp 868w" sizes="100vw" width="560" height="1121"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-material-980.webp" srcset="assets/screens/materialmonitor/mm-tour-material-980.webp 980w, assets/screens/materialmonitor/mm-tour-material-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="A material's page: its status and dates with the order-by date, the vendor and the rep with an email address and a phone number, and the history of what changed."></picture>
+<svg class="arrows aw" viewBox="0 0 1248.0 780.0" preserveAspectRatio="none" stroke-width="1.92" aria-hidden="true" focusable="false"><g class="a a1"><polyline pathLength="1" points="-23.0,109.8 861.2,109.8"/><path d="M861.2,109.8 L849.7,115.7 L849.7,103.9 Z"/></g><g class="a a2"><polyline pathLength="1" points="-23.0,639.8 15.3,656.8 44.2,656.8"/><path d="M44.2,656.8 L32.7,662.6 L32.7,650.9 Z"/></g><g class="a a3"><polyline pathLength="1" points="-23.0,696.1 15.3,679.2 840.2,679.2"/><path d="M840.2,679.2 L828.7,685.1 L828.7,673.3 Z"/></g></svg>
+<svg class="arrows an" viewBox="0 0 434.0 869.0" preserveAspectRatio="none" stroke-width="1.67" aria-hidden="true" focusable="false"><g class="a a1"><polyline pathLength="1" points="20.0,243.5 49.7,243.5"/><path d="M49.7,243.5 L39.6,248.6 L39.6,238.3 Z"/></g><g class="a a2"><polyline pathLength="1" points="20.0,617.8 49.0,617.8"/><path d="M49.0,617.8 L38.9,622.9 L38.9,612.6 Z"/></g><g class="a a3"><polyline pathLength="1" points="20.0,823.2 49.0,823.2"/><path d="M49.0,823.2 L38.9,828.3 L38.9,818.1 Z"/></g></svg>
+<span class="pin p1" style="--py:14.077%;--npy:28.015%" aria-hidden="true">1</span>
+<span class="pin p2" style="--py:82.031%;--npy:71.087%" aria-hidden="true">2</span>
+<span class="pin p3" style="--py:89.244%;--npy:94.730%" aria-hidden="true">3</span>
 <!-- MM-FIG tour-3 END -->
-                  <span class="pin p1" aria-hidden="true">1</span>
-                  <span class="pin p2" aria-hidden="true">2</span>
-                  <span class="pin p3" aria-hidden="true">3</span>
                 </div>
                 <ol class="labels">
                   <li><strong>Who to call</strong><span>The vendor and the rep, with an email address and a&nbsp;phone&nbsp;number.</span></li>
@@ -894,7 +905,6 @@ body.mm .bp-grid {
                 </ol>
                 </div>
               </div>
-              <figcaption class="mm-cap">Sample company, not a&nbsp;real&nbsp;job.</figcaption>
             </figure>
           </li>
 
@@ -909,20 +919,22 @@ body.mm .bp-grid {
                 <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>app.materialmonitor.app</span></div>
 <!-- MM-FIG tour-4 START. Generated by scripts/mm_site_images.py from site-shots-2.
      wide: console/full/updates-proposals.png, x 84 to 1332, y 1567 to 2347 (1248 x 780)
-       pin 1  proposed_change (left) box 69,208 403x98 -> left 5.529% top 32.955%, pushed -18px 0px
-       pin 2  quoted_vendor_sentence (left) box 69,316 1134x56 -> left 5.529% top 44.058%, pushed -18px 0px
-       pin 3  confirm_button (left) box 69,382 96x40 -> left 5.529% top 51.474%, pushed -18px 0px
+       pin 1  proposed_change: pin at 32.96%, arrow ends at 5.22% 32.96%
+       pin 2  quoted_vendor_sentence: pin at 44.06%, arrow ends at 5.22% 44.06%
+       pin 3  confirm_button: pin at 51.47%, arrow ends at 5.22% 51.47%
      narrow: console/full/updates-proposals.png, x 84 to 570, y 1667 to 2002 (486 x 335)
-       pin 1  proposed_change (left) box 69,108 403x98 -> left 14.198% top 46.881%, pushed -18px 0px
-       pin 2  quoted_vendor_sentence (left) box 69,216 1134x56 -> left 14.198% top 72.731%, pushed -18px 0px
-       pin 3  confirm_button (left) box 69,282 96x40 -> left 14.198% top 90.000%, pushed -18px 0px
+       pin 1  proposed_change: pin at 46.88%, arrow ends at 13.43% 46.88%
+       pin 2  quoted_vendor_sentence: pin at 72.73%, arrow ends at 13.43% 72.73%
+       pin 3  confirm_button: pin at 90.00%, arrow ends at 13.43% 90.00%
      To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
-<div class="shot nfade two" style="--x1:5.529%;--y1:32.955%;--dx1:-18px;--dy1:0px;--x2:5.529%;--y2:44.058%;--dx2:-18px;--dy2:0px;--x3:5.529%;--y3:51.474%;--dx3:-18px;--dy3:0px;--ratio:0.6250;--nx1:14.198%;--ny1:46.881%;--ndx1:-18px;--ndy1:0px;--nx2:14.198%;--ny2:72.731%;--ndx2:-18px;--ndy2:0px;--nx3:14.198%;--ny3:90.000%;--ndx3:-18px;--ndy3:0px">
-<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-updates-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-updates-n-972.webp 972w" sizes="100vw" width="560" height="386"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-updates-980.webp" srcset="assets/screens/materialmonitor/mm-tour-updates-980.webp 980w, assets/screens/materialmonitor/mm-tour-updates-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="The Updates page with sample data: vendor updates waiting for an OK, each with the proposed change, the vendor's own sentence and Confirm, Edit and Dismiss. A sample company."></picture>
+<div class="shot nfade two" style="--y1:32.955%;--y2:44.058%;--y3:51.474%;--ratio:0.6250">
+<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-updates-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-updates-n-972.webp 972w" sizes="100vw" width="560" height="386"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-updates-980.webp" srcset="assets/screens/materialmonitor/mm-tour-updates-980.webp 980w, assets/screens/materialmonitor/mm-tour-updates-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="The Updates page: vendor updates waiting for an OK, each with the proposed change, the vendor's own sentence and Confirm, Edit and Dismiss."></picture>
+<svg class="arrows aw" viewBox="0 0 1248.0 780.0" preserveAspectRatio="none" stroke-width="1.92" aria-hidden="true" focusable="false"><g class="a a1"><polyline pathLength="1" points="-23.0,257.0 65.2,257.0"/><path d="M65.2,257.0 L53.7,262.9 L53.7,251.2 Z"/></g><g class="a a2"><polyline pathLength="1" points="-23.0,343.6 65.2,343.6"/><path d="M65.2,343.6 L53.7,349.5 L53.7,337.8 Z"/></g><g class="a a3"><polyline pathLength="1" points="-23.0,401.5 65.2,401.5"/><path d="M65.2,401.5 L53.7,407.4 L53.7,395.6 Z"/></g></svg>
+<svg class="arrows an" viewBox="0 0 486.0 335.0" preserveAspectRatio="none" stroke-width="1.87" aria-hidden="true" focusable="false"><g class="a a1"><polyline pathLength="1" points="22.4,157.0 65.3,157.0"/><path d="M65.3,157.0 L54.0,162.8 L54.0,151.3 Z"/></g><g class="a a2"><polyline pathLength="1" points="22.4,243.6 65.3,243.6"/><path d="M65.3,243.6 L54.0,249.4 L54.0,237.9 Z"/></g><g class="a a3"><polyline pathLength="1" points="22.4,301.5 65.3,301.5"/><path d="M65.3,301.5 L54.0,307.2 L54.0,295.8 Z"/></g></svg>
+<span class="pin p1" style="--py:32.955%;--npy:46.881%" aria-hidden="true">1</span>
+<span class="pin p2" style="--py:44.058%;--npy:72.731%" aria-hidden="true">2</span>
+<span class="pin p3" style="--py:51.474%;--npy:90.000%" aria-hidden="true">3</span>
 <!-- MM-FIG tour-4 END -->
-                  <span class="pin p1" aria-hidden="true">1</span>
-                  <span class="pin p2" aria-hidden="true">2</span>
-                  <span class="pin p3" aria-hidden="true">3</span>
                 </div>
                 <ol class="labels">
                   <li><strong>What would change</strong><span>The new status or date the vendor's email&nbsp;points&nbsp;to.</span></li>
@@ -931,7 +943,6 @@ body.mm .bp-grid {
                 </ol>
                 </div>
               </div>
-              <figcaption class="mm-cap">Sample company, not a&nbsp;real&nbsp;job.</figcaption>
             </figure>
           </li>
 
@@ -946,20 +957,22 @@ body.mm .bp-grid {
                 <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>app.materialmonitor.app</span></div>
 <!-- MM-FIG tour-5 START. Generated by scripts/mm_site_images.py from site-shots-2.
      wide: console/full/follow-up.png, x 84 to 1332, y 204 to 984 (1248 x 780)
-       pin 1  first_draft_vendor_and_rep (left) box 69,77 1134x25 -> left 5.529% top 11.513%, pushed -18px 0px
-       pin 2  first_draft_body (left) box 69,176 1134x286 -> left 5.529% top 40.910%, pushed -18px 0px
-       pin 3  open_in_outlook (left) box 69,493 160x40 -> left 5.529% top 65.756%, pushed -18px 0px
+       pin 1  first_draft_vendor_and_rep: pin at 11.51%, arrow ends at 5.22% 11.51%
+       pin 2  first_draft_body: pin at 40.91%, arrow ends at 5.22% 40.91%
+       pin 3  open_in_outlook: pin at 65.76%, arrow ends at 5.22% 65.76%
      narrow: console/full/follow-up.png, x 84 to 696, y 244 to 784 (612 x 540)
-       pin 1  first_draft_vendor_and_rep (left) box 69,37 1134x25 -> left 11.275% top 9.222%, pushed -18px 0px
-       pin 2  first_draft_body (left) box 69,136 1134x286 -> left 11.275% top 51.685%, pushed -18px 0px
-       pin 3  open_in_outlook (left) box 69,453 160x40 -> left 11.275% top 87.574%, pushed -18px 0px
+       pin 1  first_draft_vendor_and_rep: pin at 9.22%, arrow ends at 11.28% 9.22%
+       pin 2  first_draft_body: pin at 51.69%, arrow ends at 11.28% 51.69%
+       pin 3  open_in_outlook: pin at 87.57%, arrow ends at 11.28% 87.57%
      To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
-<div class="shot nfade two" style="--x1:5.529%;--y1:11.513%;--dx1:-18px;--dy1:0px;--x2:5.529%;--y2:40.910%;--dx2:-18px;--dy2:0px;--x3:5.529%;--y3:65.756%;--dx3:-18px;--dy3:0px;--ratio:0.6250;--nx1:11.275%;--ny1:9.222%;--ndx1:-18px;--ndy1:0px;--nx2:11.275%;--ny2:51.685%;--ndx2:-18px;--ndy2:0px;--nx3:11.275%;--ny3:87.574%;--ndx3:-18px;--ndy3:0px">
-<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-follow-up-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-follow-up-n-1120.webp 1120w" sizes="100vw" width="560" height="494"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-follow-up-980.webp" srcset="assets/screens/materialmonitor/mm-tour-follow-up-980.webp 980w, assets/screens/materialmonitor/mm-tour-follow-up-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="Follow-up emails written for the reps with sample data, one per rep: each open order with its model number, how many arrived and the order date, and the button that opens it in Outlook. A sample company."></picture>
+<div class="shot nfade two" style="--y1:11.513%;--y2:40.910%;--y3:65.756%;--ratio:0.6250">
+<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-follow-up-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-follow-up-n-1120.webp 1120w" sizes="100vw" width="560" height="494"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-follow-up-980.webp" srcset="assets/screens/materialmonitor/mm-tour-follow-up-980.webp 980w, assets/screens/materialmonitor/mm-tour-follow-up-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="Follow-up emails written for the reps, one per rep: each open order with its model number, how many arrived and the order date, and the button that opens it in Outlook."></picture>
+<svg class="arrows aw" viewBox="0 0 1248.0 780.0" preserveAspectRatio="none" stroke-width="1.92" aria-hidden="true" focusable="false"><g class="a a1"><polyline pathLength="1" points="-23.0,89.8 65.2,89.8"/><path d="M65.2,89.8 L53.7,95.7 L53.7,83.9 Z"/></g><g class="a a2"><polyline pathLength="1" points="-23.0,319.1 65.2,319.1"/><path d="M65.2,319.1 L53.7,325.0 L53.7,313.2 Z"/></g><g class="a a3"><polyline pathLength="1" points="-23.0,512.9 65.2,512.9"/><path d="M65.2,512.9 L53.7,518.8 L53.7,507.0 Z"/></g></svg>
+<svg class="arrows an" viewBox="0 0 612.0 540.0" preserveAspectRatio="none" stroke-width="2.35" aria-hidden="true" focusable="false"><g class="a a1"><polyline pathLength="1" points="28.2,49.8 69.0,49.8"/><path d="M69.0,49.8 L54.9,57.0 L54.9,42.6 Z"/></g><g class="a a2"><polyline pathLength="1" points="28.2,279.1 69.0,279.1"/><path d="M69.0,279.1 L54.9,286.3 L54.9,271.9 Z"/></g><g class="a a3"><polyline pathLength="1" points="28.2,472.9 69.0,472.9"/><path d="M69.0,472.9 L54.9,480.1 L54.9,465.7 Z"/></g></svg>
+<span class="pin p1" style="--py:11.513%;--npy:9.222%" aria-hidden="true">1</span>
+<span class="pin p2" style="--py:40.910%;--npy:51.685%" aria-hidden="true">2</span>
+<span class="pin p3" style="--py:65.756%;--npy:87.574%" aria-hidden="true">3</span>
 <!-- MM-FIG tour-5 END -->
-                  <span class="pin p1" aria-hidden="true">1</span>
-                  <span class="pin p2" aria-hidden="true">2</span>
-                  <span class="pin p3" aria-hidden="true">3</span>
                 </div>
                 <ol class="labels">
                   <li><strong>One email per rep</strong><span>Every open item with that rep, on&nbsp;one&nbsp;email.</span></li>
@@ -968,7 +981,6 @@ body.mm .bp-grid {
                 </ol>
                 </div>
               </div>
-              <figcaption class="mm-cap">Sample company, not a&nbsp;real&nbsp;job.</figcaption>
             </figure>
           </li>
 
@@ -977,7 +989,6 @@ body.mm .bp-grid {
         <div class="tour-screen" aria-hidden="true">
           <div class="bar"><i></i><i></i><i></i><span>app.materialmonitor.app</span></div>
           <div class="screen-stack"></div>
-          <p class="mm-cap">Sample company, not a&nbsp;real&nbsp;job.</p>
         </div>
       </div>
     </div>
@@ -988,7 +999,7 @@ body.mm .bp-grid {
     <div class="container wide">
       <div class="section-head reveal">
         <p class="label">Vendor mail</p>
-        <h2 class="section-headline brk">The list keeps up with <em>the mail you already get.</em></h2>
+        <h2 class="section-headline"><span class="pg">The list keeps up</span> <span class="pgw"><span class="pg">with the mail</span> <span class="pg">you <em>already get.</em></span></span></h2>
       </div>
 
       <div class="seq" id="seq">
@@ -999,14 +1010,22 @@ body.mm .bp-grid {
             <span class="t">Pause</span>
           </button>
         </div>
-        <!-- A drawing of the sequence; the four captions below carry the same content as text. Sample company. -->
+        <!-- A drawing of the sequence; the four captions below carry the same content as text. -->
         <div class="seq-stage" id="seq-stage" aria-hidden="true">
           <div class="seq-col">
             <p class="seq-where">Inbox &middot; Project manager</p>
             <div class="seq-card mail-card">
-              <p class="from"><b>Rae</b>, Hollowbrook Tile Supply</p>
-              <p class="subj">Your order has shipped</p>
-              <p class="body">The primary bath wall tile shipped today by freight and should arrive Thursday.</p>
+              <div class="mail-bar"><b>Inbox</b><span>Graham W.</span></div>
+              <div class="mail-in">
+                <div class="mail-from"><span class="av">R</span><span><b>Rae, Hollowbrook Tile Supply</b><span class="addr">rae@hollowbrooktile.example</span></span><span class="time">8:42 AM</span></div>
+                <p class="to">To: Graham W.</p>
+                <p class="subj">Your order has shipped</p>
+                <div class="mail-msg">
+                  <p>Hi Graham,</p>
+                  <p><span class="vs">The primary bath wall tile shipped today by freight and should arrive Thursday.</span></p>
+                  <p>Thanks,<br>Rae</p>
+                </div>
+              </div>
             </div>
           </div>
           <svg class="seq-arrow" viewBox="0 0 30 30" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 15h19"/><path d="m18 9 6 6-6 6"/></svg>
@@ -1044,7 +1063,7 @@ body.mm .bp-grid {
           <li>The list and the crew's phones show the&nbsp;new&nbsp;date.</li>
         </ol>
       </div>
-      <p class="seq-note">This is how vendor mail keeps the list current: it suggests the change, quotes the vendor and waits for somebody in the office to say yes. The one thing that updates by itself is a shipping notice in a connected inbox for a tracking number already on the material. It can set the tracking, the expected date and Shipped, and&nbsp;nothing&nbsp;else.</p>
+      <p class="seq-note">Two things update by themselves, and only on a material that already has a tracking number: a shipping notice in a connected inbox, which can set the tracking, the expected date and Shipped, and the carrier's own tracking, which can move the expected date or flag a delay. Everything else it reads becomes a suggestion with the vendor's sentence quoted beside it, and a person confirms or dismisses it. No email and no carrier can mark a&nbsp;material&nbsp;received.</p>
     </div>
   </section>
 
@@ -1053,15 +1072,15 @@ body.mm .bp-grid {
     <div class="container wide">
       <div class="section-head center reveal">
         <p class="label label-center">The&nbsp;field&nbsp;app</p>
-        <h2 class="section-headline brk">The crew carries <em>the same list on site.</em></h2>
-        <p class="section-sub">The field app is the crew's half of Material Monitor, for the superintendent or whoever is on site when the delivery comes. What they record on site is in front of the office right away, and what the office changes shows up on&nbsp;their&nbsp;phones.</p>
+        <h2 class="section-headline"><span class="pg">The crew carries</span> <span class="pg">the <em>same list</em> on site.</span></h2>
+        <p class="section-sub">The field app is the&nbsp;crew's half of&nbsp;Material Monitor, for&nbsp;the superintendent or&nbsp;whoever is on&nbsp;site when the&nbsp;delivery comes. What they record on&nbsp;site is in&nbsp;front of&nbsp;the office right away, and&nbsp;what the&nbsp;office changes shows up on&nbsp;their&nbsp;phones.</p>
       </div>
       <div class="mm-field-grid">
         <div class="mm-field-item reveal">
           <div class="mm-phone">
 <!-- MM-FIG field-receive START. Generated by scripts/mm_site_images.py from site-shots-2.
      wide: app/receive-list.png -->
-<img src="assets/screens/materialmonitor/mm-app-receive-280.webp" srcset="assets/screens/materialmonitor/mm-app-receive-280.webp 280w, assets/screens/materialmonitor/mm-app-receive-560.webp 560w" sizes="(min-width: 900px) 280px, 70vw" width="280" height="606" loading="lazy" decoding="async" alt="The field app's receiving screen with sample data: what came in at one job, with a shower valve ticked and marked in good condition.">
+<img src="assets/screens/materialmonitor/mm-app-receive-280.webp" srcset="assets/screens/materialmonitor/mm-app-receive-280.webp 280w, assets/screens/materialmonitor/mm-app-receive-560.webp 560w" sizes="(min-width: 900px) 280px, 70vw" width="280" height="606" loading="lazy" decoding="async" alt="The field app's receiving screen: what came in at one job, with a shower valve ticked and marked in good condition.">
 <!-- MM-FIG field-receive END -->
           </div>
           <h3>Receive a delivery.</h3>
@@ -1071,7 +1090,7 @@ body.mm .bp-grid {
           <div class="mm-phone">
 <!-- MM-FIG field-material START. Generated by scripts/mm_site_images.py from site-shots-2.
      wide: app/material.png -->
-<img src="assets/screens/materialmonitor/mm-app-material-280.webp" srcset="assets/screens/materialmonitor/mm-app-material-280.webp 280w, assets/screens/materialmonitor/mm-app-material-560.webp 560w" sizes="(min-width: 900px) 280px, 70vw" width="280" height="606" loading="lazy" decoding="async" alt="A material in the field app with sample data: shipped and due Wednesday, with its tracking number, maker, model, vendor and rep. Buttons below email the rep or receive it.">
+<img src="assets/screens/materialmonitor/mm-app-material-280.webp" srcset="assets/screens/materialmonitor/mm-app-material-280.webp 280w, assets/screens/materialmonitor/mm-app-material-560.webp 560w" sizes="(min-width: 900px) 280px, 70vw" width="280" height="606" loading="lazy" decoding="async" alt="A material in the field app: shipped and due Wednesday, with its tracking number, maker, model, vendor and rep. Buttons below email the rep or receive it.">
 <!-- MM-FIG field-material END -->
           </div>
           <h3>Look up a material.</h3>
@@ -1081,22 +1100,18 @@ body.mm .bp-grid {
           <div class="mm-phone">
 <!-- MM-FIG field-problem START. Generated by scripts/mm_site_images.py from site-shots-2.
      wide: app/tell-the-office.png -->
-<img src="assets/screens/materialmonitor/mm-app-problem-280.webp" srcset="assets/screens/materialmonitor/mm-app-problem-280.webp 280w, assets/screens/materialmonitor/mm-app-problem-560.webp 560w" sizes="(min-width: 900px) 280px, 70vw" width="280" height="606" loading="lazy" decoding="async" alt="The field app's report a problem screen with sample data: a powder room sink marked damaged, with a sentence for the office.">
+<img src="assets/screens/materialmonitor/mm-app-problem-280.webp" srcset="assets/screens/materialmonitor/mm-app-problem-280.webp 280w, assets/screens/materialmonitor/mm-app-problem-560.webp 560w" sizes="(min-width: 900px) 280px, 70vw" width="280" height="606" loading="lazy" decoding="async" alt="The field app's report a problem screen: a powder room sink marked damaged, with a sentence for the office.">
 <!-- MM-FIG field-problem END -->
           </div>
           <h3>Report a problem.</h3>
           <p>Missing, wrong, damaged or needed for an inspection. A sentence goes to the office by email and stays on their board until it&nbsp;is&nbsp;handled.</p>
         </div>
       </div>
-      <p class="mm-cap">The field app, with the same&nbsp;sample&nbsp;company.</p>
-      <p class="mm-avail reveal">The iPhone app is not on the App Store yet. Founding builders get it through TestFlight, Apple's testing app. The office invites the crew from the console, and each person signs in with a six digit code sent to&nbsp;their&nbsp;email.</p>
-      <!-- ON APPROVAL: when Apple approves the app, replace the first two sentences of the paragraph above
-           ("The iPhone app is not on the App Store yet. Founding builders get it through TestFlight, Apple's testing app.") with
-             The iPhone app is on the App Store.
-           and add the badge under that paragraph (fill in the app's id from App Store Connect; do not guess it):
+      <p class="mm-avail reveal">There is an&nbsp;iPhone app for&nbsp;the crew. The office invites each person from&nbsp;the console, and&nbsp;they sign in&nbsp;with a&nbsp;six digit code sent to&nbsp;their&nbsp;email.</p>
+      <!-- ON APPROVAL (BEFORE PROMOTION): when Apple approves the app, add the App Store badge under the paragraph above
+           (fill in the app's id from App Store Connect; do not guess it, and do not link a store page that does not exist yet):
              <div class="store-badges" style="justify-content:center;margin-top:22px;"><a class="badge-apple" href="https://apps.apple.com/app/idAPP_STORE_ID"><img src="assets/app-store-badge.svg" alt="Download on the App Store" width="200" height="67"></a></div>
-           Change the FAQ answer "Can my crew use it on site?" and the Opening row under Where it stands at the same time (see the ON APPROVAL notes there),
-           then regenerate the FAQPage JSON-LD in the head with python scripts/mm_faq_jsonld.py, because the FAQ answer is in it. -->
+           Nothing else on the page has to change. -->
     </div>
   </section>
 
@@ -1105,45 +1120,46 @@ body.mm .bp-grid {
     <div class="container wide">
       <div class="section-head center reveal">
         <p class="label label-center">The&nbsp;morning&nbsp;email</p>
-        <h2 class="section-headline brk">One email each morning <em>with what&nbsp;needs&nbsp;attention.</em></h2>
-        <!-- JOSH TO CONFIRM: For Josh item 2, what the morning email carries. These sentences describe only what the picture below shows (the real email on branch console-polish-2, cut before Orders and tracking): no follow-up drafts. Carrier tracking is not switched on in production yet, so nothing here says carriers change anything. -->
-        <p class="section-sub">Everyone on the team who wants it gets one email each morning: what is waiting for an OK, what has to be ordered, what was flagged and what arrived. On a day with nothing to report, no email&nbsp;goes&nbsp;out.</p>
+        <h2 class="section-headline"><span class="pg">One email each morning</span> <span class="pg">with what <em>needs attention.</em></span></h2>
+        <!-- JOSH TO CONFIRM: For Josh item 2, what the morning email carries. These sentences describe the picture below (the real email on branch console-polish-2): no follow-up drafts; what vendors and carriers said with nobody in the office touching it is listed under Orders and tracking; the office's own edits are the gray line. -->
+        <p class="section-sub">Everyone on&nbsp;the team who wants it gets one email each morning: what is waiting for&nbsp;an OK, what has to&nbsp;be ordered, what was flagged, what arrived and&nbsp;what vendors and&nbsp;carriers reported. The office's own changes are counted in&nbsp;one gray line at&nbsp;the bottom, and&nbsp;on a&nbsp;day with&nbsp;nothing to&nbsp;report, no email&nbsp;goes&nbsp;out.</p>
       </div>
       <figure class="annotated side mm-email-fig" data-anim>
         <div class="stage">
 <!-- MM-FIG email START. Generated by scripts/mm_site_images.py from site-shots-2.
-     wide: email/morning.png, x 36 to 684, y 0 to 1374
-       pin 1  first_line (right) box 49,121 550x27 -> left 92.438% top 9.796%, pushed 18px 0px
-       pin 2  section_1 (left) box 49,172 550x18 -> left 7.562% top 13.202%, pushed -18px 0px
-       pin 3  section_2 (left) box 49,627 550x18 -> left 7.562% top 46.303%, pushed -18px 0px
-       pin 4  section_3 (left) box 49,1032 550x18 -> left 7.562% top 75.742%, pushed -18px 0px
-     narrow: email/morning.png, x 30 to 640, y 0 to 1374
-       pin 1  first_line (left) box 55,121 550x27 -> left 9.016% top 9.796%, pushed -18px 0px
-       pin 2  section_1 (left) box 55,172 550x18 -> left 9.016% top 13.202%, pushed -18px 0px
-       pin 3  section_2 (left) box 55,627 550x18 -> left 9.016% top 46.303%, pushed -18px 0px
-       pin 4  section_3 (left) box 55,1032 550x18 -> left 9.016% top 75.742%, pushed -18px 0px
+     wide: email/morning.png, x 36 to 684, y 0 to 1884
+       pin 1  first_line: pin at 5.52%, arrow ends at 7.06% 7.14%
+       pin 2  section_1: pin at 11.25%, arrow ends at 7.06% 9.63%
+       pin 3  section_2: pin at 33.77%, arrow ends at 7.06% 33.77%
+       pin 4  section_3: pin at 55.24%, arrow ends at 7.06% 55.24%
+       pin 5  section_4: pin at 74.23%, arrow ends at 7.06% 74.23%
+     narrow: email/morning.png, x 30 to 640, y 0 to 1884
+       pin 1  first_line: pin at 6.73%, arrow ends at 11.28% 7.14%
+       pin 2  section_1: pin at 10.05%, arrow ends at 11.28% 9.63%
+       pin 3  section_2: pin at 33.77%, arrow ends at 11.28% 33.77%
+       pin 4  section_3: pin at 55.24%, arrow ends at 11.28% 55.24%
+       pin 5  section_4: pin at 74.23%, arrow ends at 11.28% 74.23%
      To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
-<div class="shot two" style="--x1:92.438%;--y1:9.796%;--dx1:18px;--dy1:0px;--x2:7.562%;--y2:13.202%;--dx2:-18px;--dy2:0px;--x3:7.562%;--y3:46.303%;--dx3:-18px;--dy3:0px;--x4:7.562%;--y4:75.742%;--dx4:-18px;--dy4:0px;--ratio:2.1204;--nx1:9.016%;--ny1:9.796%;--ndx1:-18px;--ndy1:0px;--nx2:9.016%;--ny2:13.202%;--ndx2:-18px;--ndy2:0px;--nx3:9.016%;--ny3:46.303%;--ndx3:-18px;--ndy3:0px;--nx4:9.016%;--ny4:75.742%;--ndx4:-18px;--ndy4:0px">
-<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-morning-email-n-560.webp 560w, assets/screens/materialmonitor/mm-morning-email-n-1220.webp 1220w" sizes="100vw" width="560" height="1261"><img class="shot-img" src="assets/screens/materialmonitor/mm-morning-email-600.webp" srcset="assets/screens/materialmonitor/mm-morning-email-600.webp 600w, assets/screens/materialmonitor/mm-morning-email-1080.webp 1080w" sizes="(min-width: 1100px) 600px, (min-width: 700px) min(600px, calc(100vw - 48px)), 100vw" width="600" height="1272" loading="lazy" decoding="async" alt="The morning email with sample data: the updates waiting for an OK, the materials that need ordering, the problems flagged from the field and what arrived. A sample company."></picture>
+<div class="shot two" style="--y1:5.520%;--y2:11.253%;--y3:33.769%;--y4:55.239%;--y5:74.225%;--ratio:2.9074">
+<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-morning-email-n-560.webp 560w, assets/screens/materialmonitor/mm-morning-email-n-1220.webp 1220w" sizes="100vw" width="560" height="1730"><img class="shot-img" src="assets/screens/materialmonitor/mm-morning-email-600.webp" srcset="assets/screens/materialmonitor/mm-morning-email-600.webp 600w, assets/screens/materialmonitor/mm-morning-email-1080.webp 1080w" sizes="(min-width: 1100px) 600px, (min-width: 700px) min(600px, calc(100vw - 48px)), 100vw" width="600" height="1744" loading="lazy" decoding="async" alt="The morning email: the updates waiting for an OK, the materials that need ordering, the problems flagged from the field, what arrived and what vendors and carriers reported."></picture>
+<svg class="arrows aw" viewBox="0 0 648.0 1884.0" preserveAspectRatio="none" stroke-width="1.62" aria-hidden="true" focusable="false"><g class="a a1"><polyline pathLength="1" points="-19.4,104.0 13.0,134.6 45.8,134.6"/><path d="M45.8,134.6 L36.0,139.6 L36.0,129.6 Z"/></g><g class="a a2"><polyline pathLength="1" points="-19.4,212.0 13.0,181.4 45.8,181.4"/><path d="M45.8,181.4 L36.0,186.4 L36.0,176.4 Z"/></g><g class="a a3"><polyline pathLength="1" points="-19.4,636.2 45.8,636.2"/><path d="M45.8,636.2 L36.0,641.2 L36.0,631.2 Z"/></g><g class="a a4"><polyline pathLength="1" points="-19.4,1040.7 45.8,1040.7"/><path d="M45.8,1040.7 L36.0,1045.7 L36.0,1035.7 Z"/></g><g class="a a5"><polyline pathLength="1" points="-19.4,1398.4 45.8,1398.4"/><path d="M45.8,1398.4 L36.0,1403.4 L36.0,1393.4 Z"/></g></svg>
+<svg class="arrows an" viewBox="0 0 610.0 1884.0" preserveAspectRatio="none" stroke-width="2.35" aria-hidden="true" focusable="false"><g class="a a1"><polyline pathLength="1" points="28.2,126.7 50.1,134.6 68.8,134.6"/><path d="M68.8,134.6 L54.7,141.8 L54.7,127.4 Z"/></g><g class="a a2"><polyline pathLength="1" points="28.2,189.3 50.1,181.4 68.8,181.4"/><path d="M68.8,181.4 L54.7,188.6 L54.7,174.2 Z"/></g><g class="a a3"><polyline pathLength="1" points="28.2,636.2 68.8,636.2"/><path d="M68.8,636.2 L54.7,643.4 L54.7,629.0 Z"/></g><g class="a a4"><polyline pathLength="1" points="28.2,1040.7 68.8,1040.7"/><path d="M68.8,1040.7 L54.7,1047.9 L54.7,1033.5 Z"/></g><g class="a a5"><polyline pathLength="1" points="28.2,1398.4 68.8,1398.4"/><path d="M68.8,1398.4 L54.7,1405.6 L54.7,1391.2 Z"/></g></svg>
+<span class="pin p1" style="--py:5.520%;--npy:6.726%" aria-hidden="true">1</span>
+<span class="pin p2" style="--py:11.253%;--npy:10.047%" aria-hidden="true">2</span>
+<span class="pin p3" style="--py:33.769%;--npy:33.769%" aria-hidden="true">3</span>
+<span class="pin p4" style="--py:55.239%;--npy:55.239%" aria-hidden="true">4</span>
+<span class="pin p5" style="--py:74.225%;--npy:74.225%" aria-hidden="true">5</span>
 <!-- MM-FIG email END -->
-            <svg class="lead to-r l1" aria-hidden="true" focusable="false"><line x1="0" y1="6" x2="100%" y2="6" pathLength="1" marker-start="url(#mm-arrow)"/></svg>
-            <svg class="lead to-l l2" aria-hidden="true" focusable="false"><line x1="100%" y1="6" x2="0" y2="6" pathLength="1" marker-start="url(#mm-arrow)"/></svg>
-            <svg class="lead to-l l3" aria-hidden="true" focusable="false"><line x1="100%" y1="6" x2="0" y2="6" pathLength="1" marker-start="url(#mm-arrow)"/></svg>
-            <svg class="lead to-l l4" aria-hidden="true" focusable="false"><line x1="100%" y1="6" x2="0" y2="6" pathLength="1" marker-start="url(#mm-arrow)"/></svg>
-            <span class="pin p1" aria-hidden="true">1</span>
-            <span class="pin p2" aria-hidden="true">2</span>
-            <span class="pin p3" aria-hidden="true">3</span>
-            <span class="pin p4" aria-hidden="true">4</span>
           </div>
           <ol class="labels">
-            <li class="to-r"><strong>Waiting for your OK</strong><span>How many vendor updates need a yes, with a link&nbsp;to&nbsp;them.</span></li>
-            <li class="to-l"><strong>Needs ordering</strong><span>Materials whose order-by date is close or&nbsp;already&nbsp;past.</span></li>
-            <li class="to-l"><strong>Problems flagged</strong><span>Damage, wrong items, shortages and delays, with who&nbsp;reported&nbsp;them.</span></li>
-            <li class="to-l"><strong>What arrived</strong><span>Who received what and in what condition, on site or at&nbsp;the&nbsp;office.</span></li>
+            <li><strong>Waiting for your OK</strong><span>How many vendor updates need a yes, with a link&nbsp;to&nbsp;them.</span></li>
+            <li><strong>Needs ordering</strong><span>Materials whose order-by date is close or&nbsp;already&nbsp;past.</span></li>
+            <li><strong>Problems flagged</strong><span>Damage, wrong items, shortages and delays, with who&nbsp;reported&nbsp;them.</span></li>
+            <li><strong>What arrived</strong><span>Who received what and in what condition, on site or at&nbsp;the&nbsp;office.</span></li>
+            <li><strong>Orders and tracking</strong><span>What vendors and carriers reported since&nbsp;yesterday.</span></li>
           </ol>
           </div>
         </div>
-        <figcaption class="mm-cap">Sample company. The layout is the&nbsp;real&nbsp;email.</figcaption>
       </figure>
     </div>
   </section>
@@ -1153,12 +1169,12 @@ body.mm .bp-grid {
     <div class="container wide">
       <div class="section-head center reveal">
         <p class="label label-center">Built for</p>
-        <h2 class="section-headline brk">For custom builders running <em>several homes at once.</em></h2>
-        <p class="section-sub">A custom home carries a long list of finish selections, and every one is an order somebody has to place, track and receive. In most offices that lives in a spreadsheet, a few inboxes and one&nbsp;person's&nbsp;memory.</p>
+        <h2 class="section-headline"><span class="pg">For custom builders</span> <span class="pg">and remodelers.</span></h2>
+        <p class="section-sub">Custom homes and&nbsp;complex renovations carry a&nbsp;long list of&nbsp;finish selections, and&nbsp;every one is an&nbsp;order somebody has to&nbsp;place, track and&nbsp;receive.</p>
       </div>
       <div class="mm-cards">
         <div class="mm-card reveal">
-          <h3>Custom builders and remodelers, five people to thirty.</h3>
+          <h3>Offices of five people to thirty.</h3>
           <p>A few jobs at a time, each with its own long list of finish orders. Whether a coordinator keeps the list or the owner does it at night, it is built for&nbsp;that&nbsp;desk.</p>
         </div>
         <div class="mm-card reveal d1">
@@ -1178,8 +1194,8 @@ body.mm .bp-grid {
     <div class="container wide">
       <div class="section-head center reveal">
         <p class="label label-center">Who decides</p>
-        <h2 class="section-headline">It proposes. <em>A&nbsp;person decides.</em></h2>
-        <p class="section-sub">A wrong status turns into a problem on site, so Material Monitor suggests changes and leaves the decision to somebody in&nbsp;your&nbsp;office.</p>
+        <h2 class="section-headline"><span class="pg">It proposes.</span> <span class="pg">A person <em>decides.</em></span></h2>
+        <p class="section-sub">A wrong status turns into a&nbsp;problem on&nbsp;site, so Material Monitor suggests changes and&nbsp;leaves the&nbsp;decision to&nbsp;somebody in&nbsp;your&nbsp;office.</p>
       </div>
       <div class="mm-cards">
         <div class="mm-card reveal">
@@ -1188,7 +1204,7 @@ body.mm .bp-grid {
         </div>
         <div class="mm-card reveal d1">
           <h3>Every suggestion waits for a yes.</h3>
-          <p><!-- JOSH TO CONFIRM: For Josh item 1, the tracking-number exception: a shipping notice in a connected inbox whose tracking number is already on the material sets the tracking, the expected date and Shipped by itself, and nothing else. The heading says suggestions wait; this is not a suggestion. -->The one thing that updates by itself is a shipping notice in a connected inbox for a tracking number already on the material. It can set the tracking, the expected date and Shipped, and nothing else. Everything else it reads becomes a suggestion with the vendor's sentence quoted beside it, and a person confirms or dismisses it. Forwarded mail always waits for a person, and no email can mark a&nbsp;material&nbsp;received.</p>
+          <p><!-- JOSH TO CONFIRM: For Josh item 1, what updates by itself (the product: a shipping notice in a connected inbox whose tracking number is already on the material, and carrier tracking, which moves the expected date and flags a delay; a carrier "delivered" is only proposed). -->Two things update by themselves, and only on a material that already has a tracking number: a shipping notice in a connected inbox, which can set the tracking, the expected date and Shipped, and the carrier's own tracking, which can move the expected date or flag a delay. Everything else it reads becomes a suggestion with the vendor's sentence quoted beside it, and a person confirms or dismisses it. No email and no carrier can mark a&nbsp;material&nbsp;received.</p>
         </div>
         <div class="mm-card reveal d2">
           <h3>It never writes to your vendors.</h3>
@@ -1198,36 +1214,16 @@ body.mm .bp-grid {
     </div>
   </section>
 
-  <!-- WHY THIS EXISTS -->
+  <!-- WHO BUILT IT -->
   <section class="section" id="story">
     <div class="container">
       <div class="section-head center reveal">
-        <p class="label label-center">Why&nbsp;this&nbsp;exists</p>
-        <h2 class="section-headline brk">It started as one office's&nbsp;<em>spreadsheet&nbsp;problem.</em></h2>
+        <p class="label label-center">Who&nbsp;built&nbsp;it</p>
+        <h2 class="section-headline"><span class="pgw"><span class="pg">Built by a custom</span> <span class="pg">home builder,</span></span> <span class="pg">for his <em>own office.</em></span></h2>
       </div>
       <div class="mm-story reveal d1">
-        <p>Lock Ten Studio is run by the co-owner of a custom home building company outside Washington DC. His office tracked finish materials the way most do, with a spreadsheet, a few people's inboxes and the coordinator's memory. Orders went quiet, dates slipped and the office found out when the plumber was standing in an&nbsp;empty&nbsp;bathroom.</p>
-        <p>So he built one list for his office and his crews that shows where every order stands and what needs attention each morning. <!-- JOSH TO CONFIRM: For Josh item 5, that his coordinator has run on his own tracker every day since July 2026 and that Material Monitor grew out of it. -->His coordinator has run on it every day since July 2026, and his superintendents receive deliveries on their phones. Material Monitor grew out of that system, rebuilt so other builders can&nbsp;run&nbsp;it.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- WHERE IT STANDS -->
-  <section class="trust" id="status">
-    <div class="container">
-      <div class="section-head center reveal">
-        <p class="label label-center">Where&nbsp;it&nbsp;stands</p>
-        <h2 class="section-headline">Straight about the stage it is at.</h2>
-      </div>
-      <div class="mm-status reveal">
-        <ul>
-          <!-- JOSH TO CONFIRM: For Josh item 5, the Live row (the console went live in September 2026; the builder's coordinator has run on the tracker it grew out of every day since July 2026). -->
-          <li><b>Live</b><span>The office console is live at app.materialmonitor.app. It grew out of the tracker one builder's coordinator has run on every day since July 2026. Vendor mail comes in from connected Microsoft 365 inboxes or by forwarding from&nbsp;any&nbsp;inbox.</span></li>
-          <!-- ON APPROVAL: when Apple approves the app, the Opening row's three sentences about the app and the Google inbox become: The iPhone app is on the App Store, and connecting a Google inbox directly is being finished. The FAQ answer "Can my crew use it on site?" changes at the same time; then regenerate the FAQPage JSON-LD in the head with python scripts/mm_faq_jsonld.py. -->
-          <li><b>Opening</b><span>Material Monitor is opening to a small group of founding builders now. The iPhone app is not on the App Store yet. Founding builders get it through TestFlight, Apple's testing app. Connecting a Google inbox directly is&nbsp;being&nbsp;finished.</span></li>
-          <!-- JOSH TO CONFIRM: carrier tracking. Josh has not decided whether carrier tracking will be switched on, so the page promises nothing about it. If he decides to switch it on, add this as the last sentence of the Opening row above: Following a shipment by its tracking number with the carrier is being switched on with the founding builders. -->
-          <li><b>Not set</b><span>There is no price on this page because there is no public price yet. Founding builders talk it through with the person who&nbsp;built&nbsp;it.</span></li>
-        </ul>
+        <!-- JOSH TO CONFIRM: Who built it (Josh 2026-09-29 asked for this short version): the office uses the system every day and Material Monitor came out of it. -->
+        <p>Lock Ten Studio is run by the co-owner of a custom home building company outside Washington DC. Material Monitor came out of the system his own office uses every day to keep track of finish materials on&nbsp;its&nbsp;jobs.</p>
       </div>
     </div>
   </section>
@@ -1242,12 +1238,13 @@ body.mm .bp-grid {
       <div class="faq reveal">
         <details><summary>Do my vendors have to&nbsp;do&nbsp;anything?</summary><p>No. They keep emailing the same people they email now. There is no portal for them, nothing to sign up for and no new address&nbsp;to&nbsp;learn.</p></details>
         <details><summary>Do I&nbsp;need&nbsp;Buildertrend?</summary><p>No. Each job's list comes in from a spreadsheet, a PDF or a selections export from the software you already use, and anything missing you add in a line. It works beside Buildertrend if you have it, and it never logs in to any&nbsp;other&nbsp;system.</p></details>
-        <!-- ON APPROVAL: once Apple approves the app, the last two sentences of the next answer become: The app is on the App Store. Then regenerate the FAQPage JSON-LD in the head with python scripts/mm_faq_jsonld.py, or search results keep the old words. -->
-        <details><summary>Can my crew use it&nbsp;on&nbsp;site?</summary><p>Yes. The field app is the crew's half of the same list, on an iPhone: they receive deliveries, look up any material on any job and report problems to the office. The office invites them from the console, and they sign in with a six digit code sent to their email. The iPhone app is not on the App Store yet. Founding builders get it through TestFlight, Apple's&nbsp;testing&nbsp;app.</p></details>
+        <details><summary>Can my crew use it&nbsp;on&nbsp;site?</summary><p>Yes. The field app is the crew's half of the same list, on an iPhone: they receive deliveries, look up any material on any job and report problems to the office. The office invites them from the console, and they sign in with a six digit code sent to&nbsp;their&nbsp;email.</p></details>
         <details><summary>Whose inbox does&nbsp;it&nbsp;read?</summary><p>Only the ones your office connects or forwards from. Vendor mail usually comes into real people's inboxes, like the coordinator's, the project manager's, the estimator's or an in-house designer's. Some offices also have a shared one. You can connect several and give each one a name. It only reads. It never sends, replies, moves or deletes anything, and it only asks about a new sender when a message looks like an order, a shipment, a delivery or&nbsp;a&nbsp;quote.</p></details>
-        <details><summary>Microsoft 365&nbsp;or&nbsp;Google?</summary><p>Microsoft 365 inboxes connect directly today. Forwarding to your own private Material Monitor address works from any email system, Gmail included, and connecting a Google inbox directly is&nbsp;being&nbsp;finished.</p></details>
+        <!-- BEFORE PROMOTION: the direct Google connection needs its Google client configured -->
+        <details><summary>Microsoft 365&nbsp;or&nbsp;Google?</summary><p>Both. Material Monitor works with Microsoft 365 and Google inboxes, by connecting the inbox or by forwarding from it to your own private Material Monitor&nbsp;address.</p></details>
         <details><summary>Does it email&nbsp;my&nbsp;vendors?</summary><p>Never on its own. When an order needs a word, it drafts the follow-up, one email per rep with every open item on it, and you send it from your own email in your own words. Your reps hear&nbsp;from&nbsp;you.</p></details>
-        <details><summary>What happens when it reads&nbsp;something&nbsp;wrong?</summary><p>You dismiss it and nothing changes. <!-- JOSH TO CONFIRM: For Josh item 1, the tracking-number exception. -->The one thing that updates by itself is a shipping notice in a connected inbox for a tracking number already on the material. It can set the tracking, the expected date and Shipped, and nothing else. Everything else it reads becomes a suggestion with the vendor's sentence quoted beside it, and a person confirms or dismisses it, so a wrong reading is easy to spot and you can correct a suggestion before you&nbsp;confirm&nbsp;it.</p></details>
+        <details><summary>Does it track&nbsp;shipments?</summary><p>Yes. Once a material has a tracking number, Material Monitor checks it with the carrier each day and keeps the expected date current. If the carrier reports a problem, the material is flagged as delayed and the office hears about it. When the carrier says it was delivered, somebody still confirms it&nbsp;arrived.</p></details>
+        <details><summary>What happens when it reads&nbsp;something&nbsp;wrong?</summary><p>You dismiss it and nothing changes. <!-- JOSH TO CONFIRM: For Josh item 1, what updates by itself. -->Two things update by themselves, and only on a material that already has a tracking number: a shipping notice in a connected inbox, which can set the tracking, the expected date and Shipped, and the carrier's own tracking, which can move the expected date or flag a delay. Everything else it reads becomes a suggestion with the vendor's sentence quoted beside it, and a person confirms or dismisses it. No email and no carrier can mark a&nbsp;material&nbsp;received.</p></details>
         <details><summary>How does an office get&nbsp;set&nbsp;up?</summary><p>Somebody in the office signs in at app.materialmonitor.app with a work email and a six digit code, names the company, adds the jobs, brings in each job's selections from a spreadsheet or an export and invites the team. Connecting vendor mail is the last step, and the list works&nbsp;without&nbsp;it.</p></details>
         <details><summary>What does&nbsp;it&nbsp;cost?</summary><p>There is no public price yet. Founding builders talk it through directly with the builder who&nbsp;made&nbsp;it.</p></details>
         <details><summary>Is this the same company as Walkthrough&nbsp;and&nbsp;Handover?</summary><p>Yes. Lock Ten Studio makes software for custom home builders and is run by the co-owner of a building company outside Washington DC. <a href="https://lockten.ai/walkthrough">Walkthrough</a> is its field-report app, <a href="https://lockten.ai/handover">Handover</a> builds the homeowner's manual and Material Monitor keeps track of the materials&nbsp;in&nbsp;between.</p></details>
@@ -1261,7 +1258,7 @@ body.mm .bp-grid {
       <div class="mm-found">
         <div class="mm-found-copy">
           <span class="launch-stamp">Founding builders</span>
-          <h2 class="brk">Be one of the first offices <em>to run on it.</em></h2>
+          <h2><span class="pgw"><span class="pg">Be one of</span> <span class="pg">the first offices</span></span> <span class="pg">to <em>run on it.</em></span></h2>
           <p>Send a short note about your company and what you build, and the builder who made it will write back himself. A small group of founding builders gets in first, helps decide what comes next and gets&nbsp;founding&nbsp;terms.</p>
           <div class="mm-capture">
             <p class="lead-in">Get on the&nbsp;founding&nbsp;list</p>

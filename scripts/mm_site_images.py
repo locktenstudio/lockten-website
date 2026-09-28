@@ -43,15 +43,25 @@ on the page.
 
 `display` is how wide the crop shows at the 1440 layout (or at 390 for a
 narrow crop). The script checks that the console's 17px body text comes out at
-13px or more on a wide crop, and uses the scale to keep every pin, which is 28
-screen pixels whatever the scale, inside its picture; a pin that does not fit
-is hidden on the page and its number turns grey in the list.
+13px or more on a wide crop, and uses that scale for everything drawn in
+screen pixels (the pins, the arrows' ends and their spacing).
 
-Pins. Each pin names an anchor and a spot on its rectangle (`left` means just
-outside its left edge, `top-right` its top right corner, and so on; see
-SPOTS). The script writes the anchor point as percentages (--xN, --yN; --nxN,
---nyN for the narrow crop) and the push away from the rectangle in screen
-pixels (--dxN, --dyN), because the pin keeps its size while the picture scales.
+Pins and arrows. Every pin of a figure sits in ONE column, the gutter: on a
+wide crop just outside the picture's left edge (its centre 18px left of it), on
+a narrow crop just inside (18px in). Each pin sits at the height of its target
+and a thin copper arrow runs from it into the picture and ends at the target.
+A pin is (anchor, end) or (anchor, end, lane):
+  end   "left" (the default: just before the anchor's left edge, at its middle),
+        "right", "top", "bottom", "center", or ("left", dy): the left edge at dy
+        CSS pixels below the anchor's top.
+  lane  for "top" and "bottom" ends, the arrow runs level at this many CSS pixels
+        above or below the anchor and turns once to meet it (default 12), so a
+        long arrow can travel in the clear space between rows of text.
+Pins closer than a figure's spacing (100 screen pixels where the labels sit
+beside the picture, 44 otherwise, 40 on a narrow crop) are moved apart and their
+arrows bend once to reach the target's height. A pin whose target is outside a
+crop is hidden there and its number in the list is outlined. The script prints,
+per figure and crop, each pin's height and the arrow's end, as percentages.
 
 Needs Pillow with WebP. The morning email's first line has no anchor in the
 shots, so the script measures it from email/morning.html with Playwright and
@@ -86,24 +96,13 @@ NARROW_MEDIA = "(max-width: 699px)"
 CONSOLE_BODY_PX = 17   # the console's body text
 MIN_TEXT_PX = 13       # what that text must come out at on a wide crop
 
-# How far a pin sits from the edge of what it points at, and its radius, in
-# screen pixels: the pin is 28px with a 2px ring.
-PUSH = 18
+# The pin gutter, in screen pixels: a pin is 28px across with a 2px ring, and its
+# centre sits this far outside a wide crop's left edge, or inside a narrow one's.
+GUTTER = 18
 PIN_R = 14
-
-# Where on an anchor rectangle a pin goes: (fx, fy, push_x, push_y).
-# fx and fy are fractions of the rectangle; push is in units of PUSH.
-SPOTS = {
-    "center": (0.5, 0.5, 0, 0),
-    "left": (0.0, 0.5, -1, 0),
-    "right": (1.0, 0.5, 1, 0),
-    "top": (0.5, 0.0, 0, -1),
-    "bottom": (0.5, 1.0, 0, 1),
-    "top-left": (0.0, 0.0, 0, 0),
-    "top-right": (1.0, 0.0, 0, 0),
-    "inside-left": (0.0, 0.5, 1, 0),
-    "inside-right": (1.0, 0.5, -1, 0),
-}
+GAP_SIDE = 100      # pin spacing when the labels sit beside the picture
+GAP_WIDE = 44
+GAP_NARROW = 40
 
 CHROME_GLOB = os.path.expanduser("~/.cache/puppeteer/chrome/*/chrome-win64/chrome.exe")
 
@@ -125,8 +124,9 @@ HERO_SIZES = ("(min-width: 1320px) calc(50vw + 302px), (min-width: 1100px) calc(
 #           A wide crop can carry "vars": {name: (anchor, edge, offset)}, written to the
 #           page as --name, a fraction of the crop's height; every figure with pins
 #           also gets --ratio (height over width of the wide crop).
-#   pins:   (anchor, spot) in number order; narrow_pins, if given, the same
-#           pins with other spots for the narrow crop.
+#   pins:   (anchor, end[, lane]) in number order, numbered top to bottom; see
+#           "Pins and arrows" above. narrow_pins, if given, the same pins for the
+#           narrow crop. side: True when the labels sit beside the picture.
 # ---------------------------------------------------------------------------
 FIGURES = [
     {
@@ -136,9 +136,9 @@ FIGURES = [
         "budget": BUDGET_HERO,
         "eager": True,
         "lcp": True,          # fetchpriority high, and a preload block for the head
-        "alt": ("The Material Monitor dashboard with sample data: four job cards, the materials that "
-                "need ordering with their order-by dates, this week's deliveries and the start of the "
-                "follow-up list. A sample company, not a real job."),
+        "alt": ("The Material Monitor dashboard: four job cards, the materials that need ordering with "
+                "their order-by dates, this week's deliveries and the start of the follow-up list."),
+        "side": True,
         "pins": [("first_job_card", "left"), ("first_order_by_date", "left"),
                  ("deliveries_heading", "left"), ("follow_up_heading", "left")],
         "crops": {
@@ -160,20 +160,21 @@ FIGURES = [
         "source": "app:home",
         "out": "mm-app-home",
         "eager": True,
-        "alt": ("The field app's home screen with sample data: receive materials, look up a material, "
-                "report a problem and the expected deliveries by day."),
+        "alt": ("The field app's home screen: receive materials, look up a material, report a problem "
+                "and the expected deliveries by day."),
         "crops": {"wide": {"widths": [240, 480], "sizes": "(min-width: 700px) 21vw, 52vw"}},
     },
     {
         "id": "tour-1",
         "source": "console:dashboard",
         "out": "mm-tour-dashboard",
-        "alt": ("The dashboard's follow-up list with sample data: orders that have gone quiet, each "
-                "with the reason and the rep, and the button that drafts the emails. A sample company."),
-        "pins": [("search_box", "bottom"), ("first_follow_up_reason", "left"),
-                 ("draft_an_email_button", "right")],
-        "narrow_pins": [("search_box", "bottom"), ("first_follow_up_reason", "left"),
-                        ("draft_an_email_button", "left")],
+        "alt": ("The dashboard's follow-up list: orders that need a word, each with the reason and the "
+                "rep, and the button that drafts the emails."),
+        # The arrows to the search box and the button run level just under them and turn up.
+        "pins": [("search_box", "bottom", 16), ("draft_an_email_button", "bottom", 10),
+                 ("first_follow_up_reason", "left")],
+        "narrow_pins": [("search_box", "bottom", 24), ("draft_an_email_button", "bottom", 10),
+                        ("first_follow_up_reason", "left")],
         "crops": {
             # Keeps the console's own bar, because the search box is a callout.
             "wide": {"nav": True, "x0": 100, "x1": 1372, "y0": ("follow_up_heading", "top", -24),
@@ -193,10 +194,11 @@ FIGURES = [
         "id": "tour-2",
         "source": "console:job-board",
         "out": "mm-tour-job",
-        "alt": ("One job's list with sample data: the box for bringing in a selections export, then the "
-                "tile and appliance groups with each material's vendor, status and dates. A sample company."),
-        "pins": [("first_section_heading", "left"), ("status_chip_ordered", "top"),
-                 ("update_the_list_upload", "left")],
+        "alt": ("One job's list: the box for bringing in a selections export, then the tile and appliance "
+                "groups with each material's vendor, status and dates."),
+        # The status chip's arrow runs along the line between the column headings and the first row.
+        "pins": [("update_the_list_upload", "left"), ("first_section_heading", "left"),
+                 ("status_chip_ordered", "top", 12)],
         "crops": {
             "wide": {"x0": 84, "x1": 1332, "y0": ("job_title", "top", -24), "aspect": TOUR_ASPECT,
                      "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
@@ -210,30 +212,33 @@ FIGURES = [
         "source": "console:material",
         "out": "mm-tour-material",
         # The form on the left with its order-by line, "Who sells it" and History in the right column.
-        "alt": ("A material's page with sample data: its status and dates with the order-by date, the vendor "
-                "and the rep with an email address and a phone number, and the history of what changed. "
-                "A sample company."),
-        "pins": [("vendor_and_rep", "left"), ("order_by_date", "left"), ("first_history_entry", "left")],
+        "alt": ("A material's page: its status and dates with the order-by date, the vendor and the rep "
+                "with an email address and a phone number, and the history of what changed."),
+        # Vendor: level with the gap under the Status row. History: along the gap under the order-by line.
+        "pins": [(("vendor_and_rep"), ("left", 26)), ("order_by_date", "left"),
+                 ("first_history_entry", ("left", 78))],
         "crops": {
             "wide": {"x0": 84, "x1": 1332, "y0": ("status_field", "top", -24), "aspect": TOUR_ASPECT,
                      "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
-            # Phones: the lead time and order-by rows of the form above Who sells it and the first
-            # History entry from the right column.
+            # Phones: Who sells it from the right column, the lead time and order-by rows of the form,
+            # then the History heading and first entry, in the order the pins are numbered.
             "narrow": {"stack": [
+                {"x0": 896, "x1": 1330, "y0": ("who_sells_it", "top", -16),
+                 "y1": ("who_sells_it", "bottom", 8)},
                 {"x0": 90, "x1": ("needed_on_site_by", "left", -8), "y0": ("lead_time", "top", -12),
                  "y1": ("order_by_date", "bottom", 12)},
-                {"x0": 896, "x1": 1330, "y0": ("who_sells_it", "top", -16),
+                {"x0": 896, "x1": 1330, "y0": ("history_heading", "top", -12),
                  "y1": ("first_history_entry", "bottom", 3)}],
                 "display": 390, "widths": [560, 868]},
         },
-        "narrow_pins": [("vendor_and_rep", "left"), ("order_by_date", "left"), ("first_history_entry", "top-left")],
+        "narrow_pins": [("vendor_and_rep", "left"), ("order_by_date", "left"), ("first_history_entry", "left")],
     },
     {
         "id": "tour-4",
         "source": "console:updates-proposals",
         "out": "mm-tour-updates",
-        "alt": ("The Updates page with sample data: vendor updates waiting for an OK, each with the "
-                "proposed change, the vendor's own sentence and Confirm, Edit and Dismiss. A sample company."),
+        "alt": ("The Updates page: vendor updates waiting for an OK, each with the proposed change, the "
+                "vendor's own sentence and Confirm, Edit and Dismiss."),
         "pins": [("proposed_change", "left"), ("quoted_vendor_sentence", "left"),
                  ("confirm_button", "left")],
         "crops": {
@@ -249,9 +254,8 @@ FIGURES = [
         "id": "tour-5",
         "source": "console:follow-up",
         "out": "mm-tour-follow-up",
-        "alt": ("Follow-up emails written for the reps with sample data, one per rep: each open order with its "
-                "model number, how many arrived and the order date, and the button that opens it in Outlook. "
-                "A sample company."),
+        "alt": ("Follow-up emails written for the reps, one per rep: each open order with its model number, "
+                "how many arrived and the order date, and the button that opens it in Outlook."),
         "pins": [("first_draft_vendor_and_rep", "left"), ("first_draft_body", "left"),
                  ("open_in_outlook", "left")],
         "crops": {
@@ -267,48 +271,44 @@ FIGURES = [
         "source": "email",
         "measure": {"first_line": "td p"},
         "out": "mm-morning-email",
-        "alt": ("The morning email with sample data: the updates waiting for an OK, the materials that "
-                "need ordering, the problems flagged from the field and what arrived. A sample company."),
-        "pins": [("first_line", "right"), ("section_1", "left"), ("section_2", "left"),
-                 ("section_3", "left")],
+        "alt": ("The morning email: the updates waiting for an OK, the materials that need ordering, the "
+                "problems flagged from the field, what arrived and what vendors and carriers reported."),
+        "side": True,
+        "pins": [("first_line", "left"), ("section_1", "left"), ("section_2", "left"),
+                 ("section_3", "left"), ("section_4", ("left", 10))],
         "crops": {
-            # The email down to the end of Items received. It stops before "Orders and tracking",
-            # whose carrier lines describe carrier tracking, which is not switched on yet.
-            "wide": {"x0": 36, "x1": 684, "y0": 0, "y1": ("section_4", "top", -14),
+            # The whole email card, down to Orders and tracking and the gray line.
+            "wide": {"x0": 36, "x1": 684, "y0": 0, "y1": ("card", "bottom", 16),
                      "display": 600, "widths": [600, 1080],
                      "sizes": "(min-width: 1100px) 600px, (min-width: 700px) min(600px, calc(100vw - 48px)), 100vw"},
-            # Phones: the masthead, the first line and Needs ordering, cut on the right so the
-            # material names and dates read; the whole email is on wider screens.
             # Phones: the email's text column at the full width of the screen. Only the side padding
             # is cut (the grey ground on the left, the card's padding on the right), never a line.
-            "narrow": {"x0": 30, "x1": 640, "y0": 0, "y1": ("section_4", "top", -14),
+            "narrow": {"x0": 30, "x1": 640, "y0": 0, "y1": ("card", "bottom", 16),
                        "display": 390, "widths": [560, 1220]},
         },
-        "narrow_pins": [("first_line", "left"), ("section_1", "left"), ("section_2", "left"),
-                        ("section_3", "left")],
     },
     {
         "id": "field-receive",
         "source": "app:receive-list",
         "out": "mm-app-receive",
-        "alt": ("The field app's receiving screen with sample data: what came in at one job, with a "
-                "shower valve ticked and marked in good condition."),
+        "alt": ("The field app's receiving screen: what came in at one job, with a shower valve ticked "
+                "and marked in good condition."),
         "crops": {"wide": {"widths": [280, 560], "sizes": "(min-width: 900px) 280px, 70vw"}},
     },
     {
         "id": "field-material",
         "source": "app:material",
         "out": "mm-app-material",
-        "alt": ("A material in the field app with sample data: shipped and due Wednesday, with its tracking "
-                "number, maker, model, vendor and rep. Buttons below email the rep or receive it."),
+        "alt": ("A material in the field app: shipped and due Wednesday, with its tracking number, maker, "
+                "model, vendor and rep. Buttons below email the rep or receive it."),
         "crops": {"wide": {"widths": [280, 560], "sizes": "(min-width: 900px) 280px, 70vw"}},
     },
     {
         "id": "field-problem",
         "source": "app:tell-the-office",
         "out": "mm-app-problem",
-        "alt": ("The field app's report a problem screen with sample data: a powder room sink marked "
-                "damaged, with a sentence for the office."),
+        "alt": ("The field app's report a problem screen: a powder room sink marked damaged, with a "
+                "sentence for the office."),
         "crops": {"wide": {"widths": [280, 560], "sizes": "(min-width: 900px) 280px, 70vw"}},
     },
 ]
@@ -538,27 +538,105 @@ def save_webp(img: Image.Image, path: Path, width: int, budget: int, dry: bool) 
     return width, h, size, q
 
 
+def _end_point(a: tuple, end, k: float) -> tuple[float, float, str]:
+    """Where an arrow ends on an anchor, in the crop's CSS pixels, and the side it arrives from."""
+    x, y, w, h = a
+    gap = 3 / k
+    if isinstance(end, tuple):
+        side, dy = end
+        return (x - gap, y + dy, "left") if side == "left" else (x + w + gap, y + dy, "right")
+    return {
+        "left": (x - gap, y + h / 2, "left"),
+        "right": (x + w + gap, y + h / 2, "right"),
+        "top": (x + w / 2, y - gap, "top"),
+        "bottom": (x + w / 2, y + h + gap, "bottom"),
+        "center": (x + w / 2, y + h / 2, "left"),
+    }[end]
+
+
 def place_pins(fig: dict, fr: Frame, display: float | None, variant: str) -> list[dict]:
-    """Every pin as a percentage of the crop, or hidden when it does not fit inside."""
+    """Pins in one gutter at their targets' heights, moved apart where they crowd,
+    and the arrow from each pin to its target. Everything in the crop's CSS pixels."""
     k = (display / fr.css_w) if display else 1.0      # screen pixels per CSS pixel
+    W, H = fr.css_w, fr.css_h
+    narrow = variant == "narrow"
+    specs = fig.get("narrow_pins", fig["pins"]) if narrow else fig.get("pins", [])
+    gx = (GUTTER if narrow else -GUTTER) / k         # the gutter: pin centres
+    lo, hi = (PIN_R + 3) / k, H - (PIN_R + 3) / k
+    gap = (GAP_NARROW if narrow else GAP_SIDE if fig.get("side") else GAP_WIDE) / k
+    min_end = gx + (PIN_R + 12) / k if narrow else 8 / k
     out = []
-    pins = fig.get("narrow_pins", fig["pins"]) if variant == "narrow" else fig.get("pins", [])
-    for n, (name, spot) in enumerate(pins, start=1):
-        fx, fy, pxs, pys = SPOTS[spot]
+    for n, spec in enumerate(specs, start=1):
+        name, end = spec[0], spec[1]
+        lane_off = spec[2] if len(spec) > 2 else 12
+        p = {"n": n, "name": name, "end": end, "hidden": True}
         a = fr.anchor.get(name)
-        p = {"n": n, "name": name, "spot": spot, "hidden": True}
         if a is not None:
-            x, y, w, h = a
-            ax, ay = x + fx * w, y + fy * h
-            cx, cy = ax + pxs * PUSH / k, ay + pys * PUSH / k      # the pin's centre, CSS px
-            r = (PIN_R + 1) / k
-            if r <= cx <= fr.css_w - r and r <= cy <= fr.css_h - r:
-                p.update(hidden=False, rect=a, x=100 * ax / fr.css_w, y=100 * ay / fr.css_h,
-                         dx=pxs * PUSH, dy=pys * PUSH)
+            ex, ey, side = _end_point(a, end, k)
+            ex = max(ex, min_end) if side == "left" else ex
+            lane = ey
+            if side == "top":
+                lane = a[1] - lane_off
+            elif side == "bottom":
+                lane = a[1] + a[3] + lane_off
+            if 0 <= ex <= W and 0 <= ey <= H and lo - 2 / k <= lane <= hi + 2 / k:
+                p.update(hidden=False, rect=a, ex=ex, ey=ey, side=side, lane=lane, py=lane)
         if p["hidden"]:
-            warn(f"{fig['id']} {variant}: pin {n} ({name}) does not fit in the crop; hidden there")
+            warn(f"{fig['id']} {variant}: pin {n} ({name}) is outside the crop; hidden there")
         out.append(p)
+
+    shown = sorted((q for q in out if not q["hidden"]), key=lambda q: q["lane"])
+    for _ in range(80):                                # move crowded pins apart, inside the picture
+        for a_, b_ in zip(shown, shown[1:]):
+            d = b_["py"] - a_["py"]
+            if d < gap:
+                a_["py"] -= (gap - d) / 2
+                b_["py"] += (gap - d) / 2
+        for q in shown:
+            q["py"] = min(max(q["py"], lo), hi)
+    for q in shown:
+        if [x["n"] for x in shown] != sorted(x["n"] for x in shown):
+            warn(f"{fig['id']} {variant}: pins are not numbered top to bottom "
+                 f"({', '.join(str(x['n']) for x in shown)}); renumber the pins and the labels together")
+            break
+
+    for q in shown:
+        py, lane, ex, ey = q["py"], q["lane"], q["ex"], q["ey"]
+        pts = [(gx, py)]
+        lane_x = ex                                    # where the level run ends
+        if abs(py - lane) > 0.5:                       # bend once to the lane
+            bx = gx + (34 if narrow else 30) / k
+            bx = min(bx, lane_x - 12 / k)
+            pts.append((bx, lane))
+        pts.append((lane_x, lane))
+        if q["side"] in ("top", "bottom"):
+            pts.append((ex, ey))
+        # the arrowhead, pointing along the last segment
+        (x1, y1), (x2, y2) = pts[-2], pts[-1]
+        dx, dy = x2 - x1, y2 - y1
+        ln = max((dx * dx + dy * dy) ** 0.5, 1e-6)
+        ux, uy = dx / ln, dy / ln
+        L, Wd = 9 / k, 4.6 / k
+        bxh, byh = x2 - ux * L, y2 - uy * L
+        head = [(x2, y2), (bxh - uy * Wd, byh + ux * Wd), (bxh + uy * Wd, byh - ux * Wd)]
+        q.update(points=pts, head=head, stroke=1.5 / k,
+                 y=100 * py / H, end_x=100 * ex / W, end_y=100 * ey / H)
     return out
+
+
+def arrows_svg(fr: Frame, pins: list[dict], cls: str) -> str:
+    f = lambda v: f"{v:.1f}"
+    g = []
+    stroke = next((p["stroke"] for p in pins if not p["hidden"]), 1.5)
+    for p in pins:
+        if p["hidden"]:
+            continue
+        pts = " ".join(f"{f(x)},{f(y)}" for x, y in p["points"])
+        (hx, hy), (ax, ay), (bx, by) = p["head"]
+        g.append(f'<g class="a a{p["n"]}"><polyline pathLength="1" points="{pts}"/>'
+                 f'<path d="M{f(hx)},{f(hy)} L{f(ax)},{f(ay)} L{f(bx)},{f(by)} Z"/></g>')
+    return (f'<svg class="arrows {cls}" viewBox="0 0 {f(fr.css_w)} {f(fr.css_h)}" preserveAspectRatio="none" '
+            f'stroke-width="{stroke:.2f}" aria-hidden="true" focusable="false">{"".join(g)}</svg>')
 
 
 def img_tag(fig: dict, files: list[tuple[int, int]], spec: dict, stem: str, cls: str | None) -> str:
@@ -577,11 +655,10 @@ def block_for(fig: dict, shots_name: str, frames: dict, pins: dict, files: dict)
         lines.append(f"     {variant}: {fr.desc}")
         for p in pins.get(variant, []):
             if p["hidden"]:
-                lines.append(f"       pin {p['n']}  {p['name']} ({p['spot']}): outside this crop, hidden")
+                lines.append(f"       pin {p['n']}  {p['name']}: outside this crop, hidden")
             else:
-                x, y, w, h = p["rect"]
-                lines.append(f"       pin {p['n']}  {p['name']} ({p['spot']}) box {x:.0f},{y:.0f} {w:.0f}x{h:.0f}"
-                             f" -> left {p['x']:.3f}% top {p['y']:.3f}%, pushed {p['dx']}px {p['dy']}px")
+                lines.append(f"       pin {p['n']}  {p['name']}: pin at {p['y']:.2f}%, arrow ends at "
+                             f"{p['end_x']:.2f}% {p['end_y']:.2f}%")
     if fig.get("pins"):
         lines.append("     To move a pin or a crop, change it in the script and run it again; do not edit the numbers here.")
     lines[-1] += " -->"
@@ -599,8 +676,7 @@ def block_for(fig: dict, shots_name: str, frames: dict, pins: dict, files: dict)
             if p["hidden"]:
                 classes.append(f"miss-{p['n']}")
             else:
-                parts.append(f"--x{p['n']}:{p['x']:.3f}%;--y{p['n']}:{p['y']:.3f}%;"
-                             f"--dx{p['n']}:{p['dx']}px;--dy{p['n']}:{p['dy']}px")
+                parts.append(f"--y{p['n']}:{p['y']:.3f}%")
         wfr = frames["wide"]
         parts.append(f"--ratio:{wfr.css_h / wfr.css_w:.4f}")
         for vname, v in fig["crops"]["wide"].get("vars", {}).items():
@@ -609,14 +685,22 @@ def block_for(fig: dict, shots_name: str, frames: dict, pins: dict, files: dict)
             classes.append("nfade")
         if "narrow" in pins:
             classes.append("two")
-            for p in pins["narrow"]:
-                if p["hidden"]:
-                    classes.append(f"nmiss-{p['n']}")
-                else:
-                    parts.append(f"--nx{p['n']}:{p['x']:.3f}%;--ny{p['n']}:{p['y']:.3f}%;"
-                                 f"--ndx{p['n']}:{p['dx']}px;--ndy{p['n']}:{p['dy']}px")
+            classes += [f"nmiss-{p['n']}" for p in pins["narrow"] if p["hidden"]]
         lines.append(f'<div class="{" ".join(classes)}" style="{";".join(parts)}">')
         lines.append(f'<div class="pic">{pic}')
+        lines.append(arrows_svg(frames["wide"], pins["wide"], "aw"))
+        if "narrow" in pins:
+            lines.append(arrows_svg(frames["narrow"], pins["narrow"], "an"))
+        npins = {p["n"]: p for p in pins.get("narrow", [])}
+        for p in pins["wide"]:
+            q = npins.get(p["n"])
+            cls = ["pin", f"p{p['n']}"] + (["off"] if p["hidden"] else []) + (["noff"] if q and q["hidden"] else [])
+            st = []
+            if not p["hidden"]:
+                st.append(f"--py:{p['y']:.3f}%")
+            if q and not q["hidden"]:
+                st.append(f"--npy:{q['y']:.3f}%")
+            lines.append(f'<span class="{" ".join(cls)}" style="{";".join(st)}" aria-hidden="true">{p["n"]}</span>')
     else:
         lines.append(pic)
     lines.append(f"<!-- MM-FIG {fid} END -->")
@@ -706,8 +790,8 @@ def main() -> int:
                 pins[variant] = place_pins(fig, fr, display, variant)
                 for p in pins[variant]:
                     if not p["hidden"]:
-                        print(f"     pin {p['n']}  {p['name']:28s} {p['spot']:12s} left {p['x']:7.3f}%  "
-                              f"top {p['y']:7.3f}%  push {p['dx']:+d}px {p['dy']:+d}px")
+                        print(f"     pin {p['n']}  {p['name']:28s} pin y {p['y']:7.3f}%   arrow ends x {p['end_x']:7.3f}% "
+                              f"y {p['end_y']:7.3f}%")
         if not args.dry_run:        # remove this figure's files from earlier crops
             for old in glob.glob(str(OUT_DIR / f"{fig['out']}-*.webp")):
                 if Path(old).name not in written and re.fullmatch(re.escape(fig["out"]) + r"-(n-)?\d+\.webp", Path(old).name):

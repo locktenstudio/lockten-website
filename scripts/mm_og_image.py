@@ -3,7 +3,7 @@
 
 The card is the page's own identity: slate ground, the product lockup, the page's
 headline with its copper italic line, and a crop of the dashboard picture the page
-uses (assets/screens/materialmonitor/mm-hero-dashboard-2080.webp, sample data) in
+uses (assets/screens/materialmonitor/mm-hero-dashboard-2080.webp) in
 the same plain browser frame. Run it again after the headline or the pictures change:
 
     python scripts/mm_og_image.py
@@ -35,7 +35,8 @@ html, body {{ margin: 0; width: 1200px; height: 630px; overflow: hidden; backgro
 .lock span {{ font-family: 'Instrument Serif', Georgia, serif; font-size: 36px; color: #EEF1F4; letter-spacing: -0.01em; }}
 h1 {{ position: absolute; left: 64px; top: 150px; width: 520px; margin: 0; font-family: 'Instrument Serif', Georgia, serif;
       font-weight: 400; font-size: 64px; line-height: 1.04; letter-spacing: -0.02em; color: #FFFFFF; }}
-h1 em {{ display: block; font-style: italic; color: #DE9A66; }}
+h1 em {{ font-style: italic; color: #DE9A66; }}
+.pg {{ white-space: nowrap; }}
 .foot {{ position: absolute; left: 64px; bottom: 60px; font-family: 'Geist Mono', monospace; font-size: 17px;
         letter-spacing: 0.12em; text-transform: uppercase; color: #B6BCC5; }}
 .rule {{ position: absolute; left: 64px; bottom: 102px; width: 44px; height: 2px; background: #C8763C; }}
@@ -45,14 +46,12 @@ h1 em {{ display: block; font-style: italic; color: #DE9A66; }}
 .bar i {{ width: 11px; height: 11px; border-radius: 50%; background: #58616D; }}
 .bar b {{ margin-left: 90px; font: 400 15px 'Geist Mono', monospace; color: #AEB5BF; background: #1D232B; border-radius: 6px; padding: 3px 16px; }}
 .frame img {{ display: block; width: 1040px; height: auto; margin-left: -8px; }}
-.cap {{ position: absolute; left: 64px; bottom: 22px; font: 400 14px 'Geist Mono', monospace; color: #888F9C; letter-spacing: 0.04em; }}
 </style></head><body><div class="card">
 <div class="lock">{mark}<span>Material Monitor</span></div>
 <h1>{headline}</h1>
 <div class="rule"></div>
 <div class="foot">Office console &middot; Field app</div>
 <div class="frame"><div class="bar"><i></i><i></i><i></i><b>app.materialmonitor.app</b></div><img src="{shot}" alt=""></div>
-<div class="cap">Sample company, not a real job.</div>
 </div></body></html>"""
 
 
