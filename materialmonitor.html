@@ -127,8 +127,8 @@ body.mm .bp-grid {
 :where(.mm) a:focus-visible, :where(.mm) button:focus-visible, .mm summary:focus-visible { outline: 3px solid var(--copper); outline-offset: 3px; border-radius: 4px; }
 
 /* ---- Hero ---- */
-.mm .hero-dark { padding: 30px 0 124px; }
-.hero-dark .hero-headline { font-size: clamp(2.5rem, 5vw, 4.5rem); max-width: none; margin: 0; }
+.mm .hero-dark { padding: 22px 0 124px; }
+.hero-dark .hero-headline { font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1; max-width: none; margin: 0; }
 .hero-dark .hero-headline em { color: var(--copper-lift); }
 .hero-dark .btn-primary, .cta-band .btn-primary { background: var(--copper); color: #1D232B; }
 .hero-dark .btn-primary:hover, .cta-band .btn-primary:hover { background: var(--copper-lift); }
@@ -144,7 +144,7 @@ body.mm .bp-grid {
 .mm .btn { font-size: 1rem; padding: 13px 22px; }
 .launch-stamp { display: inline-block; font-family: var(--font-mono); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--copper-lift); border: 1.5px solid rgba(222, 154, 102, 0.45); border-radius: 3px; padding: 6px 13px; margin-bottom: 14px; }
 .mm .hero-geo { font-size: 0.9rem; letter-spacing: 0.12em; max-width: 1320px; gap: 12px; flex-wrap: wrap; }
-.annotated.mm-hero-fig { margin-top: 30px; }
+.annotated.mm-hero-fig { margin-top: 22px; }
 .mm-hero-fig figcaption { color: var(--steel-300); margin-top: 28px; }
 @media (max-width: 1099px) { .mm-hero-fig figcaption { margin-top: 30px; } }
 @media (max-width: 720px) { .mm .hero-geo { font-size: 0.9rem; letter-spacing: 0.06em; } .mm .hero-dark { padding-bottom: 96px; } }
@@ -464,8 +464,8 @@ body.mm .bp-grid {
   .seq.live.b2:not(.b3) .seq-caps li:nth-child(2)::before,
   .seq.live.b3:not(.b4) .seq-caps li:nth-child(3)::before,
   .seq.live.b4 .seq-caps li:nth-child(4)::before { background: var(--brand); color: #FFFFFF; }
-  .seq.live.paused .seq-caps li { color: #EEF1F4; font-weight: 400; border-top-color: var(--copper); }
-  .seq.live.paused .seq-caps li::before { background: var(--brand); }
+  .seq.live.paused .seq-caps li:nth-child(n) { color: #EEF1F4; font-weight: 400; border-top-color: var(--copper); }
+  .seq.live.paused .seq-caps li:nth-child(n)::before { background: var(--brand); }
 }
 @keyframes mm-tap { 0%, 100% { transform: none; } 50% { transform: scale(0.8); } }
 @keyframes mm-tap-btn { 0%, 100% { transform: none; } 50% { transform: scale(0.93); } }
@@ -711,7 +711,7 @@ body.mm .bp-grid {
        pin 3  deliveries_heading (left): outside this crop, hidden
        pin 4  follow_up_heading (left): outside this crop, hidden
      To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
-<div class="shot two nmiss-3 nmiss-4" style="--x1:3.846%;--y1:13.423%;--dx1:-18px;--dy1:0px;--x2:5.529%;--y2:31.088%;--dx2:-18px;--dy2:0px;--x3:3.846%;--y3:52.806%;--dx3:-18px;--dy3:0px;--x4:3.846%;--y4:72.849%;--dx4:-18px;--dy4:0px;--ratio:0.9351;--pt:0.7627;--nx1:10.619%;--ny1:37.973%;--ndx1:-18px;--ndy1:0px;--nx2:13.717%;--ny2:89.254%;--ndx2:-18px;--ndy2:0px">
+<div class="shot two nmiss-3 nmiss-4" style="--x1:3.846%;--y1:13.423%;--dx1:-18px;--dy1:0px;--x2:5.529%;--y2:31.088%;--dx2:-18px;--dy2:0px;--x3:3.846%;--y3:52.806%;--dx3:-18px;--dy3:0px;--x4:3.846%;--y4:72.849%;--dx4:-18px;--dy4:0px;--ratio:0.9351;--pt:0.7907;--nx1:10.619%;--ny1:37.973%;--ndx1:-18px;--ndy1:0px;--nx2:13.717%;--ny2:89.254%;--ndx2:-18px;--ndy2:0px">
 <div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-hero-dashboard-n-560.webp 560w, assets/screens/materialmonitor/mm-hero-dashboard-n-1120.webp 1120w" sizes="100vw" width="560" height="332"><img class="shot-img" src="assets/screens/materialmonitor/mm-hero-dashboard-1040.webp" srcset="assets/screens/materialmonitor/mm-hero-dashboard-1040.webp 1040w, assets/screens/materialmonitor/mm-hero-dashboard-2080.webp 2080w" sizes="(min-width: 1320px) calc(50vw + 302px), (min-width: 1100px) calc(100vw - 358px), (min-width: 700px) calc(100vw - 48px), 100vw" width="1040" height="972" fetchpriority="high" decoding="async" alt="The Material Monitor dashboard with sample data: four job cards, the materials that need ordering with their order-by dates, this week's deliveries and the start of the follow-up list. A sample company, not a real job."></picture>
 <!-- MM-FIG hero END -->
             <svg class="lead to-l l1" aria-hidden="true" focusable="false"><line x1="100%" y1="6" x2="0" y2="6" pathLength="1" marker-start="url(#mm-arrow)"/></svg>
@@ -884,13 +884,13 @@ body.mm .bp-grid {
        pin 1  vendor_and_rep (left) box 865,84 338x335 -> left 69.311% top 32.237%, pushed -18px 0px
        pin 2  order_by_date (left) box 48,631 371x52 -> left 3.846% top 84.199%, pushed -18px 0px
        pin 3  first_history_entry (left) box 844,601 380x86 -> left 67.628% top 82.590%, pushed -18px 0px
-     narrow: console/full/material.png, x 880 to 1330, y 202 to 991 (450 x 789)
-       pin 1  vendor_and_rep (left) box 69,76 338x335 -> left 15.333% top 30.856%, pushed -18px 0px
+     narrow: console/full/material.png, x 896 to 1330, y 202 to 991 (434 x 789)
+       pin 1  vendor_and_rep (left) box 53,76 338x335 -> left 12.212% top 30.856%, pushed -18px 0px
        pin 2  order_by_date (left): outside this crop, hidden
-       pin 3  first_history_entry (left) box 48,593 380x86 -> left 10.667% top 80.634%, pushed -18px 0px
+       pin 3  first_history_entry (top-left) box 32,593 380x86 -> left 7.373% top 75.184%, pushed 0px 0px
      To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
-<div class="shot two nmiss-2" style="--x1:69.311%;--y1:32.237%;--dx1:-18px;--dy1:0px;--x2:3.846%;--y2:84.199%;--dx2:-18px;--dy2:0px;--x3:67.628%;--y3:82.590%;--dx3:-18px;--dy3:0px;--ratio:0.6250;--nx1:15.333%;--ny1:30.856%;--ndx1:-18px;--ndy1:0px;--nx3:10.667%;--ny3:80.634%;--ndx3:-18px;--ndy3:0px">
-<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-material-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-material-n-900.webp 900w" sizes="100vw" width="560" height="982"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-material-980.webp" srcset="assets/screens/materialmonitor/mm-tour-material-980.webp 980w, assets/screens/materialmonitor/mm-tour-material-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="A material's page with sample data: its status and dates with the order-by date, the vendor and the rep with an email address and a phone number, and the history of what changed. A sample company."></picture>
+<div class="shot two nmiss-2" style="--x1:69.311%;--y1:32.237%;--dx1:-18px;--dy1:0px;--x2:3.846%;--y2:84.199%;--dx2:-18px;--dy2:0px;--x3:67.628%;--y3:82.590%;--dx3:-18px;--dy3:0px;--ratio:0.6250;--nx1:12.212%;--ny1:30.856%;--ndx1:-18px;--ndy1:0px;--nx3:7.373%;--ny3:75.184%;--ndx3:0px;--ndy3:0px">
+<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-material-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-material-n-868.webp 868w" sizes="100vw" width="560" height="1018"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-material-980.webp" srcset="assets/screens/materialmonitor/mm-tour-material-980.webp 980w, assets/screens/materialmonitor/mm-tour-material-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="A material's page with sample data: its status and dates with the order-by date, the vendor and the rep with an email address and a phone number, and the history of what changed. A sample company."></picture>
 <!-- MM-FIG tour-3 END -->
                   <span class="pin p1" aria-hidden="true">1</span>
                   <span class="pin p2" aria-hidden="true">2</span>
@@ -1360,7 +1360,7 @@ body.mm .bp-grid {
      once, when the picture is in view. Without motion nothing is hidden. */
   var fio = (motionOK && hasIO) ? new IntersectionObserver(function (entries) {
     entries.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-on'); fio.unobserve(e.target); } });
-  }, { threshold: 0.3 }) : null;
+  }, { threshold: 0, rootMargin: '0px 0px -22% 0px' }) : null;  /* when its top is in the upper part of the screen, however tall it is */
   function arm(fig) {
     if (!fio || fig.classList.contains('anim')) return;
     fig.classList.remove('is-on');

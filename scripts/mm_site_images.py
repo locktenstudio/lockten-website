@@ -138,7 +138,7 @@ FIGURES = [
             # the phone over the lower right corner covers only the empty right side of that row.
             "wide": {"x0": 84, "x1": 1332, "y0": ("jobs_heading", "top", -20),
                      "y1": ("first_follow_up_row", "bottom", 16),
-                     "vars": {"pt": ("draft_an_email_button", "bottom", 20)},
+                     "vars": {"pt": ("first_follow_up_category", "top", -8)},
                      "display": 1022, "widths": [1040, 2080], "sizes": HERO_SIZES},
             # Phones: the first two job cards and the first Needs ordering row.
             "narrow": {"x0": 60, "x1": 738, "y0": ("jobs_heading", "top", -16),
@@ -200,9 +200,10 @@ FIGURES = [
             "wide": {"x0": 84, "x1": 1332, "y0": ("status_field", "top", -24), "aspect": TOUR_ASPECT,
                      "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
             # Phones: the right column, Who sells it and the start of History.
-            "narrow": {"x0": 880, "x1": 1330, "y0": ("who_sells_it", "top", -16),
-                       "y1": ("first_history_entry", "bottom", 110), "display": 390, "widths": [560, 900]},
+            "narrow": {"x0": 896, "x1": 1330, "y0": ("who_sells_it", "top", -16),
+                       "y1": ("first_history_entry", "bottom", 110), "display": 390, "widths": [560, 868]},
         },
+        "narrow_pins": [("vendor_and_rep", "left"), ("order_by_date", "left"), ("first_history_entry", "top-left")],
     },
     {
         "id": "tour-4",
