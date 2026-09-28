@@ -211,8 +211,8 @@ FIGURES = [
         "out": "mm-app-material",
         "widths": [280, 560],
         "sizes": "(min-width: 900px) 280px, 70vw",
-        "alt": ("A material in the field app with sample data: shipped, due Wednesday, with the tracking "
-                "number, maker, model, vendor and rep, and buttons to email the rep or receive it."),
+        "alt": ("A material in the field app with sample data: shipped and due Wednesday, with its tracking "
+                "number, maker, model, vendor and rep. Buttons below email the rep or receive it."),
     },
     {
         "id": "field-problem",
