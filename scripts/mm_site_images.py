@@ -134,7 +134,7 @@ FIGURES = [
         "alt": ("The dashboard's follow-up list with sample data: orders that have gone quiet, each "
                 "with the reason and the rep, and the button that drafts the emails. A sample company."),
         "pins": [("search_box", "bottom"), ("first_follow_up_reason", "left"),
-                 ("draft_an_email_button", "left")],
+                 ("draft_an_email_button", "right")],
     },
     {
         "id": "tour-2",
@@ -145,7 +145,7 @@ FIGURES = [
         "sizes": "(min-width: 1100px) 832px, (min-width: 928px) 880px, calc(100vw - 48px)",
         "alt": ("One job's list with sample data: the box for bringing in a selections export, then the "
                 "tile and appliance groups with each material's vendor, status and dates. A sample company."),
-        "pins": [("first_section_heading", "left"), ("status_chip_ordered", "top-right"),
+        "pins": [("first_section_heading", "left"), ("status_chip_ordered", "top"),
                  ("update_the_list_upload", "left")],
     },
     {
@@ -169,7 +169,7 @@ FIGURES = [
         "alt": ("The Updates page with sample data: vendor updates waiting for an OK, each with the "
                 "proposed change, the vendor's own sentence and Confirm, Edit and Dismiss. A sample company."),
         "pins": [("proposed_change", "left"), ("quoted_vendor_sentence", "left"),
-                 ("confirm_button", "top-right")],
+                 ("confirm_button", "right")],
     },
     {
         "id": "tour-5",
