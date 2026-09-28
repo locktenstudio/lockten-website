@@ -181,7 +181,8 @@ FIGURES = [
             # Phones: the right of the bar and the heading row (search box, Draft an email button)
             # above the left of the first follow-up row (its reason).
             "narrow": {"stack": [
-                {"nav": True, "x0": ("search_box", "left", -16), "x1": 1330, "y0": ("follow_up_heading", "top", -14),
+                {"nav": True, "x0": ("search_box", "left", -16), "x1": ("search_box", "left", 612),
+                 "y0": ("follow_up_heading", "top", -14),
                  "y1": ("draft_an_email_button", "bottom", 14)},
                 {"x0": 90, "x1": 720, "y0": ("first_follow_up_category", "top", -10),
                  "y1": ("first_follow_up_row", "bottom", 8), "snap_x1": "first_follow_up_contact"}],
