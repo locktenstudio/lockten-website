@@ -181,7 +181,7 @@ FIGURES = [
             # Phones: the right of the bar and the heading row (search box, Draft an email button)
             # above the left of the first follow-up row (its reason).
             "narrow": {"stack": [
-                {"nav": True, "x0": 700, "x1": 1330, "y0": ("follow_up_heading", "top", -14),
+                {"nav": True, "x0": ("search_box", "left", -16), "x1": 1330, "y0": ("follow_up_heading", "top", -14),
                  "y1": ("draft_an_email_button", "bottom", 14)},
                 {"x0": 90, "x1": 720, "y0": ("first_follow_up_category", "top", -10),
                  "y1": ("first_follow_up_row", "bottom", 8), "snap_x1": "first_follow_up_contact"}],
@@ -219,7 +219,8 @@ FIGURES = [
             # Phones: the lead time and order-by rows of the form above Who sells it and the first
             # History entry from the right column.
             "narrow": {"stack": [
-                {"x0": 90, "x1": 524, "y0": ("lead_time", "top", -12), "y1": ("order_by_date", "bottom", 12)},
+                {"x0": 90, "x1": ("needed_on_site_by", "left", -8), "y0": ("lead_time", "top", -12),
+                 "y1": ("order_by_date", "bottom", 12)},
                 {"x0": 896, "x1": 1330, "y0": ("who_sells_it", "top", -16),
                  "y1": ("first_history_entry", "bottom", 8)}],
                 "display": 390, "widths": [560, 868]},
@@ -238,7 +239,8 @@ FIGURES = [
             "wide": {"x0": 84, "x1": 1332, "y0": ("proposals_heading", "top", -24), "aspect": TOUR_ASPECT,
                      "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
             "narrow": {"x0": 84, "x1": 640, "y0": ("proposal_card", "top", -16),
-                       "y1": ("proposal_card", "bottom", 16), "snap_x1": "quoted_vendor_sentence",
+                       "y1": ("confirm_button", "bottom", 14),
+                       "snap_x1": ["proposal_change_line", "quoted_vendor_sentence"],
                        "fade": True, "display": 390, "widths": [560, 1120]},
         },
     },
@@ -404,7 +406,8 @@ def crop_console(shots: Path, fig: dict, spec: dict) -> Frame:
     x1 = resolve(spec["x1"], anchors, what)
     y0 = resolve(spec["y0"], anchors, what)
     if spec.get("snap_x1"):
-        x1 = snap_clear_x(full, scale, x1, anchors[spec["snap_x1"]], what)
+        names = spec["snap_x1"] if isinstance(spec["snap_x1"], list) else [spec["snap_x1"]]
+        x1 = snap_clear_x(full, scale, x1, [anchors[n] for n in names], what)
     top = nav_h if spec.get("nav") else 0.0
     w = x1 - x0
     if "aspect" in spec:
@@ -437,15 +440,17 @@ def crop_console(shots: Path, fig: dict, spec: dict) -> Frame:
     return fr
 
 
-def snap_clear_x(full: Image.Image, scale: float, x1: float, band: tuple, what: str) -> float:
-    """The nearest x at or left of x1 where the band's rows have 4 clear CSS pixels (a gap between words)."""
+def snap_clear_x(full: Image.Image, scale: float, x1: float, bands: list, what: str) -> float:
+    """The nearest x at or left of x1 where every band's rows have 4 clear CSS pixels (a gap between words)."""
     import numpy as np
-    bx, by, bw, bh = band
-    rows = np.asarray(full.crop((0, int(by * scale), full.width, int((by + bh) * scale))).convert("L"))
-    clear = (rows > 205).all(axis=0)              # a column with no ink in the band
+    clear = None
+    for bx, by, bw, bh in bands:
+        rows = np.asarray(full.crop((0, int(by * scale), full.width, int((by + bh) * scale))).convert("L"))
+        c = (rows > 205).all(axis=0)              # a column with no ink in the band
+        clear = c if clear is None else (clear & c)
     need = int(4 * scale)
     x = int(x1 * scale)
-    for _ in range(int(160 * scale)):
+    for _ in range(int(220 * scale)):
         if clear[x - need:x].all():
             return (x - need / 2) / scale
         x -= 1
