@@ -193,7 +193,7 @@ FIGURES = [
                 "and the date to order by so it arrives in time. A sample company."),
         "pins": [("vendor_and_rep", "left"), ("order_by_date", "left"), ("history_list", "left")],
         "crops": {
-            "wide": {"x0": 84, "x1": 1016, "y0": ("needed_on_site_by", "top", -20), "aspect": TOUR_ASPECT,
+            "wide": {"x0": 84, "x1": 1016, "y0": ("needed_on_site_by", "top", -6), "aspect": TOUR_ASPECT,
                      "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
             "narrow": {"x0": 84, "x1": 566, "y0": ("lead_time", "top", -12),
                        "y1": ("order_by_date", "bottom", 90), "display": 390, "widths": [560, 1120]},
