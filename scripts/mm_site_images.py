@@ -29,7 +29,8 @@ page's CSS pixels: x0 to x1 across, y0 to y1 down (y1 can instead follow from
 an aspect ratio, so every tour picture has the same shape). Each edge is a
 number or (anchor, edge, offset), for example ("jobs_heading", "top", -20), so
 a re-shoot that moves things down the page still crops the same content.
-`nav: True` puts the console's navigation bar (which stays at the top of the
+`pad_left: N` adds N CSS pixels of the page's own ground on the left (for a
+crop that must start close to a neighbouring column). `nav: True` puts the console's navigation bar (which stays at the top of the
 screen when the page scrolls) above the crop, cut to the same width. A figure
 can have a "wide" crop and a "narrow" one; the narrow one is served under 700px
 through <picture>, with its own pin positions.
@@ -223,13 +224,13 @@ FIGURES = [
             # Phones: Who sells it from the right column, the lead time and order-by rows of the form,
             # then the History heading and first entry, in the order the pins are numbered.
             "narrow": {"stack": [
-                {"x0": 872, "x1": 1330, "y0": ("who_sells_it", "top", -16),
+                {"x0": 900, "x1": 1330, "pad_left": 34, "y0": ("who_sells_it", "top", -16),
                  "y1": ("who_sells_it", "bottom", 8)},
-                {"x0": 76, "x1": 534, "y0": ("lead_time", "top", -12),
+                {"x0": 96, "x1": ("needed_on_site_by", "left", -8), "pad_left": 20, "y0": ("lead_time", "top", -12),
                  "y1": ("order_by_date", "bottom", 12)},
-                {"x0": 872, "x1": 1330, "y0": ("history_heading", "top", -12),
+                {"x0": 900, "x1": 1330, "pad_left": 34, "y0": ("history_heading", "top", -12),
                  "y1": ("first_history_entry", "bottom", 3)}],
-                "display": 390, "widths": [560, 916]},
+                "display": 390, "widths": [560, 912]},
         },
         "narrow_pins": [("vendor_and_rep", "left"), ("order_by_date", "left"), ("first_history_entry", "left")],
     },
@@ -430,13 +431,23 @@ def crop_console(shots: Path, fig: dict, spec: dict) -> Frame:
         img.paste(full.crop((px(x0), 0, px(x1), px(top))), (0, 0))
     img.paste(full.crop((px(x0), px(y0), px(x1), px(y1))), (0, px(top)))
     bar = ", the console's bar kept" if top else ""
-    fr = Frame(img, scale, w, h, f"{full_rel}, x {x0} to {x1}, y {y0} to {y1}{bar} ({w} x {h})")
+    # pad_left: a strip of the page's own ground on the left, so a crop that must start close to a
+    # neighbouring column still leaves room for the pin gutter
+    pad = float(spec.get("pad_left", 0))
+    if pad:
+        ground = img.getpixel((1, img.height // 2))
+        padded = Image.new("RGB", (img.width + px(pad), img.height), ground)
+        padded.paste(img, (px(pad), 0))
+        img = padded
+        w += pad
+        bar += f", {pad:.0f}px of ground added on the left"
+    fr = Frame(img, scale, w, h, f"{full_rel}, x {x0} to {x1}, y {y0} to {y1}{bar} ({w:.0f} x {h})")
     for name, (ax, ay, aw, ah) in anchors.items():
         if ay + ah <= nav_h:
             if top:
-                fr.anchor[name] = (ax - x0, ay, aw, ah)
+                fr.anchor[name] = (ax - x0 + pad, ay, aw, ah)
         else:
-            fr.anchor[name] = (ax - x0, ay - y0 + top, aw, ah)
+            fr.anchor[name] = (ax - x0 + pad, ay - y0 + top, aw, ah)
     # Named fractions of the crop's height for the page's CSS (for example where the hero phone starts).
     for vname, edge in spec.get("vars", {}).items():
         fr.var[vname] = (resolve(edge, anchors, what) - y0 + top) / h
