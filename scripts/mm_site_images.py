@@ -115,6 +115,9 @@ HERO_SIZES = ("(min-width: 1320px) calc(50vw + 302px), (min-width: 1100px) calc(
 #   source: "console:<page>" (cropped from console/full/<page>.png with
 #           console/<page>.anchors.json), "email", or "app:<screen>".
 #   crops:  "wide" and optionally "narrow"; see the notes at the top.
+#           A wide crop can carry "vars": {name: (anchor, edge, offset)}, written to the
+#           page as --name, a fraction of the crop's height; every figure with pins
+#           also gets --ratio (height over width of the wide crop).
 #   pins:   (anchor, spot) in number order; narrow_pins, if given, the same
 #           pins with other spots for the narrow crop.
 # ---------------------------------------------------------------------------
@@ -131,9 +134,11 @@ FIGURES = [
         "pins": [("first_job_card", "left"), ("first_order_by_date", "left"),
                  ("deliveries_heading", "left"), ("follow_up_heading", "left")],
         "crops": {
-            # The whole dashboard width, from the jobs row down to the follow-up heading.
+            # The whole dashboard width, from the jobs row down through the first follow-up row, so
+            # the phone over the lower right corner covers only the empty right side of that row.
             "wide": {"x0": 84, "x1": 1332, "y0": ("jobs_heading", "top", -20),
-                     "y1": ("follow_up_heading", "bottom", 18),
+                     "y1": ("first_follow_up_row", "bottom", 16),
+                     "vars": {"pt": ("draft_an_email_button", "bottom", 20)},
                      "display": 1022, "widths": [1040, 2080], "sizes": HERO_SIZES},
             # Phones: the first two job cards and the first Needs ordering row.
             "narrow": {"x0": 60, "x1": 738, "y0": ("jobs_heading", "top", -16),
@@ -186,17 +191,17 @@ FIGURES = [
         "id": "tour-3",
         "source": "console:material",
         "out": "mm-tour-material",
-        # FOR NOW: the order-by line and the lead time fields only. When the re-shot material page
-        # arrives (site-shots-2, vendor, rep and history in a right-hand column), re-crop this figure
-        # so all three pins are inside it, and drop this note.
-        "alt": ("A material's page with sample data: the date it is needed on site, the vendor's lead time "
-                "and the date to order by so it arrives in time. A sample company."),
-        "pins": [("vendor_and_rep", "left"), ("order_by_date", "left"), ("history_list", "left")],
+        # The form on the left with its order-by line, "Who sells it" and History in the right column.
+        "alt": ("A material's page with sample data: its status and dates with the order-by date, the vendor "
+                "and the rep with an email address and a phone number, and the history of what changed. "
+                "A sample company."),
+        "pins": [("vendor_and_rep", "left"), ("order_by_date", "left"), ("first_history_entry", "left")],
         "crops": {
-            "wide": {"x0": 84, "x1": 1016, "y0": ("needed_on_site_by", "top", -6), "aspect": TOUR_ASPECT,
+            "wide": {"x0": 84, "x1": 1332, "y0": ("status_field", "top", -24), "aspect": TOUR_ASPECT,
                      "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
-            "narrow": {"x0": 84, "x1": 566, "y0": ("lead_time", "top", -12),
-                       "y1": ("order_by_date", "bottom", 90), "display": 390, "widths": [560, 1120]},
+            # Phones: the right column, Who sells it and the start of History.
+            "narrow": {"x0": 880, "x1": 1330, "y0": ("who_sells_it", "top", -16),
+                       "y1": ("first_history_entry", "bottom", 110), "display": 390, "widths": [560, 900]},
         },
     },
     {
@@ -239,9 +244,9 @@ FIGURES = [
         "pins": [("first_line", "right"), ("section_1", "left"), ("section_2", "left"),
                  ("section_3", "left")],
         "crops": {
-            # The email card and a little of its grey ground, down to the Orders and tracking heading.
-            "wide": {"x0": 36, "x1": 684, "y0": 0, "y1": ("section_4", "top", -14),
-                     "display": 600, "widths": [600, 1200],
+            # The whole email card and a little of its grey ground.
+            "wide": {"x0": 36, "x1": 684, "y0": 0, "y1": ("card", "bottom", 16),
+                     "display": 600, "widths": [600, 1080],
                      "sizes": "(min-width: 1100px) 600px, (min-width: 700px) min(600px, calc(100vw - 48px)), 100vw"},
             # Phones: the masthead, the first line and Needs ordering, cut on the right so the
             # material names and dates read; the whole email is on wider screens.
@@ -343,6 +348,7 @@ class Frame:
         self.css_h = css_h
         self.desc = desc
         self.anchor = {}            # name -> (x, y, w, h)
+        self.var = {}               # name -> fraction of the crop's height
 
 
 _full_cache: dict = {}
@@ -397,6 +403,9 @@ def crop_console(shots: Path, fig: dict, spec: dict) -> Frame:
                 fr.anchor[name] = (ax - x0, ay, aw, ah)
         else:
             fr.anchor[name] = (ax - x0, ay - y0 + top, aw, ah)
+    # Named fractions of the crop's height for the page's CSS (for example where the hero phone starts).
+    for vname, edge in spec.get("vars", {}).items():
+        fr.var[vname] = (resolve(edge, anchors, what) - y0 + top) / h
     return fr
 
 
@@ -519,6 +528,10 @@ def block_for(fig: dict, shots_name: str, frames: dict, pins: dict, files: dict)
             else:
                 parts.append(f"--x{p['n']}:{p['x']:.3f}%;--y{p['n']}:{p['y']:.3f}%;"
                              f"--dx{p['n']}:{p['dx']}px;--dy{p['n']}:{p['dy']}px")
+        wfr = frames["wide"]
+        parts.append(f"--ratio:{wfr.css_h / wfr.css_w:.4f}")
+        for vname, v in fig["crops"]["wide"].get("vars", {}).items():
+            parts.append(f"--{vname}:{wfr.var[vname]:.4f}")
         if "narrow" in pins:
             classes.append("two")
             for p in pins["narrow"]:
