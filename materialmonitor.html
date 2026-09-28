@@ -254,9 +254,9 @@ body.mm .bp-grid {
    source), with the pins from the script's --nxN/--nyN numbers. Pins outside
    the narrow crop hide and their numbers go grey; the list keeps every label. */
 @media (max-width: 699px) {
-  .mm-hero-fig .stage, .tour-fig .stage, .mm-email-fig .stage { margin-left: calc(-1 * var(--gutter)); margin-right: calc(-1 * var(--gutter)); max-width: none; }
+  .mm-hero-fig .stage, .tour-fig .stage, .annotated.mm-email-fig .stage { margin-left: calc(-1 * var(--gutter)); margin-right: calc(-1 * var(--gutter)); max-width: none; }
   .mm-hero-fig .bar, .tour-fig .bar { border-radius: 0; }
-  .mm-hero-fig .shot-img, .tour-fig .shot-img, .mm-email-fig .shot-img { border-radius: 0; }
+  .mm-hero-fig .shot-img, .tour-fig .shot-img, .annotated.mm-email-fig .shot-img { border-radius: 0; }
   .mm-hero-fig .labels, .tour-fig .labels, .mm-email-fig .labels { padding: 0 var(--gutter); }
   .shot.two .pin { display: block; }
   .shot.two .pin.p1 { left: calc(var(--nx1) + var(--ndx1)); top: calc(var(--ny1) + var(--ndy1)); }
@@ -382,7 +382,7 @@ body.mm .bp-grid {
 .quote { position: relative; margin: 0; padding: 10px 12px 10px 14px; border-left: 3px solid var(--blueprint-200); font-size: 0.98rem; line-height: 1.55; color: var(--fg-2); font-style: italic; }
 /* the highlighted copy sits in the same grid cell as the plain text, so both wrap the same way */
 .hl-quote { display: grid; }
-.hl-quote > span { grid-area: 1 / 1; }
+.hl-quote > span { grid-area: 1 / 1; text-wrap: wrap; }  /* pretty can break the two copies differently */
 .quote .hl { color: var(--fg); }
 .quote .hl mark { background: rgba(222, 154, 102, 0.34); color: inherit; border-radius: 2px; padding: 1px 0; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 .acts { display: flex; gap: 10px; position: relative; }
@@ -1104,9 +1104,14 @@ body.mm .bp-grid {
        pin 2  section_1 (left) box 49,172 550x21 -> left 7.562% top 13.719%, pushed -18px 0px
        pin 3  section_2 (left) box 49,638 550x18 -> left 7.562% top 48.655%, pushed -18px 0px
        pin 4  section_3 (left) box 49,988 550x18 -> left 7.562% top 74.959%, pushed -18px 0px
+     narrow: email/morning.png, x 40 to 490, y 0 to 393
+       pin 1  first_line (left) box 45,121 550x27 -> left 10.000% top 34.249%, pushed -18px 0px
+       pin 2  section_1 (left) box 45,172 550x21 -> left 10.000% top 46.463%, pushed -18px 0px
+       pin 3  section_2 (left): outside this crop, hidden
+       pin 4  section_3 (left): outside this crop, hidden
      To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
-<div class="shot" style="--x1:92.438%;--y1:10.113%;--dx1:18px;--dy1:0px;--x2:7.562%;--y2:13.719%;--dx2:-18px;--dy2:0px;--x3:7.562%;--y3:48.655%;--dx3:-18px;--dy3:0px;--x4:7.562%;--y4:74.959%;--dx4:-18px;--dy4:0px">
-<div class="pic"><img class="shot-img" src="assets/screens/materialmonitor/mm-morning-email-600.webp" srcset="assets/screens/materialmonitor/mm-morning-email-600.webp 600w, assets/screens/materialmonitor/mm-morning-email-1200.webp 1200w" sizes="(min-width: 1100px) 600px, (min-width: 700px) min(600px, calc(100vw - 48px)), 100vw" width="600" height="1232" loading="lazy" decoding="async" alt="The morning email with sample data: the updates waiting for an OK, the materials that need ordering, the problems flagged from the field and what arrived. A sample company.">
+<div class="shot two nmiss-3 nmiss-4" style="--x1:92.438%;--y1:10.113%;--dx1:18px;--dy1:0px;--x2:7.562%;--y2:13.719%;--dx2:-18px;--dy2:0px;--x3:7.562%;--y3:48.655%;--dx3:-18px;--dy3:0px;--x4:7.562%;--y4:74.959%;--dx4:-18px;--dy4:0px;--nx1:10.000%;--ny1:34.249%;--ndx1:-18px;--ndy1:0px;--nx2:10.000%;--ny2:46.463%;--ndx2:-18px;--ndy2:0px">
+<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-morning-email-n-560.webp 560w, assets/screens/materialmonitor/mm-morning-email-n-900.webp 900w" sizes="100vw" width="560" height="489"><img class="shot-img" src="assets/screens/materialmonitor/mm-morning-email-600.webp" srcset="assets/screens/materialmonitor/mm-morning-email-600.webp 600w, assets/screens/materialmonitor/mm-morning-email-1200.webp 1200w" sizes="(min-width: 1100px) 600px, (min-width: 700px) min(600px, calc(100vw - 48px)), 100vw" width="600" height="1232" loading="lazy" decoding="async" alt="The morning email with sample data: the updates waiting for an OK, the materials that need ordering, the problems flagged from the field and what arrived. A sample company."></picture>
 <!-- MM-FIG email END -->
             <svg class="lead to-r l1" aria-hidden="true" focusable="false"><line x1="0" y1="6" x2="100%" y2="6" pathLength="1" marker-start="url(#mm-arrow)"/></svg>
             <svg class="lead to-l l2" aria-hidden="true" focusable="false"><line x1="100%" y1="6" x2="0" y2="6" pathLength="1" marker-start="url(#mm-arrow)"/></svg>

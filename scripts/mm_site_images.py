@@ -115,7 +115,8 @@ HERO_SIZES = ("(min-width: 1320px) calc(50vw + 302px), (min-width: 1100px) calc(
 #   source: "console:<page>" (cropped from console/full/<page>.png with
 #           console/<page>.anchors.json), "email", or "app:<screen>".
 #   crops:  "wide" and optionally "narrow"; see the notes at the top.
-#   pins:   (anchor, spot) in number order.
+#   pins:   (anchor, spot) in number order; narrow_pins, if given, the same
+#           pins with other spots for the narrow crop.
 # ---------------------------------------------------------------------------
 FIGURES = [
     {
@@ -242,7 +243,13 @@ FIGURES = [
             "wide": {"x0": 36, "x1": 684, "y0": 0, "y1": ("section_4", "top", -14),
                      "display": 600, "widths": [600, 1200],
                      "sizes": "(min-width: 1100px) 600px, (min-width: 700px) min(600px, calc(100vw - 48px)), 100vw"},
+            # Phones: the masthead, the first line and Needs ordering, cut on the right so the
+            # material names and dates read; the whole email is on wider screens.
+            "narrow": {"x0": 40, "x1": 490, "y0": 0, "y1": ("section_1", "bottom", 200),
+                       "display": 390, "widths": [560, 900]},
         },
+        "narrow_pins": [("first_line", "left"), ("section_1", "left"), ("section_2", "left"),
+                        ("section_3", "left")],
     },
     {
         "id": "field-receive",
@@ -453,7 +460,8 @@ def place_pins(fig: dict, fr: Frame, display: float | None, variant: str) -> lis
     """Every pin as a percentage of the crop, or hidden when it does not fit inside."""
     k = (display / fr.css_w) if display else 1.0      # screen pixels per CSS pixel
     out = []
-    for n, (name, spot) in enumerate(fig.get("pins", []), start=1):
+    pins = fig.get("narrow_pins", fig["pins"]) if variant == "narrow" else fig.get("pins", [])
+    for n, (name, spot) in enumerate(pins, start=1):
         fx, fy, pxs, pys = SPOTS[spot]
         a = fr.anchor.get(name)
         p = {"n": n, "name": name, "spot": spot, "hidden": True}
