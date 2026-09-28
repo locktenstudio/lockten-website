@@ -224,8 +224,9 @@ FIGURES = [
         "id": "tour-5",
         "source": "console:follow-up",
         "out": "mm-tour-follow-up",
-        "alt": ("A follow-up email written for one rep with sample data: the open items with model "
-                "numbers, quantities and order dates, and the button that opens it in Outlook. A sample company."),
+        "alt": ("Follow-up emails written for the reps with sample data, one per rep: each open order with its "
+                "model number, how many arrived and the order date, and the button that opens it in Outlook. "
+                "A sample company."),
         "pins": [("first_draft_vendor_and_rep", "left"), ("first_draft_body", "left"),
                  ("open_in_outlook", "left")],
         "crops": {
