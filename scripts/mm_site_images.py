@@ -34,6 +34,13 @@ screen when the page scrolls) above the crop, cut to the same width. A figure
 can have a "wide" crop and a "narrow" one; the narrow one is served under 700px
 through <picture>, with its own pin positions.
 
+A narrow crop can also be a "stack": two or more crops of the same page set one
+above the other with a small gap, for a phone, when the things the pins point at
+sit in columns too far apart to share one legible crop. "snap_x1": anchor moves a
+crop's right edge left to the nearest clear column inside that anchor's rows, so
+a cut line of text ends between words, and "fade": True softens that right edge
+on the page.
+
 `display` is how wide the crop shows at the 1440 layout (or at 390 for a
 narrow crop). The script checks that the console's 17px body text comes out at
 13px or more on a wide crop, and uses the scale to keep every pin, which is 28
@@ -128,6 +135,7 @@ FIGURES = [
         "out": "mm-hero-dashboard",
         "budget": BUDGET_HERO,
         "eager": True,
+        "lcp": True,          # fetchpriority high, and a preload block for the head
         "alt": ("The Material Monitor dashboard with sample data: four job cards, the materials that "
                 "need ordering with their order-by dates, this week's deliveries and the start of the "
                 "follow-up list. A sample company, not a real job."),
@@ -140,9 +148,10 @@ FIGURES = [
                      "y1": ("first_follow_up_row", "bottom", 16),
                      "vars": {"pt": ("first_follow_up_category", "top", -8)},
                      "display": 1022, "widths": [1040, 2080], "sizes": HERO_SIZES},
-            # Phones: the first two job cards and the first Needs ordering row.
-            "narrow": {"x0": 60, "x1": 738, "y0": ("jobs_heading", "top", -16),
-                       "y1": ("first_needs_ordering_row", "bottom", 20),
+            # Phones: the left two job cards and the left of every section down to the line under the
+            # follow-up heading, so all four pins show; the right edge falls between the second and third card.
+            "narrow": {"x0": 60, "x1": 724, "y0": ("jobs_heading", "top", -16),
+                       "y1": ("first_follow_up_category", "top", -8), "fade": True,
                        "display": 390, "widths": [560, 1120]},
         },
     },
@@ -163,13 +172,20 @@ FIGURES = [
                 "with the reason and the rep, and the button that drafts the emails. A sample company."),
         "pins": [("search_box", "bottom"), ("first_follow_up_reason", "left"),
                  ("draft_an_email_button", "right")],
+        "narrow_pins": [("search_box", "bottom"), ("first_follow_up_reason", "left"),
+                        ("draft_an_email_button", "left")],
         "crops": {
             # Keeps the console's own bar, because the search box is a callout.
             "wide": {"nav": True, "x0": 100, "x1": 1372, "y0": ("follow_up_heading", "top", -24),
                      "aspect": TOUR_ASPECT, "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
-            # The search box and the button sit far to the right, so a phone shows the list and pin 2.
-            "narrow": {"nav": True, "x0": 100, "x1": 700, "y0": ("follow_up_heading", "top", -24),
-                       "y1": ("first_follow_up_row", "bottom", 24), "display": 390, "widths": [560, 1120]},
+            # Phones: the right of the bar and the heading row (search box, Draft an email button)
+            # above the left of the first follow-up row (its reason).
+            "narrow": {"stack": [
+                {"nav": True, "x0": 700, "x1": 1330, "y0": ("follow_up_heading", "top", -14),
+                 "y1": ("draft_an_email_button", "bottom", 14)},
+                {"x0": 90, "x1": 720, "y0": ("first_follow_up_category", "top", -10),
+                 "y1": ("first_follow_up_row", "bottom", 8), "snap_x1": "first_follow_up_contact"}],
+                "fade": True, "display": 390, "widths": [560, 1120]},
         },
     },
     {
@@ -184,7 +200,8 @@ FIGURES = [
             "wide": {"x0": 84, "x1": 1332, "y0": ("job_title", "top", -24), "aspect": TOUR_ASPECT,
                      "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
             "narrow": {"x0": 60, "x1": 740, "y0": ("update_the_list_upload", "top", -24),
-                       "y1": ("first_board_row", "bottom", 110), "display": 390, "widths": [560, 1120]},
+                       "y1": ("first_board_row", "bottom", 1), "fade": True,
+                       "display": 390, "widths": [560, 1120]},
         },
     },
     {
@@ -199,9 +216,13 @@ FIGURES = [
         "crops": {
             "wide": {"x0": 84, "x1": 1332, "y0": ("status_field", "top", -24), "aspect": TOUR_ASPECT,
                      "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
-            # Phones: the right column, Who sells it and the start of History.
-            "narrow": {"x0": 896, "x1": 1330, "y0": ("who_sells_it", "top", -16),
-                       "y1": ("first_history_entry", "bottom", 110), "display": 390, "widths": [560, 868]},
+            # Phones: the lead time and order-by rows of the form above Who sells it and the first
+            # History entry from the right column.
+            "narrow": {"stack": [
+                {"x0": 90, "x1": 524, "y0": ("lead_time", "top", -12), "y1": ("order_by_date", "bottom", 12)},
+                {"x0": 896, "x1": 1330, "y0": ("who_sells_it", "top", -16),
+                 "y1": ("first_history_entry", "bottom", 8)}],
+                "display": 390, "widths": [560, 868]},
         },
         "narrow_pins": [("vendor_and_rep", "left"), ("order_by_date", "left"), ("first_history_entry", "top-left")],
     },
@@ -212,12 +233,13 @@ FIGURES = [
         "alt": ("The Updates page with sample data: vendor updates waiting for an OK, each with the "
                 "proposed change, the vendor's own sentence and Confirm, Edit and Dismiss. A sample company."),
         "pins": [("proposed_change", "left"), ("quoted_vendor_sentence", "left"),
-                 ("confirm_button", "right")],
+                 ("confirm_button", "left")],
         "crops": {
             "wide": {"x0": 84, "x1": 1332, "y0": ("proposals_heading", "top", -24), "aspect": TOUR_ASPECT,
                      "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
             "narrow": {"x0": 84, "x1": 640, "y0": ("proposal_card", "top", -16),
-                       "y1": ("proposal_card", "bottom", 16), "display": 390, "widths": [560, 1120]},
+                       "y1": ("proposal_card", "bottom", 16), "snap_x1": "quoted_vendor_sentence",
+                       "fade": True, "display": 390, "widths": [560, 1120]},
         },
     },
     {
@@ -233,7 +255,8 @@ FIGURES = [
             "wide": {"x0": 84, "x1": 1332, "y0": ("first_draft", "top", -56), "aspect": TOUR_ASPECT,
                      "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
             "narrow": {"x0": 84, "x1": 700, "y0": ("first_draft", "top", -16),
-                       "y1": ("open_in_outlook", "bottom", 24), "display": 390, "widths": [560, 1120]},
+                       "y1": ("first_draft", "bottom", 12), "snap_x1": "first_draft_body",
+                       "fade": True, "display": 390, "widths": [560, 1120]},
         },
     },
     {
@@ -246,13 +269,14 @@ FIGURES = [
         "pins": [("first_line", "right"), ("section_1", "left"), ("section_2", "left"),
                  ("section_3", "left")],
         "crops": {
-            # The whole email card and a little of its grey ground.
-            "wide": {"x0": 36, "x1": 684, "y0": 0, "y1": ("card", "bottom", 16),
+            # The email down to the end of Items received. It stops before "Orders and tracking",
+            # whose carrier lines describe carrier tracking, which is not switched on yet.
+            "wide": {"x0": 36, "x1": 684, "y0": 0, "y1": ("section_4", "top", -14),
                      "display": 600, "widths": [600, 1080],
                      "sizes": "(min-width: 1100px) 600px, (min-width: 700px) min(600px, calc(100vw - 48px)), 100vw"},
             # Phones: the masthead, the first line and Needs ordering, cut on the right so the
             # material names and dates read; the whole email is on wider screens.
-            "narrow": {"x0": 40, "x1": 490, "y0": 0, "y1": ("section_1", "bottom", 200),
+            "narrow": {"x0": 40, "x1": 490, "y0": 0, "y1": ("section_4", "top", -14), "fade": True,
                        "display": 390, "widths": [560, 900]},
         },
         "narrow_pins": [("first_line", "left"), ("section_1", "left"), ("section_2", "left"),
@@ -379,6 +403,8 @@ def crop_console(shots: Path, fig: dict, spec: dict) -> Frame:
     x0 = resolve(spec["x0"], anchors, what)
     x1 = resolve(spec["x1"], anchors, what)
     y0 = resolve(spec["y0"], anchors, what)
+    if spec.get("snap_x1"):
+        x1 = snap_clear_x(full, scale, x1, anchors[spec["snap_x1"]], what)
     top = nav_h if spec.get("nav") else 0.0
     w = x1 - x0
     if "aspect" in spec:
@@ -408,6 +434,43 @@ def crop_console(shots: Path, fig: dict, spec: dict) -> Frame:
     # Named fractions of the crop's height for the page's CSS (for example where the hero phone starts).
     for vname, edge in spec.get("vars", {}).items():
         fr.var[vname] = (resolve(edge, anchors, what) - y0 + top) / h
+    return fr
+
+
+def snap_clear_x(full: Image.Image, scale: float, x1: float, band: tuple, what: str) -> float:
+    """The nearest x at or left of x1 where the band's rows have 4 clear CSS pixels (a gap between words)."""
+    import numpy as np
+    bx, by, bw, bh = band
+    rows = np.asarray(full.crop((0, int(by * scale), full.width, int((by + bh) * scale))).convert("L"))
+    clear = (rows > 205).all(axis=0)              # a column with no ink in the band
+    need = int(4 * scale)
+    x = int(x1 * scale)
+    for _ in range(int(160 * scale)):
+        if clear[x - need:x].all():
+            return (x - need / 2) / scale
+        x -= 1
+    warn(f"{what}: no gap between words near x {x1:.0f}; the edge stays")
+    return x1
+
+
+def crop_stack(shots: Path, fig: dict, spec: dict) -> Frame:
+    """Several crops of one page, one above the other, for a phone."""
+    gap = spec.get("gap", 14)
+    parts = [crop_console(shots, fig, sub) for sub in spec["stack"]]
+    scale = parts[0].scale
+    w = max(p.css_w for p in parts)
+    h = sum(p.css_h for p in parts) + gap * (len(parts) - 1)
+    ground = parts[0].image.getpixel((2, parts[0].image.height - 2))
+    img = Image.new("RGB", (int(round(w * scale)), int(round(h * scale))), ground)
+    fr = Frame(img, scale, w, h, " then ".join(p.desc for p in parts))
+    y = 0.0
+    for p in parts:
+        img.paste(p.image, (0, int(round(y * scale))))
+        for name, (ax, ay, aw, ah) in p.anchor.items():
+            # an anchor belongs to the part its top left corner falls in
+            if name not in fr.anchor and 0 <= ax <= p.css_w and 0 <= ay <= p.css_h:
+                fr.anchor[name] = (ax, ay + y, aw, ah)
+        y += p.css_h + gap
     return fr
 
 
@@ -493,10 +556,10 @@ def place_pins(fig: dict, fr: Frame, display: float | None, variant: str) -> lis
 def img_tag(fig: dict, files: list[tuple[int, int]], spec: dict, stem: str, cls: str | None) -> str:
     w1, h1 = files[0]
     srcset = ", ".join(f"{OUT_URL}/{stem}-{w}.webp {w}w" for w, _ in files)
-    loading = 'fetchpriority="high"' if fig.get("eager") else 'loading="lazy"'
+    loading = 'fetchpriority="high"' if fig.get("lcp") else ("" if fig.get("eager") else 'loading="lazy"')
     c = f'class="{cls}" ' if cls else ""
     return (f'<img {c}src="{OUT_URL}/{stem}-{w1}.webp" srcset="{srcset}" sizes="{spec["sizes"]}" '
-            f'width="{w1}" height="{h1}" {loading} decoding="async" alt="{fig["alt"]}">')
+            f'width="{w1}" height="{h1}" {loading + " " if loading else ""}decoding="async" alt="{fig["alt"]}">')
 
 
 def block_for(fig: dict, shots_name: str, frames: dict, pins: dict, files: dict) -> str:
@@ -534,6 +597,8 @@ def block_for(fig: dict, shots_name: str, frames: dict, pins: dict, files: dict)
         parts.append(f"--ratio:{wfr.css_h / wfr.css_w:.4f}")
         for vname, v in fig["crops"]["wide"].get("vars", {}).items():
             parts.append(f"--{vname}:{wfr.var[vname]:.4f}")
+        if fig["crops"].get("narrow", {}).get("fade"):
+            classes.append("nfade")
         if "narrow" in pins:
             classes.append("two")
             for p in pins["narrow"]:
@@ -548,6 +613,24 @@ def block_for(fig: dict, shots_name: str, frames: dict, pins: dict, files: dict)
         lines.append(pic)
     lines.append(f"<!-- MM-FIG {fid} END -->")
     return "\n".join(lines)
+
+
+def preload_block(fig: dict, files: dict, shots_name: str) -> str:
+    """Preload the largest picture of the first screen, the wide or the narrow crop by width."""
+    fid = fig["id"] + "-preload"
+    out = [f"<!-- MM-FIG {fid} START. Generated by scripts/mm_site_images.py from {shots_name}. -->"]
+    wide = files["wide"]
+    srcset = ", ".join(f"{OUT_URL}/{fig['out']}-{w}.webp {w}w" for w, _ in wide)
+    media = ' media="(min-width: 700px)"' if "narrow" in files else ""
+    out.append(f'<link rel="preload" as="image" href="{OUT_URL}/{fig["out"]}-{wide[0][0]}.webp" '
+               f'imagesrcset="{srcset}" imagesizes="{fig["crops"]["wide"]["sizes"]}"{media} fetchpriority="high">')
+    if "narrow" in files:
+        nf = files["narrow"]
+        nsrc = ", ".join(f"{OUT_URL}/{fig['out']}-n-{w}.webp {w}w" for w, _ in nf)
+        out.append(f'<link rel="preload" as="image" href="{OUT_URL}/{fig["out"]}-n-{nf[0][0]}.webp" '
+                   f'imagesrcset="{nsrc}" imagesizes="100vw" media="{NARROW_MEDIA}" fetchpriority="high">')
+    out.append(f"<!-- MM-FIG {fid} END -->")
+    return "\n".join(out)
 
 
 def apply_blocks(blocks: dict[str, str]) -> None:
@@ -579,7 +662,8 @@ def main() -> int:
         if args.only and fig["id"] not in args.only:
             continue
         kind = fig["source"].split(":", 1)[0]
-        cropper = {"console": crop_console, "email": crop_email, "app": crop_app}[kind]
+        base_cropper = {"console": crop_console, "email": crop_email, "app": crop_app}[kind]
+        cropper = lambda sh, f, sp: (crop_stack if "stack" in sp else base_cropper)(sh, f, sp)
         frames, pins, files, written = {}, {}, {}, set()
         print(f"\n== {fig['id']}")
         for variant, spec in fig["crops"].items():
@@ -622,6 +706,8 @@ def main() -> int:
                     os.remove(old)
         blocks[fig["id"]] = block_for(fig, shots.name, frames, pins, files)
         print(blocks[fig["id"]])
+        if fig.get("lcp"):
+            blocks[fig["id"] + "-preload"] = preload_block(fig, files, shots.name)
 
     print(f"\nTotal of the WebP files written: {sum(total.values()) / 1000:.0f} KB over {len(total)} files.")
     if args.apply and not args.dry_run:
