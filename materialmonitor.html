@@ -495,8 +495,6 @@ body.mm .bp-grid {
 .mm-email-fig .shot-img { border-radius: 12px; box-shadow: var(--shadow-3); }
 @media (min-width: 1100px) { .mm-email-fig { --col: 236px; --gap: 40px; } .mm-email-fig .stage { max-width: min(600px, calc(100% - 2 * (var(--col) + var(--gap)))); } }
 
-/* ---- It proposes, a person decides ---- */
-
 /* ---- Cards ---- */
 .mm-cards { display: grid; gap: 20px; }
 @media (min-width: 900px) { .mm-cards { grid-template-columns: repeat(3, 1fr); gap: 22px; } }
@@ -615,7 +613,7 @@ body.mm .bp-grid {
       "name": "What happens when it reads something wrong?",
       "acceptedAnswer": {
         "@type": "Answer",
-        "text": "You dismiss it and nothing changes. Everything it reads is a suggestion with the vendor's own words quoted beside it, so a wrong reading is easy to spot, and you can correct a suggestion before you confirm it. The one thing that updates by itself is a shipping notice in a connected inbox for a tracking number already on the material. It can set the tracking, the expected date and Shipped, and nothing else."
+        "text": "You dismiss it and nothing changes. The one thing that updates by itself is a shipping notice in a connected inbox for a tracking number already on the material. It can set the tracking, the expected date and Shipped, and nothing else. Everything else it reads becomes a suggestion with the vendor's sentence quoted beside it, and a person confirms or dismisses it, so a wrong reading is easy to spot and you can correct a suggestion before you confirm it."
       }
     },
     {
@@ -877,13 +875,13 @@ body.mm .bp-grid {
        pin 1  vendor_and_rep (left) box 865,84 338x335 -> left 69.311% top 32.237%, pushed -18px 0px
        pin 2  order_by_date (left) box 48,631 371x52 -> left 3.846% top 84.199%, pushed -18px 0px
        pin 3  first_history_entry (left) box 844,601 380x86 -> left 67.628% top 82.590%, pushed -18px 0px
-     narrow: console/full/material.png, x 90 to 513, y 733 to 889 (423 x 156) then console/full/material.png, x 896 to 1330, y 202 to 889 (434 x 687)
-       pin 1  vendor_and_rep (left) box 53,246 338x335 -> left 12.212% top 48.244%, pushed -18px 0px
-       pin 2  order_by_date (left) box 42,92 371x52 -> left 9.677% top 13.740%, pushed -18px 0px
-       pin 3  first_history_entry (top-left) box 32,763 380x86 -> left 7.373% top 89.055%, pushed 0px 0px
+     narrow: console/full/material.png, x 90 to 513, y 733 to 889 (423 x 156) then console/full/material.png, x 896 to 1330, y 202 to 884 (434 x 682)
+       pin 1  vendor_and_rep (left) box 53,246 338x335 -> left 12.212% top 48.527%, pushed -18px 0px
+       pin 2  order_by_date (left) box 42,92 371x52 -> left 9.677% top 13.820%, pushed -18px 0px
+       pin 3  first_history_entry (top-left) box 32,763 380x86 -> left 7.373% top 89.577%, pushed 0px 0px
      To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
-<div class="shot two" style="--x1:69.311%;--y1:32.237%;--dx1:-18px;--dy1:0px;--x2:3.846%;--y2:84.199%;--dx2:-18px;--dy2:0px;--x3:67.628%;--y3:82.590%;--dx3:-18px;--dy3:0px;--ratio:0.6250;--nx1:12.212%;--ny1:48.244%;--ndx1:-18px;--ndy1:0px;--nx2:9.677%;--ny2:13.740%;--ndx2:-18px;--ndy2:0px;--nx3:7.373%;--ny3:89.055%;--ndx3:0px;--ndy3:0px">
-<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-material-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-material-n-868.webp 868w" sizes="100vw" width="560" height="1106"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-material-980.webp" srcset="assets/screens/materialmonitor/mm-tour-material-980.webp 980w, assets/screens/materialmonitor/mm-tour-material-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="A material's page with sample data: its status and dates with the order-by date, the vendor and the rep with an email address and a phone number, and the history of what changed. A sample company."></picture>
+<div class="shot two" style="--x1:69.311%;--y1:32.237%;--dx1:-18px;--dy1:0px;--x2:3.846%;--y2:84.199%;--dx2:-18px;--dy2:0px;--x3:67.628%;--y3:82.590%;--dx3:-18px;--dy3:0px;--ratio:0.6250;--nx1:12.212%;--ny1:48.527%;--ndx1:-18px;--ndy1:0px;--nx2:9.677%;--ny2:13.820%;--ndx2:-18px;--ndy2:0px;--nx3:7.373%;--ny3:89.577%;--ndx3:0px;--ndy3:0px">
+<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-material-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-material-n-868.webp 868w" sizes="100vw" width="560" height="1099"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-material-980.webp" srcset="assets/screens/materialmonitor/mm-tour-material-980.webp 980w, assets/screens/materialmonitor/mm-tour-material-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="A material's page with sample data: its status and dates with the order-by date, the vendor and the rep with an email address and a phone number, and the history of what changed. A sample company."></picture>
 <!-- MM-FIG tour-3 END -->
                   <span class="pin p1" aria-hidden="true">1</span>
                   <span class="pin p2" aria-hidden="true">2</span>
@@ -1119,14 +1117,14 @@ body.mm .bp-grid {
        pin 2  section_1 (left) box 49,172 550x18 -> left 7.562% top 13.202%, pushed -18px 0px
        pin 3  section_2 (left) box 49,627 550x18 -> left 7.562% top 46.303%, pushed -18px 0px
        pin 4  section_3 (left) box 49,1032 550x18 -> left 7.562% top 75.742%, pushed -18px 0px
-     narrow: email/morning.png, x 40 to 490, y 0 to 1374
-       pin 1  first_line (left) box 45,121 550x27 -> left 10.000% top 9.796%, pushed -18px 0px
-       pin 2  section_1 (left) box 45,172 550x18 -> left 10.000% top 13.202%, pushed -18px 0px
-       pin 3  section_2 (left) box 45,627 550x18 -> left 10.000% top 46.303%, pushed -18px 0px
-       pin 4  section_3 (left) box 45,1032 550x18 -> left 10.000% top 75.742%, pushed -18px 0px
+     narrow: email/morning.png, x 30 to 640, y 0 to 1374
+       pin 1  first_line (left) box 55,121 550x27 -> left 9.016% top 9.796%, pushed -18px 0px
+       pin 2  section_1 (left) box 55,172 550x18 -> left 9.016% top 13.202%, pushed -18px 0px
+       pin 3  section_2 (left) box 55,627 550x18 -> left 9.016% top 46.303%, pushed -18px 0px
+       pin 4  section_3 (left) box 55,1032 550x18 -> left 9.016% top 75.742%, pushed -18px 0px
      To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
-<div class="shot nfade two" style="--x1:92.438%;--y1:9.796%;--dx1:18px;--dy1:0px;--x2:7.562%;--y2:13.202%;--dx2:-18px;--dy2:0px;--x3:7.562%;--y3:46.303%;--dx3:-18px;--dy3:0px;--x4:7.562%;--y4:75.742%;--dx4:-18px;--dy4:0px;--ratio:2.1204;--nx1:10.000%;--ny1:9.796%;--ndx1:-18px;--ndy1:0px;--nx2:10.000%;--ny2:13.202%;--ndx2:-18px;--ndy2:0px;--nx3:10.000%;--ny3:46.303%;--ndx3:-18px;--ndy3:0px;--nx4:10.000%;--ny4:75.742%;--ndx4:-18px;--ndy4:0px">
-<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-morning-email-n-560.webp 560w, assets/screens/materialmonitor/mm-morning-email-n-900.webp 900w" sizes="100vw" width="560" height="1710"><img class="shot-img" src="assets/screens/materialmonitor/mm-morning-email-600.webp" srcset="assets/screens/materialmonitor/mm-morning-email-600.webp 600w, assets/screens/materialmonitor/mm-morning-email-1080.webp 1080w" sizes="(min-width: 1100px) 600px, (min-width: 700px) min(600px, calc(100vw - 48px)), 100vw" width="600" height="1272" loading="lazy" decoding="async" alt="The morning email with sample data: the updates waiting for an OK, the materials that need ordering, the problems flagged from the field and what arrived. A sample company."></picture>
+<div class="shot two" style="--x1:92.438%;--y1:9.796%;--dx1:18px;--dy1:0px;--x2:7.562%;--y2:13.202%;--dx2:-18px;--dy2:0px;--x3:7.562%;--y3:46.303%;--dx3:-18px;--dy3:0px;--x4:7.562%;--y4:75.742%;--dx4:-18px;--dy4:0px;--ratio:2.1204;--nx1:9.016%;--ny1:9.796%;--ndx1:-18px;--ndy1:0px;--nx2:9.016%;--ny2:13.202%;--ndx2:-18px;--ndy2:0px;--nx3:9.016%;--ny3:46.303%;--ndx3:-18px;--ndy3:0px;--nx4:9.016%;--ny4:75.742%;--ndx4:-18px;--ndy4:0px">
+<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-morning-email-n-560.webp 560w, assets/screens/materialmonitor/mm-morning-email-n-1220.webp 1220w" sizes="100vw" width="560" height="1261"><img class="shot-img" src="assets/screens/materialmonitor/mm-morning-email-600.webp" srcset="assets/screens/materialmonitor/mm-morning-email-600.webp 600w, assets/screens/materialmonitor/mm-morning-email-1080.webp 1080w" sizes="(min-width: 1100px) 600px, (min-width: 700px) min(600px, calc(100vw - 48px)), 100vw" width="600" height="1272" loading="lazy" decoding="async" alt="The morning email with sample data: the updates waiting for an OK, the materials that need ordering, the problems flagged from the field and what arrived. A sample company."></picture>
 <!-- MM-FIG email END -->
             <svg class="lead to-r l1" aria-hidden="true" focusable="false"><line x1="0" y1="6" x2="100%" y2="6" pathLength="1" marker-start="url(#mm-arrow)"/></svg>
             <svg class="lead to-l l2" aria-hidden="true" focusable="false"><line x1="100%" y1="6" x2="0" y2="6" pathLength="1" marker-start="url(#mm-arrow)"/></svg>
@@ -1190,7 +1188,7 @@ body.mm .bp-grid {
         </div>
         <div class="mm-card reveal d1">
           <h3>Every suggestion waits for a yes.</h3>
-          <p>Everything it reads becomes a suggestion with the vendor's sentence quoted beside it, and a person confirms or dismisses it. Forwarded mail always waits for a person, and no email can mark a material received. <!-- JOSH TO CONFIRM: For Josh item 1, the tracking-number exception: a shipping notice in a connected inbox whose tracking number is already on the material sets the tracking, the expected date and Shipped by itself, and nothing else. The heading says suggestions wait; this is not a suggestion. -->The one thing that updates by itself is a shipping notice in a connected inbox for a tracking number already on the material. It can set the tracking, the expected date and Shipped, and&nbsp;nothing&nbsp;else.</p>
+          <p><!-- JOSH TO CONFIRM: For Josh item 1, the tracking-number exception: a shipping notice in a connected inbox whose tracking number is already on the material sets the tracking, the expected date and Shipped by itself, and nothing else. The heading says suggestions wait; this is not a suggestion. -->The one thing that updates by itself is a shipping notice in a connected inbox for a tracking number already on the material. It can set the tracking, the expected date and Shipped, and nothing else. Everything else it reads becomes a suggestion with the vendor's sentence quoted beside it, and a person confirms or dismisses it. Forwarded mail always waits for a person, and no email can mark a material&nbsp;received.</p>
         </div>
         <div class="mm-card reveal d2">
           <h3>It never writes to your vendors.</h3>
@@ -1225,8 +1223,9 @@ body.mm .bp-grid {
         <ul>
           <!-- JOSH TO CONFIRM: For Josh item 5, the Live row (the console went live in September 2026; the builder's coordinator has run on the tracker it grew out of every day since July 2026). -->
           <li><b>Live</b><span>The office console is live at app.materialmonitor.app. It grew out of the tracker one builder's coordinator has run on every day since July 2026. Vendor mail comes in from connected Microsoft 365 inboxes or by forwarding from&nbsp;any&nbsp;inbox.</span></li>
-          <!-- ON APPROVAL: when Apple approves the app, the Opening row's three sentences about the app and the Google inbox become: The iPhone app is on the App Store, and connecting a Google inbox directly is being finished. The carrier sentence after them stays until carrier tracking is on. The FAQ answer "Can my crew use it on site?" changes at the same time; then regenerate the FAQPage JSON-LD in the head with python scripts/mm_faq_jsonld.py. -->
-          <li><b>Opening</b><span>Material Monitor is opening to a small group of founding builders now. The iPhone app is not on the App Store yet. Founding builders get it through TestFlight, Apple's testing app. Connecting a Google inbox directly is being finished. Following a shipment by its tracking number with the carrier is being switched on with the&nbsp;founding&nbsp;builders.</span></li>
+          <!-- ON APPROVAL: when Apple approves the app, the Opening row's three sentences about the app and the Google inbox become: The iPhone app is on the App Store, and connecting a Google inbox directly is being finished. The FAQ answer "Can my crew use it on site?" changes at the same time; then regenerate the FAQPage JSON-LD in the head with python scripts/mm_faq_jsonld.py. -->
+          <li><b>Opening</b><span>Material Monitor is opening to a small group of founding builders now. The iPhone app is not on the App Store yet. Founding builders get it through TestFlight, Apple's testing app. Connecting a Google inbox directly is&nbsp;being&nbsp;finished.</span></li>
+          <!-- JOSH TO CONFIRM: carrier tracking. Josh has not decided whether carrier tracking will be switched on, so the page promises nothing about it. If he decides to switch it on, add this as the last sentence of the Opening row above: Following a shipment by its tracking number with the carrier is being switched on with the founding builders. -->
           <li><b>Not set</b><span>There is no price on this page because there is no public price yet. Founding builders talk it through with the person who&nbsp;built&nbsp;it.</span></li>
         </ul>
       </div>
@@ -1248,7 +1247,7 @@ body.mm .bp-grid {
         <details><summary>Whose inbox does&nbsp;it&nbsp;read?</summary><p>Only the ones your office connects or forwards from. Vendor mail usually comes into real people's inboxes, like the coordinator's, the project manager's, the estimator's or an in-house designer's. Some offices also have a shared one. You can connect several and give each one a name. It only reads. It never sends, replies, moves or deletes anything, and it only asks about a new sender when a message looks like an order, a shipment, a delivery or&nbsp;a&nbsp;quote.</p></details>
         <details><summary>Microsoft 365&nbsp;or&nbsp;Google?</summary><p>Microsoft 365 inboxes connect directly today. Forwarding to your own private Material Monitor address works from any email system, Gmail included, and connecting a Google inbox directly is&nbsp;being&nbsp;finished.</p></details>
         <details><summary>Does it email&nbsp;my&nbsp;vendors?</summary><p>Never on its own. When an order needs a word, it drafts the follow-up, one email per rep with every open item on it, and you send it from your own email in your own words. Your reps hear&nbsp;from&nbsp;you.</p></details>
-        <details><summary>What happens when it reads&nbsp;something&nbsp;wrong?</summary><p>You dismiss it and nothing changes. Everything it reads is a suggestion with the vendor's own words quoted beside it, so a wrong reading is easy to spot, and you can correct a suggestion before you confirm it. <!-- JOSH TO CONFIRM: For Josh item 1, the tracking-number exception. -->The one thing that updates by itself is a shipping notice in a connected inbox for a tracking number already on the material. It can set the tracking, the expected date and Shipped, and&nbsp;nothing&nbsp;else.</p></details>
+        <details><summary>What happens when it reads&nbsp;something&nbsp;wrong?</summary><p>You dismiss it and nothing changes. <!-- JOSH TO CONFIRM: For Josh item 1, the tracking-number exception. -->The one thing that updates by itself is a shipping notice in a connected inbox for a tracking number already on the material. It can set the tracking, the expected date and Shipped, and nothing else. Everything else it reads becomes a suggestion with the vendor's sentence quoted beside it, and a person confirms or dismisses it, so a wrong reading is easy to spot and you can correct a suggestion before you&nbsp;confirm&nbsp;it.</p></details>
         <details><summary>How does an office get&nbsp;set&nbsp;up?</summary><p>Somebody in the office signs in at app.materialmonitor.app with a work email and a six digit code, names the company, adds the jobs, brings in each job's selections from a spreadsheet or an export and invites the team. Connecting vendor mail is the last step, and the list works&nbsp;without&nbsp;it.</p></details>
         <details><summary>What does&nbsp;it&nbsp;cost?</summary><p>There is no public price yet. Founding builders talk it through directly with the builder who&nbsp;made&nbsp;it.</p></details>
         <details><summary>Is this the same company as Walkthrough&nbsp;and&nbsp;Handover?</summary><p>Yes. Lock Ten Studio makes software for custom home builders and is run by the co-owner of a building company outside Washington DC. <a href="https://lockten.ai/walkthrough">Walkthrough</a> is its field-report app, <a href="https://lockten.ai/handover">Handover</a> builds the homeowner's manual and Material Monitor keeps track of the materials&nbsp;in&nbsp;between.</p></details>

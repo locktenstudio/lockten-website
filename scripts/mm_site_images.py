@@ -223,7 +223,7 @@ FIGURES = [
                 {"x0": 90, "x1": ("needed_on_site_by", "left", -8), "y0": ("lead_time", "top", -12),
                  "y1": ("order_by_date", "bottom", 12)},
                 {"x0": 896, "x1": 1330, "y0": ("who_sells_it", "top", -16),
-                 "y1": ("first_history_entry", "bottom", 8)}],
+                 "y1": ("first_history_entry", "bottom", 3)}],
                 "display": 390, "widths": [560, 868]},
         },
         "narrow_pins": [("vendor_and_rep", "left"), ("order_by_date", "left"), ("first_history_entry", "top-left")],
@@ -279,8 +279,10 @@ FIGURES = [
                      "sizes": "(min-width: 1100px) 600px, (min-width: 700px) min(600px, calc(100vw - 48px)), 100vw"},
             # Phones: the masthead, the first line and Needs ordering, cut on the right so the
             # material names and dates read; the whole email is on wider screens.
-            "narrow": {"x0": 40, "x1": 490, "y0": 0, "y1": ("section_4", "top", -14), "fade": True,
-                       "display": 390, "widths": [560, 900]},
+            # Phones: the email's text column at the full width of the screen. Only the side padding
+            # is cut (the grey ground on the left, the card's padding on the right), never a line.
+            "narrow": {"x0": 30, "x1": 640, "y0": 0, "y1": ("section_4", "top", -14),
+                       "display": 390, "widths": [560, 1220]},
         },
         "narrow_pins": [("first_line", "left"), ("section_1", "left"), ("section_2", "left"),
                         ("section_3", "left")],
