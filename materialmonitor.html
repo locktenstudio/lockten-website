@@ -70,6 +70,8 @@ body.mm {
   --pin: 28px;
   --col: 250px;       /* label column beside a picture */
   --gap: 44px;        /* from the label column to the picture */
+  /* how far the hero picture and the tour screen run past the text column, to 24px from the edge */
+  --bleed: calc((100vw - min(100vw, 1320px)) / 2 + 16px);
 }
 
 /* ---- The product mark and wordmark lockup ---- */
@@ -126,18 +128,18 @@ body.mm .bp-grid {
 
 /* ---- Hero ---- */
 .mm .hero-dark { padding: 52px 0 124px; }
-.hero-dark .hero-headline { font-size: clamp(2.5rem, 4.1vw, 3.75rem); max-width: none; margin: 0; }
+.hero-dark .hero-headline { font-size: clamp(2.5rem, 5vw, 4.5rem); max-width: none; margin: 0; }
 .hero-dark .hero-headline em { color: var(--copper-lift); }
 .hero-dark .btn-primary, .cta-band .btn-primary { background: var(--copper); color: #1D232B; }
 .hero-dark .btn-primary:hover, .cta-band .btn-primary:hover { background: var(--copper-lift); }
 .hero-dark .btn-primary:active, .cta-band .btn-primary:active { background: var(--copper-deep); }
-.hero-dark .hero-subhead { font-size: clamp(1.1rem, 1.45vw, 1.22rem); line-height: 1.6; color: rgba(238, 242, 246, 0.84); max-width: 50em; margin-top: 18px; text-wrap: balance; }
+.hero-dark .hero-subhead { font-size: clamp(1.1rem, 1.45vw, 1.22rem); line-height: 1.6; color: rgba(238, 242, 246, 0.84); max-width: 35em; margin-top: 18px; text-wrap: pretty; }
 .hero-dark .hero-actions { margin-top: 26px; }
 .mm .btn { font-size: 1rem; padding: 13px 22px; }
 .launch-stamp { display: inline-block; font-family: var(--font-mono); font-size: 0.9rem; font-weight: 500; letter-spacing: 0.16em; text-transform: uppercase; color: var(--copper-lift); border: 1.5px solid rgba(222, 154, 102, 0.45); border-radius: 3px; padding: 6px 13px; margin-bottom: 18px; }
 .mm .hero-geo { font-size: 0.9rem; letter-spacing: 0.12em; max-width: 1320px; gap: 12px; flex-wrap: wrap; }
-.annotated.mm-hero-fig { margin-top: 44px; }
-.mm-hero-fig figcaption { color: var(--steel-300); margin-top: 64px; }
+.annotated.mm-hero-fig { margin-top: 40px; }
+.mm-hero-fig figcaption { color: var(--steel-300); margin-top: 72px; }
 @media (max-width: 1099px) { .mm-hero-fig figcaption { margin-top: 30px; } }
 @media (max-width: 720px) { .mm .hero-geo { font-size: 0.9rem; letter-spacing: 0.06em; } .mm .hero-dark { padding-bottom: 96px; } }
 @media (max-width: 560px) { .mm .hero-geo span + span { display: none; } }
@@ -146,10 +148,10 @@ body.mm .bp-grid {
 .bar { display: flex; align-items: center; gap: 7px; height: 34px; padding: 0 14px; background: #2A313A; border-radius: 12px 12px 0 0; }
 .bar i { width: 10px; height: 10px; border-radius: 50%; background: #58616D; flex: none; }
 .bar span { margin: 0 auto; transform: translateX(-18px); font-family: var(--font-mono); font-size: 0.9rem; letter-spacing: 0.02em; color: #AEB5BF; background: #1D232B; border-radius: 6px; padding: 3px 16px; max-width: 60%; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
-.browser .pic > img { border-radius: 0 0 12px 12px; }
-.browser .bar, .browser .pic > img { box-shadow: 0 30px 70px -28px rgba(0, 0, 0, 0.55), 0 8px 18px -10px rgba(0, 0, 0, 0.25); }
-.section .browser .bar, .section .browser .pic > img { box-shadow: var(--shadow-3); }
-@media (max-width: 560px) { .bar { height: 30px; padding: 0 9px; gap: 5px; border-radius: 8px 8px 0 0; } .bar i { width: 7px; height: 7px; } .bar span { font-size: 0.9rem; padding: 1px 10px; max-width: 74%; transform: none; } .browser .pic > img { border-radius: 0 0 8px 8px; } }
+.browser .shot-img { border-radius: 0 0 12px 12px; }
+.browser .bar, .browser .shot-img { box-shadow: 0 30px 70px -28px rgba(0, 0, 0, 0.55), 0 8px 18px -10px rgba(0, 0, 0, 0.25); }
+.section .browser .bar, .section .browser .shot-img { box-shadow: var(--shadow-3); }
+@media (max-width: 560px) { .bar { height: 30px; padding: 0 9px; gap: 5px; border-radius: 8px 8px 0 0; } .bar i { width: 7px; height: 7px; } .bar span { font-size: 0.9rem; padding: 1px 10px; max-width: 74%; transform: none; } .browser .shot-img { border-radius: 0 0 8px 8px; } }
 
 /* =====================================================================
    Callout system. A figure.annotated holds:
@@ -168,7 +170,8 @@ body.mm .bp-grid {
 .annotated .stage { position: relative; }
 .annotated .shot { position: relative; }
 .annotated .pic { position: relative; }
-.annotated .pic > img { display: block; width: 100%; height: auto; }
+.annotated .pic picture { display: block; }
+.shot-img { display: block; width: 100%; height: auto; }
 .pin {
   position: absolute; z-index: 3;
   width: var(--pin); height: var(--pin); margin: calc(var(--pin) / -2) 0 0 calc(var(--pin) / -2);
@@ -247,16 +250,36 @@ body.mm .bp-grid {
   .annotated.anim.is-on .labels li:nth-child(4) { transition-delay: calc(var(--t0, 0s) + 1.51s); }
 }
 
+/* Under 700px a figure runs edge to edge and shows its narrow crop (a <picture>
+   source), with the pins from the script's --nxN/--nyN numbers. Pins outside
+   the narrow crop hide and their numbers go grey; the list keeps every label. */
+@media (max-width: 699px) {
+  .mm-hero-fig .stage, .tour-fig .stage, .mm-email-fig .stage { margin-left: calc(-1 * var(--gutter)); margin-right: calc(-1 * var(--gutter)); max-width: none; }
+  .mm-hero-fig .bar, .tour-fig .bar { border-radius: 0; }
+  .mm-hero-fig .shot-img, .tour-fig .shot-img, .mm-email-fig .shot-img { border-radius: 0; }
+  .mm-hero-fig .labels, .tour-fig .labels, .mm-email-fig .labels { padding: 0 var(--gutter); }
+  .shot.two .pin { display: block; }
+  .shot.two .pin.p1 { left: calc(var(--nx1) + var(--ndx1)); top: calc(var(--ny1) + var(--ndy1)); }
+  .shot.two .pin.p2 { left: calc(var(--nx2) + var(--ndx2)); top: calc(var(--ny2) + var(--ndy2)); }
+  .shot.two .pin.p3 { left: calc(var(--nx3) + var(--ndx3)); top: calc(var(--ny3) + var(--ndy3)); }
+  .shot.two .pin.p4 { left: calc(var(--nx4) + var(--ndx4)); top: calc(var(--ny4) + var(--ndy4)); }
+  .shot.two.nmiss-1 .p1, .shot.two.nmiss-2 .p2, .shot.two.nmiss-3 .p3, .shot.two.nmiss-4 .p4 { display: none; }
+  .shot.two .labels li::before { background: var(--brand); }
+  .shot.two.nmiss-1 .labels li:nth-child(1)::before, .shot.two.nmiss-2 .labels li:nth-child(2)::before,
+  .shot.two.nmiss-3 .labels li:nth-child(3)::before, .shot.two.nmiss-4 .labels li:nth-child(4)::before { background: var(--steel-300); }
+  .mm-hero-fig .pic .hero-phone { position: relative; right: auto; bottom: auto; width: 52%; max-width: 230px; margin: 28px auto 0; }
+  .mm-hero-fig .labels { margin-top: 30px; }
+}
+
 /* ---- The hero figure: labels on the left, the phone over the lower right ---- */
 .mm-hero-fig { --t0: 0.95s; }
 .mm-hero-fig .labels { margin-top: 30px; }
 @media (min-width: 1100px) {
-  .mm-hero-fig .stage { margin-left: calc(var(--col) + var(--gap)); }
+  .mm-hero-fig .stage { margin-left: calc(var(--col) + var(--gap)); margin-right: calc(-1 * var(--bleed)); }
   .mm-hero-fig .labels { margin-top: 0; }
 }
-.hero-phone { position: absolute; z-index: 4; right: -2.5%; bottom: -10%; width: 21%; }
-@media (max-width: 1099px) { .hero-phone { width: 24%; right: -1%; bottom: -14%; } .mm-hero-fig .labels { margin-top: 64px; } }
-@media (max-width: 560px) { .hero-phone { width: 27%; bottom: -22%; } .mm-hero-fig .labels { margin-top: 70px; } }
+.hero-phone { position: absolute; z-index: 4; right: 2.5%; bottom: -12%; width: 18%; }
+@media (max-width: 1099px) { .hero-phone { width: 22%; right: 1.5%; bottom: -13%; } .mm-hero-fig .labels { margin-top: 64px; } }
 .js .mm-hero-fig .stage { animation: rise 0.9s var(--ease) 0.25s both; }
 .js .mm-hero-fig .hero-phone { animation: rise 0.9s var(--ease) 0.6s both; }
 
@@ -296,7 +319,7 @@ body.mm .bp-grid {
    picture stays put on the right, changing with the step in view. The
    script adds .is-live; without it the tour is the plain stack above. */
 @media (min-width: 1100px) {
-  .tour.is-live { display: grid; grid-template-columns: minmax(0, 336px) minmax(0, 1fr); gap: 0 52px; }
+  .tour.is-live { display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 0 40px; margin-right: calc(-1 * var(--bleed)); }
   .tour.is-live .tour-step { min-height: 76vh; padding: 0; display: flex; flex-direction: column; justify-content: center; opacity: 0.4; transition: opacity 0.4s var(--ease); position: relative; }
   .tour.is-live .tour-step.is-active { opacity: 1; }
   .tour.is-live .tour-step.is-active .tour-num { color: var(--brand); }
@@ -313,11 +336,11 @@ body.mm .bp-grid {
   .tour.is-live .tour-step .miss-1 .labels li:nth-child(1)::before,
   .tour.is-live .tour-step .miss-2 .labels li:nth-child(2)::before,
   .tour.is-live .tour-step .miss-3 .labels li:nth-child(3)::before { background: var(--steel-400); }
-  .tour.is-live .tour-screen { display: block; position: sticky; top: calc(50vh - 270px); align-self: start; margin-top: 12vh; }
-  .screen-stack { position: relative; aspect-ratio: 1440 / 900; }
+  .tour.is-live .tour-screen { display: block; position: sticky; top: max(20px, calc(50vh - 336px)); align-self: start; margin-top: 10vh; }
+  .screen-stack { position: relative; aspect-ratio: 1.6; }
   .screen-stack .layer { position: absolute; inset: 0; opacity: 0; transition: opacity 0.45s var(--ease); }
   .screen-stack .layer.is-active { opacity: 1; }
-  .screen-stack .pic > img { border-radius: 0 0 12px 12px; box-shadow: var(--shadow-3); }
+  .screen-stack .shot-img { border-radius: 0 0 12px 12px; box-shadow: var(--shadow-3); }
   .tour-screen .bar { box-shadow: var(--shadow-3); }
   .tour-screen .mm-cap { text-align: left; margin-left: 0; }
 }
@@ -435,9 +458,9 @@ body.mm .bp-grid {
 
 /* ---- The morning email: labels on both sides of a real email ---- */
 .mm-email-fig { --t0: 0.2s; }
-.mm-email-fig .stage { max-width: 520px; margin: 0 auto; }
-.mm-email-fig .pic > img { border-radius: 12px; box-shadow: var(--shadow-3); -webkit-mask-image: linear-gradient(to bottom, #000 91%, transparent); mask-image: linear-gradient(to bottom, #000 91%, transparent); }
-@media (min-width: 1100px) { .mm-email-fig { --col: 236px; --gap: 40px; } .mm-email-fig .stage { max-width: min(520px, calc(100% - 2 * (var(--col) + var(--gap)))); } }
+.mm-email-fig .stage { max-width: 600px; margin: 0 auto; }
+.mm-email-fig .shot-img { border-radius: 12px; box-shadow: var(--shadow-3); -webkit-mask-image: linear-gradient(to bottom, #000 91%, transparent); mask-image: linear-gradient(to bottom, #000 91%, transparent); }
+@media (min-width: 1100px) { .mm-email-fig { --col: 236px; --gap: 40px; } .mm-email-fig .stage { max-width: min(600px, calc(100% - 2 * (var(--col) + var(--gap)))); } }
 
 /* ---- It proposes, a person decides ---- */
 .mm-propose { display: grid; gap: 32px; align-items: center; border: 1px solid var(--line); border-radius: var(--radius-lg); background: var(--white); padding: 34px 30px; margin: 0 0 30px; }
@@ -650,14 +673,20 @@ body.mm .bp-grid {
       <figure class="annotated side browser mm-hero-fig" data-anim>
         <div class="stage">
           <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>app.materialmonitor.app</span></div>
-<!-- MM-FIG hero START. Generated by scripts/mm_site_images.py from site-shots: console/full/dashboard.png, a 1440 x 942 view at scroll 581, navigation bar kept.
-     To move a pin, change its anchor or spot in the script and run it again; do not edit the numbers by hand.
-     pin 1  first_job_card (left) box 132,107 285x207 of 1440x942 -> left 9.167% top 22.362%, pushed -18px 0px
-     pin 2  first_order_by_date (left) box 153,402 128x29 of 1440x942 -> left 10.625% top 44.246%, pushed -18px 0px
-     pin 3  deliveries_heading (left) box 132,657 1176x26 of 1440x942 -> left 9.167% top 71.152%, pushed -18px 0px
-     pin 4  follow_up_heading (left) box 132,891 252x26 of 1440x942 -> left 9.167% top 95.982%, pushed -18px 0px -->
-<div class="shot" style="--x1:9.167%;--y1:22.362%;--dx1:-18px;--dy1:0px;--x2:10.625%;--y2:44.246%;--dx2:-18px;--dy2:0px;--x3:9.167%;--y3:71.152%;--dx3:-18px;--dy3:0px;--x4:9.167%;--y4:95.982%;--dx4:-18px;--dy4:0px">
-<div class="pic"><img src="assets/screens/materialmonitor/mm-hero-dashboard-960.webp" srcset="assets/screens/materialmonitor/mm-hero-dashboard-960.webp 960w, assets/screens/materialmonitor/mm-hero-dashboard-1920.webp 1920w" sizes="(min-width: 1320px) 954px, (min-width: 1100px) calc(100vw - 366px), calc(100vw - 48px)" width="960" height="628" fetchpriority="high" decoding="async" alt="The Material Monitor dashboard with sample data: four job cards, the materials that need ordering with their order-by dates, this week's deliveries and the start of the follow-up list. A sample company, not a real job.">
+<!-- MM-FIG hero START. Generated by scripts/mm_site_images.py from site-shots.
+     wide: console/full/dashboard.png, x 84 to 1332, y 635 to 1516 (1248 x 881)
+       pin 1  first_job_card (left) box 48,53 285x207 -> left 3.846% top 17.781%, pushed -18px 0px
+       pin 2  first_order_by_date (left) box 69,348 128x29 -> left 5.529% top 41.180%, pushed -18px 0px
+       pin 3  deliveries_heading (left) box 48,603 1176x26 -> left 3.846% top 69.949%, pushed -18px 0px
+       pin 4  follow_up_heading (left) box 48,837 252x26 -> left 3.846% top 96.498%, pushed -18px 0px
+     narrow: console/full/dashboard.png, x 60 to 738, y 639 to 1041 (678 x 402)
+       pin 1  first_job_card (left) box 72,49 285x207 -> left 10.619% top 37.973%, pushed -18px 0px
+       pin 2  first_order_by_date (left) box 93,344 128x29 -> left 13.717% top 89.254%, pushed -18px 0px
+       pin 3  deliveries_heading (left): outside this crop, hidden
+       pin 4  follow_up_heading (left): outside this crop, hidden
+     To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
+<div class="shot two nmiss-3 nmiss-4" style="--x1:3.846%;--y1:17.781%;--dx1:-18px;--dy1:0px;--x2:5.529%;--y2:41.180%;--dx2:-18px;--dy2:0px;--x3:3.846%;--y3:69.949%;--dx3:-18px;--dy3:0px;--x4:3.846%;--y4:96.498%;--dx4:-18px;--dy4:0px;--nx1:10.619%;--ny1:37.973%;--ndx1:-18px;--ndy1:0px;--nx2:13.717%;--ny2:89.254%;--ndx2:-18px;--ndy2:0px">
+<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-hero-dashboard-n-560.webp 560w, assets/screens/materialmonitor/mm-hero-dashboard-n-1120.webp 1120w" sizes="100vw" width="560" height="332"><img class="shot-img" src="assets/screens/materialmonitor/mm-hero-dashboard-1040.webp" srcset="assets/screens/materialmonitor/mm-hero-dashboard-1040.webp 1040w, assets/screens/materialmonitor/mm-hero-dashboard-2080.webp 2080w" sizes="(min-width: 1320px) calc(50vw + 302px), (min-width: 1100px) calc(100vw - 358px), (min-width: 700px) calc(100vw - 48px), 100vw" width="1040" height="734" fetchpriority="high" decoding="async" alt="The Material Monitor dashboard with sample data: four job cards, the materials that need ordering with their order-by dates, this week's deliveries and the start of the follow-up list. A sample company, not a real job."></picture>
 <!-- MM-FIG hero END -->
             <svg class="lead to-l l1" aria-hidden="true" focusable="false"><line x1="100%" y1="6" x2="0" y2="6" pathLength="1" marker-start="url(#mm-arrow)"/></svg>
             <svg class="lead to-l l2" aria-hidden="true" focusable="false"><line x1="100%" y1="6" x2="0" y2="6" pathLength="1" marker-start="url(#mm-arrow)"/></svg>
@@ -668,8 +697,9 @@ body.mm .bp-grid {
             <span class="pin p3" aria-hidden="true">3</span>
             <span class="pin p4" aria-hidden="true">4</span>
             <div class="hero-phone"><div class="mm-phone">
-<!-- MM-FIG hero-phone START. Generated by scripts/mm_site_images.py from site-shots: app/home.png. -->
-<img src="assets/screens/materialmonitor/mm-app-home-240.webp" srcset="assets/screens/materialmonitor/mm-app-home-240.webp 240w, assets/screens/materialmonitor/mm-app-home-480.webp 480w" sizes="(min-width: 1100px) 210px, 26vw" width="240" height="519" fetchpriority="high" decoding="async" alt="The field app's home screen with sample data: receive materials, look up a material, report a problem and the expected deliveries by day.">
+<!-- MM-FIG hero-phone START. Generated by scripts/mm_site_images.py from site-shots.
+     wide: app/home.png -->
+<img src="assets/screens/materialmonitor/mm-app-home-240.webp" srcset="assets/screens/materialmonitor/mm-app-home-240.webp 240w, assets/screens/materialmonitor/mm-app-home-480.webp 480w" sizes="(min-width: 700px) 21vw, 52vw" width="240" height="519" fetchpriority="high" decoding="async" alt="The field app's home screen with sample data: receive materials, look up a material, report a problem and the expected deliveries by day.">
 <!-- MM-FIG hero-phone END -->
             </div></div>
           </div>
@@ -696,7 +726,7 @@ body.mm .bp-grid {
       <div class="section-head reveal">
         <p class="label">What you get</p>
         <h2 class="section-headline brk">Everyone in the office works <em>from the same list.</em></h2>
-        <p class="section-sub">Whoever places the orders, whoever runs the job and whoever meets the truck can each see where a material stands without asking anyone.</p>
+        <p class="section-sub">Whoever places the orders, whoever runs the job and whoever is on site when the delivery comes can each see where a material stands without asking anyone.</p>
       </div>
       <div class="mm-gets">
         <div class="mm-get reveal">
@@ -749,13 +779,18 @@ body.mm .bp-grid {
             <figure class="annotated legend browser tour-fig">
               <div class="stage">
                 <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>app.materialmonitor.app</span></div>
-<!-- MM-FIG tour-1 START. Generated by scripts/mm_site_images.py from site-shots: console/full/dashboard.png, a 1440 x 900 view at scroll 1386, navigation bar kept.
-     To move a pin, change its anchor or spot in the script and run it again; do not edit the numbers by hand.
-     pin 1  search_box (bottom) box 808,12 150x38 of 1440x900 -> left 61.285% top 5.556%, pushed 0px 18px
-     pin 2  first_follow_up_reason (left) box 153,275 1134x21 of 1440x900 -> left 10.625% top 31.711%, pushed -18px 0px
-     pin 3  draft_an_email_button (right) box 1008,79 300x40 of 1440x900 -> left 90.833% top 11.011%, pushed 18px 0px -->
-<div class="shot" style="--x1:61.285%;--y1:5.556%;--dx1:0px;--dy1:18px;--x2:10.625%;--y2:31.711%;--dx2:-18px;--dy2:0px;--x3:90.833%;--y3:11.011%;--dx3:18px;--dy3:0px">
-<div class="pic"><img src="assets/screens/materialmonitor/mm-tour-dashboard-880.webp" srcset="assets/screens/materialmonitor/mm-tour-dashboard-880.webp 880w, assets/screens/materialmonitor/mm-tour-dashboard-1760.webp 1760w" sizes="(min-width: 1100px) 832px, (min-width: 928px) 880px, calc(100vw - 48px)" width="880" height="550" loading="lazy" decoding="async" alt="The dashboard's follow-up list with sample data: orders that have gone quiet, each with the reason and the rep, and the button that drafts the emails. A sample company.">
+<!-- MM-FIG tour-1 START. Generated by scripts/mm_site_images.py from site-shots.
+     wide: console/full/dashboard.png, x 100 to 1372, y 1448 to 2181, the console's bar kept (1272 x 795)
+       pin 1  search_box (bottom) box 708,12 150x38 -> left 61.517% top 6.289%, pushed 0px 18px
+       pin 2  first_follow_up_reason (left) box 53,275 1134x21 -> left 4.167% top 35.899%, pushed -18px 0px
+       pin 3  draft_an_email_button (right) box 908,79 300x40 -> left 94.969% top 12.465%, pushed 18px 0px
+     narrow: console/full/dashboard.png, x 100 to 700, y 1448 to 1810, the console's bar kept (600 x 424)
+       pin 1  search_box (bottom): outside this crop, hidden
+       pin 2  first_follow_up_reason (left) box 53,275 1134x21 -> left 8.833% top 67.311%, pushed -18px 0px
+       pin 3  draft_an_email_button (right): outside this crop, hidden
+     To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
+<div class="shot two nmiss-1 nmiss-3" style="--x1:61.517%;--y1:6.289%;--dx1:0px;--dy1:18px;--x2:4.167%;--y2:35.899%;--dx2:-18px;--dy2:0px;--x3:94.969%;--y3:12.465%;--dx3:18px;--dy3:0px;--nx2:8.833%;--ny2:67.311%;--ndx2:-18px;--ndy2:0px">
+<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-dashboard-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-dashboard-n-1120.webp 1120w" sizes="100vw" width="560" height="396"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-dashboard-980.webp" srcset="assets/screens/materialmonitor/mm-tour-dashboard-980.webp 980w, assets/screens/materialmonitor/mm-tour-dashboard-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="The dashboard's follow-up list with sample data: orders that have gone quiet, each with the reason and the rep, and the button that drafts the emails. A sample company."></picture>
 <!-- MM-FIG tour-1 END -->
                   <span class="pin p1" aria-hidden="true">1</span>
                   <span class="pin p2" aria-hidden="true">2</span>
@@ -781,13 +816,18 @@ body.mm .bp-grid {
             <figure class="annotated legend browser tour-fig">
               <div class="stage">
                 <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>app.materialmonitor.app</span></div>
-<!-- MM-FIG tour-2 START. Generated by scripts/mm_site_images.py from site-shots: console/full/job-board.png, a 1440 x 900 view at scroll 0, navigation bar kept.
-     To move a pin, change its anchor or spot in the script and run it again; do not edit the numbers by hand.
-     pin 1  first_section_heading (left) box 132,394 1176x26 of 1440x900 -> left 9.167% top 45.294%, pushed -18px 0px
-     pin 2  status_chip_ordered (top) box 522,492 200x29 of 1440x900 -> left 43.201% top 54.722%, pushed 0px -18px
-     pin 3  update_the_list_upload (left) box 132,171 1176x80 of 1440x900 -> left 9.167% top 23.489%, pushed -18px 0px -->
-<div class="shot" style="--x1:9.167%;--y1:45.294%;--dx1:-18px;--dy1:0px;--x2:43.201%;--y2:54.722%;--dx2:0px;--dy2:-18px;--x3:9.167%;--y3:23.489%;--dx3:-18px;--dy3:0px">
-<div class="pic"><img src="assets/screens/materialmonitor/mm-tour-job-880.webp" srcset="assets/screens/materialmonitor/mm-tour-job-880.webp 880w, assets/screens/materialmonitor/mm-tour-job-1760.webp 1760w" sizes="(min-width: 1100px) 832px, (min-width: 928px) 880px, calc(100vw - 48px)" width="880" height="550" loading="lazy" decoding="async" alt="One job's list with sample data: the box for bringing in a selections export, then the tile and appliance groups with each material's vendor, status and dates. A sample company.">
+<!-- MM-FIG tour-2 START. Generated by scripts/mm_site_images.py from site-shots.
+     wide: console/full/job-board.png, x 84 to 1332, y 89 to 869 (1248 x 780)
+       pin 1  first_section_heading (left) box 48,305 1176x26 -> left 3.846% top 40.853%, pushed -18px 0px
+       pin 2  status_chip_ordered (top) box 438,404 200x29 -> left 43.117% top 51.731%, pushed 0px -18px
+       pin 3  update_the_list_upload (left) box 48,82 1176x80 -> left 3.846% top 15.692%, pushed -18px 0px
+     narrow: console/full/job-board.png, x 60 to 740, y 147 to 689 (680 x 542)
+       pin 1  first_section_heading (left) box 72,247 1176x26 -> left 10.588% top 48.090%, pushed -18px 0px
+       pin 2  status_chip_ordered (top) box 462,346 200x29 -> left 82.662% top 63.745%, pushed 0px -18px
+       pin 3  update_the_list_upload (left) box 72,24 1176x80 -> left 10.588% top 11.882%, pushed -18px 0px
+     To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
+<div class="shot two" style="--x1:3.846%;--y1:40.853%;--dx1:-18px;--dy1:0px;--x2:43.117%;--y2:51.731%;--dx2:0px;--dy2:-18px;--x3:3.846%;--y3:15.692%;--dx3:-18px;--dy3:0px;--nx1:10.588%;--ny1:48.090%;--ndx1:-18px;--ndy1:0px;--nx2:82.662%;--ny2:63.745%;--ndx2:0px;--ndy2:-18px;--nx3:10.588%;--ny3:11.882%;--ndx3:-18px;--ndy3:0px">
+<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-job-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-job-n-1120.webp 1120w" sizes="100vw" width="560" height="446"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-job-980.webp" srcset="assets/screens/materialmonitor/mm-tour-job-980.webp 980w, assets/screens/materialmonitor/mm-tour-job-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="One job's list with sample data: the box for bringing in a selections export, then the tile and appliance groups with each material's vendor, status and dates. A sample company."></picture>
 <!-- MM-FIG tour-2 END -->
                   <span class="pin p1" aria-hidden="true">1</span>
                   <span class="pin p2" aria-hidden="true">2</span>
@@ -813,13 +853,20 @@ body.mm .bp-grid {
             <figure class="annotated legend browser tour-fig">
               <div class="stage">
                 <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>app.materialmonitor.app</span></div>
-<!-- MM-FIG tour-3 START. Generated by scripts/mm_site_images.py from site-shots: console/full/material.png, a 1440 x 900 view at scroll 653, navigation bar kept.
-     To move a pin, change its anchor or spot in the script and run it again; do not edit the numbers by hand.
-     pin 1  vendor_and_rep (left) box 132,496 860x252 of 1440x900 -> left 9.167% top 69.111%, pushed -18px 0px
-     pin 2  order_by_date (left) box 132,172 421x52 of 1440x900 -> left 9.167% top 21.972%, pushed -18px 0px
-     pin 3  history_list (left): not in this picture, hidden -->
-<div class="shot miss-3" style="--x1:9.167%;--y1:69.111%;--dx1:-18px;--dy1:0px;--x2:9.167%;--y2:21.972%;--dx2:-18px;--dy2:0px">
-<div class="pic"><img src="assets/screens/materialmonitor/mm-tour-material-880.webp" srcset="assets/screens/materialmonitor/mm-tour-material-880.webp 880w, assets/screens/materialmonitor/mm-tour-material-1760.webp 1760w" sizes="(min-width: 1100px) 832px, (min-width: 928px) 880px, calc(100vw - 48px)" width="880" height="550" loading="lazy" decoding="async" alt="A material's page with sample data: its lead time and order-by date, the vendor and the rep with an email address and a phone number. A sample company.">
+<!-- FOR NOW this figure is cropped to the order-by line and the lead time fields only (pins 1 and 3 are outside it and hidden).
+     Re-crop it in scripts/mm_site_images.py when the re-shot material page arrives (site-shots-2, vendor, rep and history in a right-hand column). -->
+<!-- MM-FIG tour-3 START. Generated by scripts/mm_site_images.py from site-shots.
+     wide: console/full/material.png, x 84 to 1016, y 636 to 1219 (932 x 583)
+       pin 1  vendor_and_rep (left): outside this crop, hidden
+       pin 2  order_by_date (left) box 48,189 421x52 -> left 5.150% top 36.835%, pushed -18px 0px
+       pin 3  history_list (left): outside this crop, hidden
+     narrow: console/full/material.png, x 84 to 566, y 733 to 967 (482 x 234)
+       pin 1  vendor_and_rep (left): outside this crop, hidden
+       pin 2  order_by_date (left) box 48,92 421x52 -> left 9.959% top 50.321%, pushed -18px 0px
+       pin 3  history_list (left): outside this crop, hidden
+     To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
+<div class="shot miss-1 miss-3 two nmiss-1 nmiss-3" style="--x2:5.150%;--y2:36.835%;--dx2:-18px;--dy2:0px;--nx2:9.959%;--ny2:50.321%;--ndx2:-18px;--ndy2:0px">
+<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-material-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-material-n-964.webp 964w" sizes="100vw" width="560" height="272"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-material-980.webp" srcset="assets/screens/materialmonitor/mm-tour-material-980.webp 980w, assets/screens/materialmonitor/mm-tour-material-1864.webp 1864w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="613" loading="lazy" decoding="async" alt="A material's page with sample data: the date it is needed on site, the vendor's lead time and the date to order by so it arrives in time. A sample company."></picture>
 <!-- MM-FIG tour-3 END -->
                   <span class="pin p1" aria-hidden="true">1</span>
                   <span class="pin p2" aria-hidden="true">2</span>
@@ -845,13 +892,18 @@ body.mm .bp-grid {
             <figure class="annotated legend browser tour-fig">
               <div class="stage">
                 <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>app.materialmonitor.app</span></div>
-<!-- MM-FIG tour-4 START. Generated by scripts/mm_site_images.py from site-shots: console/full/updates-proposals.png, a 1440 x 900 view at scroll 1505, navigation bar kept.
-     To move a pin, change its anchor or spot in the script and run it again; do not edit the numbers by hand.
-     pin 1  proposed_change (left) box 153,236 251x135 of 1440x900 -> left 10.625% top 33.722%, pushed -18px 0px
-     pin 2  quoted_vendor_sentence (left) box 153,381 1134x56 of 1440x900 -> left 10.625% top 45.417%, pushed -18px 0px
-     pin 3  confirm_button (right) box 153,446 96x40 of 1440x900 -> left 17.278% top 51.833%, pushed 18px 0px -->
-<div class="shot" style="--x1:10.625%;--y1:33.722%;--dx1:-18px;--dy1:0px;--x2:10.625%;--y2:45.417%;--dx2:-18px;--dy2:0px;--x3:17.278%;--y3:51.833%;--dx3:18px;--dy3:0px">
-<div class="pic"><img src="assets/screens/materialmonitor/mm-tour-updates-880.webp" srcset="assets/screens/materialmonitor/mm-tour-updates-880.webp 880w, assets/screens/materialmonitor/mm-tour-updates-1760.webp 1760w" sizes="(min-width: 1100px) 832px, (min-width: 928px) 880px, calc(100vw - 48px)" width="880" height="550" loading="lazy" decoding="async" alt="The Updates page with sample data: vendor updates waiting for an OK, each with the proposed change, the vendor's own sentence and Confirm, Edit and Dismiss. A sample company.">
+<!-- MM-FIG tour-4 START. Generated by scripts/mm_site_images.py from site-shots.
+     wide: console/full/updates-proposals.png, x 84 to 1332, y 1567 to 2347 (1248 x 780)
+       pin 1  proposed_change (left) box 69,174 251x135 -> left 5.529% top 30.962%, pushed -18px 0px
+       pin 2  quoted_vendor_sentence (left) box 69,319 1134x56 -> left 5.529% top 44.455%, pushed -18px 0px
+       pin 3  confirm_button (right) box 69,384 96x40 -> left 13.205% top 51.859%, pushed 18px 0px
+     narrow: console/full/updates-proposals.png, x 84 to 640, y 1667 to 2068 (556 x 401)
+       pin 1  proposed_change (left) box 69,74 251x135 -> left 12.410% top 35.287%, pushed -18px 0px
+       pin 2  quoted_vendor_sentence (left) box 69,219 1134x56 -> left 12.410% top 61.534%, pushed -18px 0px
+       pin 3  confirm_button (right) box 69,284 96x40 -> left 29.640% top 75.935%, pushed 18px 0px
+     To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
+<div class="shot two" style="--x1:5.529%;--y1:30.962%;--dx1:-18px;--dy1:0px;--x2:5.529%;--y2:44.455%;--dx2:-18px;--dy2:0px;--x3:13.205%;--y3:51.859%;--dx3:18px;--dy3:0px;--nx1:12.410%;--ny1:35.287%;--ndx1:-18px;--ndy1:0px;--nx2:12.410%;--ny2:61.534%;--ndx2:-18px;--ndy2:0px;--nx3:29.640%;--ny3:75.935%;--ndx3:18px;--ndy3:0px">
+<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-updates-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-updates-n-1112.webp 1112w" sizes="100vw" width="560" height="404"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-updates-980.webp" srcset="assets/screens/materialmonitor/mm-tour-updates-980.webp 980w, assets/screens/materialmonitor/mm-tour-updates-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="The Updates page with sample data: vendor updates waiting for an OK, each with the proposed change, the vendor's own sentence and Confirm, Edit and Dismiss. A sample company."></picture>
 <!-- MM-FIG tour-4 END -->
                   <span class="pin p1" aria-hidden="true">1</span>
                   <span class="pin p2" aria-hidden="true">2</span>
@@ -877,13 +929,18 @@ body.mm .bp-grid {
             <figure class="annotated legend browser tour-fig">
               <div class="stage">
                 <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>app.materialmonitor.app</span></div>
-<!-- MM-FIG tour-5 START. Generated by scripts/mm_site_images.py from site-shots: console/full/follow-up.png, a 1440 x 900 view at scroll 76, navigation bar kept.
-     To move a pin, change its anchor or spot in the script and run it again; do not edit the numbers by hand.
-     pin 1  first_draft_vendor_and_rep (left) box 153,205 1134x25 of 1440x900 -> left 10.625% top 24.200%, pushed -18px 0px
-     pin 2  first_draft_body (left) box 153,304 1134x478 of 1440x900 -> left 10.625% top 60.344%, pushed -18px 0px
-     pin 3  open_in_outlook (left) box 153,813 160x40 of 1440x900 -> left 10.625% top 92.544%, pushed -18px 0px -->
-<div class="shot" style="--x1:10.625%;--y1:24.200%;--dx1:-18px;--dy1:0px;--x2:10.625%;--y2:60.344%;--dx2:-18px;--dy2:0px;--x3:10.625%;--y3:92.544%;--dx3:-18px;--dy3:0px">
-<div class="pic"><img src="assets/screens/materialmonitor/mm-tour-follow-up-880.webp" srcset="assets/screens/materialmonitor/mm-tour-follow-up-880.webp 880w, assets/screens/materialmonitor/mm-tour-follow-up-1760.webp 1760w" sizes="(min-width: 1100px) 832px, (min-width: 928px) 880px, calc(100vw - 48px)" width="880" height="550" loading="lazy" decoding="async" alt="A follow-up email written for one rep with sample data: the open items with model numbers, quantities and order dates, and the button that opens it in Outlook. A sample company.">
+<!-- MM-FIG tour-5 START. Generated by scripts/mm_site_images.py from site-shots.
+     wide: console/full/follow-up.png, x 84 to 1332, y 204 to 984 (1248 x 780)
+       pin 1  first_draft_vendor_and_rep (left) box 69,77 1134x25 -> left 5.529% top 11.513%, pushed -18px 0px
+       pin 2  first_draft_body (left) box 69,176 1134x478 -> left 5.529% top 53.218%, pushed -18px 0px
+       pin 3  open_in_outlook (left) box 69,685 160x40 -> left 5.529% top 90.372%, pushed -18px 0px
+     narrow: console/full/follow-up.png, x 84 to 700, y 244 to 953 (616 x 709)
+       pin 1  first_draft_vendor_and_rep (left) box 69,37 1134x25 -> left 11.201% top 7.024%, pushed -18px 0px
+       pin 2  first_draft_body (left) box 69,136 1134x478 -> left 11.201% top 52.906%, pushed -18px 0px
+       pin 3  open_in_outlook (left) box 69,645 160x40 -> left 11.201% top 93.780%, pushed -18px 0px
+     To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
+<div class="shot two" style="--x1:5.529%;--y1:11.513%;--dx1:-18px;--dy1:0px;--x2:5.529%;--y2:53.218%;--dx2:-18px;--dy2:0px;--x3:5.529%;--y3:90.372%;--dx3:-18px;--dy3:0px;--nx1:11.201%;--ny1:7.024%;--ndx1:-18px;--ndy1:0px;--nx2:11.201%;--ny2:52.906%;--ndx2:-18px;--ndy2:0px;--nx3:11.201%;--ny3:93.780%;--ndx3:-18px;--ndy3:0px">
+<div class="pic"><picture><source media="(max-width: 699px)" srcset="assets/screens/materialmonitor/mm-tour-follow-up-n-560.webp 560w, assets/screens/materialmonitor/mm-tour-follow-up-n-1120.webp 1120w" sizes="100vw" width="560" height="645"><img class="shot-img" src="assets/screens/materialmonitor/mm-tour-follow-up-980.webp" srcset="assets/screens/materialmonitor/mm-tour-follow-up-980.webp 980w, assets/screens/materialmonitor/mm-tour-follow-up-1960.webp 1960w" sizes="(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), (min-width: 700px) min(960px, calc(100vw - 48px)), 100vw" width="980" height="612" loading="lazy" decoding="async" alt="A follow-up email written for one rep with sample data: the open items with model numbers, quantities and order dates, and the button that opens it in Outlook. A sample company."></picture>
 <!-- MM-FIG tour-5 END -->
                   <span class="pin p1" aria-hidden="true">1</span>
                   <span class="pin p2" aria-hidden="true">2</span>
@@ -982,12 +1039,13 @@ body.mm .bp-grid {
       <div class="section-head center reveal">
         <p class="label label-center">The field app</p>
         <h2 class="section-headline brk">The crew carries <em>the same list on site.</em></h2>
-        <p class="section-sub">The field app is the crew's half of Material Monitor, for the superintendent or whoever meets the truck. What they record on site is in front of the office right away, and what the office changes shows up on their phones.</p>
+        <p class="section-sub">The field app is the crew's half of Material Monitor, for the superintendent or whoever is on site when the delivery comes. What they record on site is in front of the office right away, and what the office changes shows up on their phones.</p>
       </div>
       <div class="mm-field-grid">
         <div class="mm-field-item reveal">
           <div class="mm-phone">
-<!-- MM-FIG field-receive START. Generated by scripts/mm_site_images.py from site-shots: app/receive-list.png. -->
+<!-- MM-FIG field-receive START. Generated by scripts/mm_site_images.py from site-shots.
+     wide: app/receive-list.png -->
 <img src="assets/screens/materialmonitor/mm-app-receive-280.webp" srcset="assets/screens/materialmonitor/mm-app-receive-280.webp 280w, assets/screens/materialmonitor/mm-app-receive-560.webp 560w" sizes="(min-width: 900px) 280px, 70vw" width="280" height="606" loading="lazy" decoding="async" alt="The field app's receiving screen with sample data: what came in at one job, with a shower valve ticked and marked in good condition.">
 <!-- MM-FIG field-receive END -->
           </div>
@@ -996,7 +1054,8 @@ body.mm .bp-grid {
         </div>
         <div class="mm-field-item reveal d1">
           <div class="mm-phone">
-<!-- MM-FIG field-material START. Generated by scripts/mm_site_images.py from site-shots: app/material.png. -->
+<!-- MM-FIG field-material START. Generated by scripts/mm_site_images.py from site-shots.
+     wide: app/material.png -->
 <img src="assets/screens/materialmonitor/mm-app-material-280.webp" srcset="assets/screens/materialmonitor/mm-app-material-280.webp 280w, assets/screens/materialmonitor/mm-app-material-560.webp 560w" sizes="(min-width: 900px) 280px, 70vw" width="280" height="606" loading="lazy" decoding="async" alt="A material in the field app with sample data: shipped and due Wednesday, with its tracking number, maker, model, vendor and rep. Buttons below email the rep or receive it.">
 <!-- MM-FIG field-material END -->
           </div>
@@ -1005,7 +1064,8 @@ body.mm .bp-grid {
         </div>
         <div class="mm-field-item reveal d2">
           <div class="mm-phone">
-<!-- MM-FIG field-problem START. Generated by scripts/mm_site_images.py from site-shots: app/tell-the-office.png. -->
+<!-- MM-FIG field-problem START. Generated by scripts/mm_site_images.py from site-shots.
+     wide: app/tell-the-office.png -->
 <img src="assets/screens/materialmonitor/mm-app-problem-280.webp" srcset="assets/screens/materialmonitor/mm-app-problem-280.webp 280w, assets/screens/materialmonitor/mm-app-problem-560.webp 560w" sizes="(min-width: 900px) 280px, 70vw" width="280" height="606" loading="lazy" decoding="async" alt="The field app's report a problem screen with sample data: a powder room sink marked damaged, with a sentence for the office.">
 <!-- MM-FIG field-problem END -->
           </div>
@@ -1034,14 +1094,15 @@ body.mm .bp-grid {
       </div>
       <figure class="annotated side mm-email-fig" data-anim>
         <div class="stage">
-<!-- MM-FIG email START. Generated by scripts/mm_site_images.py from site-shots: email/morning.png, cropped to 720 x 1331.
-     To move a pin, change its anchor or spot in the script and run it again; do not edit the numbers by hand.
-     pin 1  first_line (right) box 85,121 550x27 of 720x1331 -> left 88.194% top 10.113%, pushed 18px 0px
-     pin 2  section_1 (left) box 85,172 550x21 of 720x1331 -> left 11.806% top 13.719%, pushed -18px 0px
-     pin 3  section_2 (left) box 85,638 550x18 of 720x1331 -> left 11.806% top 48.655%, pushed -18px 0px
-     pin 4  section_3 (left) box 85,988 550x18 of 720x1331 -> left 11.806% top 74.959%, pushed -18px 0px -->
-<div class="shot" style="--x1:88.194%;--y1:10.113%;--dx1:18px;--dy1:0px;--x2:11.806%;--y2:13.719%;--dx2:-18px;--dy2:0px;--x3:11.806%;--y3:48.655%;--dx3:-18px;--dy3:0px;--x4:11.806%;--y4:74.959%;--dx4:-18px;--dy4:0px">
-<div class="pic"><img src="assets/screens/materialmonitor/mm-morning-email-520.webp" srcset="assets/screens/materialmonitor/mm-morning-email-520.webp 520w, assets/screens/materialmonitor/mm-morning-email-1040.webp 1040w" sizes="(min-width: 900px) 520px, calc(100vw - 48px)" width="520" height="961" loading="lazy" decoding="async" alt="The morning email with sample data: the updates waiting for an OK, the materials that need ordering, the problems flagged from the field and what arrived. A sample company.">
+<!-- MM-FIG email START. Generated by scripts/mm_site_images.py from site-shots.
+     wide: email/morning.png, x 36 to 684, y 0 to 1331
+       pin 1  first_line (right) box 49,121 550x27 -> left 92.438% top 10.113%, pushed 18px 0px
+       pin 2  section_1 (left) box 49,172 550x21 -> left 7.562% top 13.719%, pushed -18px 0px
+       pin 3  section_2 (left) box 49,638 550x18 -> left 7.562% top 48.655%, pushed -18px 0px
+       pin 4  section_3 (left) box 49,988 550x18 -> left 7.562% top 74.959%, pushed -18px 0px
+     To move a pin or a crop, change it in the script and run it again; do not edit the numbers here. -->
+<div class="shot" style="--x1:92.438%;--y1:10.113%;--dx1:18px;--dy1:0px;--x2:7.562%;--y2:13.719%;--dx2:-18px;--dy2:0px;--x3:7.562%;--y3:48.655%;--dx3:-18px;--dy3:0px;--x4:7.562%;--y4:74.959%;--dx4:-18px;--dy4:0px">
+<div class="pic"><img class="shot-img" src="assets/screens/materialmonitor/mm-morning-email-600.webp" srcset="assets/screens/materialmonitor/mm-morning-email-600.webp 600w, assets/screens/materialmonitor/mm-morning-email-1200.webp 1200w" sizes="(min-width: 1100px) 600px, (min-width: 700px) min(600px, calc(100vw - 48px)), 100vw" width="600" height="1232" loading="lazy" decoding="async" alt="The morning email with sample data: the updates waiting for an OK, the materials that need ordering, the problems flagged from the field and what arrived. A sample company.">
 <!-- MM-FIG email END -->
             <svg class="lead to-r l1" aria-hidden="true" focusable="false"><line x1="0" y1="6" x2="100%" y2="6" pathLength="1" marker-start="url(#mm-arrow)"/></svg>
             <svg class="lead to-l l2" aria-hidden="true" focusable="false"><line x1="100%" y1="6" x2="0" y2="6" pathLength="1" marker-start="url(#mm-arrow)"/></svg>

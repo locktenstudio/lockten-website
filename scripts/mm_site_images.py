@@ -12,10 +12,10 @@ which writes a shots folder like this:
     email/morning.png + .html + .anchors.json
     app/<screen>.png (+ .anchors.json) 390 x 844 phone pictures at 3x
 
-This script reads that folder, frames each figure the page uses, writes WebP
+This script reads that folder, crops each figure the page uses, writes WebP
 files at two widths (1x and 2x of the displayed size) into
 assets/screens/materialmonitor/, and works out every pin as a percentage of
-the picture from the anchors, so a pin holds its place at any width.
+the cropped picture from the anchors, so a pin holds its place at any width.
 
     python scripts/mm_site_images.py <shots-folder>            convert and print
     python scripts/mm_site_images.py <shots-folder> --apply    also rewrite the MM-FIG blocks in materialmonitor.html
@@ -24,24 +24,31 @@ the picture from the anchors, so a pin holds its place at any width.
 Swapping in a new set of pictures is one run with --apply. Without --apply,
 paste each printed block over the matching MM-FIG block in the page.
 
-How a pin is placed: each pin names an anchor and a spot on its rectangle
-(`left` means just outside its left edge, `top-right` its top right corner,
-and so on; see SPOTS). The script writes the anchor point as percentages
-(--xN, --yN) and the push away from the rectangle in screen pixels (--dxN,
---dyN), because a 28px pin is 28 screen pixels at every width while the
-picture scales. The page's CSS places pins, leader lines and labels from
-those four numbers.
+Crops. A console figure is a rectangle cut from the full-page picture, in the
+page's CSS pixels: x0 to x1 across, y0 to y1 down (y1 can instead follow from
+an aspect ratio, so every tour picture has the same shape). Each edge is a
+number or (anchor, edge, offset), for example ("jobs_heading", "top", -20), so
+a re-shoot that moves things down the page still crops the same content.
+`nav: True` puts the console's navigation bar (which stays at the top of the
+screen when the page scrolls) above the crop, cut to the same width. A figure
+can have a "wide" crop and a "narrow" one; the narrow one is served under 700px
+through <picture>, with its own pin positions.
 
-How a console figure is framed: the viewport pictures scroll with the page but
-the console's navigation bar stays at the top, so any view can be rebuilt from
-the full-page picture: the bar, then the page from the chosen scroll offset.
-A frame names the anchor to put near the top and the height of the view; if a
-pin's anchor does not fit, the script tops the frame on the pins instead and
-says which pins still fall outside (the page then hides those pins).
+`display` is how wide the crop shows at the 1440 layout (or at 390 for a
+narrow crop). The script checks that the console's 17px body text comes out at
+13px or more on a wide crop, and uses the scale to keep every pin, which is 28
+screen pixels whatever the scale, inside its picture; a pin that does not fit
+is hidden on the page and its number turns grey in the list.
+
+Pins. Each pin names an anchor and a spot on its rectangle (`left` means just
+outside its left edge, `top-right` its top right corner, and so on; see
+SPOTS). The script writes the anchor point as percentages (--xN, --yN; --nxN,
+--nyN for the narrow crop) and the push away from the rectangle in screen
+pixels (--dxN, --dyN), because the pin keeps its size while the picture scales.
 
 Needs Pillow with WebP. The morning email's first line has no anchor in the
 shots, so the script measures it from email/morning.html with Playwright and
-the local Chrome (see CHROME below); that step is skipped with a warning if
+the local Chrome (see CHROME_GLOB); that step is skipped with a warning if
 Playwright is missing.
 """
 
@@ -53,6 +60,7 @@ import json
 import os
 import re
 import sys
+from io import BytesIO
 from pathlib import Path
 
 from PIL import Image
@@ -62,14 +70,19 @@ OUT_DIR = REPO / "assets" / "screens" / "materialmonitor"
 OUT_URL = "assets/screens/materialmonitor"
 PAGE = REPO / "materialmonitor.html"
 
-QUALITY = 82          # WebP quality to start from
-MIN_QUALITY = 66      # the lowest it will go to meet a size budget
+QUALITY = 82           # WebP quality to start from
+MIN_QUALITY = 66       # the lowest it will go to meet a size budget
 BUDGET_HERO = 250_000  # bytes, the hero at 2x
 BUDGET_OTHER = 200_000  # bytes, every other file
 
-# How far a pin sits from the edge of what it points at, in screen pixels:
-# the pin is 28px with a 2px ring, so 18px leaves a hair of space.
+NARROW_MEDIA = "(max-width: 699px)"
+CONSOLE_BODY_PX = 17   # the console's body text
+MIN_TEXT_PX = 13       # what that text must come out at on a wide crop
+
+# How far a pin sits from the edge of what it points at, and its radius, in
+# screen pixels: the pin is 28px with a 2px ring.
 PUSH = 18
+PIN_R = 14
 
 # Where on an anchor rectangle a pin goes: (fx, fy, push_x, push_y).
 # fx and fy are fractions of the rectangle; push is in units of PUSH.
@@ -87,141 +100,173 @@ SPOTS = {
 
 CHROME_GLOB = os.path.expanduser("~/.cache/puppeteer/chrome/*/chrome-win64/chrome.exe")
 
+# The tour pictures crossfade in one frame, so their wide crops share a shape.
+TOUR_ASPECT = 1.6
+# Where the pictures show at the 1440 layout (see the page's CSS): the tour
+# screen and the hero picture run to 24px from the right edge.
+TOUR_DISPLAY = 976
+TOUR_SIZES = ("(min-width: 1320px) calc(50vw + 256px), (min-width: 1100px) calc(100vw - 404px), "
+              "(min-width: 700px) min(960px, calc(100vw - 48px)), 100vw")
+HERO_SIZES = ("(min-width: 1320px) calc(50vw + 302px), (min-width: 1100px) calc(100vw - 358px), "
+              "(min-width: 700px) calc(100vw - 48px), 100vw")
+
 # ---------------------------------------------------------------------------
 # The figures on the page. Each id matches an MM-FIG block in the page.
-#   source: "console:<page>" (framed from console/full/<page>.png with
+#   source: "console:<page>" (cropped from console/full/<page>.png with
 #           console/<page>.anchors.json), "email", or "app:<screen>".
-#   frame:  console only. top/prefer_top name an anchor (or "page" for the
-#           top of the page), pad_top is the space above it; height is the
-#           view height, or bottom lists anchors to end below (+ pad_bottom).
-#   crop:   email only, where the picture ends.
+#   crops:  "wide" and optionally "narrow"; see the notes at the top.
 #   pins:   (anchor, spot) in number order.
 # ---------------------------------------------------------------------------
 FIGURES = [
     {
         "id": "hero",
         "source": "console:dashboard",
-        "frame": {"top": "jobs_heading", "pad_top": 12,
-                  "bottom": ["follow_up_heading", "draft_an_email_button"], "pad_bottom": 18},
         "out": "mm-hero-dashboard",
-        "widths": [960, 1920],
         "budget": BUDGET_HERO,
         "eager": True,
-        "sizes": "(min-width: 1320px) 954px, (min-width: 1100px) calc(100vw - 366px), calc(100vw - 48px)",
         "alt": ("The Material Monitor dashboard with sample data: four job cards, the materials that "
                 "need ordering with their order-by dates, this week's deliveries and the start of the "
                 "follow-up list. A sample company, not a real job."),
         "pins": [("first_job_card", "left"), ("first_order_by_date", "left"),
                  ("deliveries_heading", "left"), ("follow_up_heading", "left")],
+        "crops": {
+            # The whole dashboard width, from the jobs row down to the follow-up heading.
+            "wide": {"x0": 84, "x1": 1332, "y0": ("jobs_heading", "top", -20),
+                     "y1": ("follow_up_heading", "bottom", 18),
+                     "display": 1022, "widths": [1040, 2080], "sizes": HERO_SIZES},
+            # Phones: the first two job cards and the first Needs ordering row.
+            "narrow": {"x0": 60, "x1": 738, "y0": ("jobs_heading", "top", -16),
+                       "y1": ("first_needs_ordering_row", "bottom", 20),
+                       "display": 390, "widths": [560, 1120]},
+        },
     },
     {
         "id": "hero-phone",
         "source": "app:home",
         "out": "mm-app-home",
-        "widths": [240, 480],
         "eager": True,
-        "sizes": "(min-width: 1100px) 210px, 26vw",
         "alt": ("The field app's home screen with sample data: receive materials, look up a material, "
                 "report a problem and the expected deliveries by day."),
+        "crops": {"wide": {"widths": [240, 480], "sizes": "(min-width: 700px) 21vw, 52vw"}},
     },
     {
         "id": "tour-1",
         "source": "console:dashboard",
-        "frame": {"prefer_top": "follow_up_heading", "pad_top": 24, "height": 900},
         "out": "mm-tour-dashboard",
-        "widths": [880, 1760],
-        "sizes": "(min-width: 1100px) 832px, (min-width: 928px) 880px, calc(100vw - 48px)",
         "alt": ("The dashboard's follow-up list with sample data: orders that have gone quiet, each "
                 "with the reason and the rep, and the button that drafts the emails. A sample company."),
         "pins": [("search_box", "bottom"), ("first_follow_up_reason", "left"),
                  ("draft_an_email_button", "right")],
+        "crops": {
+            # Keeps the console's own bar, because the search box is a callout.
+            "wide": {"nav": True, "x0": 100, "x1": 1372, "y0": ("follow_up_heading", "top", -24),
+                     "aspect": TOUR_ASPECT, "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
+            # The search box and the button sit far to the right, so a phone shows the list and pin 2.
+            "narrow": {"nav": True, "x0": 100, "x1": 700, "y0": ("follow_up_heading", "top", -24),
+                       "y1": ("first_follow_up_row", "bottom", 24), "display": 390, "widths": [560, 1120]},
+        },
     },
     {
         "id": "tour-2",
         "source": "console:job-board",
-        "frame": {"prefer_top": "page", "height": 900},
         "out": "mm-tour-job",
-        "widths": [880, 1760],
-        "sizes": "(min-width: 1100px) 832px, (min-width: 928px) 880px, calc(100vw - 48px)",
         "alt": ("One job's list with sample data: the box for bringing in a selections export, then the "
                 "tile and appliance groups with each material's vendor, status and dates. A sample company."),
         "pins": [("first_section_heading", "left"), ("status_chip_ordered", "top"),
                  ("update_the_list_upload", "left")],
+        "crops": {
+            "wide": {"x0": 84, "x1": 1332, "y0": ("job_title", "top", -24), "aspect": TOUR_ASPECT,
+                     "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
+            "narrow": {"x0": 60, "x1": 740, "y0": ("update_the_list_upload", "top", -24),
+                       "y1": ("first_board_row", "bottom", 110), "display": 390, "widths": [560, 1120]},
+        },
     },
     {
         "id": "tour-3",
         "source": "console:material",
-        "frame": {"prefer_top": "page", "pad_top": 0, "height": 900, "fallback_pad": 110},
         "out": "mm-tour-material",
-        "widths": [880, 1760],
-        "sizes": "(min-width: 1100px) 832px, (min-width: 928px) 880px, calc(100vw - 48px)",
-        "alt": ("A material's page with sample data: its lead time and order-by date, the vendor and "
-                "the rep with an email address and a phone number. A sample company."),
+        # FOR NOW: the order-by line and the lead time fields only. When the re-shot material page
+        # arrives (site-shots-2, vendor, rep and history in a right-hand column), re-crop this figure
+        # so all three pins are inside it, and drop this note.
+        "alt": ("A material's page with sample data: the date it is needed on site, the vendor's lead time "
+                "and the date to order by so it arrives in time. A sample company."),
         "pins": [("vendor_and_rep", "left"), ("order_by_date", "left"), ("history_list", "left")],
+        "crops": {
+            "wide": {"x0": 84, "x1": 1016, "y0": ("needed_on_site_by", "top", -20), "aspect": TOUR_ASPECT,
+                     "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
+            "narrow": {"x0": 84, "x1": 566, "y0": ("lead_time", "top", -12),
+                       "y1": ("order_by_date", "bottom", 90), "display": 390, "widths": [560, 1120]},
+        },
     },
     {
         "id": "tour-4",
         "source": "console:updates-proposals",
-        "frame": {"prefer_top": "proposals_heading", "pad_top": 24, "height": 900},
         "out": "mm-tour-updates",
-        "widths": [880, 1760],
-        "sizes": "(min-width: 1100px) 832px, (min-width: 928px) 880px, calc(100vw - 48px)",
         "alt": ("The Updates page with sample data: vendor updates waiting for an OK, each with the "
                 "proposed change, the vendor's own sentence and Confirm, Edit and Dismiss. A sample company."),
         "pins": [("proposed_change", "left"), ("quoted_vendor_sentence", "left"),
                  ("confirm_button", "right")],
+        "crops": {
+            "wide": {"x0": 84, "x1": 1332, "y0": ("proposals_heading", "top", -24), "aspect": TOUR_ASPECT,
+                     "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
+            "narrow": {"x0": 84, "x1": 640, "y0": ("proposal_card", "top", -16),
+                       "y1": ("proposal_card", "bottom", 16), "display": 390, "widths": [560, 1120]},
+        },
     },
     {
         "id": "tour-5",
         "source": "console:follow-up",
-        "frame": {"prefer_top": "title", "pad_top": 22, "height": 900},
         "out": "mm-tour-follow-up",
-        "widths": [880, 1760],
-        "sizes": "(min-width: 1100px) 832px, (min-width: 928px) 880px, calc(100vw - 48px)",
         "alt": ("A follow-up email written for one rep with sample data: the open items with model "
                 "numbers, quantities and order dates, and the button that opens it in Outlook. A sample company."),
         "pins": [("first_draft_vendor_and_rep", "left"), ("first_draft_body", "left"),
                  ("open_in_outlook", "left")],
+        "crops": {
+            "wide": {"x0": 84, "x1": 1332, "y0": ("first_draft", "top", -56), "aspect": TOUR_ASPECT,
+                     "display": TOUR_DISPLAY, "widths": [980, 1960], "sizes": TOUR_SIZES},
+            "narrow": {"x0": 84, "x1": 700, "y0": ("first_draft", "top", -16),
+                       "y1": ("open_in_outlook", "bottom", 24), "display": 390, "widths": [560, 1120]},
+        },
     },
     {
         "id": "email",
         "source": "email",
-        "crop": {"bottom": "section_4", "pad_bottom": -14},
         "measure": {"first_line": "td p"},
         "out": "mm-morning-email",
-        "widths": [520, 1040],
-        "sizes": "(min-width: 900px) 520px, calc(100vw - 48px)",
         "alt": ("The morning email with sample data: the updates waiting for an OK, the materials that "
                 "need ordering, the problems flagged from the field and what arrived. A sample company."),
         "pins": [("first_line", "right"), ("section_1", "left"), ("section_2", "left"),
                  ("section_3", "left")],
+        "crops": {
+            # The email card and a little of its grey ground, down to the Orders and tracking heading.
+            "wide": {"x0": 36, "x1": 684, "y0": 0, "y1": ("section_4", "top", -14),
+                     "display": 600, "widths": [600, 1200],
+                     "sizes": "(min-width: 1100px) 600px, (min-width: 700px) min(600px, calc(100vw - 48px)), 100vw"},
+        },
     },
     {
         "id": "field-receive",
         "source": "app:receive-list",
         "out": "mm-app-receive",
-        "widths": [280, 560],
-        "sizes": "(min-width: 900px) 280px, 70vw",
         "alt": ("The field app's receiving screen with sample data: what came in at one job, with a "
                 "shower valve ticked and marked in good condition."),
+        "crops": {"wide": {"widths": [280, 560], "sizes": "(min-width: 900px) 280px, 70vw"}},
     },
     {
         "id": "field-material",
         "source": "app:material",
         "out": "mm-app-material",
-        "widths": [280, 560],
-        "sizes": "(min-width: 900px) 280px, 70vw",
         "alt": ("A material in the field app with sample data: shipped and due Wednesday, with its tracking "
                 "number, maker, model, vendor and rep. Buttons below email the rep or receive it."),
+        "crops": {"wide": {"widths": [280, 560], "sizes": "(min-width: 900px) 280px, 70vw"}},
     },
     {
         "id": "field-problem",
         "source": "app:tell-the-office",
         "out": "mm-app-problem",
-        "widths": [280, 560],
-        "sizes": "(min-width: 900px) 280px, 70vw",
         "alt": ("The field app's report a problem screen with sample data: a powder room sink marked "
                 "damaged, with a sentence for the office."),
+        "crops": {"wide": {"widths": [280, 560], "sizes": "(min-width: 900px) 280px, 70vw"}},
     },
 ]
 
@@ -269,126 +314,127 @@ def measure_html(html: Path, width: int, selectors: dict[str, str]) -> dict[str,
     return found
 
 
+def resolve(v, anchors: dict, what: str) -> float:
+    """A crop edge: a number, or (anchor, edge, offset)."""
+    if isinstance(v, (int, float)):
+        return float(v)
+    name, edge, off = v
+    if name not in anchors:
+        raise SystemExit(f"{what}: anchor {name!r} is not in the shots")
+    x, y, w, h = anchors[name]
+    base = {"top": y, "bottom": y + h, "left": x, "right": x + w}[edge]
+    return base + float(off)
+
+
 class Frame:
-    """A picture to write plus a way to find each anchor inside it (CSS px)."""
+    """One cropped picture plus every anchor inside it, in the crop's CSS pixels."""
 
     def __init__(self, image: Image.Image, scale: float, css_w: float, css_h: float, desc: str):
-        self.image = image          # full-resolution picture for this figure
+        self.image = image          # full-resolution crop
         self.scale = scale          # image pixels per CSS pixel
         self.css_w = css_w
         self.css_h = css_h
         self.desc = desc
-        self.anchor = {}            # name -> (x, y, w, h) in this frame's CSS px
+        self.anchor = {}            # name -> (x, y, w, h)
 
 
-def frame_console(shots: Path, fig: dict) -> Frame:
+_full_cache: dict = {}
+
+
+def console_source(shots: Path, page: str):
+    key = (str(shots), page)
+    if key not in _full_cache:
+        data = load_json(shots / "console" / f"{page}.anchors.json")
+        full_rel = data.get("full_page_picture") or f"console/full/{page}.png"
+        full = Image.open(shots / full_rel).convert("RGB")
+        anchors = {k: rect(v["full_page"]) for k, v in data["anchors"].items()
+                   if isinstance(v, dict) and v.get("full_page")}
+        nav = anchors.get("nav_updates")
+        nav_h = (nav[1] + nav[3]) if nav else 62.0
+        _full_cache[key] = (data, full_rel, full, anchors, nav_h)
+    return _full_cache[key]
+
+
+def crop_console(shots: Path, fig: dict, spec: dict) -> Frame:
     page = fig["source"].split(":", 1)[1]
-    anchors_path = shots / "console" / f"{page}.anchors.json"
-    data = load_json(anchors_path)
-    full_rel = data.get("full_page_picture") or f"console/full/{page}.png"
-    full = Image.open(shots / full_rel).convert("RGB")
+    data, full_rel, full, anchors, nav_h = console_source(shots, page)
     scale = float(data.get("device_scale_factor", 2))
-    vw = float(data["viewport"]["width"])
     page_h = float(data["full_page"]["height"])
-    anchors = {k: rect(v["full_page"]) for k, v in data["anchors"].items()
-               if isinstance(v, dict) and v.get("full_page")}
-    nav = anchors.get("nav_updates")
-    nav_h = (nav[1] + nav[3]) if nav else 62.0
-
-    spec = fig["frame"]
-    pins = [p[0] for p in fig.get("pins", [])]
-    missing = [p for p in pins if p not in anchors]
-    for m in missing:
-        warn(f"{fig['id']}: anchor {m!r} is not in {anchors_path.name}")
-
-    def top_for(name: str, pad: float) -> float:
-        if name == "page":
-            return 0.0
-        return anchors[name][1] - nav_h - pad
-
-    def fits(s: float, h: float, name: str) -> bool:
-        x, y, w, hh = anchors[name]
-        if y + hh <= nav_h:            # in the navigation bar, always in view
-            return True
-        return y - s >= nav_h - 1 and y - s + hh <= h + 1
-
-    if "top" in spec:
-        s = top_for(spec["top"], spec.get("pad_top", 0))
+    what = f"{fig['id']}"
+    x0 = resolve(spec["x0"], anchors, what)
+    x1 = resolve(spec["x1"], anchors, what)
+    y0 = resolve(spec["y0"], anchors, what)
+    top = nav_h if spec.get("nav") else 0.0
+    w = x1 - x0
+    if "aspect" in spec:
+        y1 = y0 + w / spec["aspect"] - top
     else:
-        s = top_for(spec.get("prefer_top", "page"), spec.get("pad_top", 0))
-    s = max(0.0, s)
-    if "height" in spec:
-        h = float(spec["height"])
-    else:
-        bottom = max(anchors[b][1] + anchors[b][3] for b in spec["bottom"])
-        h = bottom + spec.get("pad_bottom", 0) - s
-    present = [p for p in pins if p in anchors]
-    if "prefer_top" in spec and not all(fits(s, h, p) for p in present):
-        body = [anchors[p] for p in present if anchors[p][1] + anchors[p][3] > nav_h]
-        pad = spec.get("fallback_pad", 24)
-        s = max(0.0, min(r[1] for r in body) - nav_h - pad)
-        warn(f"{fig['id']}: the pins do not all fit below {spec['prefer_top']!r}; "
-             f"framed on the pins instead (scroll {s:.0f})")
-    s = min(s, max(0.0, page_h - h))
-    s = round(s)
-    h = round(h)
-
+        y1 = resolve(spec["y1"], anchors, what)
+    if y0 < top:                      # never repeat the bar's own rows
+        y1 += top - y0
+        y0 = top
+    if y1 > page_h:
+        y0, y1 = y0 - (y1 - page_h), page_h
+    x0, x1, y0, y1 = (round(v) for v in (x0, x1, y0, y1))
+    w, h = x1 - x0, (y1 - y0) + round(top)
     px = lambda v: int(round(v * scale))
-    img = Image.new("RGB", (px(vw), px(h)))
-    img.paste(full.crop((0, 0, px(vw), px(nav_h))), (0, 0))
-    img.paste(full.crop((0, px(s + nav_h), px(vw), px(s + h))), (0, px(nav_h)))
-    fr = Frame(img, scale, vw, h, f"{full_rel}, a {vw:.0f} x {h} view at scroll {s}, navigation bar kept")
-    for name, (x, y, w, hh) in anchors.items():
-        if y + hh <= nav_h:
-            fr.anchor[name] = (x, y, w, hh)
-        elif y - s >= nav_h - 1 and y - s + hh <= h + 1:
-            fr.anchor[name] = (x, y - s, w, hh)
+    img = Image.new("RGB", (px(w), px(h)))
+    if top:
+        img.paste(full.crop((px(x0), 0, px(x1), px(top))), (0, 0))
+    img.paste(full.crop((px(x0), px(y0), px(x1), px(y1))), (0, px(top)))
+    bar = ", the console's bar kept" if top else ""
+    fr = Frame(img, scale, w, h, f"{full_rel}, x {x0} to {x1}, y {y0} to {y1}{bar} ({w} x {h})")
+    for name, (ax, ay, aw, ah) in anchors.items():
+        if ay + ah <= nav_h:
+            if top:
+                fr.anchor[name] = (ax - x0, ay, aw, ah)
+        else:
+            fr.anchor[name] = (ax - x0, ay - y0 + top, aw, ah)
     return fr
 
 
-def frame_email(shots: Path, fig: dict) -> Frame:
-    data = load_json(shots / "email" / "morning.anchors.json")
-    pic = Image.open(shots / data.get("picture", "email/morning.png")).convert("RGB")
-    scale = float(data.get("device_scale_factor", 2))
-    w = float(data.get("width", pic.width / scale))
-    anchors = {k: rect(v) for k, v in data["anchors"].items()}
-    html = shots / "email" / "morning.html"
-    if fig.get("measure") and html.exists():
-        anchors.update(measure_html(html, int(w), fig["measure"]))
-    crop = fig.get("crop", {})
-    h = float(data.get("height", pic.height / scale))
-    if crop.get("bottom") in anchors:
-        h = anchors[crop["bottom"]][1] + crop.get("pad_bottom", 0)
-    elif crop.get("bottom"):
-        warn(f"email: crop anchor {crop['bottom']!r} missing; the whole email is used")
-    h = round(h)
-    img = pic.crop((0, 0, pic.width, int(round(h * scale))))
-    fr = Frame(img, scale, w, h, f"{data.get('picture', 'email/morning.png')}, cropped to {w:.0f} x {h}")
-    fr.anchor = {k: v for k, v in anchors.items() if v[1] + v[3] <= h}
+_email_cache: dict = {}
+
+
+def crop_email(shots: Path, fig: dict, spec: dict) -> Frame:
+    key = str(shots)
+    if key not in _email_cache:
+        data = load_json(shots / "email" / "morning.anchors.json")
+        pic = Image.open(shots / data.get("picture", "email/morning.png")).convert("RGB")
+        scale = float(data.get("device_scale_factor", 2))
+        width = float(data.get("width", pic.width / scale))
+        anchors = {k: rect(v) for k, v in data["anchors"].items()}
+        html = shots / "email" / "morning.html"
+        if fig.get("measure") and html.exists():
+            anchors.update(measure_html(html, int(width), fig["measure"]))
+        _email_cache[key] = (data, pic, scale, anchors)
+    data, pic, scale, anchors = _email_cache[key]
+    x0, x1 = resolve(spec["x0"], anchors, "email"), resolve(spec["x1"], anchors, "email")
+    y0, y1 = resolve(spec["y0"], anchors, "email"), resolve(spec["y1"], anchors, "email")
+    x0, x1, y0, y1 = (round(v) for v in (x0, x1, y0, y1))
+    px = lambda v: int(round(v * scale))
+    img = pic.crop((px(x0), px(y0), px(x1), px(y1)))
+    fr = Frame(img, scale, x1 - x0, y1 - y0, f"{data.get('picture', 'email/morning.png')}, x {x0} to {x1}, y {y0} to {y1}")
+    fr.anchor = {k: (x - x0, y - y0, w, h) for k, (x, y, w, h) in anchors.items()}
     return fr
 
 
-def frame_app(shots: Path, fig: dict) -> Frame:
+def crop_app(shots: Path, fig: dict, spec: dict) -> Frame:
     screen = fig["source"].split(":", 1)[1]
     pic = Image.open(shots / "app" / f"{screen}.png").convert("RGB")
-    apath = shots / "app" / f"{screen}.anchors.json"
     scale = 3.0
-    anchors = {}
+    apath = shots / "app" / f"{screen}.anchors.json"
     if apath.exists():
-        data = load_json(apath)
-        scale = float(data.get("device_scale_factor", 3))
-        anchors = {k: rect(v) for k, v in data["anchors"].items()}
-    fr = Frame(pic, scale, pic.width / scale, pic.height / scale, f"app/{screen}.png")
-    fr.anchor = anchors
-    return fr
+        scale = float(load_json(apath).get("device_scale_factor", 3))
+    return Frame(pic, scale, pic.width / scale, pic.height / scale, f"app/{screen}.png")
 
 
-def save_webp(img: Image.Image, path: Path, width: int, budget: int, dry: bool) -> tuple[int, int, int]:
+def save_webp(img: Image.Image, path: Path, width: int, budget: int, dry: bool) -> tuple[int, int, int, int]:
+    width = min(width, img.width)          # never enlarge the source
     h = round(img.height * width / img.width)
     small = img.resize((width, h), Image.LANCZOS) if width != img.width else img
     q = QUALITY
     while True:
-        from io import BytesIO
         buf = BytesIO()
         small.save(buf, format="WEBP", quality=q, method=6)
         size = buf.tell()
@@ -400,58 +446,83 @@ def save_webp(img: Image.Image, path: Path, width: int, budget: int, dry: bool) 
     if not dry:
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_bytes(buf.getvalue())
-    return size, q, h
+    return width, h, size, q
 
 
-def pin_numbers(fig: dict, fr: Frame) -> list[dict]:
+def place_pins(fig: dict, fr: Frame, display: float | None, variant: str) -> list[dict]:
+    """Every pin as a percentage of the crop, or hidden when it does not fit inside."""
+    k = (display / fr.css_w) if display else 1.0      # screen pixels per CSS pixel
     out = []
     for n, (name, spot) in enumerate(fig.get("pins", []), start=1):
         fx, fy, pxs, pys = SPOTS[spot]
         a = fr.anchor.get(name)
-        if a is None:
-            warn(f"{fig['id']}: pin {n} ({name}) is outside the picture; it is hidden on the page")
-            out.append({"n": n, "name": name, "spot": spot, "hidden": True})
-            continue
-        x, y, w, h = a
-        ax, ay = x + fx * w, y + fy * h
-        out.append({
-            "n": n, "name": name, "spot": spot, "hidden": False, "rect": a,
-            "x": 100 * ax / fr.css_w, "y": 100 * ay / fr.css_h,
-            "dx": pxs * PUSH, "dy": pys * PUSH,
-        })
+        p = {"n": n, "name": name, "spot": spot, "hidden": True}
+        if a is not None:
+            x, y, w, h = a
+            ax, ay = x + fx * w, y + fy * h
+            cx, cy = ax + pxs * PUSH / k, ay + pys * PUSH / k      # the pin's centre, CSS px
+            r = (PIN_R + 1) / k
+            if r <= cx <= fr.css_w - r and r <= cy <= fr.css_h - r:
+                p.update(hidden=False, rect=a, x=100 * ax / fr.css_w, y=100 * ay / fr.css_h,
+                         dx=pxs * PUSH, dy=pys * PUSH)
+        if p["hidden"]:
+            warn(f"{fig['id']} {variant}: pin {n} ({name}) does not fit in the crop; hidden there")
+        out.append(p)
     return out
 
 
-def block_for(fig: dict, fr: Frame, pins: list[dict], files: list[tuple[int, int]], shots_name: str) -> str:
+def img_tag(fig: dict, files: list[tuple[int, int]], spec: dict, stem: str, cls: str | None) -> str:
+    w1, h1 = files[0]
+    srcset = ", ".join(f"{OUT_URL}/{stem}-{w}.webp {w}w" for w, _ in files)
+    loading = 'fetchpriority="high"' if fig.get("eager") else 'loading="lazy"'
+    c = f'class="{cls}" ' if cls else ""
+    return (f'<img {c}src="{OUT_URL}/{stem}-{w1}.webp" srcset="{srcset}" sizes="{spec["sizes"]}" '
+            f'width="{w1}" height="{h1}" {loading} decoding="async" alt="{fig["alt"]}">')
+
+
+def block_for(fig: dict, shots_name: str, frames: dict, pins: dict, files: dict) -> str:
     fid = fig["id"]
-    lines = [f"<!-- MM-FIG {fid} START. Generated by scripts/mm_site_images.py from {shots_name}: {fr.desc}."]
-    if pins:
-        lines.append("     To move a pin, change its anchor or spot in the script and run it again; do not edit the numbers by hand.")
-        for p in pins:
+    lines = [f"<!-- MM-FIG {fid} START. Generated by scripts/mm_site_images.py from {shots_name}."]
+    for variant, fr in frames.items():
+        lines.append(f"     {variant}: {fr.desc}")
+        for p in pins.get(variant, []):
             if p["hidden"]:
-                lines.append(f"     pin {p['n']}  {p['name']} ({p['spot']}): not in this picture, hidden")
+                lines.append(f"       pin {p['n']}  {p['name']} ({p['spot']}): outside this crop, hidden")
             else:
                 x, y, w, h = p["rect"]
-                lines.append(
-                    f"     pin {p['n']}  {p['name']} ({p['spot']}) box {x:.0f},{y:.0f} {w:.0f}x{h:.0f} of "
-                    f"{fr.css_w:.0f}x{fr.css_h:.0f} -> left {p['x']:.3f}% top {p['y']:.3f}%, "
-                    f"pushed {p['dx']}px {p['dy']}px")
+                lines.append(f"       pin {p['n']}  {p['name']} ({p['spot']}) box {x:.0f},{y:.0f} {w:.0f}x{h:.0f}"
+                             f" -> left {p['x']:.3f}% top {p['y']:.3f}%, pushed {p['dx']}px {p['dy']}px")
+    if fig.get("pins"):
+        lines.append("     To move a pin or a crop, change it in the script and run it again; do not edit the numbers here.")
     lines[-1] += " -->"
-    w1, h1 = files[0]
-    srcset = ", ".join(f"{OUT_URL}/{fig['out']}-{w}.webp {w}w" for w, _ in files)
-    loading = 'fetchpriority="high"' if fig.get("eager") else 'loading="lazy"'
-    img = (f'<img src="{OUT_URL}/{fig["out"]}-{w1}.webp" srcset="{srcset}" sizes="{fig["sizes"]}" '
-           f'width="{w1}" height="{h1}" {loading} decoding="async" alt="{fig["alt"]}">')
-    if pins:
-        style = ";".join(
-            f"--x{p['n']}:{p['x']:.3f}%;--y{p['n']}:{p['y']:.3f}%;--dx{p['n']}:{p['dx']}px;--dy{p['n']}:{p['dy']}px"
-            for p in pins if not p["hidden"])
-        hidden = " ".join(f"miss-{p['n']}" for p in pins if p["hidden"])
-        cls = "shot" + (f" {hidden}" if hidden else "")
-        lines.append(f'<div class="{cls}" style="{style}">')
-        lines.append(f'<div class="pic">{img}')
+    wide = img_tag(fig, files["wide"], fig["crops"]["wide"], fig["out"], "shot-img" if fig.get("pins") else None)
+    if "narrow" in files:
+        nf = files["narrow"]
+        nsrc = ", ".join(f"{OUT_URL}/{fig['out']}-n-{w}.webp {w}w" for w, _ in nf)
+        pic = (f'<picture><source media="{NARROW_MEDIA}" srcset="{nsrc}" sizes="100vw" '
+               f'width="{nf[0][0]}" height="{nf[0][1]}">{wide}</picture>')
     else:
-        lines.append(img)
+        pic = wide
+    if fig.get("pins"):
+        parts, classes = [], ["shot"]
+        for p in pins["wide"]:
+            if p["hidden"]:
+                classes.append(f"miss-{p['n']}")
+            else:
+                parts.append(f"--x{p['n']}:{p['x']:.3f}%;--y{p['n']}:{p['y']:.3f}%;"
+                             f"--dx{p['n']}:{p['dx']}px;--dy{p['n']}:{p['dy']}px")
+        if "narrow" in pins:
+            classes.append("two")
+            for p in pins["narrow"]:
+                if p["hidden"]:
+                    classes.append(f"nmiss-{p['n']}")
+                else:
+                    parts.append(f"--nx{p['n']}:{p['x']:.3f}%;--ny{p['n']}:{p['y']:.3f}%;"
+                                 f"--ndx{p['n']}:{p['dx']}px;--ndy{p['n']}:{p['dy']}px")
+        lines.append(f'<div class="{" ".join(classes)}" style="{";".join(parts)}">')
+        lines.append(f'<div class="pic">{pic}')
+    else:
+        lines.append(pic)
     lines.append(f"<!-- MM-FIG {fid} END -->")
     return "\n".join(lines)
 
@@ -480,31 +551,54 @@ def main() -> int:
         print(f"{shots} does not look like a shots folder (no console/ inside).", file=sys.stderr)
         return 2
 
-    blocks = {}
-    total = {}
+    blocks, total = {}, {}
     for fig in FIGURES:
         if args.only and fig["id"] not in args.only:
             continue
         kind = fig["source"].split(":", 1)[0]
-        fr = {"console": frame_console, "email": frame_email, "app": frame_app}[kind](shots, fig)
-        pins = pin_numbers(fig, fr)
-        files = []
-        print(f"\n== {fig['id']}  ({fr.desc})")
-        for w in fig["widths"]:
-            path = OUT_DIR / f"{fig['out']}-{w}.webp"
-            size, q, h = save_webp(fr.image, path, w, fig.get("budget", BUDGET_OTHER), args.dry_run)
-            files.append((w, h))
-            total[path.name] = size
-            print(f"   {path.name:34s} {w} x {h}  {size / 1000:6.1f} KB  q{q}")
-        for p in pins:
-            if p["hidden"]:
-                print(f"   pin {p['n']}  {p['name']:28s} OUTSIDE THE PICTURE (hidden)")
-            else:
-                print(f"   pin {p['n']}  {p['name']:28s} {p['spot']:12s} left {p['x']:7.3f}%  top {p['y']:7.3f}%"
-                      f"  push {p['dx']:+d}px {p['dy']:+d}px")
-        block = block_for(fig, fr, pins, files, shots.name)
-        blocks[fig["id"]] = block
-        print(block)
+        cropper = {"console": crop_console, "email": crop_email, "app": crop_app}[kind]
+        frames, pins, files, written = {}, {}, {}, set()
+        print(f"\n== {fig['id']}")
+        for variant, spec in fig["crops"].items():
+            fr = cropper(shots, fig, spec)
+            frames[variant] = fr
+            stem = fig["out"] + ("-n" if variant == "narrow" else "")
+            display = spec.get("display")
+            note = ""
+            if display:
+                k = display / fr.css_w
+                note = f", shown {display}px wide (x{k:.3f})"
+                if kind == "console" and variant == "wide":
+                    text = CONSOLE_BODY_PX * k
+                    note += f", console text {text:.1f}px"
+                    if text < MIN_TEXT_PX:
+                        warn(f"{fig['id']}: the console's {CONSOLE_BODY_PX}px text shows at {text:.1f}px, under {MIN_TEXT_PX}px")
+                if k > 1.08 and variant == "wide":
+                    warn(f"{fig['id']}: the crop is enlarged {k:.2f} times at the 1440 layout; it may look soft")
+            print(f"   {variant}: {fr.desc}{note}")
+            files[variant] = []
+            for w in spec["widths"]:
+                aw = min(w, fr.image.width)
+                if any(fw == aw for fw, _ in files[variant]):
+                    continue
+                path = OUT_DIR / f"{stem}-{aw}.webp"
+                aw, ah, size, q = save_webp(fr.image, path, aw, fig.get("budget", BUDGET_OTHER), args.dry_run)
+                files[variant].append((aw, ah))
+                written.add(path.name)
+                total[path.name] = size
+                print(f"     {path.name:36s} {aw} x {ah}  {size / 1000:6.1f} KB  q{q}")
+            if fig.get("pins"):
+                pins[variant] = place_pins(fig, fr, display, variant)
+                for p in pins[variant]:
+                    if not p["hidden"]:
+                        print(f"     pin {p['n']}  {p['name']:28s} {p['spot']:12s} left {p['x']:7.3f}%  "
+                              f"top {p['y']:7.3f}%  push {p['dx']:+d}px {p['dy']:+d}px")
+        if not args.dry_run:        # remove this figure's files from earlier crops
+            for old in glob.glob(str(OUT_DIR / f"{fig['out']}-*.webp")):
+                if Path(old).name not in written and re.fullmatch(re.escape(fig["out"]) + r"-(n-)?\d+\.webp", Path(old).name):
+                    os.remove(old)
+        blocks[fig["id"]] = block_for(fig, shots.name, frames, pins, files)
+        print(blocks[fig["id"]])
 
     print(f"\nTotal of the WebP files written: {sum(total.values()) / 1000:.0f} KB over {len(total)} files.")
     if args.apply and not args.dry_run:
