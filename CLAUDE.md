@@ -95,7 +95,7 @@ Field Notes is retired. The homepage signup (`#newsletter`), its Beehiiv loader 
 
 ## 2026-09-30: homepage redo and cleanup
 
-- **Homepage rebuilt** to the 2026-09-30 copy draft and brought up to the visual level of `materialmonitor.html` and homehandover.app, in the studio palette. The homepage now links Handover and Material Monitor (Early access band), which reverses the earlier "homepage stays silent" rule for those two. The one mention of AI is in the studio paragraph. `og-home.png` was not regenerated.
+- **Homepage rebuilt** to the 2026-09-30 copy draft and brought up to the visual level of `materialmonitor.html` and homehandover.app, in the studio palette. The homepage now links Handover and Material Monitor (Early access band), which reverses the earlier "homepage stays silent" rule for those two. The one mention of AI is in the studio paragraph. `assets/og/og-home.png` was re-rendered with the new headline (it used to advertise The Install); its source HTML is in that session's scratchpad as `og-home-src.html`.
 - **Field Notes retired** (see above). The **Cowork primer** footer link is gone everywhere; `primer.html` is `noindex`, out of the sitemap and `llms.txt`, still reachable.
 - **Architect**: `architect.html` and `assets/og/og-architect.png` deleted, out of the sitemap and `llms.txt`. `architect-help.html` stays reachable for the app and unlinked. The Architect screens and demo video under `assets/` are now unused.
 - **The Install**: `install.html` untouched (hidden, `noindex`); the primer's Install card and the `llms.txt` entry removed.
