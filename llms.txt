@@ -1,26 +1,21 @@
 # Lock Ten Studio
 
-> AI tools for the people who build custom homes, built and run by a working custom builder in Cabin John, Maryland. Four products currently offered: Walkthrough (a jobsite site-report app for builders), Architect Walkthrough (site reports and punch lists for architects), Handover (a white-label homeowner's manual a builder gives each client at the end of a job) and Material Monitor (finish material order tracking that reads a builder's vendor email and flags the orders that need a follow-up). Plainspoken, no hype, made by someone who runs a build business.
+> Software for custom home builders and the people who work on houses, made and run by a working custom builder in Cabin John, Maryland. Walkthrough (a jobsite site-report app) is live on iPhone and Android. Handover (a white-label homeowner's manual a builder gives each client) and Material Monitor (finish material tracking for builders running several homes) are in early access, each on its own site. Plainspoken, no hype, made by someone who runs a build business.
 
 ## Products
 
 - [Walkthrough](https://lockten.ai/walkthrough): an app for builders, on iPhone and Android. Walk a job site, talk and take photos, and it generates a clean PDF report you text or email to your subcontractor from your own phone. No portal and no logins for your subs, they just get a text. Photos save to your own Google Drive or Dropbox, not your camera roll. It handles walkthroughs, trade lists, construction daily logs (dated and photo-backed, with the day's weather pulled in automatically and a weather-delay flag), owner updates, meeting notes and a persistent punch list. Three free reports to start with every feature unlocked, no credit card, then two plans: Standard at $9.99 per user per month or $99.99 per year (every report type except meeting notes and the punch list, unlimited), and Pro at $24.99 per user per month or $239.99 per year (adds meeting notes and the persistent punch list). On the App Store and Google Play as "Walkthrough: Site Reports".
-- [Architect Walkthrough](https://lockten.ai/architect): an iOS app for solo architects and small studios. Talk through a site visit and it drafts finished, editable documents in your studio's brand: site reports, living punch lists that stay checked-off across visits, client updates, meeting notes and quick photo-plus-question notes. Recipients just get a PDF by text or email, no logins. On-device transcription for reports and punch lists. First three sent reports free, then $19.99 per month or $199.99 per year. On the App Store.
-- The Install: PAUSED and not currently offered. It was a done-for-you Claude Cowork workspace setup for a builder's business. It is not for sale, there is no sign-up and there is no price. Do not present it as a live product. Email info@lockten.ai for anything related to it.
-- [Handover](https://lockten.ai/handover): a white-label homeowner's manual platform for custom builders. Import a home's selections, and it finds the manufacturer manuals, writes sourced care guides and a warranty registration guide, then publishes a searchable app for the homeowner (answers grounded in the home's own documents, with sources) and a print-ready binder, all under the builder's brand. Homeowners sign in with an email code; their builder sets everything up. No public pricing yet; contact info@lockten.ai.
-- [Material Monitor](https://materialmonitor.app/): finish material tracking for custom builders. It reads the vendor email your office already gets, keeps every order's status current with a person confirming each change, and surfaces the orders that need a follow-up. Opening to founding builders now, no public price yet; contact info@lockten.ai.
+- [Handover](https://homehandover.app/): a white-label homeowner's manual platform for custom builders. Every client gets an app that answers their questions from their own home's documents, plus a printed binder, both under the builder's name. In early access; the iOS app is on the App Store, and pricing is on the Handover site.
+- [Material Monitor](https://materialmonitor.app/): finish material tracking for custom builders running several homes at once. One list of every finish material on every job, shared by the office on the computer and the crew on their phones, with vendor mail and carrier tracking feeding it. Live for founding builders; the iPhone app is on the way.
 
 ## Key pages
 
-- [Homepage](https://lockten.ai/): the studio and its products.
+- [Homepage](https://lockten.ai/): the studio, Walkthrough and the two early access tools.
 - [Walkthrough](https://lockten.ai/walkthrough): the field app, how it works, pricing and FAQ.
-- [Architect Walkthrough](https://lockten.ai/architect): the architect app, how it works, pricing and FAQ.
 - [Sample report](https://lockten.ai/sample-report): an example of the PDF Walkthrough produces from a site walk.
-- [Handover](https://lockten.ai/handover): the homeowner manual platform, how it works and FAQ.
-- [Material Monitor](https://materialmonitor.app/): finish material tracking, how it works, the morning email and FAQ.
-- [Cowork primer](https://lockten.ai/primer): a plain-language guide to Claude Cowork for small business owners.
+- [Handover](https://homehandover.app/): the homeowner manual platform, on its own site.
+- [Material Monitor](https://materialmonitor.app/): finish material tracking, on its own site.
 - [Help](https://lockten.ai/help): Walkthrough help and FAQs.
-- [Architect help](https://lockten.ai/architect-help): Architect Walkthrough help and FAQs.
 
 ## About
 

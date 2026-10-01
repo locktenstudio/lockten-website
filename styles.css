@@ -1,5 +1,5 @@
 /* ============================================================
-   Lock Ten Studio — site styles
+   Lock Ten Studio: site styles
    Lock Ten Studio Design System:
    indigo ink + gate blue + cool slate neutrals, pure white ground.
    Display: Instrument Serif · UI/body: Geist · spec data: Geist Mono.
@@ -87,7 +87,7 @@
   --blueprint-700: #155DA3;
   --blueprint-800: #114A82;
 
-  /* Slate (true cool grey-blue neutrals — reads grey, never violet)
+  /* Slate (true cool grey-blue neutrals, reads grey, never violet)
      Matches the Lock Ten Design System neutral ramp. */
   --slate-50:  #F5F7F9;
   --slate-100: #EAECF0;
@@ -99,12 +99,12 @@
   --slate-700: #2D343D;
   --slate-800: #1D232B;
   --slate-900: #11161C;
-  --ink-indigo: #272260;  /* logo color only — never for text or neutrals */
+  --ink-indigo: #272260;  /* logo color only, never for text or neutrals */
 
   --white: #FFFFFF;
   --black: #0A0820;
 
-  /* Deep navy (dark surfaces — blue-cast, not indigo) */
+  /* Deep navy (dark surfaces, blue-cast, not indigo) */
   --deep-900: #0C1B38;
   --deep-800: #142A52;
   --steel-600: #2F507F;
@@ -185,7 +185,7 @@ html, body {
 .skip-link:focus { left: 0; }
 
 /* ------------------------------------------------------------
-   Section labels — mono with a short gate-blue rule
+   Section labels: mono with a short gate-blue rule
    ------------------------------------------------------------ */
 .label {
   font-family: var(--font-mono);
@@ -264,7 +264,7 @@ html, body {
 .store-badges-sm .badge-google img { width: 181px; }
 
 /* ------------------------------------------------------------
-   Header — tall brand header + compact sticky bar on scroll
+   Header: tall brand header + compact sticky bar on scroll
    ------------------------------------------------------------ */
 .site-header {
   background: var(--bg);
@@ -335,7 +335,7 @@ html, body {
 .compact-header .header-nav { gap: 26px; }
 
 /* ------------------------------------------------------------
-   Hero — dark, contour lines draw themselves in
+   Hero: dark, contour lines draw themselves in
    ------------------------------------------------------------ */
 .hero-dark {
   position: relative;
@@ -472,7 +472,7 @@ html, body {
 }
 
 /* ------------------------------------------------------------
-   Products — two showcase cards with blueprint panels
+   Products: two showcase cards with blueprint panels
    ------------------------------------------------------------ */
 .product-grid {
   display: grid;
@@ -656,102 +656,6 @@ html, body {
 }
 
 /* ------------------------------------------------------------
-   Newsletter (dark masthead)
-   ------------------------------------------------------------ */
-.newsletter {
-  position: relative;
-  background: var(--deep-900);
-  color: var(--white);
-  padding: 96px 0;
-  overflow: hidden;
-}
-.newsletter .contour-field {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  pointer-events: none;
-  color: var(--blueprint-200);
-  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
-  mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
-}
-.newsletter .contour-field svg {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: max(100%, 1440px);
-  height: auto;
-  opacity: 0.07;
-}
-.newsletter .container { position: relative; }
-.newsletter-grid { max-width: 660px; margin: 0 auto; text-align: center; }
-.newsletter .label { color: var(--blueprint-300); }
-.newsletter .label::before, .newsletter .label::after { background: var(--blueprint-300); }
-
-.masthead { margin-top: 10px; }
-.m-line {
-  font-family: var(--font-display);
-  font-weight: 400;
-  font-size: clamp(2.2rem, 4.6vw, 3.8rem);
-  line-height: 1.12;
-  letter-spacing: -0.015em;
-  color: var(--white);
-  padding: 0.14em 0;
-  border-top: 1px solid rgba(243, 243, 248, 0.16);
-}
-.m-line:first-child { border-top: 0; }
-.m-line em { font-style: italic; color: var(--blueprint-300); }
-
-.stamp {
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 0.72rem;
-  font-weight: 500;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--blueprint-200);
-  border: 1.5px solid var(--blueprint-300);
-  border-radius: 3px;
-  padding: 8px 16px;
-  margin-top: 26px;
-  transform: rotate(-2.5deg);
-}
-
-.newsletter-body {
-  color: rgba(243, 243, 248, 0.78);
-  font-size: 1.05rem;
-  line-height: 1.6;
-  max-width: 520px;
-  margin: 24px auto 0;
-}
-.newsletter-card {
-  background: var(--white);
-  color: var(--fg);
-  padding: 24px;
-  border-radius: var(--radius-lg);
-  box-shadow: var(--shadow-2);
-  max-width: 520px;
-  margin: 36px auto 0;
-  text-align: left;
-}
-.newsletter-card .lead-in {
-  font-family: var(--font-sans);
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: var(--fg-2);
-  margin-bottom: 14px;
-}
-.newsletter-card iframe {
-  width: 100% !important;
-  max-width: 100% !important;
-  height: 150px !important;
-  border: none;
-  display: block;
-}
-.newsletter-fallback { font-size: 0.95rem; color: var(--fg-2); }
-.newsletter-fallback a { color: var(--brand); font-weight: 600; }
-
-/* ------------------------------------------------------------
    Footer
    ------------------------------------------------------------ */
 .site-footer {
@@ -883,12 +787,12 @@ html, body {
   .hero-geo { font-size: 0.62rem; }
   .section { padding: 64px 0; }
   .product-row { padding: 44px 0; gap: 32px; }
-  .trust, .newsletter { padding: 76px 0; }
+  .trust { padding: 76px 0; }
   .compact-header .header-nav a:not(:first-child):not(:last-child) { display: none; }
 }
 
 @media print {
-  .site-header, .compact-header, .newsletter, .site-footer { display: none; }
+  .site-header, .compact-header, .site-footer { display: none; }
   body { background: white; color: black; }
   .hero-dark, .section, .trust { padding: 1rem 0; }
 }

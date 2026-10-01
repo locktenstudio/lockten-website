@@ -2,6 +2,10 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
+<!-- lockten.ai/materialmonitor redirects to the product's own site (2026-09-30). This file is also the source the
+     materialmonitor Render service copies to index.html for materialmonitor.app, so it cannot become a redirect stub;
+     the redirect fires only on the lockten.ai host. A Render redirect rule is the server-side version. -->
+<script>if (/^(www\.)?lockten\.ai$/.test(location.hostname)) location.replace('https://materialmonitor.app/' + location.search + location.hash);</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Material Monitor | One list for every finish material on every job</title>
 <meta name="description" content="Material Monitor keeps every finish material on every job on one list, shared by the office on the computer and the crew on site. For custom builders.">
@@ -1247,7 +1251,7 @@ body.mm .bp-grid {
         <details><summary>What happens when it reads&nbsp;something&nbsp;wrong?</summary><p>You dismiss it and nothing changes. <!-- JOSH TO CONFIRM: For Josh item 1, what updates by itself. -->Two things update by themselves, and only on a material that already has a tracking number: a shipping notice in a connected inbox, which can set the tracking, the expected date and Shipped, and the carrier's own tracking, which can move the expected date or flag a delay. Everything else it reads becomes a suggestion with the vendor's sentence quoted beside it, and a person confirms or dismisses it. No email and no carrier can mark a&nbsp;material&nbsp;received.</p></details>
         <details><summary>How does an office get&nbsp;set&nbsp;up?</summary><p>Somebody in the office signs in at app.materialmonitor.app with a work email and a six digit code, names the company, adds the jobs, brings in each job's selections from a spreadsheet or an export and invites the team. Connecting vendor mail is the last step, and the list works&nbsp;without&nbsp;it.</p></details>
         <details><summary>What does&nbsp;it&nbsp;cost?</summary><p>There is no public price yet. Founding builders talk it through directly with the builder who&nbsp;made&nbsp;it.</p></details>
-        <details><summary>Is this the same company as Walkthrough&nbsp;and&nbsp;Handover?</summary><p>Yes. Lock Ten Studio makes software for custom home builders and is run by the co-owner of a building company outside Washington DC. <a href="https://lockten.ai/walkthrough">Walkthrough</a> is its field-report app, <a href="https://lockten.ai/handover">Handover</a> builds the homeowner's manual and Material Monitor keeps track of the materials&nbsp;in&nbsp;between.</p></details>
+        <details><summary>Is this the same company as Walkthrough&nbsp;and&nbsp;Handover?</summary><p>Yes. Lock Ten Studio makes software for custom home builders and is run by the co-owner of a building company outside Washington DC. <a href="https://lockten.ai/walkthrough">Walkthrough</a> is its field-report app, <a href="https://homehandover.app/">Handover</a> builds the homeowner's manual and Material Monitor keeps track of the materials&nbsp;in&nbsp;between.</p></details>
       </div>
     </div>
   </section>
@@ -1294,7 +1298,7 @@ body.mm .bp-grid {
       <nav class="footer-nav" aria-label="Footer">
         <a href="https://lockten.ai/">Lock Ten Studio</a>
         <a href="https://lockten.ai/walkthrough">Walkthrough</a>
-        <a href="https://lockten.ai/handover">Handover</a>
+        <a href="https://homehandover.app/">Handover</a>
         <a href="mailto:info@lockten.ai?subject=Material%20Monitor">Contact</a>
         <a href="https://materialmonitor.app/privacy">Privacy</a>
         <a href="https://materialmonitor.app/terms">Terms</a>
