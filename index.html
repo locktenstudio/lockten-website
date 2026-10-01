@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lock Ten Studio | AI tools for custom builders</title>
-<meta name="description" content="Lock Ten Studio makes AI tools for custom home builders. Built and run by a residential custom builder currently building custom homes.">
+<title>Lock Ten Studio | Software for custom builders, made by a builder</title>
+<meta name="description" content="Software for custom home builders and the people who work on houses. Walkthrough turns a site walk into a PDF report. Handover and Material Monitor are in early access.">
 
 <meta property="og:title" content="Lock Ten Studio">
-<meta property="og:description" content="AI tools for custom builders, made by one.">
+<meta property="og:description" content="Software for custom builders, made by a builder.">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://lockten.ai">
 <meta property="og:image" content="https://lockten.ai/assets/og/og-home.png">
@@ -24,42 +24,259 @@
 <script>document.documentElement.className += ' js';</script>
 
 <style>
-/* Centered hero (homepage only; product pages keep their own layouts) */
-.home .hero-dark .container { text-align: center; }
-.home .hero-headline { margin-left: auto; margin-right: auto; }
-.home .hero-subhead { margin-left: auto; margin-right: auto; }
-.home .hero-actions { justify-content: center; }
-
-/* One product card since The Install was unlisted (2026-09-12): keep the grid
-   single-column and centered at the card's old two-column width (1180 container
-   minus 80 gutter minus 32 gap, halved). */
-@media (min-width: 900px) {
-  .product-grid { grid-template-columns: minmax(0, 534px); justify-content: center; }
+/* =====================================================================
+   Homepage (2026-09-30 redo). Everything here is scoped to body.home so
+   the shared kit in styles.css (header, hero, buttons, badges, footer)
+   keeps working on every other page. Studio palette only: gate blue,
+   deep navy, cool slate, white ground. The two early access cards carry
+   their own product marks and a tint drawn from each mark.
+   Reading copy is 1.06rem or more (18px on the 17px root); labels and
+   small print stay at 0.95rem (16px) or more.
+   ===================================================================== */
+body.home {
+  --h-wide: 1240px;
+  --h-teal: #123A40;        /* Handover mark */
+  --h-teal-tint: #EEF4F5;
+  --h-mm: #2D343D;          /* Material Monitor mark ground */
+  --h-mm-accent: #C8763C;   /* Material Monitor mark beacon, accent only */
+  --h-mm-tint: #F2F4F7;
 }
+.home .container.wide { max-width: var(--h-wide); }
+.home .pg { white-space: nowrap; }
+.home p, .home li, .home dd { text-wrap: pretty; }
+:where(.home) a:focus-visible { outline: 3px solid var(--blueprint-300); outline-offset: 3px; border-radius: 4px; }
 
-/* Product panels: real UI shots rising from the panel bottom
-   (replaced the blueprint line-art SVGs once both products went live) */
-.product-panel.pp { height: 264px; padding: 30px 30px 0; overflow: hidden; align-items: flex-end; }
-.product-card:hover .product-panel.pp svg { transform: none; }
-.pp-phone { width: 190px; height: 234px; overflow: hidden; background: #0A0D12; border: 1px solid rgba(255,255,255,0.15); border-bottom: none; border-radius: 26px 26px 0 0; padding: 8px 8px 0; box-shadow: 0 -18px 50px -20px rgba(0,0,0,0.6); transition: transform 400ms var(--ease); }
-.pp-phone img { display: block; width: 100%; height: auto; border-radius: 18px 18px 0 0; }
-.product-card:hover .pp-phone { transform: translateY(-6px); }
-.pp-window { width: min(82%, 280px); background: var(--white); border-radius: 10px 10px 0 0; box-shadow: 0 -18px 50px -20px rgba(0,0,0,0.55); overflow: hidden; transition: transform 400ms var(--ease); }
-.product-card:hover .pp-window { transform: translateY(-6px); }
-.pp-bar { display: flex; gap: 5px; padding: 9px 12px; background: var(--slate-100); border-bottom: 1px solid var(--line); }
-.pp-bar span { width: 8px; height: 8px; border-radius: 50%; background: var(--slate-300); }
-.pp-rows { padding: 10px 14px 14px; font-size: 12.5px; color: var(--fg-2); }
-.pp-row { display: flex; align-items: center; gap: 8px; padding: 5px 0 5px calc(var(--ind, 0) * 16px); }
-.pp-row svg { width: 14px; height: 14px; flex: none; }
-.pp-row.dir svg { color: var(--brand); }
-.pp-row.file svg { color: var(--slate-400); }
-.pp-row.dir .nm { font-weight: 500; color: var(--fg); }
+/* ---- Header: the shared lockup, nav a touch larger ---- */
+.home .site-header .header-nav a { font-size: 0.86rem; }
+.home .compact-header .header-nav a { font-size: 0.86rem; }
 
-/* Product-card action rows (store badges + learn-more). Badge sizing and the
-   Apple/Google pairing live in styles.css under .store-badges. */
-.product-actions { display: flex; align-items: center; gap: 20px; flex-wrap: wrap; margin-top: 20px; }
-.product-actions .product-more { margin-top: 0; }
-.product-actions .store-badges { gap: 4px 6px; }
+/* ---- Labels and headlines ---- */
+.home .label { font-size: 0.95rem; letter-spacing: 0.14em; }
+.h-head { margin-bottom: 44px; }
+.h-head.center { text-align: center; }
+.h-head.center .label { justify-content: center; }
+.h-head.center .label::after { content: ""; width: 30px; height: 1px; background: var(--brand); flex: none; }
+.h-title {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: clamp(1.8rem, 1.05rem + 2.75vw, 2.95rem);
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  color: var(--fg);
+  text-wrap: balance;
+}
+.h-title em { font-style: italic; color: var(--brand); }
+.h-lede { font-size: 1.15rem; line-height: 1.65; color: var(--fg-2); max-width: 38em; margin-top: 16px; }
+.h-head.center .h-lede { margin-left: auto; margin-right: auto; text-wrap: balance; }
+
+/* ---- Hero ---- */
+.home .hero-dark { padding: 64px 0 120px; text-align: center; }
+.home .hero-dark .hero-headline {
+  font-size: clamp(2.4rem, 1.2rem + 4.6vw, 5rem);
+  line-height: 1.04;
+  max-width: none;
+  margin: 0 auto;
+}
+.home .hero-dark .hero-subhead {
+  font-size: clamp(1.1rem, 1.45vw, 1.24rem);
+  color: rgba(238, 242, 246, 0.84);
+  max-width: 35em;
+  margin: 28px auto 0;
+  text-wrap: balance;
+}
+.home .hero-actions { justify-content: center; margin-top: 36px; }
+.home .btn { font-size: 1rem; padding: 13px 22px; }
+
+/* The lineup: the studio's three tools under the hero copy */
+.h-lineup {
+  list-style: none;
+  margin: 64px auto 0;
+  padding: 0;
+  display: grid;
+  gap: 12px;
+  max-width: 940px;
+}
+@media (min-width: 760px) { .h-lineup { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
+.h-lineup a {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  text-align: left;
+  text-decoration: none;
+  padding: 14px 16px;
+  border: 1px solid rgba(169, 191, 220, 0.22);
+  border-radius: var(--radius-lg);
+  background: rgba(20, 42, 82, 0.55);
+  transition: border-color 200ms var(--ease), transform 200ms var(--ease), background 200ms var(--ease);
+}
+.h-lineup a:hover { border-color: rgba(169, 191, 220, 0.5); background: rgba(20, 42, 82, 0.85); transform: translateY(-2px); }
+.h-lineup .mk { width: 44px; height: 44px; flex: none; border-radius: 10px; overflow: hidden; display: grid; place-items: center; }
+.h-lineup .mk svg, .h-lineup .mk img { display: block; width: 100%; height: 100%; }
+.h-lineup .mk.wt { background: var(--white); padding: 7px; }
+.h-lineup .mk.wt img { object-fit: contain; }
+.h-lineup b { display: block; font-weight: 600; font-size: 1.06rem; line-height: 1.3; color: var(--white); }
+.h-lineup small { display: block; font-family: var(--font-mono); font-size: 0.95rem; letter-spacing: 0.02em; line-height: 1.35; color: var(--steel-300); margin-top: 2px; }
+.js .h-lineup { animation: rise 0.8s var(--ease) 0.34s both; }
+
+/* ---- Walkthrough band ---- */
+.h-band { padding: 104px 0; }
+.h-benefits { list-style: none; margin: 0; padding: 0; display: grid; gap: 22px; }
+@media (min-width: 900px) { .h-benefits { grid-template-columns: repeat(3, 1fr); gap: 24px; } }
+.h-benefit {
+  display: flex;
+  flex-direction: column;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  overflow: hidden;
+  transition: box-shadow 260ms var(--ease), transform 260ms var(--ease), border-color 260ms;
+}
+.h-benefit:hover { box-shadow: var(--shadow-3); transform: translateY(-3px); border-color: var(--line-strong); }
+.h-shot {
+  height: 330px;
+  padding: 34px 24px 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: hidden;
+  background-color: var(--slate-50);
+  background-image:
+    linear-gradient(to right, rgba(28, 113, 193, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(28, 113, 193, 0.06) 1px, transparent 1px);
+  background-size: 28px 28px;
+  border-bottom: 1px solid var(--line);
+}
+.h-phone {
+  width: 232px;
+  height: 100%;
+  background: #0B0F14;
+  border-radius: 34px 34px 0 0;
+  padding: 9px 9px 0;
+  box-shadow: 0 -16px 44px -22px rgba(17, 22, 28, 0.55), 0 0 0 1px rgba(17, 22, 28, 0.08);
+  overflow: hidden;
+  transition: transform 400ms var(--ease);
+}
+.h-phone img { display: block; width: 100%; height: auto; border-radius: 26px 26px 0 0; }
+.h-benefit:hover .h-phone { transform: translateY(-8px); }
+.h-benefit-text { padding: 26px 28px 30px; }
+.h-num { font-family: var(--font-mono); font-size: 0.95rem; letter-spacing: 0.14em; color: var(--brand); margin-bottom: 10px; }
+.h-benefit h3 { font-family: var(--font-sans); font-weight: 600; font-size: 1.32rem; line-height: 1.3; letter-spacing: -0.01em; color: var(--fg); margin-bottom: 10px; text-wrap: balance; }
+.h-benefit p.what { font-size: 1.06rem; line-height: 1.62; color: var(--fg-2); }
+
+.h-buy {
+  margin-top: 28px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  background: var(--white);
+  padding: 28px 30px;
+  display: grid;
+  gap: 24px;
+  align-items: center;
+}
+@media (min-width: 1000px) { .h-buy { grid-template-columns: minmax(0, 1.25fr) auto; gap: 48px; padding: 30px 36px; } }
+.h-buy .k { font-family: var(--font-mono); font-size: 0.95rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--fg-3); margin-bottom: 8px; }
+.h-buy p.price { font-size: 1.06rem; line-height: 1.65; color: var(--fg-2); max-width: 46em; }
+.h-buy p.price b { color: var(--fg); font-weight: 600; }
+.h-get { display: flex; flex-direction: column; gap: 14px; }
+.h-get .store-badges { gap: 4px 6px; }
+.h-links { display: flex; flex-wrap: wrap; gap: 8px 26px; }
+.h-more { display: inline-flex; align-items: center; gap: 6px; color: var(--brand); font-weight: 500; font-size: 1.06rem; text-decoration: none; transition: gap 160ms var(--ease), color 160ms; }
+.h-more:hover { color: var(--brand-hover); gap: 10px; }
+
+/* ---- Early access band ---- */
+.h-early {
+  padding: 104px 0;
+  background-color: var(--slate-50);
+  background-image:
+    linear-gradient(to right, rgba(28, 113, 193, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(28, 113, 193, 0.06) 1px, transparent 1px);
+  background-size: 32px 32px;
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+}
+.h-ea-grid { display: grid; gap: 24px; max-width: 1080px; margin: 0 auto; }
+@media (min-width: 900px) { .h-ea-grid { grid-template-columns: 1fr 1fr; gap: 28px; } }
+.h-ea {
+  --acc: var(--brand);
+  --tint: var(--slate-50);
+  --btn: var(--brand);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-1);
+  transition: box-shadow 260ms var(--ease), transform 260ms var(--ease);
+}
+.h-ea:hover { box-shadow: var(--shadow-3); transform: translateY(-3px); }
+.h-ea.handover { --acc: var(--h-teal); --tint: var(--h-teal-tint); --btn: var(--h-teal); }
+.h-ea.mm { --acc: var(--h-mm-accent); --tint: var(--h-mm-tint); --btn: var(--h-mm); }
+.h-ea-top {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 26px 30px;
+  background: var(--tint);
+  border-top: 3px solid var(--acc);
+  border-bottom: 1px solid var(--line);
+}
+.h-ea-mark { width: 68px; height: 68px; flex: none; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 24px -12px rgba(17, 22, 28, 0.45); }
+.h-ea-mark svg, .h-ea-mark img { display: block; width: 100%; height: 100%; }
+.h-ea-top h3 { font-family: var(--font-display); font-weight: 400; font-size: 2.1rem; line-height: 1.05; letter-spacing: -0.01em; color: var(--fg); }
+.h-ea-top .tagline { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-2); margin-top: 6px; }
+.h-ea-top .tagline::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--acc); flex: none; }
+.h-ea-body { display: flex; flex-direction: column; flex: 1; padding: 26px 30px 30px; }
+.h-ea-body p.what { font-size: 1.12rem; line-height: 1.62; color: var(--fg); }
+.h-facts { margin: 22px 0 0; padding: 0; display: grid; gap: 14px; }
+.h-facts div { border-top: 1px solid var(--line); padding-top: 14px; }
+.h-facts dt { font-family: var(--font-mono); font-size: 0.95rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3); margin-bottom: 4px; }
+.h-facts dd { margin: 0; font-size: 1.06rem; line-height: 1.6; color: var(--fg-2); }
+.h-ea .btn { margin-top: auto; align-self: flex-start; background: var(--btn); color: var(--white); box-shadow: var(--shadow-1); }
+.h-ea .h-facts + .btn { margin-top: 26px; }
+.h-ea .btn:hover { filter: brightness(1.15); box-shadow: var(--shadow-2); }
+.sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
+
+/* ---- Studio ---- */
+.h-studio { padding: 112px 0; }
+.h-studio .h-head { margin-bottom: 40px; }
+.h-studio-copy { display: grid; gap: 1.1rem 64px; border-top: 1px solid var(--line-strong); padding-top: 36px; }
+@media (min-width: 960px) { .h-studio-copy { grid-template-columns: 1fr 1fr; } }
+.h-studio-copy p { font-size: 1.12rem; line-height: 1.75; color: var(--fg-2); max-width: 36em; }
+.h-studio-copy p.h-studio-geo { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px 22px; margin-top: 14px; font-family: var(--font-mono); font-size: 0.95rem; line-height: 1.5; letter-spacing: 0.12em; text-transform: uppercase; color: var(--fg-3); }
+
+/* ---- Contact prompt ---- */
+.h-contact { position: relative; background: var(--deep-900); color: var(--white); padding: 96px 0; overflow: hidden; text-align: center; }
+.h-contact .label { color: var(--blueprint-300); justify-content: center; }
+.h-contact .label::before { background: var(--blueprint-300); }
+.h-contact .label::after { content: ""; width: 30px; height: 1px; background: var(--blueprint-300); flex: none; }
+.h-contact .h-title { color: var(--white); }
+.h-contact .h-title em { color: var(--blueprint-300); }
+.h-contact .btn { margin-top: 32px; }
+
+/* ---- Footer ---- */
+.home .footer-nav a { font-size: 0.86rem; }
+.home .footer-contact-block, .home .footer-legal { font-size: 0.95rem; }
+
+/* ---- Motion ---- */
+.js .home .reveal.d2 { transition-delay: 0.24s; }
+
+/* ---- Small screens ---- */
+@media (max-width: 720px) {
+  .home .hero-dark { padding: 52px 0 104px; }
+  .h-lineup { margin-top: 48px; }
+  .h-band, .h-early { padding: 72px 0; }
+  .h-studio { padding: 80px 0; }
+  .h-contact { padding: 76px 0; }
+  .h-head { margin-bottom: 32px; }
+  .h-shot { height: 300px; }
+  .h-benefit-text, .h-ea-body { padding-left: 24px; padding-right: 24px; }
+  .h-ea-top { padding: 22px 24px; gap: 16px; }
+  .h-ea-mark { width: 58px; height: 58px; border-radius: 14px; }
+  .h-ea-top h3 { font-size: 1.85rem; }
+  .h-buy { padding: 24px; }
+}
 </style>
 
 <script type="application/ld+json">
@@ -69,6 +286,7 @@
   "name": "Lock Ten Studio",
   "url": "https://lockten.ai",
   "logo": "https://lockten.ai/assets/lockten-logo.png",
+  "description": "Software for custom home builders and the people who work on houses. Walkthrough turns a site walk into a PDF report. Handover and Material Monitor are in early access.",
   "email": "info@lockten.ai",
   "sameAs": [
     "https://www.instagram.com/locktenstudio",
@@ -90,9 +308,9 @@
       <img src="assets/lockten-logo.png" alt="Lock Ten Studio" width="635" height="701">
     </a>
     <nav class="header-nav" aria-label="Primary">
-      <a href="/walkthrough">Walkthrough</a>
+      <a href="#walkthrough">Walkthrough</a>
+      <a href="#early-access">Early access</a>
       <a href="#studio">The studio</a>
-      <a href="#newsletter">Field Notes</a>
       <a href="mailto:info@lockten.ai">Contact</a>
     </nav>
   </div>
@@ -104,9 +322,9 @@
       <img src="assets/lockten-logo.png" alt="">
     </a>
     <nav class="header-nav">
-      <a href="/walkthrough" tabindex="-1">Walkthrough</a>
+      <a href="#walkthrough" tabindex="-1">Walkthrough</a>
+      <a href="#early-access" tabindex="-1">Early access</a>
       <a href="#studio" tabindex="-1">The studio</a>
-      <a href="#newsletter" tabindex="-1">Field Notes</a>
       <a href="mailto:info@lockten.ai" tabindex="-1">Contact</a>
     </nav>
   </div>
@@ -128,14 +346,38 @@
         <path d="M-40,626 C210,618 400,644 600,630 C800,616 990,646 1190,630 C1350,618 1460,636 1540,624" stroke-width="1.5"/>
       </svg>
     </div>
-    <div class="container">
-      <h1 class="hero-headline">AI tools for custom builders, <em>made by one.</em></h1>
-      <p class="hero-subhead">Built and run by a custom residential builder, tested on our own jobs first. Walkthrough is available now for the field.</p>
+    <div class="container wide">
+      <h1 class="hero-headline"><span class="pg">Tools made on the job,</span> <span class="pg">for <em>the job.</em></span></h1>
+      <p class="hero-subhead">Lock Ten Studio makes software for custom home builders and for the people who work in and on houses. Walkthrough is live now, and two more tools are open to a small number of builders.</p>
       <div class="hero-actions">
-        <a href="/walkthrough" class="btn btn-primary">Walkthrough, for the field
+        <a href="#walkthrough" class="btn btn-primary">Get Walkthrough
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
         </a>
+        <a href="#early-access" class="btn btn-ghost-dark">See early access</a>
       </div>
+
+      <ul class="h-lineup" aria-label="The studio's tools">
+        <li>
+          <a href="#walkthrough">
+            <span class="mk wt"><img src="assets/brand/walkthrough-house-mark.png" alt="" width="601" height="535"></span>
+            <span><b>Walkthrough</b><small>On iPhone and Android</small></span>
+          </a>
+        </li>
+        <li>
+          <a href="#early-access">
+            <span class="mk" aria-hidden="true">
+              <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><rect width="1024" height="1024" fill="#123a40"/><g transform="translate(512 512) scale(1.18) translate(-512 -512)"><rect x="368" y="240" width="288" height="608" rx="10" fill="none" stroke="#1d5058" stroke-width="26"/><rect x="392" y="264" width="240" height="560" fill="#f0bd6a"/><path d="M 632 264 L 632 824 L 516 876 L 516 292 Z" fill="#0c2b30"/><circle cx="542" cy="566" r="12" fill="#d9a44e"/></g></svg>
+            </span>
+            <span><b>Handover</b><small>Early access</small></span>
+          </a>
+        </li>
+        <li>
+          <a href="#early-access">
+            <span class="mk"><img src="assets/brand/materialmonitor-mark-small.svg" alt="" width="96" height="96"></span>
+            <span><b>Material Monitor</b><small>Early access</small></span>
+          </a>
+        </li>
+      </ul>
     </div>
     <div class="hero-geo" aria-hidden="true">
       <span>Cabin John, Maryland</span>
@@ -143,102 +385,149 @@
     </div>
   </section>
 
-  <section class="section" id="products">
-    <div class="container">
-      <div class="section-head reveal">
-        <p class="label">What we make</p>
-        <h2 class="section-headline">Built on the job.</h2>
-        <p class="section-sub">No bundle, no platform to adopt. Just the tool your week needs.</p>
+  <!-- WALKTHROUGH -->
+  <section class="h-band" id="walkthrough">
+    <div class="container wide">
+      <div class="h-head reveal">
+        <p class="label">Walkthrough</p>
+        <h2 class="h-title"><span class="pg">Walk the site, talk,</span> <span class="pg">and send <em>a finished report.</em></span></h2>
+        <p class="h-lede">Built first for builders, and used by designers, stagers, subs and architects too. Anyone who works on or in a house.</p>
       </div>
 
-      <div class="product-grid">
-
-        <article class="product-card reveal">
-          <div class="product-panel pp" aria-hidden="true">
-            <div class="pp-phone"><img src="assets/screens/modes.webp" alt="" width="640" height="1391" loading="lazy"></div>
+      <ol class="h-benefits">
+        <li class="h-benefit reveal">
+          <div class="h-shot">
+            <div class="h-phone"><img src="assets/screens/capture.webp" alt="Walkthrough recording a walk: the camera view with the timer running and the words being transcribed" width="640" height="1391" loading="lazy"></div>
           </div>
-          <div class="product-info">
-            <p class="product-kicker">For the field</p>
-            <div class="product-name-row">
-              <h3 class="product-name">Walkthrough</h3>
-              <span class="tag tag-live">On the App Store and Google Play</span>
+          <div class="h-benefit-text">
+            <p class="h-num">01</p>
+            <h3>Talk instead of typing.</h3>
+            <p class="what">Walk the job, take pictures and say what needs to get done. Walkthrough writes it up.</p>
+          </div>
+        </li>
+        <li class="h-benefit reveal d1">
+          <div class="h-shot">
+            <div class="h-phone"><img src="assets/screens/punchlist.webp" alt="A finished punch list in Walkthrough, sorted by trade, with Share PDF, Save to Dropbox and Save to Drive buttons" width="640" height="1391" loading="lazy"></div>
+          </div>
+          <div class="h-benefit-text">
+            <p class="h-num">02</p>
+            <h3>A clean PDF with your name on it.</h3>
+            <p class="what">Set your logo, your color and your company name once, and every report carries your brand instead of ours.</p>
+          </div>
+        </li>
+        <li class="h-benefit reveal d2">
+          <div class="h-shot">
+            <div class="h-phone"><img src="assets/screens/cloud.webp" alt="Walkthrough settings with Dropbox and Google Drive ready to connect for saving reports" width="640" height="1391" loading="lazy"></div>
+          </div>
+          <div class="h-benefit-text">
+            <p class="h-num">03</p>
+            <h3>Sent from your own phone.</h3>
+            <p class="what">Text or email the report to your sub in your normal thread. No portal, and no account for them to make. Photos save to your own Google Drive or Dropbox, not your camera roll.</p>
+          </div>
+        </li>
+      </ol>
+
+      <div class="h-buy reveal">
+        <div>
+          <p class="k">Pricing</p>
+          <p class="price"><b>Three free reports to start, no card.</b> After that, Standard is <span class="pg">$9.99 a month</span> or <span class="pg">$99.99 a year,</span> and Pro is <span class="pg">$24.99 a month</span> or <span class="pg">$239.99 a year,</span> per user. Pro adds meeting notes and a punch list you reopen and reshare as it shrinks.</p>
+        </div>
+        <div class="h-get">
+          <div class="store-badges store-badges-sm">
+            <a class="badge-apple" href="https://apps.apple.com/app/walkthrough-site-reports/id6775347863">
+              <img src="assets/app-store-badge.svg" alt="Download on the App Store" width="140" height="47">
+            </a>
+            <a class="badge-google" href="https://play.google.com/store/apps/details?id=com.cabinjohnbuilders.walkthrough">
+              <img src="assets/google-play-badge.png" alt="Get it on Google Play" width="181" height="70">
+            </a>
+          </div>
+          <div class="h-links">
+            <a href="/sample-report" class="h-more">See a real report <span aria-hidden="true">&rsaquo;</span></a>
+            <a href="/walkthrough" class="h-more">Learn more <span aria-hidden="true">&rsaquo;</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- EARLY ACCESS -->
+  <section class="h-early" id="early-access">
+    <div class="container wide">
+      <div class="h-head center reveal">
+        <p class="label">Early access</p>
+        <h2 class="h-title"><span class="pg">Two more tools,</span> <span class="pg">open to <em>a few builders</em> at a time.</span></h2>
+        <p class="h-lede">Early access means a small number of builders come in first, you talk directly to the person who built the tool, and we set the terms together.</p>
+      </div>
+
+      <div class="h-ea-grid">
+        <article class="h-ea handover reveal">
+          <div class="h-ea-top">
+            <span class="h-ea-mark" aria-hidden="true">
+              <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><rect width="1024" height="1024" fill="#123a40"/><g transform="translate(512 512) scale(1.18) translate(-512 -512)"><polygon points="392,824 632,824 776,952 264,952" fill="#f4c877" opacity="0.16"/><rect x="368" y="240" width="288" height="608" rx="10" fill="none" stroke="#1d5058" stroke-width="26"/><rect x="392" y="264" width="240" height="560" fill="#f0bd6a"/><path d="M 632 264 L 632 824 L 516 876 L 516 292 Z" fill="#0c2b30"/><circle cx="542" cy="566" r="12" fill="#d9a44e"/></g></svg>
+            </span>
+            <div>
+              <h3>Handover</h3>
+              <p class="tagline">Early access</p>
             </div>
-            <p class="product-role">Walk the site. Talk. Send.</p>
-            <p class="product-body">
-              Walk a job site, take pictures and talk into your phone about what needs to get done. Walkthrough turns it into a clean PDF report you text or email to your sub from your own phone, in their normal thread. No portals, no accounts for your subs. Photos save to your own Google Drive or Dropbox, not your camera roll.
-            </p>
-            <div class="product-spec">
-              <span class="product-price">From $9.99 <span class="per">per user / month</span></span>
-              <span class="product-trial">Standard and Pro plans. Three free reports to start, no card.</span>
-            </div>
-            <div class="product-actions">
-              <div class="store-badges store-badges-sm">
-                <a class="badge-apple" href="https://apps.apple.com/app/walkthrough-site-reports/id6775347863">
-                  <img src="assets/app-store-badge.svg" alt="Download on the App Store" width="140" height="47">
-                </a>
-                <a class="badge-google" href="https://play.google.com/store/apps/details?id=com.cabinjohnbuilders.walkthrough">
-                  <img src="assets/google-play-badge.png" alt="Get it on Google Play" width="181" height="70">
-                </a>
-              </div>
-              <a href="/walkthrough" class="product-more">Learn more <span aria-hidden="true">&rsaquo;</span></a>
-              <a href="/sample-report" class="product-more">See a real report <span aria-hidden="true">&rsaquo;</span></a>
-            </div>
+          </div>
+          <div class="h-ea-body">
+            <p class="what">Every client gets an app that answers their questions from their own home's documents, plus a printed binder, both under your company's name.</p>
+            <dl class="h-facts">
+              <div><dt>Who it is for</dt><dd>Custom home builders who hand a client a homeowner's manual at closing.</dd></div>
+              <div><dt>Status</dt><dd>Live. The iOS app is on the App Store, and pricing is on the Handover site.</dd></div>
+            </dl>
+            <a class="btn" href="https://homehandover.app" target="_blank" rel="noopener">Request early access<span class="sr-only"> (opens the Handover site in a new tab)</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+            </a>
           </div>
         </article>
 
-      </div>
-
-    </div>
-  </section>
-
-  <section class="trust bp-grid" id="studio">
-    <div class="container">
-      <div class="trust-cols reveal">
-        <div>
-          <p class="label">The studio</p>
-          <h2 class="trust-headline">Big things, built by <em>small shops.</em></h2>
-        </div>
-        <div class="trust-copy">
-          <p>For decades, construction technology ignored the small businesses building big things. The software was made for the largest firms: heavy licenses, steep fees and almost no room to fit the way you actually work.</p>
-          <p>AI changes that. For the first time, a working builder can build real tools for their peers, software that clears the bottlenecks in your day instead of adding to them. Every tool here was made for, and tested on, our own jobs first.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="newsletter" id="newsletter">
-    <div class="contour-field" aria-hidden="true">
-      <svg viewBox="0 0 1440 600" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M-40,70 C180,30 340,120 540,88 C740,56 900,140 1100,102 C1260,72 1380,118 1480,86" stroke="currentColor" stroke-width="1.5"/>
-        <path d="M-40,130 C150,96 330,180 530,148 C730,116 910,196 1110,160 C1280,130 1390,172 1480,144" stroke="currentColor" stroke-width="1.5"/>
-        <path d="M-40,192 C170,160 320,242 520,210 C720,178 920,254 1120,218 C1290,188 1400,228 1480,202" stroke="currentColor" stroke-width="1.5"/>
-        <path d="M-40,256 C190,228 340,300 540,272 C740,244 930,312 1130,278 C1300,250 1400,286 1480,262" stroke="currentColor" stroke-width="1.5"/>
-        <path d="M-40,320 C180,296 350,360 550,334 C750,308 940,370 1140,338 C1300,312 1400,344 1480,322" stroke="currentColor" stroke-width="1.5"/>
-        <path d="M-40,384 C170,364 360,418 560,394 C760,370 950,428 1150,398 C1310,374 1400,402 1480,382" stroke="currentColor" stroke-width="1.5"/>
-        <path d="M-40,448 C190,432 370,478 570,456 C770,434 960,486 1160,458 C1320,436 1410,462 1480,444" stroke="currentColor" stroke-width="1.5"/>
-        <path d="M-40,512 C180,500 380,538 580,518 C780,498 970,544 1170,518 C1330,498 1410,522 1480,506" stroke="currentColor" stroke-width="1.5"/>
-      </svg>
-    </div>
-    <div class="container">
-      <div class="newsletter-grid reveal">
-        <p class="label label-center">Lock Ten Field Notes</p>
-        <div class="masthead">
-          <p class="m-line">One move.</p>
-          <p class="m-line">One image.</p>
-          <p class="m-line"><em>Under 500 words.</em></p>
-        </div>
-        <span class="stamp">Every Tuesday</span>
-        <p class="newsletter-body">
-          A weekly note on using AI in a builder business. One actionable thing per issue, written by a working custom builder. Free, and no follow-up without your consent.
-        </p>
-        <div class="newsletter-card">
-          <p class="lead-in">Subscribe to Field Notes</p>
-          <div class="newsletter-form" id="beehiiv-embed-slot">
-            <p class="newsletter-fallback">Loading the form&hellip; or email <a href="mailto:info@lockten.ai">info@lockten.ai</a> to be added.</p>
-            <script async src="https://subscribe-forms.beehiiv.com/v3/loader.js" data-beehiiv-form="a189be07-5f91-4076-ba42-67b8fe520c48"></script>
+        <article class="h-ea mm reveal d1">
+          <div class="h-ea-top">
+            <span class="h-ea-mark"><img src="assets/brand/materialmonitor-mark-small.svg" alt="" width="96" height="96"></span>
+            <div>
+              <h3>Material Monitor</h3>
+              <p class="tagline">Early access</p>
+            </div>
           </div>
-        </div>
+          <div class="h-ea-body">
+            <p class="what">One list of every finish material on every job, shared by the office on the computer and the crew on their phones, with vendor mail and carrier tracking feeding it.</p>
+            <dl class="h-facts">
+              <div><dt>Who it is for</dt><dd>Custom builders running several homes at once.</dd></div>
+              <div><dt>Status</dt><dd>Live for founding builders. The iPhone app is on the way.</dd></div>
+            </dl>
+            <a class="btn" href="https://materialmonitor.app" target="_blank" rel="noopener">Join the founding list<span class="sr-only"> (opens the Material Monitor site in a new tab)</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
+            </a>
+          </div>
+        </article>
       </div>
+    </div>
+  </section>
+
+  <!-- STUDIO -->
+  <section class="h-studio" id="studio">
+    <div class="container wide">
+      <div class="h-head reveal">
+        <p class="label">The studio</p>
+        <h2 class="h-title"><span class="pg">Made by a builder,</span> <span class="pg">tested on <em>his own jobs.</em></span></h2>
+      </div>
+      <div class="h-studio-copy reveal d1">
+        <p>Lock Ten Studio is run by a custom home builder in Cabin John, Maryland. Each of its AI tools is made for his own company first, and used on real jobs there before it is offered to anyone else.</p>
+        <p>That is why the tools are small and specific. Each one takes on a piece of the work you already do, fits the way you already run a week and asks you to adopt nothing else. If it does not hold up on a job, it gets fixed before anyone else sees it.</p>
+        <p class="h-studio-geo" aria-hidden="true"><span>Cabin John, Maryland</span><span>38.97&deg; N &middot; 77.15&deg; W</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="h-contact" id="contact">
+    <div class="container wide reveal">
+      <p class="label">Contact</p>
+      <h2 class="h-title"><span class="pg">Tell us what you build,</span> <span class="pg">and we will <em>write back.</em></span></h2>
+      <a class="btn btn-primary" href="mailto:info@lockten.ai">info@lockten.ai
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+      </a>
     </div>
   </section>
 
@@ -252,12 +541,11 @@
           <img src="assets/lockten-logo.png" alt="Lock Ten Studio">
         </a>
       </div>
-      <p class="footer-tagline">AI tools for custom builders, made by one.</p>
+      <p class="footer-tagline">Software for custom builders, made by a builder.</p>
       <nav class="footer-nav" aria-label="Footer">
-        <a href="/walkthrough">Walkthrough</a>
+        <a href="#walkthrough">Walkthrough</a>
+        <a href="#early-access">Early access</a>
         <a href="#studio">The studio</a>
-        <a href="#newsletter">Field Notes</a>
-        <a href="/primer">Cowork primer</a>
         <a href="mailto:info@lockten.ai">Contact</a>
         <a href="/privacy">Privacy</a>
         <a href="/terms">Terms</a>
@@ -303,20 +591,6 @@
     });
   }
   window.addEventListener('scroll', onScroll, { passive: true });
-
-  var slot = document.getElementById('beehiiv-embed-slot');
-  if (slot) {
-    var hideFallback = function () {
-      if (!slot.querySelector('iframe')) return false;
-      var fb = slot.querySelector('.newsletter-fallback');
-      if (fb) fb.style.display = 'none';
-      return true;
-    };
-    if (!hideFallback() && 'MutationObserver' in window) {
-      var mo = new MutationObserver(function () { if (hideFallback()) mo.disconnect(); });
-      mo.observe(slot, { childList: true, subtree: true });
-    }
-  }
 
   if ('IntersectionObserver' in window) {
     var io = new IntersectionObserver(function (entries) {
