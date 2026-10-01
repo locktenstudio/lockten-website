@@ -5,7 +5,7 @@
 <!-- lockten.ai/materialmonitor redirects to the product's own site (2026-09-30). This file is also the source the
      materialmonitor Render service copies to index.html for materialmonitor.app, so it cannot become a redirect stub;
      the redirect fires only on the lockten.ai host. A Render redirect rule is the server-side version. -->
-<script>if (/^(www\.)?lockten\.ai$/.test(location.hostname)) location.replace('https://materialmonitor.app/' + location.hash);</script>
+<script>if (/^(www\.)?lockten\.ai$/.test(location.hostname)) location.replace('https://materialmonitor.app/' + location.search + location.hash);</script>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Material Monitor | One list for every finish material on every job</title>
 <meta name="description" content="Material Monitor keeps every finish material on every job on one list, shared by the office on the computer and the crew on site. For custom builders.">
