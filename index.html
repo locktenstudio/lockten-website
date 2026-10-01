@@ -99,7 +99,12 @@ body.home {
   overflow: hidden;
   align-items: start;
 }
-.h-dev { margin: 0; display: flex; flex-direction: column; align-items: center; }
+.h-dev { margin: 0; display: flex; flex-direction: column; align-items: center; grid-row: 1; }
+/* Walkthrough is the flagship: first in the markup (reading order and the first to rise in),
+   placed in the centre column and raised. Handover sits left, Material Monitor right. */
+.h-dev.wt-dev { grid-column: 2; }
+.h-dev.hv-dev { grid-column: 1; }
+.h-dev.mm-dev { grid-column: 3; }
 .h-dev.lift { margin-top: 0; }
 .h-dev:not(.lift) { margin-top: clamp(24px, 4vw, 56px); }
 .h-dev figcaption { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; min-height: 44px; }
@@ -358,14 +363,14 @@ body.home {
       </div>
 
       <div class="h-lineup">
-        <figure class="h-dev">
+        <figure class="h-dev lift wt-dev">
           <figcaption>
             <span class="mk wt"><img src="assets/brand/walkthrough-house-mark.png" alt="" width="601" height="535"></span>
             <span><b>Walkthrough</b><small>On iPhone and Android</small></span>
           </figcaption>
           <div class="h-phone"><img src="assets/screens/modes.webp" alt="Walkthrough on a demo project: start a walkthrough, a trade list, an owner update, a daily log, meeting notes or the punch list" width="640" height="1391" fetchpriority="high"></div>
         </figure>
-        <figure class="h-dev lift">
+        <figure class="h-dev hv-dev">
           <figcaption>
             <span class="mk" aria-hidden="true">
               <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><rect width="1024" height="1024" fill="#123a40"/><g transform="translate(512 512) scale(1.18) translate(-512 -512)"><rect x="368" y="240" width="288" height="608" rx="10" fill="none" stroke="#1d5058" stroke-width="26"/><rect x="392" y="264" width="240" height="560" fill="#f0bd6a"/><path d="M 632 264 L 632 824 L 516 876 L 516 292 Z" fill="#0c2b30"/><circle cx="542" cy="566" r="12" fill="#d9a44e"/></g></svg>
@@ -374,7 +379,7 @@ body.home {
           </figcaption>
           <div class="h-phone"><img src="assets/home/handover-app-answer.webp" alt="The Handover homeowner app on a demo home answering how to clean the wood floors, in numbered steps drawn from that home's documents" width="480" height="1039"></div>
         </figure>
-        <figure class="h-dev">
+        <figure class="h-dev mm-dev">
           <figcaption>
             <span class="mk"><img src="assets/brand/materialmonitor-mark-small.svg" alt="" width="96" height="96"></span>
             <span><b>Material Monitor</b><small>Early access</small></span>
