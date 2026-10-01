@@ -38,7 +38,6 @@ body.home {
   --h-teal: #123A40;        /* Handover mark */
   --h-teal-tint: #EEF4F5;
   --h-mm: #2D343D;          /* Material Monitor mark ground */
-  --h-mm-accent: #C8763C;   /* Material Monitor mark beacon, accent only */
   --h-mm-tint: #F2F4F7;
 }
 .home .container.wide { max-width: var(--h-wide); }
@@ -205,6 +204,7 @@ body.home {
   flex-direction: column;
   background: var(--white);
   border: 1px solid var(--line);
+  border-top: 3px solid var(--acc);
   border-radius: var(--radius-lg);
   overflow: hidden;
   box-shadow: var(--shadow-1);
@@ -212,22 +212,45 @@ body.home {
 }
 .h-ea:hover { box-shadow: var(--shadow-3); transform: translateY(-3px); }
 .h-ea.handover { --acc: var(--h-teal); --tint: var(--h-teal-tint); --btn: var(--h-teal); }
-.h-ea.mm { --acc: var(--h-mm-accent); --tint: var(--h-mm-tint); --btn: var(--h-mm); }
+.h-ea.mm { --acc: var(--h-mm); --tint: var(--h-mm-tint); --btn: var(--h-mm); }
 .h-ea-top {
   display: flex;
   align-items: center;
   gap: 18px;
-  padding: 26px 30px;
+  padding: 26px 30px 0;
+}
+/* The real product screen: a tinted panel with the screen rising from its bottom edge,
+   the same construction as the Walkthrough cards. */
+.h-ea-shot {
+  height: 310px;
+  padding: 34px 30px 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  overflow: hidden;
   background: var(--tint);
-  border-top: 3px solid var(--acc);
   border-bottom: 1px solid var(--line);
 }
+.h-ea:hover .h-phone, .h-ea:hover .h-window { transform: translateY(-8px); }
+.h-window {
+  width: 100%;
+  max-width: 470px;
+  height: 100%;
+  background: var(--white);
+  border-radius: 10px 10px 0 0;
+  overflow: hidden;
+  box-shadow: 0 -16px 44px -22px rgba(17, 22, 28, 0.5), 0 0 0 1px rgba(17, 22, 28, 0.1);
+  transition: transform 400ms var(--ease);
+}
+.h-window-bar { display: flex; gap: 6px; align-items: center; height: 26px; padding: 0 12px; background: var(--slate-100); border-bottom: 1px solid var(--line); }
+.h-window-bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--slate-300); }
+.h-window img { display: block; width: 100%; height: auto; }
 .h-ea-mark { width: 68px; height: 68px; flex: none; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 24px -12px rgba(17, 22, 28, 0.45); }
 .h-ea-mark svg, .h-ea-mark img { display: block; width: 100%; height: 100%; }
 .h-ea-top h3 { font-family: var(--font-display); font-weight: 400; font-size: 2.1rem; line-height: 1.05; letter-spacing: -0.01em; color: var(--fg); }
 .h-ea-top .tagline { display: inline-flex; align-items: center; gap: 8px; font-family: var(--font-mono); font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg-2); margin-top: 6px; }
 .h-ea-top .tagline::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--acc); flex: none; }
-.h-ea-body { display: flex; flex-direction: column; flex: 1; padding: 26px 30px 30px; }
+.h-ea-body { display: flex; flex-direction: column; flex: 1; padding: 20px 30px 30px; }
 .h-ea-body p.what { font-size: 1.12rem; line-height: 1.62; color: var(--fg); }
 .h-facts { margin: 22px 0 0; padding: 0; display: grid; gap: 14px; }
 .h-facts div { border-top: 1px solid var(--line); padding-top: 14px; }
@@ -272,7 +295,8 @@ body.home {
   .h-head { margin-bottom: 32px; }
   .h-shot { height: 300px; }
   .h-benefit-text, .h-ea-body { padding-left: 24px; padding-right: 24px; }
-  .h-ea-top { padding: 22px 24px; gap: 16px; }
+  .h-ea-top { padding: 22px 24px 0; gap: 16px; }
+  .h-ea-shot { height: 280px; padding: 28px 20px 0; }
   .h-ea-mark { width: 58px; height: 58px; border-radius: 14px; }
   .h-ea-top h3 { font-size: 1.85rem; }
   .h-buy { padding: 24px; }
@@ -461,6 +485,9 @@ body.home {
 
       <div class="h-ea-grid">
         <article class="h-ea handover reveal">
+          <div class="h-ea-shot">
+            <div class="h-phone"><img src="assets/home/handover-app-home.webp" alt="The Handover homeowner app for a demo home in its builder's brand: an Ask about your home box with a suggested question, then the home's emergency and service contacts with a call button for each" width="480" height="1039" loading="lazy"></div>
+          </div>
           <div class="h-ea-top">
             <span class="h-ea-mark" aria-hidden="true">
               <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><rect width="1024" height="1024" fill="#123a40"/><g transform="translate(512 512) scale(1.18) translate(-512 -512)"><polygon points="392,824 632,824 776,952 264,952" fill="#f4c877" opacity="0.16"/><rect x="368" y="240" width="288" height="608" rx="10" fill="none" stroke="#1d5058" stroke-width="26"/><rect x="392" y="264" width="240" height="560" fill="#f0bd6a"/><path d="M 632 264 L 632 824 L 516 876 L 516 292 Z" fill="#0c2b30"/><circle cx="542" cy="566" r="12" fill="#d9a44e"/></g></svg>
@@ -483,6 +510,9 @@ body.home {
         </article>
 
         <article class="h-ea mm reveal d1">
+          <div class="h-ea-shot">
+            <div class="h-window"><div class="h-window-bar" aria-hidden="true"><i></i><i></i><i></i></div><img src="assets/home/materialmonitor-dashboard.webp" alt="The Material Monitor office dashboard for a set of demo jobs: a card per job showing items in hand, in transit and needing a follow-up, and below them the materials that need ordering with their order-by dates" width="940" height="651" loading="lazy"></div>
+          </div>
           <div class="h-ea-top">
             <span class="h-ea-mark"><img src="assets/brand/materialmonitor-mark-small.svg" alt="" width="96" height="96"></span>
             <div>
