@@ -1,7 +1,7 @@
 User-agent: *
 Allow: /
 
-# The Install is paused and not currently offered. /install stays reachable but
-# carries a noindex, nofollow meta tag, so it must stay crawlable for that to be seen.
+# /install is paused and not currently offered. It stays reachable but carries
+# a noindex, nofollow meta tag, so it must stay crawlable for that to be seen.
 
 Sitemap: https://lockten.ai/sitemap.xml
