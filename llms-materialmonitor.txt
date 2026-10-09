@@ -1,0 +1,58 @@
+# Material Monitor
+
+> Finish material tracking for custom home builders and remodelers running several homes at once. One list of every finish material on every job, shared by the office on the computer and the crew on an iPhone app, kept current from vendor mail and carrier tracking with a person confirming what it suggests. Made by Lock Ten Studio, which is run by the co-owner of a custom home building company outside Washington DC. Live for founding builders. Site: https://materialmonitor.app/
+
+## What it does
+
+- Every material on one list. Each job's selections come in from a spreadsheet, a PDF or a selections export, and every material keeps its status, dates, vendor, rep and model number.
+- Know what to order and when. The dashboard works back from the day a material is needed on site and the vendor's lead time, and shows what has to be ordered now.
+- One email every morning. The team gets one email with what needs an OK, what needs ordering, what is due and what arrived.
+- The crew works the same list. A superintendent checks in a delivery on the iPhone app and the office sees it as soon as it is saved. The crew can look up any material on any job and report a problem to the office.
+- Vendor mail keeps it current. The office connects the inboxes vendor mail already comes into (Microsoft 365 or Google, or forwarding) and it suggests updates with the vendor's words quoted. Somebody in the office confirms each one.
+- Shipments followed with the carrier. Once a material has a tracking number, it is checked with the carrier each day, the expected date is kept current and a shipment the carrier reports a problem with is flagged.
+- Follow-ups written for you. When an order has gone quiet it drafts the email to the rep, one per rep with every open item, and the office sends it from its own email.
+
+## Who decides
+
+Two things update by themselves, and only on a material that already has a tracking number: a shipping notice in a connected inbox, which can set the tracking, the expected date and Shipped, and the carrier's own tracking, which can move the expected date or flag a delay. Everything else it reads becomes a suggestion with the vendor's sentence quoted beside it, and a person confirms or dismisses it. No email and no carrier can mark a material received. It never sends, replies, moves or deletes anything in an inbox, and it never emails a vendor on its own.
+
+## Who it is for
+
+Custom home builders and remodelers with offices of five to thirty people, running a few jobs at a time, each with a long list of finish orders: tile, plumbing fixtures, appliances, lighting, cabinetry, doors, windows and hardware. It sits next to what the office already uses. Nothing has to move out of Buildertrend or anything else.
+
+## Getting started
+
+Somebody in the office signs in at https://app.materialmonitor.app with a work email and a six digit code (no password), names the company, adds the jobs, brings in each job's selections and invites the team. Connecting vendor mail is the last step, and the list works without it. The crew's iPhone app is on the App Store: https://apps.apple.com/us/app/material-monitor/id6810472714
+
+## Pricing
+
+There is no public price yet. Founding builders talk it through directly with the builder who made it. Contact: info@lockten.ai
+
+## Key pages
+
+- [Material Monitor](https://materialmonitor.app/): the product page, with a tour of the office console, the vendor mail sequence, the field app, the morning email and the FAQ.
+- [Sign in](https://app.materialmonitor.app/): the office console.
+- [iPhone app](https://apps.apple.com/us/app/material-monitor/id6810472714): the crew's app on the App Store.
+- [Privacy policy](https://materialmonitor.app/privacy)
+- [Terms of service](https://materialmonitor.app/terms)
+- [Lock Ten Studio](https://lockten.ai/): the studio behind Material Monitor, Walkthrough and Handover.
+
+## FAQ
+
+Do my vendors have to do anything? No. They keep emailing the same people they email now. There is no portal for them, nothing to sign up for and no new address to learn.
+
+Do I need Buildertrend? No. Each job's list comes in from a spreadsheet, a PDF or a selections export from the software you already use, and anything missing you add in a line. It works beside Buildertrend if you have it, and it never logs in to any other system.
+
+Can my crew use it on site? Yes. The field app is the crew's half of the same list, on an iPhone: they receive deliveries, look up any material on any job and report problems to the office. The office invites them from the console, and they sign in with a six digit code sent to their email.
+
+Whose inbox does it read? Only the ones your office connects or forwards from. Vendor mail usually comes into real people's inboxes, like the coordinator's, the project manager's, the estimator's or an in-house designer's. You can connect several and give each one a name. It only reads, and it only asks about a new sender when a message looks like an order, a shipment, a delivery or a quote.
+
+Microsoft 365 or Google? Both, by connecting the inbox or by forwarding from it to your own private Material Monitor address.
+
+Does it email my vendors? Never on its own. It drafts the follow-up and you send it from your own email in your own words.
+
+Does it track shipments? Yes. Once a material has a tracking number it checks with the carrier each day and keeps the expected date current. A problem the carrier reports flags the material as delayed. When the carrier says it was delivered, somebody still confirms it arrived.
+
+What happens when it reads something wrong? You dismiss it and nothing changes. See Who decides above.
+
+Is this the same company as Walkthrough and Handover? Yes. Lock Ten Studio makes software for custom home builders. Walkthrough is its field-report app, Handover builds the homeowner's manual and Material Monitor keeps track of the materials in between.

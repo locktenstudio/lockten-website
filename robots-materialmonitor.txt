@@ -1,0 +1,6 @@
+# materialmonitor.app
+# Every crawler is welcome, including the ones that read for AI assistants.
+User-agent: *
+Allow: /
+
+Sitemap: https://materialmonitor.app/sitemap.xml

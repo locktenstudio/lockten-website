@@ -72,3 +72,26 @@ services:
       - path: /.well-known/apple-app-site-association
         name: Cache-Control
         value: public, max-age=3600
+
+  # ------------------------------------------------------------------
+  # Material Monitor's own domain: https://materialmonitor.app/
+  #
+  # Same repo, third static site. The build command copies the product
+  # page over index.html and the product's legal pages over privacy.html
+  # and terms.html, then copies this host's own crawler files over the
+  # studio ones: robots-materialmonitor.txt, sitemap-materialmonitor.xml
+  # (with lastmod dates; bump the home page's date when the page changes)
+  # and llms-materialmonitor.txt (the product's own description for AI
+  # readers). Edit those three files in the repo, never the build command.
+  #
+  # Created in the Render dashboard like the others, so this entry is
+  # documentation and the paste source for the build command.
+  # ------------------------------------------------------------------
+  - type: web
+    name: materialmonitor
+    runtime: static
+    branch: main
+    buildCommand: |-
+      cp materialmonitor.html index.html && cp materialmonitor-privacy.html privacy.html && cp materialmonitor-terms.html terms.html && cp robots-materialmonitor.txt robots.txt && cp sitemap-materialmonitor.xml sitemap.xml && cp llms-materialmonitor.txt llms.txt
+    staticPublishPath: ./
+    pullRequestPreviewsEnabled: false
