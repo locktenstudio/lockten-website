@@ -58,7 +58,7 @@ services:
     runtime: static
     branch: main
     buildCommand: |-
-      cp sitewalkthrough.html index.html && printf 'User-agent: *\nAllow: /\nSitemap: https://sitewalkthrough.com/sitemap.xml\n' > robots.txt && printf '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n  <url><loc>https://sitewalkthrough.com/</loc></url>\n</urlset>\n' > sitemap.xml
+      cp sitewalkthrough.html index.html && cp robots-sitewalkthrough.txt robots.txt && cp sitemap-sitewalkthrough.xml sitemap.xml && cp llms-sitewalkthrough.txt llms.txt
     staticPublishPath: ./
     pullRequestPreviewsEnabled: false
     headers:

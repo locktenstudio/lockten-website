@@ -1,0 +1,54 @@
+# Walkthrough: Site Reports
+
+> Site visit reports for builders, remodelers, designers, and the trades. Walkthrough is a phone app (iPhone and Android) that turns a walk through a property into a clean, formatted PDF report: you shoot photos, say a word about the ones that need it, and the report writes itself. You text or email the PDF from your own phone, so nobody you send it to needs an account. Photos file themselves in your own Google Drive or Dropbox. Made by Lock Ten Studio, which is run by a working custom home builder. Site: https://sitewalkthrough.com/
+
+## Who it is for
+
+Anyone who walks a property and owes someone a write-up afterward. Builders and superintendents running daily site checks and punch walks. Remodelers who walk a job with a homeowner. Project managers, foremen and owner-operators who need a list to a trade quickly. Interior designers and architects documenting a site visit for a client. Subs and specialty trades who owe a photo report when the call is done. Stagers and anyone else who walks a home and owes someone a report. It is not for anyone who wants to put the people they work with on a platform: there is no portal and no login for the people who receive a report.
+
+## How it works
+
+1. Walk. Open the app at the property, tap a room, photograph what needs attention.
+2. Talk. Say a word about the shots that need one. The app handles the transcription and the formatting. Speech recognition for site walks runs on the phone.
+3. Send. Preview the PDF, edit it if you want, then text or email it from your own phone to whoever needs it, in the thread they already use.
+
+## Six kinds of report
+
+- Walkthrough: walk the site, shoot it, talk it through, get a room-by-room write-up.
+- Trade list: scope the work by trade, in your own words for whoever is doing it, into clear action lists.
+- Owner update: a weekly progress recap for the owner or the client.
+- Daily log: shoot the day as you go, talk through it at the end, and get a dated, photo-backed daily log with the day's weather filled in from the National Weather Service and a weather-delay flag if you lost time.
+- Meeting notes: record a project meeting and get the decisions, action items and open questions pulled out (Pro). Meeting audio goes to a secure transcription service.
+- Punch list: walk the job, read off what is not done, and get a living checklist you can reopen on every visit, check off and reshare as it shrinks (Pro).
+
+## The console
+
+A web version of what you captured, in a browser, at https://app.sitewalkthrough.com/console. It is in beta and comes with your account; you sign in with the same six-digit code. A Recent feed of every photo across every job, a page for each job, and tools to select photos and download them, save them to Google Drive or Dropbox, add them to a report, or email someone a link. Meeting notes and the punch list are Pro in the console, the same as in the app.
+
+## Your brand, your storage
+
+Set your logo, your color and your company name once, and every report carries your brand. Photos save to your own Google Drive or Dropbox, in a folder for each walkthrough, so your records stay in your own storage.
+
+## Plans and pricing
+
+Two plans, month to month, no contract. Standard is $9.99 per user each month, or $99.99 a year, and includes every report type except meeting notes and the punch list, with unlimited reports. Pro is $24.99 per user each month, or $239.99 a year, and adds meeting notes and the persistent punch list. New accounts get three free reports with every feature unlocked and no credit card; after the third report you pick a plan. Each person on a team gets their own seat and signs in with their own email. Cancel anytime from Settings; a refund is offered within the first 14 days by replying to the welcome email.
+
+## Sign in
+
+Enter your email, receive a six-digit code, type it in. No password to remember or reset.
+
+## Availability
+
+On the App Store and Google Play, available in the United States, Canada and Australia.
+
+## Key pages
+
+- [Walkthrough](https://sitewalkthrough.com/): the product page, with how it works, the six report kinds, the console, pricing and the FAQ.
+- [Get it on the App Store](https://apps.apple.com/app/walkthrough-site-reports/id6775347863)
+- [Get it on Google Play](https://play.google.com/store/apps/details?id=com.cabinjohnbuilders.walkthrough)
+- [Open the console](https://app.sitewalkthrough.com/console): the web version, same sign-in.
+- [See a real report](https://lockten.ai/sample-report): a real redacted report next to a web version.
+- [Help](https://lockten.ai/help): the help and FAQ center.
+- [Privacy policy](https://lockten.ai/privacy)
+- [Terms of use](https://lockten.ai/terms)
+- [Lock Ten Studio](https://lockten.ai/): the studio behind Walkthrough, Material Monitor and Handover.

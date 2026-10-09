@@ -1,0 +1,6 @@
+# sitewalkthrough.com
+# Every crawler is welcome, including the ones that read for AI assistants.
+User-agent: *
+Allow: /
+
+Sitemap: https://sitewalkthrough.com/sitemap.xml
