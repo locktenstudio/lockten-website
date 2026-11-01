@@ -107,20 +107,26 @@ body.home {
 .h-dev.mm-dev { grid-column: 3; }
 .h-dev.lift { margin-top: 0; }
 .h-dev:not(.lift) { margin-top: clamp(24px, 4vw, 56px); }
-.h-dev figcaption { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; min-height: 44px; }
+.h-dev .h-go { display: flex; flex-direction: column; align-items: center; width: 100%; color: inherit; text-decoration: none; }
+.h-dev .h-cap { display: flex; align-items: center; gap: 12px; margin-bottom: 20px; min-height: 44px; }
 .h-dev .mk { width: 40px; height: 40px; flex: none; border-radius: 10px; overflow: hidden; display: grid; place-items: center; }
 .h-dev .mk svg, .h-dev .mk img { display: block; width: 100%; height: 100%; }
 .h-dev .mk.wt { background: var(--white); padding: 6px; }
 .h-dev .mk.wt img { object-fit: contain; }
 .h-dev b { display: block; font-weight: 600; font-size: 1.06rem; line-height: 1.25; color: var(--white); }
 .h-dev small { display: block; font-family: var(--font-mono); font-size: 0.95rem; line-height: 1.35; color: var(--steel-300); }
-.h-dev .h-phone { width: min(100%, 316px); }
+.h-dev .h-phone { width: min(100%, 316px); transition: transform 220ms var(--ease); }
+.h-dev b { text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px; text-decoration-thickness: 1px; transition: text-decoration-color 160ms; }
+.h-dev .h-go:hover b, .h-dev .h-go:focus-visible b { text-decoration-color: currentColor; }
+@media (prefers-reduced-motion: no-preference) {
+  .h-dev .h-go:hover .h-phone, .h-dev .h-go:focus-visible .h-phone { transform: translateY(-8px); }
+}
 .js .h-dev { animation: rise 0.9s var(--ease) both; }
 .js .h-dev:nth-child(1) { animation-delay: 0.28s; }
 .js .h-dev:nth-child(2) { animation-delay: 0.4s; }
 .js .h-dev:nth-child(3) { animation-delay: 0.52s; }
 @media (max-width: 699px) {
-  .h-dev figcaption { flex-direction: column; justify-content: flex-end; gap: 8px; text-align: center; min-height: 92px; margin-bottom: 14px; }
+  .h-dev .h-cap { flex-direction: column; justify-content: flex-end; gap: 8px; text-align: center; min-height: 92px; margin-bottom: 14px; }
   .h-dev:not(.lift) { margin-top: 20px; }
   .h-dev .mk { width: 32px; height: 32px; border-radius: 8px; }
   .h-dev b { font-size: 0.95rem; }
@@ -238,11 +244,19 @@ body.home {
   .h-row.flip .h-combo { order: 2; }
 }
 .h-combo { position: relative; padding: 0 5% 13% 0; }
+a.h-combo { display: block; color: inherit; text-decoration: none; border-radius: 12px; }
+a.h-combo .h-win, a.h-combo .h-phone { transition: transform 220ms var(--ease), box-shadow 220ms var(--ease); }
+@media (prefers-reduced-motion: no-preference) {
+  a.h-combo:hover .h-win, a.h-combo:focus-visible .h-win { transform: translateY(-4px); }
+  a.h-combo:hover .h-phone, a.h-combo:focus-visible .h-phone { transform: translateY(-8px); }
+}
 .h-combo .h-phone { position: absolute; right: 0; bottom: 0; width: 23%; z-index: 2; }
 .h-ea-name { display: flex; align-items: center; gap: 18px; }
 .h-ea-mark { width: 64px; height: 64px; flex: none; border-radius: 15px; overflow: hidden; box-shadow: 0 10px 24px -12px rgba(17, 22, 28, 0.45); }
 .h-ea-mark svg, .h-ea-mark img { display: block; width: 100%; height: 100%; }
 .h-ea-name h3 { font-family: var(--font-display); font-weight: 400; font-size: clamp(2.2rem, 1.4rem + 1.8vw, 2.9rem); line-height: 1; letter-spacing: -0.015em; color: var(--fg); }
+.h-ea-name h3 a { color: inherit; text-decoration: underline; text-decoration-color: transparent; text-decoration-thickness: 1px; text-underline-offset: 6px; transition: text-decoration-color 160ms; }
+.h-ea-name h3 a:hover { text-decoration-color: currentColor; }
 .h-status { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; margin-top: 26px; font-size: 1.06rem; line-height: 1.55; color: var(--fg-2); }
 .h-status .chip { flex: none; font-family: var(--font-mono); font-size: 0.95rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--fg); background: var(--white); border: 1px solid var(--line-strong); border-radius: 999px; padding: 3px 12px; }
 .h-row p.what { font-size: 1.18rem; line-height: 1.65; color: var(--fg); margin-top: 18px; max-width: 30em; }
@@ -250,6 +264,8 @@ body.home {
 .h-row.handover .btn { background: var(--h-teal); }
 .h-row.mm .btn { background: var(--h-slate); }
 .h-row .btn:hover { filter: brightness(1.2); box-shadow: var(--shadow-2); }
+.h-row .h-domain { display: block; width: fit-content; margin-top: 14px; font-family: var(--font-mono); font-size: 0.95rem; letter-spacing: 0.02em; color: var(--fg-2); text-decoration: underline; text-decoration-color: var(--line-strong); text-underline-offset: 4px; }
+.h-row .h-domain:hover { color: var(--fg); text-decoration-color: currentColor; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); clip-path: inset(50%); white-space: nowrap; }
 
 /* ---- Studio ---- */
@@ -364,27 +380,33 @@ body.home {
 
       <div class="h-lineup">
         <figure class="h-dev lift wt-dev">
-          <figcaption>
-            <span class="mk wt"><img src="assets/brand/walkthrough-house-mark.png" alt="" width="601" height="535"></span>
-            <span><b>Walkthrough</b><small>On iPhone and Android</small></span>
-          </figcaption>
-          <div class="h-phone"><img src="assets/screens/modes.webp" alt="Walkthrough on a demo project: start a walkthrough, a trade list, an owner update, a daily log, meeting notes or the punch list" width="640" height="1391" fetchpriority="high"></div>
+          <a class="h-go" href="/walkthrough" aria-label="Learn more about Walkthrough">
+            <div class="h-cap">
+              <span class="mk wt"><img src="assets/brand/walkthrough-house-mark.png" alt="" width="601" height="535"></span>
+              <span><b>Walkthrough</b><small>On iPhone and Android</small></span>
+            </div>
+            <div class="h-phone"><img src="assets/screens/modes.webp" alt="Walkthrough on a demo project: start a walkthrough, a trade list, an owner update, a daily log, meeting notes or the punch list" width="640" height="1391" fetchpriority="high"></div>
+          </a>
         </figure>
         <figure class="h-dev hv-dev">
-          <figcaption>
-            <span class="mk" aria-hidden="true">
-              <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><rect width="1024" height="1024" fill="#123a40"/><g transform="translate(512 512) scale(1.18) translate(-512 -512)"><rect x="368" y="240" width="288" height="608" rx="10" fill="none" stroke="#1d5058" stroke-width="26"/><rect x="392" y="264" width="240" height="560" fill="#f0bd6a"/><path d="M 632 264 L 632 824 L 516 876 L 516 292 Z" fill="#0c2b30"/><circle cx="542" cy="566" r="12" fill="#d9a44e"/></g></svg>
-            </span>
-            <span><b>Handover</b><small>Early access</small></span>
-          </figcaption>
-          <div class="h-phone"><img src="assets/home/handover-app-answer.webp" alt="The Handover homeowner app on a demo home answering how to clean the wood floors, in numbered steps drawn from that home's documents" width="480" height="1039"></div>
+          <a class="h-go" href="https://homehandover.app" target="_blank" rel="noopener" aria-label="Open the Handover site (opens in a new tab)">
+            <div class="h-cap">
+              <span class="mk" aria-hidden="true">
+                <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><rect width="1024" height="1024" fill="#123a40"/><g transform="translate(512 512) scale(1.18) translate(-512 -512)"><rect x="368" y="240" width="288" height="608" rx="10" fill="none" stroke="#1d5058" stroke-width="26"/><rect x="392" y="264" width="240" height="560" fill="#f0bd6a"/><path d="M 632 264 L 632 824 L 516 876 L 516 292 Z" fill="#0c2b30"/><circle cx="542" cy="566" r="12" fill="#d9a44e"/></g></svg>
+              </span>
+              <span><b>Handover</b><small>Early access</small></span>
+            </div>
+            <div class="h-phone"><img src="assets/home/handover-app-answer.webp" alt="The Handover homeowner app on a demo home answering how to clean the wood floors, in numbered steps drawn from that home's documents" width="480" height="1039"></div>
+          </a>
         </figure>
         <figure class="h-dev mm-dev">
-          <figcaption>
-            <span class="mk"><img src="assets/brand/materialmonitor-mark-small.svg" alt="" width="96" height="96"></span>
-            <span><b>Material Monitor</b><small>Early access</small></span>
-          </figcaption>
-          <div class="h-phone"><img src="assets/screens/materialmonitor/mm-app-home-480.webp" alt="The Material Monitor field app for a demo company: receive materials, look up a material, report a problem and the expected deliveries by day" width="480" height="1039"></div>
+          <a class="h-go" href="https://materialmonitor.app" target="_blank" rel="noopener" aria-label="Open the Material Monitor site (opens in a new tab)">
+            <div class="h-cap">
+              <span class="mk"><img src="assets/brand/materialmonitor-mark-small.svg" alt="" width="96" height="96"></span>
+              <span><b>Material Monitor</b><small>Early access</small></span>
+            </div>
+            <div class="h-phone"><img src="assets/screens/materialmonitor/mm-app-home-480.webp" alt="The Material Monitor field app for a demo company: receive materials, look up a material, report a problem and the expected deliveries by day" width="480" height="1039"></div>
+          </a>
         </figure>
       </div>
     </div>
@@ -455,46 +477,48 @@ body.home {
 
       <div class="h-rows">
         <article class="h-row handover">
-          <div class="h-combo reveal">
+          <a class="h-combo reveal" href="https://homehandover.app" target="_blank" rel="noopener" aria-label="Open the Handover site (opens in a new tab)">
             <div class="h-win">
               <div class="h-win-bar" aria-hidden="true"><i></i><i></i><i></i></div>
               <img src="assets/home/handover-office.webp" alt="The Handover office view of a demo home: the steps from import to invite all complete, and the home's products listed by section with brand, model, room and status" width="1280" height="800" loading="lazy" decoding="async">
             </div>
             <div class="h-phone"><img src="assets/home/handover-app-home.webp" alt="The Handover homeowner app for the same demo home: an ask box and the home's emergency and service contacts" width="480" height="1039" loading="lazy" decoding="async"></div>
-          </div>
+          </a>
           <div class="h-ea-copy reveal d1">
             <div class="h-ea-name">
               <span class="h-ea-mark" aria-hidden="true">
                 <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><rect width="1024" height="1024" fill="#123a40"/><g transform="translate(512 512) scale(1.18) translate(-512 -512)"><polygon points="392,824 632,824 776,952 264,952" fill="#f4c877" opacity="0.16"/><rect x="368" y="240" width="288" height="608" rx="10" fill="none" stroke="#1d5058" stroke-width="26"/><rect x="392" y="264" width="240" height="560" fill="#f0bd6a"/><path d="M 632 264 L 632 824 L 516 876 L 516 292 Z" fill="#0c2b30"/><circle cx="542" cy="566" r="12" fill="#d9a44e"/></g></svg>
               </span>
-              <h3>Handover</h3>
+              <h3><a href="https://homehandover.app" target="_blank" rel="noopener">Handover<span class="sr-only"> (opens in a new tab)</span></a></h3>
             </div>
             <p class="what">Every client gets an app that answers their questions from their own home's documents, plus a printed binder, both under your company's name.</p>
             <p class="h-status"><span class="chip">Early access</span><span>Live for early access builders. The iOS app is on the App Store, and pricing is on the Handover site.</span></p>
             <a class="btn" href="https://homehandover.app" target="_blank" rel="noopener">Request early access<span class="sr-only"> (opens the Handover site in a new tab)</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
             </a>
+            <a class="h-domain" href="https://homehandover.app" target="_blank" rel="noopener">homehandover.app<span class="sr-only"> (opens in a new tab)</span></a>
           </div>
         </article>
 
         <article class="h-row mm flip">
-          <div class="h-combo reveal">
+          <a class="h-combo reveal" href="https://materialmonitor.app" target="_blank" rel="noopener" aria-label="Open the Material Monitor site (opens in a new tab)">
             <div class="h-win">
               <div class="h-win-bar" aria-hidden="true"><i></i><i></i><i></i></div>
               <img src="assets/home/materialmonitor-dashboard.webp" alt="The Material Monitor office dashboard for demo jobs: a card per job with items in hand, in transit and needing a follow-up, the materials to order with their order-by dates and the week's deliveries" width="1280" height="800" loading="lazy" decoding="async">
             </div>
             <div class="h-phone"><img src="assets/screens/materialmonitor/mm-app-receive-560.webp" alt="The Material Monitor field app receiving a delivery at a demo job: tick what came off the truck and mark it good, partial, damaged or wrong" width="560" height="1212" loading="lazy" decoding="async"></div>
-          </div>
+          </a>
           <div class="h-ea-copy reveal d1">
             <div class="h-ea-name">
               <span class="h-ea-mark"><img src="assets/brand/materialmonitor-mark-small.svg" alt="" width="96" height="96"></span>
-              <h3>Material Monitor</h3>
+              <h3><a href="https://materialmonitor.app" target="_blank" rel="noopener">Material Monitor<span class="sr-only"> (opens in a new tab)</span></a></h3>
             </div>
             <p class="what">One list of every finish material on every job, shared by the office on the computer and the crew on their phones, with vendor mail and carrier tracking feeding it.</p>
             <p class="h-status"><span class="chip">Early access</span><span>Live for founding builders. The iPhone app is on the way.</span></p>
             <a class="btn" href="https://materialmonitor.app" target="_blank" rel="noopener">Join the founding list<span class="sr-only"> (opens the Material Monitor site in a new tab)</span>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17 17 7"/><path d="M8 7h9v9"/></svg>
             </a>
+            <a class="h-domain" href="https://materialmonitor.app" target="_blank" rel="noopener">materialmonitor.app<span class="sr-only"> (opens in a new tab)</span></a>
           </div>
         </article>
       </div>
