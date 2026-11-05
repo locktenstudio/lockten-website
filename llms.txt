@@ -17,6 +17,10 @@
 - [Material Monitor](https://materialmonitor.app/): finish material tracking, on its own site.
 - [Help](https://lockten.ai/help): Walkthrough help and FAQs.
 
+## Free guide
+
+- [Getting Started with AI in a Building Company](https://lockten.ai/guide): a free, plain-language guide for owners and office teams at building companies, written by Josh Rosenthal. It covers the first fifteen minutes with Claude, building trust in it one step at a time, projects, files and folders, connections to email and other tools, skills and the plans and privacy settings to choose. It ends with when to try building your own tools with Claude Code. Current as of October 2026 and refreshed as the tools change. It is not a product and nothing is sold on it.
+
 ## About
 
 Lock Ten Studio LLC, Cabin John, Maryland. The name refers to Lock 10 of the C&O Canal, a piece of 19th-century masonry engineering still standing. Contact: info@lockten.ai.

@@ -297,6 +297,24 @@ a.h-combo .h-win, a.h-combo .h-phone { transition: transform 220ms var(--ease), 
   .h-rows { gap: 88px; }
   .h-buy { margin-top: 64px; }
 }
+
+/* ---- Free guide: the quiet hero link and the band before the studio (2026-11-04) ---- */
+.h-guide-link { display: inline-block; margin-top: 18px; font-size: 1rem; line-height: 1.45; color: var(--steel-300); text-decoration: underline; text-decoration-color: rgba(169, 191, 220, 0.45); text-underline-offset: 4px; text-decoration-thickness: 1px; transition: color 160ms, text-decoration-color 160ms; }
+.h-guide-link svg { display: inline-block; width: 16px; height: 16px; margin-left: 8px; vertical-align: -3px; transition: transform 160ms var(--ease); }
+.h-guide-link:hover, .h-guide-link:focus-visible { color: var(--white); text-decoration-color: currentColor; }
+.h-guide-link:hover svg { transform: translateX(3px); }
+@media (min-width: 1000px) { .h-cta-col { flex: none; text-align: right; } .h-cta-col .hero-actions { justify-content: flex-end; } }
+.h-guide { border-top: 1px solid var(--line); }
+.h-guide .h-head { margin-bottom: 40px; }
+.h-title.h-guide-title { font-size: clamp(2.1rem, 1.2rem + 2.6vw, 2.85rem); }
+.h-guide-grid { display: grid; gap: 40px; align-items: center; border-top: 1px solid var(--line-strong); padding-top: 40px; }
+@media (min-width: 960px) { .h-guide-grid { grid-template-columns: minmax(0, 1fr) minmax(0, 480px); gap: 72px; } }
+.h-guide-copy p { font-size: 1.15rem; line-height: 1.75; color: var(--fg-2); max-width: 36em; }
+.h-guide-more { display: inline-flex; align-items: center; gap: 8px; margin-top: 22px; font-size: 1.06rem; font-weight: 500; color: var(--brand); text-decoration: none; transition: gap 160ms var(--ease), color 160ms; }
+.h-guide-more svg { width: 18px; height: 18px; flex: none; }
+.h-guide-more:hover, .h-guide-more:focus-visible { color: var(--brand-hover); gap: 12px; }
+.h-guide-art { display: block; background-color: var(--deep-900); background-image: linear-gradient(rgba(255,255,255,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.06) 1px, transparent 1px); background-size: 32px 32px; border-radius: 12px; padding: clamp(24px, 4vw, 44px); }
+.h-guide-art svg { display: block; width: 100%; max-width: 420px; height: auto; margin: 0 auto; }
 </style>
 
 <script type="application/ld+json">
@@ -330,6 +348,7 @@ a.h-combo .h-win, a.h-combo .h-phone { transition: transform 220ms var(--ease), 
     <nav class="header-nav" aria-label="Primary">
       <a href="#walkthrough">Walkthrough</a>
       <a href="#early-access">Early access</a>
+      <a href="/guide">Guide</a>
       <a href="#studio">The studio</a>
       <a href="mailto:info@lockten.ai">Contact</a>
     </nav>
@@ -344,6 +363,7 @@ a.h-combo .h-win, a.h-combo .h-phone { transition: transform 220ms var(--ease), 
     <nav class="header-nav">
       <a href="#walkthrough" tabindex="-1">Walkthrough</a>
       <a href="#early-access" tabindex="-1">Early access</a>
+      <a href="/guide" tabindex="-1">Guide</a>
       <a href="#studio" tabindex="-1">The studio</a>
       <a href="mailto:info@lockten.ai" tabindex="-1">Contact</a>
     </nav>
@@ -370,11 +390,14 @@ a.h-combo .h-win, a.h-combo .h-phone { transition: transform 220ms var(--ease), 
       <h1 class="hero-headline"><span class="pg">Tools made on the job,</span> <span class="pg">for the job.</span></h1>
       <div class="h-hero-row">
         <p class="hero-subhead">Lock Ten Studio makes software for custom home builders and for the people who work in and on houses. Walkthrough is live now, and two more tools are open to a small number of builders.</p>
-        <div class="hero-actions">
-          <a href="#walkthrough" class="btn btn-primary">Get Walkthrough
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
-          </a>
-          <a href="#early-access" class="btn btn-ghost-dark">See early access</a>
+        <div class="h-cta-col">
+          <div class="hero-actions">
+            <a href="#walkthrough" class="btn btn-primary">Get Walkthrough
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m9 18 6-6-6-6"/></svg>
+            </a>
+            <a href="#early-access" class="btn btn-ghost-dark">See early access</a>
+          </div>
+          <a class="h-guide-link" href="/guide">Read the free guide: Getting started with AI in a building company<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
         </div>
       </div>
 
@@ -525,6 +548,23 @@ a.h-combo .h-win, a.h-combo .h-phone { transition: transform 220ms var(--ease), 
     </div>
   </section>
 
+  <!-- GUIDE -->
+  <section class="h-band h-guide" id="guide">
+    <div class="container wide">
+      <div class="h-head reveal">
+        <p class="label">Free guide</p>
+        <h2 class="h-title h-guide-title">A plain-language guide to getting started with AI in a building company.</h2>
+      </div>
+      <div class="h-guide-grid">
+        <div class="h-guide-copy reveal d1">
+          <p>Builders and friends keep asking me where to start with AI for their company. This guide is my answer. I run a building company and use these tools in our office every day.</p>
+          <a class="h-guide-more" href="/guide">Read the guide<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+        </div>
+        <a class="h-guide-art reveal d1" href="/guide" tabindex="-1" aria-hidden="true"><svg viewBox="0 0 400 320" role="img" aria-label="A plan sheet with three numbered callout pins beside a phone showing a three-item report"><defs><pattern id="hg-cgrid" width="16" height="16" patternUnits="userSpaceOnUse"><path d="M16 0 H0 V16" fill="none" stroke="#2F507F" stroke-width="0.8"/></pattern></defs><rect x="10" y="12" width="300" height="236" rx="4" fill="#142A52" stroke="#2F507F" stroke-width="1.5"/><rect x="10" y="12" width="300" height="236" rx="4" fill="url(#hg-cgrid)" opacity="0.55"/><g fill="none" stroke="#A9BFDC" stroke-width="4" stroke-linecap="square"><path d="M40 44 H272 V214 H40 Z"/><path d="M146 44 V118"/><path d="M146 150 V214"/><path d="M146 122 H196"/><path d="M228 122 H272"/></g><path d="M146 150 A30 30 0 0 1 176 120" fill="none" stroke="#6F8AB0" stroke-width="1.5" stroke-dasharray="3 4"/><path d="M40 30 H272 M40 25 V35 M272 25 V35" fill="none" stroke="#6F8AB0" stroke-width="1.5"/><rect x="190" y="226" width="64" height="14" fill="none" stroke="#2F507F" stroke-width="1.2"/><circle cx="92" cy="90" r="16" fill="#1C71C1" stroke="#FFFFFF" stroke-width="2.5"/><text x="92" y="96.5" font-family="Geist, system-ui, -apple-system, Segoe UI, Arial, sans-serif" font-size="18" font-weight="600" fill="#FFFFFF" text-anchor="middle" >1</text><circle cx="214" cy="84" r="16" fill="#1C71C1" stroke="#FFFFFF" stroke-width="2.5"/><text x="214" y="90.5" font-family="Geist, system-ui, -apple-system, Segoe UI, Arial, sans-serif" font-size="18" font-weight="600" fill="#FFFFFF" text-anchor="middle" >2</text><circle cx="98" cy="176" r="16" fill="#1C71C1" stroke="#FFFFFF" stroke-width="2.5"/><text x="98" y="182.5" font-family="Geist, system-ui, -apple-system, Segoe UI, Arial, sans-serif" font-size="18" font-weight="600" fill="#FFFFFF" text-anchor="middle" >3</text><rect x="262" y="106" width="124" height="206" rx="18" fill="#FFFFFF"/><rect x="274" y="122" width="100" height="174" rx="8" fill="#F5F7F9"/><rect x="282" y="132" width="84" height="14" rx="3" fill="#1C71C1"/><rect x="282" y="160" width="28" height="28" rx="4" fill="#D3E6F7"/><circle cx="296" cy="174" r="6" fill="#1C71C1"/><rect x="316" y="164" width="48" height="7" rx="3" fill="#B4BFCA"/><rect x="316" y="177" width="34" height="7" rx="3" fill="#D5DCE3"/><rect x="282" y="204" width="28" height="28" rx="4" fill="#D3E6F7"/><circle cx="296" cy="218" r="6" fill="#1C71C1"/><rect x="316" y="208" width="48" height="7" rx="3" fill="#B4BFCA"/><rect x="316" y="221" width="34" height="7" rx="3" fill="#D5DCE3"/><rect x="282" y="248" width="28" height="28" rx="4" fill="#D3E6F7"/><circle cx="296" cy="262" r="6" fill="#1C71C1"/><rect x="316" y="252" width="48" height="7" rx="3" fill="#B4BFCA"/><rect x="316" y="265" width="34" height="7" rx="3" fill="#D5DCE3"/></svg></a>
+      </div>
+    </div>
+  </section>
+
   <!-- STUDIO -->
   <section class="h-band" id="studio">
     <div class="container wide">
@@ -565,6 +605,7 @@ a.h-combo .h-win, a.h-combo .h-phone { transition: transform 220ms var(--ease), 
       <nav class="footer-nav" aria-label="Footer">
         <a href="#walkthrough">Walkthrough</a>
         <a href="#early-access">Early access</a>
+        <a href="/guide">Guide</a>
         <a href="#studio">The studio</a>
         <a href="mailto:info@lockten.ai">Contact</a>
         <a href="/privacy">Privacy</a>
